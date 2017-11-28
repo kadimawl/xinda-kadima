@@ -1,6 +1,7 @@
 <template>
   <div >
     <h3>这是顶部</h3>
+    <a href="#">注册</a>
   </div>
 </template>
 
