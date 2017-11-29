@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ohead from './ohead'
+import ohead from '@/views/ohead'
 export default {
   data () {
       return {}
@@ -18,9 +18,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-// h3{
-    // color: #f00;
-// }
 @color : red;
 div{
     color: @color;

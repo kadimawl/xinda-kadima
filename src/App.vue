@@ -2,7 +2,7 @@
   <div id="app">
     <top></top>
     <img src="./assets/logo.png">
-    <router-view/>   //自带标签
+    <router-view/>   <!--自带标签-->
     <bottom/>
   </div>
 </template>
@@ -22,7 +22,5 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
