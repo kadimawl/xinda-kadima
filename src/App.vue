@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <top></top>
-    <img src="./assets/logo.png">
     <router-view/>   <!--自带标签-->
     <bottom/>
   </div>
@@ -17,10 +16,5 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-}
+
 </style>
