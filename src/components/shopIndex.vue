@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
+  <div class="body">
+      <h3>这是店铺首页</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
   data() {
     return {};
   }

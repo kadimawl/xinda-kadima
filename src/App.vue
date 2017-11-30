@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <top/>
+<<<<<<< HEAD
     <router-view/>   <!--自带标签-->
+=======
+    <sele/>
+    <router-view/>
+>>>>>>> 1b99444865cd7e759af3cc473842864474493c17
     <bottom/>
   </div>
 </template>

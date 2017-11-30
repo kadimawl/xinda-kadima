@@ -1,6 +1,6 @@
 <template>
 <div class="memeber">
-    <!-- <select/> -->
+    <sele/>
     <div class="member-body">
          <user/>
          <router-view/>
@@ -10,13 +10,13 @@
 </template>
 
 <script>
-// import select from 
+import sele from '../components/sele'
 import user from './user'
 export default {
   data() {
     return {};
   },
-   components: { user }
+   components: { user,sele }
 };
 </script>
 
