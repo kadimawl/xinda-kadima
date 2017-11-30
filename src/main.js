@@ -3,7 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'    //vue的路由实例化对象
+import axios  from 'axios'
 
+
+Vue.prototype.ajax = axios;
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
@@ -16,25 +19,3 @@ new Vue({
 })
 
 
-// console.log('hello vue')
-// setTimeout(()=>{   //异步
-//   console.log(5);
-// },1000);
-// var promise = new Promise(function(resolve,reject){   //此function是同步的
-//   console.log(1);
-//   resolve();      //resolve()对应的事件处理函数不会立即执行
-//   console.log(2);
-// })
-// promise.then(function(){
-//   console.log(3);
-// })
-// console.log(4);
-
-
-
-
-// console.log(2)
-
-// require('./mode')
-// import d,{b,c} from './mode';//解构赋值的形式接受的{b:2}
-// console.log(b,c,d)

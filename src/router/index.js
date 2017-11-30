@@ -4,11 +4,14 @@ import HelloWorld from '@/components/HelloWorld'
 import outter from '../components/outter'
 import login from '@/views/login'
 import register from '@/views/register'
+import forgetpw from '@/views/forgetpw'
+
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
       path: '/',
       name: 'HelloWorld',
       component: HelloWorld
@@ -24,6 +27,10 @@ export default new Router({
         {
           path: 'register',
           component: register
+        },
+        {
+          path: 'forgetpw',
+          component: forgetpw
         }
       ]
     }
