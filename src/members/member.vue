@@ -1,6 +1,5 @@
 <template>
 <div class="memeber">
-    <sele/>
     <div class="member-body">
          <user/>
          <router-view/>
@@ -10,13 +9,12 @@
 </template>
 
 <script>
-import sele from '../components/sele'
 import user from './user'
 export default {
   data() {
     return {};
   },
-   components: { user,sele }
+   components: { user }
 };
 </script>
 
@@ -26,13 +24,12 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 .dispf{
   display: flex;
 }
-.member{
-  .member-body{
-      .dispf;
-}
+.member-body{
+ .dispf;
 }
 
 

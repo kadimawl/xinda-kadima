@@ -62,9 +62,9 @@ export default new Router({
             name: 'member',
             component: member,
             children: [{
-                    path: '/memberBody',
-                    alias: '/member',
-                    component: memberBody
+                    path: '/memberBody', //父级特有模块路径
+                    alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                    component: memberBody //父级特有模块
                 },
                 {
                     path: 'userEval',

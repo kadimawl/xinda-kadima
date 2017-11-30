@@ -1,10 +1,6 @@
 <template>
 <div class="memeber">
-    <!-- <select/> -->
-    <div class="member-body">
-         <user/>
-         <router-view/>
-    </div>
+    <h3>用户信息</h3>
 </div>
   
 </template>
