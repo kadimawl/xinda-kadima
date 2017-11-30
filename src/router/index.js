@@ -6,7 +6,7 @@ import login from '@/views/login'
 import register from '@/views/register'
 import forgetpw from '@/views/forgetpw'
 
-import member from '@/members/member'
+import member from '../members/member.vue'
 import memberBody from '@/members/memberBody'
 import userEval from '@/members/userEval'
 import gotoeval from '@/members/gotoeval'
