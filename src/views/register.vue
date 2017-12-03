@@ -146,8 +146,6 @@ export default {
     p {
       margin-left: 30px;
     }
-    img {
-    }
     .immediately {
       margin: 23px 0 19px;
       a {

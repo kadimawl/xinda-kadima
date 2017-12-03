@@ -1,10 +1,10 @@
 <template>
   <div class="lBox">
     <div class="leftB">
-      <input type="text" placeholder="  请输入手机号码" >
+      <input type="text" v-model="phoneInput" @blur="phone" placeholder="  请输入手机号码" class="phone">
       <div class="Verification"><input type="text" placeholder="  请输入验证码"><div class="v-box"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div></div>
       <div class="Verification"><input type="text" placeholder="  请输入验证码"><button>点击获取</button></div>
-      <input type="text" placeholder="  请输入新密码">
+      <input type="text" placeholder="  请输入新密码" >
       <input type="text" placeholder="  请再次确认密码">
       <button class="confirm" >确认修改</button>
       
@@ -20,25 +20,34 @@
 
 <script>
 export default {
-  name: 'forgetpw',
-
   data() {
-    return {};
+    return {
+      phoneInput: '',
+    };
   },
   methods: {
-    // confirm: function(){
-      // console.log(this.$refs.pinput.value);
-      
-    // }
+    //手机号输入验证
+    phone() {
+      console.log(this)
+      let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+      let result = pReg.test(Number(this.phoneInput));
+    },
+    //密码输入验证
+    pw() {
+      let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
+      let pwResult = pwReg.test(this.pwInput);
+    },
   }
 };
+
+
 //手机号正则
 var pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$/;
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-input{
+input {
   display: block;
   border: none;
   outline: 0;
@@ -48,15 +57,15 @@ input{
   width: 281px;
   height: 34px;
 }
-.v-box{
+.v-box {
   margin-left: 9px;
 }
-.Verification{
+.Verification {
   display: flex;
-  input{
+  input {
     width: 172px;
   }
-  button{
+  button {
     width: 98px;
     height: 36px;
     background: #fff;
@@ -73,21 +82,21 @@ input{
   margin: 54px auto;
   display: flex;
 }
-.leftB{
+.leftB {
   width: 452px;
 }
-.confirm{
-    width: 281px;
-    height: 36px;
-    background: #fff;
-    border: none;
-    border: 1px solid #2693d4;
-    color: #2693d4;
-    border-radius: 3px;
-    outline: 0;
+.confirm {
+  width: 281px;
+  height: 36px;
+  background: #fff;
+  border: none;
+  border: 1px solid #2693d4;
+  color: #2693d4;
+  border-radius: 3px;
+  outline: 0;
 }
 
-.midB{
+.midB {
   width: 1px;
   height: 261px;
   margin-top: 29px;
@@ -95,21 +104,21 @@ input{
   // padding-left: 138px;
   box-sizing: border-box;
 }
-.rightB{
+.rightB {
   font-size: 17px;
-  p{
+  p {
     color: #000;
     line-height: 17px;
     margin-bottom: 23px;
     margin-left: 188px;
   }
-  a{
+  a {
     color: #409cd7;
     text-decoration: none;
     display: block;
     margin-left: 188px;
   }
-  img{
+  img {
     margin-left: 138px;
   }
 }

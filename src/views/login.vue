@@ -1,11 +1,11 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码"><br>
-      <input type="text" placeholder="  请输入密码"><br>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div>
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone"><br>
+      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw"><br>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src='http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode' @click="reImg" alt=""></div>
       <div class="forget"><a href="/#/forgetpw">忘记密码？</a></div>
-      <button>立即登录</button>
+      <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
@@ -19,7 +19,34 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      phoneInput: '',
+      pwInput: '',
+      img: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode"
+    };
+  },
+
+  methods: {
+    //手机号输入验证
+    phone() {
+      console.log(this)
+      let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
+      let result = pReg.test(Number(this.phoneInput));
+    },
+    //密码输入验证
+    pw() {
+      let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
+      let pwResult = pwReg.test(this.pwInput);
+    },
+    //验证码刷新-
+    reImg() { 
+      console.log(this.img);
+      this.img = 'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?' +  Math.random().toString().substr(2, 4);
+    },
+    //立即登录
+    iLogin() {
+
+    }
   }
 };
 </script>
@@ -46,7 +73,7 @@ export default {
   .v-box {
     width: 281px;
     display: flex;
-    img{
+    img {
       height: 34px;
       margin-left: 9px;
     }
@@ -103,11 +130,8 @@ export default {
       font-size: 16px;
       color: #000;
     }
-    p{
+    p {
       margin-left: 30px;
-    }
-    img{
-
     }
     .immediately {
       margin: 23px 0 19px;
