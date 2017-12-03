@@ -3,14 +3,14 @@
     <div class="leftOut">
       <input type="text" placeholder="  请输入手机号码"><br>
       <input type="text" placeholder="  请输入密码"><br>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><div class="v-img"></div></div>
-      <div class="forget"><a href="#">忘记密码？</a></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div>
+      <div class="forget"><a href="/#/forgetpw">忘记密码？</a></div>
       <button>立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
-      <p class="immediately"><a href="/#/outter/register">立即注册>></a></p>
+      <p class="immediately"><a href="/#/register">立即注册>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -46,7 +46,10 @@ export default {
   .v-box {
     width: 281px;
     display: flex;
-    justify-content: space-between;
+    img{
+      height: 34px;
+      margin-left: 9px;
+    }
   }
   #verification {
     width: 172px;

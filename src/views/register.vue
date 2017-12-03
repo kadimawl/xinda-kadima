@@ -2,7 +2,7 @@
 <div class="lOut">
     <div class="leftOut">
       <input type="text" placeholder="  请输入手机号码"><br>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><div class="v-img"></div></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button class="clickGet">点击获取</button></div>
       <div class="sel"><select name="" id="">
         <options>1</options>
@@ -47,7 +47,7 @@
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
-      <p class="immediately"><a href="/#/outter/login">立即登录>></a></p>
+      <p class="immediately"><a href="/#/login">立即登录>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -59,7 +59,6 @@ export default {
     return {};
   }
 };
-console.log(111111);
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -84,7 +83,10 @@ console.log(111111);
   .v-box {
     width: 281px;
     display: flex;
-    justify-content: space-between;
+    img{
+      height: 33px;
+      margin-left: 9px;
+    }
   }
   .clickGet {
     width: 100px;
@@ -96,6 +98,8 @@ console.log(111111);
     border: 1px solid #2693d4;
     border-radius: 3px;
     outline: none;
+      margin-left: 9px;
+
   }
   #verification {
     width: 172px;
