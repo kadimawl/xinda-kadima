@@ -1,11 +1,11 @@
 <template>
-  <div class="hello">
+  <div class="body">
+      <h3>这是订单详情</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: "HelloWorld",
   data() {
     return {};
   }
@@ -14,9 +14,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-*{
-  margin: 0;
-  padding: 0;
-}
 
 </style>

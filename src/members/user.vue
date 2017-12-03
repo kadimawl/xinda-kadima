@@ -1,11 +1,13 @@
 <template>
-  <div class="hello">
-  </div>
+<div class="memeber">
+    <h3>用户信息</h3>
+</div>
+  
 </template>
 
 <script>
+// import select from 
 export default {
-  name: "HelloWorld",
   data() {
     return {};
   }
@@ -13,10 +15,23 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-*{
+<style scoped lang="less">
+* {
   margin: 0;
   padding: 0;
 }
+.dispf{
+  display: flex;
+}
+.member{
+  .member-body{
+      .dispf;
+}
+}
 
+
+
+  
+  
+ 
 </style>
