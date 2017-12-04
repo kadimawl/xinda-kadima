@@ -1,6 +1,5 @@
 <template>
 <div class="memeber">
-    <!-- <select/> -->
     <div class="member-body">
          <user/>
          <router-view/>
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-// import select from 
 import user from './user'
 export default {
   data() {
@@ -26,13 +24,12 @@ export default {
   margin: 0;
   padding: 0;
 }
+
 .dispf{
   display: flex;
 }
-.member{
-  .member-body{
-      .dispf;
-}
+.member-body{
+ .dispf;
 }
 
 

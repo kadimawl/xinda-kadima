@@ -5,10 +5,10 @@
       <p class="w-come">欢迎来到信达！</p>
       <div class="please">
         <p>请</p>
-        <div><a href="#">登录</a></div>
+        <div><a href="#/login">登录</a></div>
       </div>
       <div class="item-reg">
-        <a href="#">快速注册</a>
+        <a href="#/register">快速注册</a>
       </div>
     </div>
     <div class="box-right">

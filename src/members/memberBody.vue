@@ -1,16 +1,11 @@
 <template>
 <div class="memeber">
-    <!-- <select/> -->
-    <div class="member-body">
-         <user/>
-         <router-view/>
-    </div>
+    <h3>用户订单</h3>
 </div>
   
 </template>
 
 <script>
-// import select from 
 import user from './user'
 export default {
   data() {
