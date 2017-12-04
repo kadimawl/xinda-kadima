@@ -5,8 +5,8 @@
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
 
-      <input type="text" placeholder="  请输入密码" class="pw">
-      <button class="i-register">立即注册</button>
+      <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
+      <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
     </div>
     <div class="midOut"></div>
@@ -28,7 +28,8 @@ export default {
       imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode",
       imgShow: true,
       phoneInput: "",
-      pshow: true
+      pshow: true,
+      pwInput: ""
     };
   },
   methods: {
@@ -71,7 +72,16 @@ export default {
         Math.random()
           .toString()
           .substr(2, 4);
+    },
+     submit() {
+    let storage = window.localStorage;
+    var user = this.phoneInput;
+    var pw = this.pwInput;
+    if (storage) {
+      storage.setItem(user, pw);
     }
+  }
+ 
   }
 };
 </script>
@@ -205,7 +215,7 @@ select {
   text-align: center;
   margin: 0 0 5px;
 }
-.countdown{
+.countdown {
   color: #000;
 }
 </style>
