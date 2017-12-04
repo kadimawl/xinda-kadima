@@ -36,6 +36,10 @@ export default {
     height: 435px;
     margin: 0 auto 0;
     background: #fff;
+    padding-top: 54px;
+    box-sizing: border-box;
   }
+  
 }
+
 </style>

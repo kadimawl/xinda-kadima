@@ -1,46 +1,11 @@
 <template>
 <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码"><br>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button class="clickGet">点击获取</button></div>
-      <div class="sel"><select name="" id="">
-        <options>1</options>
-        <options>2</options>
-        <options>3</options>
-        <options>4</options>
-        <options>5</options>
-        <options>6</options>
-        <options>7</options>
-        <options>8</options>
-        <options>9</options>
-        <options>10</options>
-      </select>
-      <select class="m-sele" name="" id="">
-        <options>1</options>
-        <options>2</options>
-        <options>3</options>
-        <options>4</options>
-        <options>5</options>
-        <options>6</options>
-        <options>7</options>
-        <options>8</options>
-        <options>9</options>
-        <options>10</options>
-      </select>
-      <select name="" id="">
-        <options>1</options>
-        <options>2</options>
-        <options>3</options>
-        <options>4</options>
-        <options>5</options>
-        <options>6</options>
-        <options>7</options>
-        <options>8</options>
-        <options>9</options>
-        <options>10</options>
-      </select></div>
-      <input type="text" placeholder="  请输入密码" class="pw"><br>
+      <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
+
+      <input type="text" placeholder="  请输入密码" class="pw">
       <button class="i-register">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
     </div>
@@ -56,7 +21,57 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      show: true,
+      count: "",
+      timer: null,
+      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode",
+      imgShow: true,
+      phoneInput: "",
+      pshow: true
+    };
+  },
+  methods: {
+    //手机号输入
+    phone() {
+      let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
+      let result = pReg.test(this.phoneInput);
+      if (!this.phoneInput == "") {
+        this.pshow = true;
+        if (!result) {
+          this.pshow = false;
+        }
+      }
+    },
+    //重新获得焦点，提示框消失
+    focus() {
+      this.pshow = true;
+    },
+    //点击获取倒计时
+    clickGet: function() {
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
+    },
+    //验证码刷新-
+    reImg() {
+      this.imgUrl =
+        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
+        Math.random()
+          .toString()
+          .substr(2, 4);
+    }
   }
 };
 </script>
@@ -65,7 +80,6 @@ export default {
 <style scoped lang="less">
 .lOut {
   margin: 0px auto 54px;
-  padding-top: 43px;
   width: 907px;
   height: 300px;
   display: flex;
@@ -83,7 +97,7 @@ export default {
   .v-box {
     width: 281px;
     display: flex;
-    img{
+    img {
       height: 33px;
       margin-left: 9px;
     }
@@ -98,8 +112,7 @@ export default {
     border: 1px solid #2693d4;
     border-radius: 3px;
     outline: none;
-      margin-left: 9px;
-
+    margin-left: 9px;
   }
   #verification {
     width: 172px;
@@ -180,7 +193,19 @@ select {
   border: 1px solid #cbcbcb;
   border-radius: 3px;
 }
-.m-sele{
+.m-sele {
   margin: 0 20px;
+}
+.errorMsg {
+  width: 281px;
+  height: 33px;
+  border: 1px solid #f33;
+  color: #f33;
+  line-height: 33px;
+  text-align: center;
+  margin: 0 0 5px;
+}
+.countdown{
+  color: #000;
 }
 </style>
