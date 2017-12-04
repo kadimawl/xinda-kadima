@@ -23,21 +23,21 @@
       <tr>
         <td><h5>产品类型</h5></td>
         <td class="productTypes">
-          <a v-for="productType in productTypes" :key="productType.id" v-on:click="navigationC" href="javascript:void(0)">{{productType.name}}</a>
+          <a v-for="productType in productTypes" :key="productType.id" v-on:click="productTypesC" href="javascript:void(0)">{{productType.name}}</a>
         </td>
       </tr>
     </table>
     <div class="navigation">
-      <button>综合排序</button>
-      <button>价格↑↑</button>
-      <button>接单数↑↑</button>
+      <a href="javascript:void(0)">综合排序</a>
+      <a href="javascript:void(0)">价格↑↑</a>
+      <a href="javascript:void(0)">接单数↑↑</a>
     </div>
     <div class="shopTypes">
       <div v-for="shopType in shopTypes" :key="shopType.id">
         <div class="logo">
           <img src="" alt=""><img src="" alt="">
         </div>
-        <div>
+        <div class="shopText">
           <p>{{shopType.providerName}}</p>
           <p>信誉<span class="xinyu"></span></p>
           <p>{{shopType.regionName}}</p>
@@ -47,24 +47,22 @@
         </div>
       </div>
     </div>
+    <div class="page">
+      <button>上一页</button>
+      <a href="javascript:viod(0)">1</a>
+      <button>下一页</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   created() {
-    var that = this;
-    // function getShop(TypeCode) {
-      
-    // }
-    this.getShop();
+    this.getShop();//调用商品列表请求函数
 
-    this.ajax
-      .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/style/list",
-        {}
-      )
-      .then(data => {
+
+    //商品类别导航
+    this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list",{}).then(data => {
         var products = data.data.data;
         var productType = [{ code: 0, name: "所有" }];
         for (var key in products) {
@@ -74,7 +72,6 @@ export default {
           }
         }
         productType.sort(this.objSort("code"));
-        console.log(productType);
         this.productTypes = productType;
       });
   },
@@ -84,11 +81,11 @@ export default {
       shopTypes: []
     };
   },
-  methods:{
-    navigationC : function(event){
-      console.log(123123)
+  methods: {
+    productTypesC: function(event) {//商品分类单击事件
+      console.log(123123);
     },
-    getShop:function(TypeCode){
+    getShop: function(TypeCode) {//商品列表请求函数
       var that = this;
       this.ajax
         .post("http://115.182.107.203:8088/xinda/xinda-api/provider/grid", {
@@ -103,12 +100,10 @@ export default {
           var shops = data.data.data;
           for (var key in shops) {
             shops[key].productTypes = shops[key].productTypes.split(",");
-            shops[key].productTypeCodes = shops[key].productTypeCodes.split(
-              ","
-            );
+            shops[key].productTypeCodes = shops[key].productTypeCodes.split(",");
           }
           that.shopTypes = shops;
-          // console.log(shops);
+          console.log(shops);
         });
     }
   }
@@ -170,6 +165,105 @@ table {
         margin-right: 15px;
       }
     }
+  }
+}
+.navigation{
+  background: #f7f7f7;
+  border: 1px solid #cccccc;
+  margin-top: 24px;
+  a{
+    text-decoration: none;
+    display: inline-block;
+    width: 105px;
+    height: 43px;
+    font-size: 14px;
+    color: #000000;
+    text-align: center;
+    line-height: 43px;
+  }
+  a:nth-child(1){
+    color: #ffffff;
+    background: #2693d4;
+  }
+}
+.shopTypes{
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid #cccccc;
+  border-top: none;
+  &>div{
+    width: 569px;
+    height: 250px;
+    border: 1px solid #e9e9e9;
+    margin: 12px 14px;
+    display: flex;
+  }
+}
+.logo{
+  width: 200px;
+  height: 250px;
+  background: pink;
+}
+.shopText{
+  padding: 10px 0;
+  width: 360px;
+  position: relative;
+  p{
+    font-size: 13px;
+    color: #686868;
+  }
+  span{
+    margin: 0 25px 0 15px;
+  }
+  a{
+    display: inline-block;
+    width: 71px;
+    height: 22px;
+    font-size: 13px;
+    color: #ffffff;
+    background: #2693d4;
+    border-radius: 3px;
+    margin: 2px;
+    text-align: center;
+    line-height: 22px;
+    text-decoration: none;
+  }
+  button{
+    display: block;
+    width: 102px;
+    height: 33px;
+    background: #ff5a1a;
+    color: #ffffff;
+    font-size: 14px;
+    line-height: 33px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 0;
+    position: absolute;
+    bottom: 20px;
+  }
+}
+.page{
+  text-align: center;
+  margin: 60px 0 150px;
+  button{
+    width: 66px;
+    height: 34px;
+    border: 1px solid #cccccc;
+    color: #cccccc;
+    font-size: 13px;
+    background: #ffffff;
+  }
+  a{
+    display: inline-block;
+    width: 37px;
+    height: 34px;
+    border: 1px solid #2693d4;
+    color: #2693d4;
+    font-size: 13px;
+    line-height: 34px;
+    text-decoration: none;
   }
 }
 </style>
