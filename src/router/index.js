@@ -17,6 +17,19 @@ import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
 
+<<<<<<< HEAD
+import Order from '@/components/Order' //订单详情http://localhost:9090
+import detial from '@/components/detial' //商品详情
+import shopIndex from '@/components/shopIndex' //店铺首页
+import shopList from '@/components/shopList' //店铺列表
+
+
+import order from '@/components/order/order' //dingdan
+import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
+import paymentFailure from '@/components/order/paymentFailure' //支付失败
+import payZfb from '@/components/order/payZfb' //支付宝支付
+import payBank from '@/components/order/payBank' //银行支付
+=======
 
 import detial from '@/components/detial'//商品详情
 import shopIndex from '@/components/shopIndex'//店铺首页
@@ -29,11 +42,32 @@ import paymentFailure from '@/components/order/paymentFailure'//支付失败
 import payZfb from '@/components/order/payZfb'//支付宝支付
 import payBank from '@/components/order/payBank'//银行支付
 
+>>>>>>> b94f9efa3f8b06890802c03d6b1dc9a21117cdbe
 
 
 Vue.use(Router)
 export default new Router({
     routes: [{
+<<<<<<< HEAD
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld
+        }, {
+            path: '/outter',
+            name: 'outter',
+            component: outter,
+            children: [{
+                path: '/login',
+                component: login,
+            }, {
+                path: '/register',
+                component: register
+            }, {
+                path: '/forgetpw',
+                component: forgetpw
+            }]
+        },
+=======
         path: '/',
         name: 'HelloWorld',
         component: HelloWorld
@@ -52,6 +86,7 @@ export default new Router({
             component: forgetpw
         }]
     },
+>>>>>>> b94f9efa3f8b06890802c03d6b1dc9a21117cdbe
 
 
 
@@ -70,30 +105,30 @@ export default new Router({
                     path: 'userEval',
                     component: userEval,
                     children: [{
-                            path: '/evalNone',
-                            alias: '/userEval',
+                            path: 'evalNone',
+                            alias: 'userEval',
                             component: evalNone
                         },
                         {
-                            path: '/evalAlready',
+                            path: 'evalAlready',
                             component: evalAlready
                         }
                     ]
                 },
                 {
-                    path: '/gotoeval',
+                    path: 'gotoeval',
                     component: gotoeval
                 },
                 {
-                    path: '/accountSet',
+                    path: 'accountSet',
                     component: accountSet,
                     children: [{
-                            path: '/accountsetBody',
-                            alias: '/accountSet',
+                            path: 'accountsetBody',
+                            alias: 'accountSet',
                             component: accountsetBody
                         },
                         {
-                            path: '/changePd',
+                            path: 'changePd',
                             component: changePd
                         }
                     ]
@@ -103,33 +138,34 @@ export default new Router({
 
 
 
-    {
-        path: '/order',
-        component: Order,
-        children: [{
-            path: '/',
-            component: order
+        {
+            path: '/Order',
+            component: Order,
+            children: [{
+                path: '/',
+                component: order
+            }, {
+                path: 'success',
+                component: paymentSuccess
+            }, {
+                path: 'failure',
+                component: paymentFailure
+            }, {
+                path: 'payZfb',
+                component: payZfb
+            }, {
+                path: 'payBank',
+                component: payBank
+            }]
         }, {
-            path: 'success',
-            component: paymentSuccess
+            path: '/detial',
+            component: detial
         }, {
-            path: 'failure',
-            component: paymentFailure
+            path: '/shopIndex',
+            component: shopIndex
         }, {
-            path: 'payZfb',
-            component: payZfb
-        }, {
-            path: 'payBank',
-            component: payBank
-        }]
-    }, {
-        path: '/detial',
-        component: detial
-    }, {
-        path: '/shopIndex',
-        component: shopIndex
-    }, {
-        path: '/shopList',
-        component: shopList
-    }]
+            path: '/shopList',
+            component: shopList
+        }
+    ]
 })

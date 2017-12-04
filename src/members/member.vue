@@ -1,9 +1,7 @@
 <template>
-<div class="memeber">
-    <div class="member-body">
+<div class="member">
          <user/>
          <router-view/>
-    </div>
 </div>
   
 </template>
@@ -25,11 +23,12 @@ export default {
   padding: 0;
 }
 
-.dispf{
-  display: flex;
-}
-.member-body{
- .dispf;
+
+.member{
+   width: 1200px;
+   margin: 0 auto;
+   padding: 10px 20px;
+   display: flex;
 }
 
 

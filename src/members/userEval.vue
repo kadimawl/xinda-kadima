@@ -1,5 +1,6 @@
 <template>
 <div class="memeber">
+    <div>用户设置</div>
     <userevalTop/>
     <router-view/>
 </div>
