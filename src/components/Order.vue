@@ -1,7 +1,10 @@
 <template>
-  <div class="body">
-      <h3>这是订单详情</h3>
-  </div>
+ <div>
+     <p>我是订单</p>
+      <router-view/>
+
+ </div>
+  
 </template>
 
 <script>

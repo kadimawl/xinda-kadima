@@ -22,7 +22,7 @@ import detial from '@/components/detial' //商品详情
 import shopIndex from '@/components/shopIndex' //店铺首页
 import shopList from '@/components/shopList' //店铺列表
 
-import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
+import paymentSuccess1 from '@/components/order/paymentSuccess1' //支付成功
 import paymentFailure from '@/components/order/paymentFailure' //支付失败
 import payZfb from '@/components/order/payZfb' //支付宝支付
 import payBank from '@/components/order/payBank' //银行支付
@@ -40,15 +40,16 @@ export default new Router({
             name: 'outter',
             component: outter,
             children: [{
-                    path: '/login',
+                    path: 'login',
+
                     component: login,
                 },
                 {
-                    path: '/register',
+                    path: 'register',
                     component: register
                 },
                 {
-                    path: '/forgetpw',
+                    path: 'forgetpw',
                     component: forgetpw
                 }
             ]
@@ -70,30 +71,30 @@ export default new Router({
                     path: 'userEval',
                     component: userEval,
                     children: [{
-                            path: '/evalNone',
-                            alias: '/userEval',
+                            path: 'evalNone',
+                            alias: 'userEval',
                             component: evalNone
                         },
                         {
-                            path: '/evalAlready',
+                            path: 'evalAlready',
                             component: evalAlready
                         }
                     ]
                 },
                 {
-                    path: '/gotoeval',
+                    path: 'gotoeval',
                     component: gotoeval
                 },
                 {
-                    path: '/accountSet',
+                    path: 'accountSet',
                     component: accountSet,
                     children: [{
-                            path: '/accountsetBody',
-                            alias: '/accountSet',
+                            path: 'accountsetBody',
+                            alias: 'accountSet',
                             component: accountsetBody
                         },
                         {
-                            path: '/changePd',
+                            path: 'changePd',
                             component: changePd
                         }
                     ]
@@ -107,20 +108,20 @@ export default new Router({
             path: '/order',
             component: order,
             children: [{
-                    path: '/success',
-                    // alias: '/accountSet',
-                    component: paymentSuccess
+                    path: 'success',
+                    alias: '/order',
+                    component: paymentSuccess1
                 },
                 {
-                    path: '/failure',
+                    path: 'failure',
                     component: paymentFailure
                 },
                 {
-                    path: '/payZfb',
+                    path: 'payZfb',
                     component: payZfb
                 },
                 {
-                    path: '/payBank',
+                    path: 'payBank',
                     component: payBank
                 }
             ]
