@@ -1,11 +1,14 @@
 <template>
   <div class="hello">
+    <sele/>
   </div>
 </template>
 
 <script>
+import sele from "./sele";
 export default {
   name: "HelloWorld",
+  components: {sele},
   data() {
     return {};
   }

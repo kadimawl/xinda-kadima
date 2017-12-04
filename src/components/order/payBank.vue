@@ -6,6 +6,7 @@
 
 <script>
 export default {
+  name:'payBank',
   data() {
     return {};
   }

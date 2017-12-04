@@ -1,5 +1,5 @@
 <template>
-    <div class="Select">
+    <div class="Select" v-show="seleShow">
       <div class="sele">
         <div class="logo">
             <div class="backG"></div>
@@ -42,7 +42,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      seleShow: true
+    };
   }
 };
 </script>

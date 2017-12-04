@@ -4,7 +4,7 @@
       <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
-
+      <v-distpicker class="select" province="省" city="市" ></v-distpicker>
       <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
@@ -12,7 +12,7 @@
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
-      <p class="immediately"><a href="/#/login">立即登录>></a></p>
+      <p class="immediately"><a href="/#/outter/login">立即登录>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -29,7 +29,7 @@ export default {
       imgShow: true,
       phoneInput: "",
       pshow: true,
-      pwInput: ""
+      pwInput: "",
     };
   },
   methods: {
@@ -87,9 +87,9 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
+<style  lang="less">
 .lOut {
-  margin: 0px auto 54px;
+  margin: 0px auto 24px;
   width: 907px;
   height: 300px;
   display: flex;
@@ -192,16 +192,18 @@ export default {
     color: #409cd7;
   }
 }
-.sele {
-  display: flex;
-  justify-content: space-between;
-}
 select {
   width: 78px;
   height: 33px;
   border: none;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
+  margin-right: 15px;
+  font-size: 12px;
+  option{
+    font-size: 12px;
+  }
+  
 }
 .m-sele {
   margin: 0 20px;

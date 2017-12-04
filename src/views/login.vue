@@ -4,13 +4,13 @@
       <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus"><p class="errorMsg" v-show="!registered">该手机号已被注册</p>
       <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus"> <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img  @click="reImg" :src="imgUrl" alt=""></div>
-      <div class="forget"><a href="/#/forgetpw">忘记密码？</a></div>
+      <div class="forget"><a href="/#/outter/forgetpw">忘记密码？</a></div>
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
-      <p class="immediately"><a href="/#/register">立即注册>></a></p>
+      <p class="immediately"><a href="/#/outter/register">立即注册>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
