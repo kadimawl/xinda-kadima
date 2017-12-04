@@ -1,9 +1,9 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone"><br>
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
       <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw"><br>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img src='http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode' @click="reImg" alt=""></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img  @click="reImg" :src="imgUrl" alt=""></div>
       <div class="forget"><a href="/#/forgetpw">忘记密码？</a></div>
       <button @click="iLogin">立即登录</button>
     </div>
@@ -22,16 +22,15 @@ export default {
     return {
       phoneInput: '',
       pwInput: '',
-      img: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode"
+      imgUrl: 'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode'
     };
   },
 
   methods: {
     //手机号输入验证
     phone() {
-      console.log(this)
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-      let result = pReg.test(Number(this.phoneInput));
+      let result = pReg.test(this.phoneInput);
     },
     //密码输入验证
     pw() {
@@ -40,8 +39,7 @@ export default {
     },
     //验证码刷新-
     reImg() { 
-      console.log(this.img);
-      this.img = 'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?' +  Math.random().toString().substr(2, 4);
+      this.imgUrl =  'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=' +  Math.random().toString().substr(2, 4);
     },
     //立即登录
     iLogin() {
@@ -55,7 +53,6 @@ export default {
 <style scoped lang="less">
 .lOut {
   margin: 0px auto 54px;
-  padding-top: 43px;
   width: 907px;
   height: 300px;
   display: flex;

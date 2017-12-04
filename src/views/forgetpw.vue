@@ -1,11 +1,11 @@
 <template>
   <div class="lBox">
     <div class="leftB">
-      <input type="text" v-model="phoneInput" @blur="phone" placeholder="  请输入手机号码" class="phone">
-      <div class="Verification"><input type="text" placeholder="  请输入验证码"><div class="v-box"><img src="http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode" alt=""></div></div>
-      <div class="Verification"><input type="text" placeholder="  请输入验证码"><button>点击获取</button></div>
-      <input type="text" placeholder="  请输入新密码" >
-      <input type="text" placeholder="  请再次确认密码">
+      <input type="text" v-model="phoneInput" @blur="phone" @focus="focus" placeholder="  请输入手机号码" class="phone"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
+      <div class="Verification"><input type="text" placeholder="  请输入验证码"  @blur="imgBlur"><div class="v-box"><img @click="reImg" :src="imgUrl" alt=""></div></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
+      <div class="Verification"><input type="text" placeholder="  请输入验证码"><button @click="clickGet"><span v-show="show">点击获取</span><span v-show="!show" class="countdown">重新发送{{count}}</span></button></div>
+      <input type="text" placeholder="  请输入新密码"   @blur="pwShow" @focus="pwFocus" v-model="pwInput"><p  class="errorMsg" v-show="pwMsg">请输入（8-20位）数字、大小写字母</p>
+      <input type="text" placeholder="  请再次确认密码"  @blur="pwShowAgain" @focus="pwFocusAgain" v-model="validationInput"><p  class="errorMsg" v-show="pwMSG">两次密码输入不一致</p>
       <button class="confirm" >确认修改</button>
       
     </div>
@@ -22,27 +22,91 @@
 export default {
   data() {
     return {
-      phoneInput: '',
+      phoneInput: "",
+      show: true,
+      pshow: true,
+      imgShow: true,
+      pwInput: '',
+      validationInput: '',
+      pwMsg: false,
+      pwMSG: false,
+      count: "",
+      timer: null,
+      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode"
     };
   },
   methods: {
     //手机号输入验证
     phone() {
-      console.log(this)
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-      let result = pReg.test(Number(this.phoneInput));
+      let result = pReg.test(this.phoneInput);
+      if (!this.phoneInput == "") {
+        this.pshow = true;
+        if (!result) {
+          this.pshow = false;
+        }
+      }
     },
-    //密码输入验证
-    pw() {
+    //重新获得焦点，提示框消失
+    focus() {
+      this.pshow = true;
+    },
+    
+    //图片验证码
+    imgBlur() {
+      // this.
+    },
+    //点击获取倒计时
+    clickGet: function() {
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000);
+      }
+    },
+    //验证码刷新-
+    reImg() {
+      this.imgUrl =
+        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
+        Math.random()
+          .toString()
+          .substr(2, 4);
+    },
+    //密码验证
+    pwShow() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
+      if(!pwResult){
+        this.pwMsg = true;
+      }else{
+        this.pwMsg = false;
+      }
     },
+    pwFocus() {
+      this.pwMsg = false;
+    },
+    pwShowAgain() {
+      if(this.validationInput !== this.pwInput){
+        this.pwMSG = true;
+      }else{
+        this.pwMSG = false;
+      }
+    },
+    pwFocusAgain() {
+      this.pwMSG = false;
+    }
   }
 };
 
-
-//手机号正则
-var pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$/;
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -79,7 +143,7 @@ input {
 }
 .lBox {
   width: 905px;
-  margin: 54px auto;
+  margin: 0px auto;
   display: flex;
 }
 .leftB {
@@ -121,5 +185,16 @@ input {
   img {
     margin-left: 138px;
   }
+}
+.errorMsg{
+  width: 281px;
+  height: 33px;
+  border: 1px solid #f33;
+  color: #f33;
+  line-height: 33px;
+  text-align: center;
+}
+.countdown{
+  color: #000;
 }
 </style>
