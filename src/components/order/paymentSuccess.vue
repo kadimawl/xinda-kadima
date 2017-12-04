@@ -1,12 +1,12 @@
 <template>
   <div class="body">
     <p>首页/支付</p>
-    <h5>支付失败</h5>
+    <h5>支付成功</h5>
     <div>
       <img src="" alt="">
       <div>
-        <h2>支付失败！</h2>
-        <h4>支付未成功：让我们再试一次吧！<button>返回支付页</button></h4>
+        <h2>支付成功！</h2>
+        <h4>我们将尽快确认您的（订单号：{{payID}}）付款信息。</h4>
         <p>如有问题，请联系客服：</p>
         <h3>010-83421842</h3>
       </div>
@@ -17,12 +17,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      payID:'12314414'
+    };
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
+<style scoped lang="less">
+  
 </style>

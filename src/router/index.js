@@ -17,12 +17,14 @@ import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
 
-import order from '@/components/Order' //订单详情
+import Order from '@/components/Order' //订单详情http://localhost:9090
 import detial from '@/components/detial' //商品详情
 import shopIndex from '@/components/shopIndex' //店铺首页
 import shopList from '@/components/shopList' //店铺列表
 
-import paymentSuccess1 from '@/components/order/paymentSuccess1' //支付成功
+
+import order from '@/components/order/order' //dingdan
+import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
 import paymentFailure from '@/components/order/paymentFailure' //支付失败
 import payZfb from '@/components/order/payZfb' //支付宝支付
 import payBank from '@/components/order/payBank' //银行支付
@@ -34,26 +36,22 @@ export default new Router({
             path: '/',
             name: 'HelloWorld',
             component: HelloWorld
-        },
-        {
+        }, {
             path: '/outter',
             name: 'outter',
             component: outter,
             children: [{
-                    path: 'login',
-
-                    component: login,
-                },
-                {
-                    path: 'register',
-                    component: register
-                },
-                {
-                    path: 'forgetpw',
-                    component: forgetpw
-                }
-            ]
+                path: '/login',
+                component: login,
+            }, {
+                path: '/register',
+                component: register
+            }, {
+                path: '/forgetpw',
+                component: forgetpw
+            }]
         },
+
 
 
 
@@ -105,36 +103,31 @@ export default new Router({
 
 
         {
-            path: '/order',
-            component: order,
+            path: '/Order',
+            component: Order,
             children: [{
-                    path: 'success',
-                    alias: '/order',
-                    component: paymentSuccess1
-                },
-                {
-                    path: 'failure',
-                    component: paymentFailure
-                },
-                {
-                    path: 'payZfb',
-                    component: payZfb
-                },
-                {
-                    path: 'payBank',
-                    component: payBank
-                }
-            ]
-        },
-        {
+                path: '/',
+                component: order
+            }, {
+                path: 'success',
+                component: paymentSuccess
+            }, {
+                path: 'failure',
+                component: paymentFailure
+            }, {
+                path: 'payZfb',
+                component: payZfb
+            }, {
+                path: 'payBank',
+                component: payBank
+            }]
+        }, {
             path: '/detial',
             component: detial
-        },
-        {
+        }, {
             path: '/shopIndex',
             component: shopIndex
-        },
-        {
+        }, {
             path: '/shopList',
             component: shopList
         }

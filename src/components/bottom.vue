@@ -1,5 +1,5 @@
 <template>
-  <div class="BOTTOM">
+  <div class="Bottom">
         <div class="bottom">
             <div>
                 <h5>关于我们</h5>
@@ -40,7 +40,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.BOTTOM {
+.Bottom {
   background: rgba(242, 242, 242, 0.6);
   padding: 20px;
   .bottom {
