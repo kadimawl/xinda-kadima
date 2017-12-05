@@ -26,10 +26,14 @@ import changePd from '@/members/changePd'
 
 
 
-import detial from '@/components/detial' //商品详情
-import shopIndex from '@/components/shopIndex' //店铺首页
-import shopList from '@/components/shopList' //店铺列表
-import Order from '@/components/Order' //订单详情路由
+import detial from '@/components/detial'//商品详情
+import shopIndex from '@/components/shopIndex'//店铺首页
+import Order from '@/components/Order'//订单详情路由
+
+import shopList from '@/components/shopList'//店铺列表路由
+import credentials from '@/components/ShopList/credentials'//店铺列表路由
+import custom from '@/components/ShopList/custom'//店铺列表路由
+import product from '@/components/ShopList/product'//店铺列表路由
 
 import order from '@/components/order/order' //订单详情
 import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
@@ -157,9 +161,17 @@ export default new Router({
       path: '/shopIndex',
       component: shopIndex
     }, {
-      path: '/shopList',
-      component: shopList
-    }
-
-  ]
+        path: '/shopList',
+        component: shopList,
+        children: [{
+            path: '/',
+            component: credentials
+        }, {
+            path: 'custom',
+            component: custom
+        }, {
+            path: 'product',
+            component: product
+        }]
+    }]
 })
