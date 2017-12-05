@@ -8,15 +8,11 @@ import register from '@/views/register'                     //登录
 import forgetpw from '@/views/forgetpw'                     //忘记密码
 
 
-<<<<<<< HEAD
 import HomePage from '@/components/ModelHomePage/HomePage'//首页模块
 import taxationList from '@/components/ModelHomePage/taxationList'//财税服务模块
 import companyList from '@/components/ModelHomePage/companyList'//公司工商模块
 import goodsDetails from '@/components/ModelHomePage/goodsDetails'//商品详情模块
 import shoppingCart from '@/components/ModelHomePage/shoppingCart'//购物车模块
-=======
-import HomePage from '@/components/ModelHomePage/HomePage' //首页模块
->>>>>>> 4dbc4f1b3e8aaf75b202c11de7ae1e9c05637ce1
 
 import member from '@/members/member'
 import memberBody from '@/members/memberBody'
@@ -54,18 +50,10 @@ export default new Router({
       children: [{
         path: '/HomePage',
         alias: '/',
-<<<<<<< HEAD
         component: HomePage,
       }]
     },
 
-=======
-        component: HomePage
-      }]
-    },
-
-    //注册登录、忘记密码
->>>>>>> 4dbc4f1b3e8aaf75b202c11de7ae1e9c05637ce1
     {
       path: 'outter',
       name: 'outter',
@@ -82,7 +70,6 @@ export default new Router({
       }]
     },
 
-<<<<<<< HEAD
     {
       path:'/taxationList',   //财税服务
       name:'taxationList',
@@ -105,9 +92,6 @@ export default new Router({
     },
 
 
-=======
-    //会员中心
->>>>>>> 4dbc4f1b3e8aaf75b202c11de7ae1e9c05637ce1
     {
       path: '/member',
       name: 'member',
