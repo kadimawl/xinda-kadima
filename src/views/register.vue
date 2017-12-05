@@ -4,7 +4,7 @@
       <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
-      <v-distpicker class="select" province="省" city="市" ></v-distpicker>
+      <v-distpicker id="select" province="省" city="市" ></v-distpicker>
       <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
@@ -20,6 +20,9 @@
 
 <script>
 export default {
+  created(){
+    // this.ajax.post('/xinda-api/register/sendsms', canshu, {}).then((res) => {console.log('验证码验证', res)})
+  },
   data() {
     return {
       show: true,
@@ -29,10 +32,11 @@ export default {
       imgShow: true,
       phoneInput: "",
       pshow: true,
-      pwInput: "",
+      pwInput: ""
     };
   },
   methods: {
+    
     //手机号输入
     phone() {
       let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
@@ -73,15 +77,18 @@ export default {
           .toString()
           .substr(2, 4);
     },
-     submit() {
-    let storage = window.localStorage;
-    var user = this.phoneInput;
-    var pw = this.pwInput;
-    if (storage) {
-      storage.setItem(user, pw);
+    //立即注册
+    submit() {
+      let storage = window.sessionStorage;
+      var user = this.phoneInput;
+      var pw = this.pwInput;
+      console.log(pw,user);
+      
+      if (storage) {
+        storage.setItem(user, pw);
+      }
+      
     }
-  }
- 
   }
 };
 </script>
@@ -192,22 +199,22 @@ export default {
     color: #409cd7;
   }
 }
+#select {
+  font-size: 12px;
+}
 select {
   width: 78px;
   height: 33px;
   border: none;
+  outline: 0;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
   margin-right: 15px;
-  font-size: 12px;
-  option{
+  option {
     font-size: 12px;
   }
-  
 }
-.m-sele {
-  margin: 0 20px;
-}
+
 .errorMsg {
   width: 281px;
   height: 33px;
