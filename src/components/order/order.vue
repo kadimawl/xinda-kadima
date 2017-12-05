@@ -1,12 +1,12 @@
 <template>
   <div class="body">
-      <h3>这是银行支付</h3>
+      <h3>这是订单详情</h3>
+      <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name:'payBank',
   data() {
     return {};
   }

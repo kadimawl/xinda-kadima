@@ -1,28 +1,55 @@
 <template>
   <div class="headeBox">
     <div class="imgBox"></div>
-    二级子路由--登陆注册等头部
+    <div class="sinda"><p >信达</p></div>
+    <div class="nullLine"></div>
+    <div class="welcome">{{headMsg}}</div>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-      return {}
+  data() {
+    return {
+      headMsg:['欢迎登录','欢迎注册','找回密码']
+    };
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-*{
-  margin: 0;
-  padding: 0;
-}
-.headeBox{
+.headeBox {
   height: 97px;
   width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  display: flex;
+  .imgBox {
+    width: 52px;
+    height: 56px;
+    margin: auto 12px;
+    background: url(../assets/index/Sprites.png) 0 0;
+  }
+  .sinda {
+    width: 98px;
+    height: 28px;
+    line-height: 28px;
+    font-size: 28px;
+    font-weight: 700;
+  }
+  .nullLine{
+    width: 1px;
+    height: 47px;
+    background: #b4b4b4;
+    margin: auto 0;
+  }
+  .welcome{
+    height: 18px;
+    margin: auto 0 auto 26px;
+    line-height: 18px;
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
 }
 </style>

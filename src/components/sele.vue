@@ -1,5 +1,6 @@
 <template>
-    <div class="sele">
+    <div class="Select" v-show="seleShow">
+      <div class="sele">
         <div class="logo">
             <div class="backG"></div>
             <h1>信达</h1>
@@ -28,12 +29,22 @@
             <div class="telP">010-83421842</div>
         </div>
     </div>
+    <div class="navigation">
+      <a href="javascript:void(0)" class="">全部商品</a>
+      <a href="javascript:void(0)" class="">财税服务</a>
+      <a href="javascript:void(0)" class="">公司工商</a>
+      <a href="javascript:void(0)" class="">加盟我们</a>
+      <a href="javascript:void(0)" class="">店铺</a>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      seleShow: true
+    };
   }
 };
 </script>
@@ -44,7 +55,9 @@ export default {
   margin: 0;
   padding: 0;
 }
-
+.Select{
+  border-bottom: 1px solid #2693d4;
+}
 .sele {
   width: 1200px;
   margin: 0 auto;
@@ -136,5 +149,21 @@ h1 {
   font-weight: 700;
   line-height: 22px;
   margin: 25px 50px 0 0;
+}
+
+.navigation {
+  width: 1200px;
+  margin: 0 auto;
+  a {
+    text-decoration: none;
+    font-size: 18px;
+    color: #2b2b2b;
+    font-weight: normal;
+    text-align: center;
+    line-height: 50px;
+    display: inline-block;
+    width: 200px;
+    height: 50px;
+  }
 }
 </style>
