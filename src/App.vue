@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <top/>
-    <!-- <sele /> -->
     <router-view/>
     <bottom/>
   </div>  
@@ -9,7 +8,6 @@
 
 <script>
 import top from "./components/top";
-// import sele from "./components/sele";
 import bottom from "./components/bottom";
 
 export default {

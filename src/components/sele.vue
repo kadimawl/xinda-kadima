@@ -113,6 +113,7 @@ h1 {
       background: url("../assets/index/memCen.png") no-repeat -21px -401px;
       background-color: #2693d4;
       vertical-align: bottom;
+      cursor: pointer;
     }
     span {
       display: inline-block;

@@ -2,9 +2,9 @@
 <div class="lOut">
     <div class="leftOut">
       <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
-      <v-distpicker id="select" province="省" city="市" ></v-distpicker>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgV"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV"><button  class="clickGet" @click="clickGet"><span  v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
+      <div class="selected"><v-distpicker id="select" province="省" city="市" ></v-distpicker></div>
       <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  created(){
+  created() {
     // this.ajax.post('/xinda-api/register/sendsms', canshu, {}).then((res) => {console.log('验证码验证', res)})
   },
   data() {
@@ -28,15 +28,17 @@ export default {
       show: true,
       count: "",
       timer: null,
-      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode",
+      imgUrl: "/xinda-api/ajaxAuthcode",
       imgShow: true,
       phoneInput: "",
+      imgV: "",
+      phoneV: "",
       pshow: true,
       pwInput: ""
     };
   },
   methods: {
-    
+    created() {},
     //手机号输入
     phone() {
       let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
@@ -68,26 +70,34 @@ export default {
           }
         }, 1000);
       }
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.phoneInput,
+            smsType: 1,
+            imgCode: this.imgV
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
     },
     //验证码刷新-
     reImg() {
-      this.imgUrl =
-        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
-        Math.random()
-          .toString()
-          .substr(2, 4);
+      this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
     },
     //立即注册
     submit() {
-      let storage = window.sessionStorage;
+      // let storage = window.sessionStorage;
       var user = this.phoneInput;
       var pw = this.pwInput;
-      console.log(pw,user);
-      
-      if (storage) {
-        storage.setItem(user, pw);
-      }
-      
+      console.log(pw, user);
+      // this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:user,smsType:1,imgCode:this.imgV})).then(data=>{console.log(data);
+      // })
+      // if (storage) {
+      // storage.setItem(user, pw);
+      // }
     }
   }
 };
@@ -199,19 +209,20 @@ export default {
     color: #409cd7;
   }
 }
-#select {
-  font-size: 12px;
-}
-select {
-  width: 78px;
-  height: 33px;
-  border: none;
-  outline: 0;
-  border: 1px solid #cbcbcb;
-  border-radius: 3px;
-  margin-right: 15px;
-  option {
+.selected {
+  display: flex;
+  select {
+    width: 88px;
+    height: 33px;
     font-size: 12px;
+    padding: .5rem .15rem;
+    border: none;
+    outline: 0;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    option {
+      font-size: 12px;
+    }
   }
 }
 

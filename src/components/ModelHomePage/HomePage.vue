@@ -25,11 +25,11 @@
           <div class="Listnames">
             <div class="listI" v-for="itemName in ItemLists" :key="itemName.name">
               <p class="ListNameI">
-                <a href="">{{itemName.name}}</a>
+                <a href="javascript:void(0)">{{itemName.name}}</a>
               </p>
               <div class="listII" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
                 <p>
-                  <a href="">{{itemNameII.name}}</a>
+                  <a href="javascript:void(0)">{{itemNameII.name}}</a>
                 </p>
               </div>
             </div>
@@ -44,7 +44,7 @@
               <div class="ListNameIII">
                 <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
                   <p>
-                    <a href="">{{itemNameIII.name}}</a>
+                    <a href="javascript:void(0)">{{itemNameIII.name}}</a>
                   </p>
                 </div>
               </div>
