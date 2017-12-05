@@ -33,7 +33,7 @@
       <a href="javascript:void(0)" class="">全部商品</a>
       <a href="javascript:void(0)" class="">财税服务</a>
       <a href="javascript:void(0)" class="">公司工商</a>
-      <a href="javascript:void(0)" class="">加盟我们</a>
+      <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
       <a href="javascript:void(0)" class="">店铺</a>
     </div>
   </div>
