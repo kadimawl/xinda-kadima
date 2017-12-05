@@ -1,20 +1,20 @@
 <template>
-<div class="memeber">
-    <div class="member-body">
-         <user/>
-         <router-view/>
-    </div>
+<div class="member">
+  <sele/>
+  <user/>
+  <router-view/>
 </div>
   
 </template>
 
 <script>
-import user from './user'
+import sele from "@/components/sele"
+import user from "./user"
 export default {
   data() {
     return {};
   },
-   components: { user }
+  components: { user,sele }
 };
 </script>
 
@@ -25,16 +25,10 @@ export default {
   padding: 0;
 }
 
-.dispf{
-  display: flex;
+.member {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  // display: flex;
 }
-.member-body{
- .dispf;
-}
-
-
-
-  
-  
- 
 </style>

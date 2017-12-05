@@ -4,15 +4,15 @@
       <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
-
-      <input type="text" placeholder="  请输入密码" class="pw">
-      <button class="i-register">立即注册</button>
+      <v-distpicker id="select" province="省" city="市" ></v-distpicker>
+      <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
+      <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
-      <p class="immediately"><a href="/#/login">立即登录>></a></p>
+      <p class="immediately"><a href="/#/outter/login">立即登录>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -20,6 +20,9 @@
 
 <script>
 export default {
+  created(){
+    // this.ajax.post('/xinda-api/register/sendsms', canshu, {}).then((res) => {console.log('验证码验证', res)})
+  },
   data() {
     return {
       show: true,
@@ -28,10 +31,12 @@ export default {
       imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode",
       imgShow: true,
       phoneInput: "",
-      pshow: true
+      pshow: true,
+      pwInput: ""
     };
   },
   methods: {
+    
     //手机号输入
     phone() {
       let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
@@ -71,15 +76,27 @@ export default {
         Math.random()
           .toString()
           .substr(2, 4);
+    },
+    //立即注册
+    submit() {
+      let storage = window.sessionStorage;
+      var user = this.phoneInput;
+      var pw = this.pwInput;
+      console.log(pw,user);
+      
+      if (storage) {
+        storage.setItem(user, pw);
+      }
+      
     }
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
+<style  lang="less">
 .lOut {
-  margin: 0px auto 54px;
+  margin: 0px auto 24px;
   width: 907px;
   height: 300px;
   display: flex;
@@ -182,20 +199,22 @@ export default {
     color: #409cd7;
   }
 }
-.sele {
-  display: flex;
-  justify-content: space-between;
+#select {
+  font-size: 12px;
 }
 select {
   width: 78px;
   height: 33px;
   border: none;
+  outline: 0;
   border: 1px solid #cbcbcb;
   border-radius: 3px;
+  margin-right: 15px;
+  option {
+    font-size: 12px;
+  }
 }
-.m-sele {
-  margin: 0 20px;
-}
+
 .errorMsg {
   width: 281px;
   height: 33px;
@@ -205,7 +224,7 @@ select {
   text-align: center;
   margin: 0 0 5px;
 }
-.countdown{
+.countdown {
   color: #000;
 }
 </style>

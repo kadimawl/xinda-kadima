@@ -12,7 +12,7 @@
     <div class="midB"></div>
     <div class="rightB">
       <p>想起密码来了？</p>
-      <a href="/#/login">返回登录>></a>
+      <a href="/#/outter/login">返回登录>></a>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>

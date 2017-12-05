@@ -1,6 +1,6 @@
 <template>
   <div >
-    <outHead></outHead>
+    <outHead ></outHead>
     <div class="outBox">
       <div class="content">
         <router-view/>
@@ -15,7 +15,9 @@ import outHead from "@/views/outHead";
 export default {
   components: { outHead },
   data() {
-    return {};
+    return {
+      // seleShow: false,
+    };
   }
 };
 </script>
@@ -36,7 +38,7 @@ export default {
     height: 435px;
     margin: 0 auto 0;
     background: #fff;
-    padding-top: 54px;
+    padding-top: 34px;
     box-sizing: border-box;
   }
   

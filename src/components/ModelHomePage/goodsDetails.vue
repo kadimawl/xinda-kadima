@@ -1,12 +1,11 @@
 <template>
-  <div class="body">
-      <h3>这是银行支付</h3>
+  <div>
+      <h3>这是商品详情</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name:'payBank',
   data() {
     return {};
   }
@@ -14,6 +13,6 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style scoped lang="less">
 
 </style>

@@ -1,16 +1,16 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
-      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw"><br>
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus"><p class="errorMsg" v-show="!registered">该手机号已被注册</p>
+      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus"> <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img  @click="reImg" :src="imgUrl" alt=""></div>
-      <div class="forget"><a href="/#/forgetpw">忘记密码？</a></div>
+      <div class="forget"><a href="/#/outter/forgetpw">忘记密码？</a></div>
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
-      <p class="immediately"><a href="/#/register">立即注册>></a></p>
+      <p class="immediately"><a href="/#/outter/register">立即注册>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -20,9 +20,11 @@
 export default {
   data() {
     return {
-      phoneInput: '',
-      pwInput: '',
-      imgUrl: 'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode'
+      phoneInput: "",
+      registered: true,
+      pwInput: "",
+      pwShow: false,
+      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode"
     };
   },
 
@@ -31,19 +33,51 @@ export default {
     phone() {
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
       let result = pReg.test(this.phoneInput);
+      if (!this.phoneInput == "") {
+        this.registered = true;
+        if (!result) {
+          this.registered = false;
+        }
+      }
     },
+    pFocus(){
+      this.registered = true;
+    },
+
     //密码输入验证
     pw() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
+      if(!pwResult){
+        this.pwShow = true;
+      }
+    },
+    pwFocus() {
+      this.pwShow = false;
     },
     //验证码刷新-
-    reImg() { 
-      this.imgUrl =  'http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=' +  Math.random().toString().substr(2, 4);
+    reImg() {
+      this.imgUrl =
+        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
+        Math.random()
+          .toString()
+          .substr(2, 4);
     },
     //立即登录
     iLogin() {
-
+      var user = this.phoneInput;
+      var pw = this.pwInput;
+      console.log(user,pw);
+      if(!user == ''){
+        if(window.sessionStorage){
+          let storage = window.sessionStorage;
+          if(storage.user){
+          console.log(storage.user);
+          }
+          console.log('11===',storage.user);
+        }
+      }
+      // this.$router.push({path: '/HomePage'})  //页面跳转
     }
   }
 };
@@ -140,5 +174,14 @@ export default {
       }
     }
   }
+}
+.errorMsg {
+  width: 281px;
+  height: 33px;
+  border: 1px solid #f33;
+  color: #f33;
+  line-height: 33px;
+  text-align: center;
+  margin: 0 0 5px;
 }
 </style>
