@@ -43,7 +43,7 @@
           <p>{{shopType.regionName}}</p>
           <p>累计服务客户次数：{{shopType.orderNum}}<span>丨</span>好评率：100%</p>
           <a href="javascript:void(0)" v-for="product in shopType.productTypes" :key="product.id">{{product}}</a>
-          <button>进入店铺</button>
+          <button v-bind:id="shopType.id" v-on:click="shopGoto($event)">进入店铺</button>
         </div>
       </div>
     </div>
@@ -58,11 +58,15 @@
 <script>
 export default {
   created() {
-    this.getShop();//调用商品列表请求函数
-
+    this.getShop(); //调用商品列表请求函数
 
     //商品类别导航
-    this.ajax.post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list",{}).then(data => {
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/style/list",
+        {}
+      )
+      .then(data => {
         var products = data.data.data;
         var productType = [{ code: 0, name: "所有" }];
         for (var key in products) {
@@ -78,12 +82,18 @@ export default {
   data() {
     return {
       productTypes: [],
-      shopTypes: []
+      shopTypes: [],
+      shopID: ""
     };
   },
   methods: {
     productTypesC: function(event) {//商品分类单击事件
       console.log(123123);
+    },
+    shopGoto: function(e) {//商品页面跳转事件//获取店铺ID
+      var shopID=e.target.getAttribute('id');//获取店铺ID
+      sessionStorage.setItem("shopID",shopID);
+      location.href="#/shopList";
     },
     getShop: function(TypeCode) {//商品列表请求函数
       var that = this;
@@ -100,10 +110,11 @@ export default {
           var shops = data.data.data;
           for (var key in shops) {
             shops[key].productTypes = shops[key].productTypes.split(",");
-            shops[key].productTypeCodes = shops[key].productTypeCodes.split(",");
+            shops[key].productTypeCodes = shops[key].productTypeCodes.split(
+              ","
+            );
           }
           that.shopTypes = shops;
-          console.log(shops);
         });
     }
   }
@@ -167,11 +178,11 @@ table {
     }
   }
 }
-.navigation{
+.navigation {
   background: #f7f7f7;
   border: 1px solid #cccccc;
   margin-top: 24px;
-  a{
+  a {
     text-decoration: none;
     display: inline-block;
     width: 105px;
@@ -181,17 +192,17 @@ table {
     text-align: center;
     line-height: 43px;
   }
-  a:nth-child(1){
+  a:nth-child(1) {
     color: #ffffff;
     background: #2693d4;
   }
 }
-.shopTypes{
+.shopTypes {
   display: flex;
   flex-wrap: wrap;
   border: 1px solid #cccccc;
   border-top: none;
-  &>div{
+  & > div {
     width: 569px;
     height: 250px;
     border: 1px solid #e9e9e9;
@@ -199,23 +210,23 @@ table {
     display: flex;
   }
 }
-.logo{
+.logo {
   width: 200px;
   height: 250px;
   background: pink;
 }
-.shopText{
+.shopText {
   padding: 10px 0;
   width: 360px;
   position: relative;
-  p{
+  p {
     font-size: 13px;
     color: #686868;
   }
-  span{
+  span {
     margin: 0 25px 0 15px;
   }
-  a{
+  a {
     display: inline-block;
     width: 71px;
     height: 22px;
@@ -228,7 +239,7 @@ table {
     line-height: 22px;
     text-decoration: none;
   }
-  button{
+  button {
     display: block;
     width: 102px;
     height: 33px;
@@ -244,10 +255,10 @@ table {
     bottom: 20px;
   }
 }
-.page{
+.page {
   text-align: center;
   margin: 60px 0 150px;
-  button{
+  button {
     width: 66px;
     height: 34px;
     border: 1px solid #cccccc;
@@ -255,7 +266,7 @@ table {
     font-size: 13px;
     background: #ffffff;
   }
-  a{
+  a {
     display: inline-block;
     width: 37px;
     height: 34px;
