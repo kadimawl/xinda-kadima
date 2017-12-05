@@ -3,7 +3,14 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'    //vue的路由实例化对象
+<<<<<<< HEAD
+import axios  from 'axios'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+=======
 import axios from 'axios'
+>>>>>>> 1ba99b8b45869b6c8987f72ea5fe5d5c4079a32e
 
 var objSort = function (name) {
   return function (o, p) {
@@ -25,6 +32,7 @@ var objSort = function (name) {
 };
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
+Vue.use(ElementUI)
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 

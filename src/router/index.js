@@ -7,6 +7,9 @@ import login from '@/views/login'
 import register from '@/views/register'
 import forgetpw from '@/views/forgetpw'
 
+
+import HomePage from '@/components/ModelHomePage/HomePage'//首页模块
+
 import member from '@/members/member'
 import memberBody from '@/members/memberBody'
 import userEval from '@/members/userEval'
@@ -59,7 +62,11 @@ export default new Router({
 
 
 
-
+        // {
+        //         path:'/HomePage',
+        //         alias:'/',
+        //         component:HomePage
+        // },
 
     {
       path: '/member',
