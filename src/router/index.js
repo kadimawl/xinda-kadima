@@ -9,6 +9,10 @@ import forgetpw from '@/views/forgetpw'
 
 
 import HomePage from '@/components/ModelHomePage/HomePage'//首页模块
+import taxationList from '@/components/ModelHomePage/taxationList'//财税服务模块
+import companyList from '@/components/ModelHomePage/companyList'//公司工商模块
+import goodsDetails from '@/components/ModelHomePage/goodsDetails'//商品详情模块
+import shoppingCart from '@/components/ModelHomePage/shoppingCart'//购物车模块
 
 import member from '@/members/member'
 import memberBody from '@/members/memberBody'
@@ -41,9 +45,14 @@ export default new Router({
     {
       path: '/',
       name: 'HelloWorld',
-      component: HelloWorld
+      component: HelloWorld,
+      children: [{
+        path: '/HomePage',
+        alias: '/',
+        component: HomePage,
+      }]
     },
-    
+
     {
       path: 'outter',
       name: 'outter',
@@ -55,60 +64,74 @@ export default new Router({
         path: '/outter/register',
         component: register
       }, {
-        path: '/outter/forgetpw',
+        path: '/outter/forgetpw',  
         component: forgetpw
       }]
     },
 
+    {
+      path:'/taxationList',   //财税服务
+      name:'taxationList',
+      component:taxationList
+    },
+    {
+      path:'/companyList',   //公司工商
+      name:'companyList',
+      component:companyList
+    },
+    {
+      path:'/goodsDetails',   //商品详情
+      name:'goodsDetails',
+      component:goodsDetails
+    },
+    {
+      path:'/shoppingCart',   //购物车
+      name:'shoppingCart',
+      component:shoppingCart
+    },
 
-
-        // {
-        //         path:'/HomePage',
-        //         alias:'/',
-        //         component:HomePage
-        // },
 
     {
       path: '/member',
       name: 'member',
       component: member,
       children: [{
-          path: '/memberBody', //父级特有模块路径
-          alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-          component: memberBody //父级特有模块
+        path: '/memberBody', //父级特有模块路径
+        alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+        component: memberBody //父级特有模块
+      },
+      {
+        path: 'userEval',
+        component: userEval,
+        children: [{
+          path: 'evalNone',
+          alias: 'userEval',
+          component: evalNone
         },
         {
-          path: 'userEval',
-          component: userEval,
-          children: [{
-              path: 'evalNone',
-              alias: 'userEval',
-              component: evalNone
-            },
-            {
-              path: 'evalAlready',
-              component: evalAlready
-            }
-          ]
-        },
-        {
-          path: 'gotoeval',
-          component: gotoeval
-        },
-        {
-          path: 'accountSet',
-          component: accountSet,
-          children: [{
-              path: 'accountsetBody',
-              alias: 'accountSet',
-              component: accountsetBody
-            },
-            {
-              path: 'changePd',
-              component: changePd
-            }
-          ]
+          path: 'evalAlready',
+          component: evalAlready
         }
+        ]
+      },
+      {
+        path: 'gotoeval',
+        component: gotoeval
+      },
+      {
+        path: 'accountSet',
+        component: accountSet,
+        children: [{
+          path: 'accountsetBody',
+          alias: 'accountSet',
+          component: accountsetBody
+        },
+        {
+          path: 'changePd',
+          component: changePd
+        }
+        ]
+      }
       ]
     },
 
