@@ -3,7 +3,7 @@
     <div class="imgBox"></div>
     <div class="sinda"><p >信达</p></div>
     <div class="nullLine"></div>
-    <div class="welcome">{{headMsg}}</div>
+    <div class="welcome">{{headMsg[2]}}</div>
   </div>
 </template>
 

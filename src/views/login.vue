@@ -67,15 +67,17 @@ export default {
     iLogin() {
       var user = this.phoneInput;
       var pw = this.pwInput;
+      console.log(user,pw);
       if(!user == ''){
-        if(window.localStorage){
-          let storage = window.localStorage;
+        if(window.sessionStorage){
+          let storage = window.sessionStorage;
           if(storage.user){
           console.log(storage.user);
           }
-          
+          console.log('11===',storage.user);
         }
       }
+      // this.$router.push({path: '/HomePage'})  //页面跳转
     }
   }
 };

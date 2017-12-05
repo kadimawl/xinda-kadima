@@ -1,13 +1,6 @@
 <template>
   <div class="hello">
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-    <router-view></router-view>
-=======
-    <sele/>
->>>>>>> 1ba99b8b45869b6c8987f72ea5fe5d5c4079a32e
->>>>>>> f24f7147ae2ea04cf800fe08eaaa586ebfaad69b
+    <router-view/>
   </div>
 </template>
 
