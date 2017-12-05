@@ -97,27 +97,9 @@ export default new Router({
       name: 'member',
       component: member,
       children: [{
-<<<<<<< HEAD
           path: '/memberBody', //父级特有模块路径
           alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
           component: memberBody //父级特有模块
-=======
-
-        path: '/memberBody', //父级特有模块路径
-        alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-        component: memberBody //父级特有模块
-      },
-      {
-        path: 'userEval',
-        component: userEval,
-        children: [{
-          path: 'evalNone',
-          alias: 'userEval',
-          component: evalNone,
-          path: '/memberBody',             //父级特有模块路径
-          alias: '/member',                //父级路径   当加载父级路径，父级特有模块也会被加载
-          component: memberBody            //父级特有模块
->>>>>>> 22a479cf9fa87edc02fa18583dcb8cd05e38425e
         },
         {
           path: 'evalAlready',
