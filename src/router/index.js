@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Distpicker from 'v-distpicker'
+import Distpicker from 'v-distpicker'  //三级联动插件
 import HelloWorld from '@/components/HelloWorld'
 import outter from '../components/outter'
-import login from '@/views/login'
-import register from '@/views/register'
-import forgetpw from '@/views/forgetpw'
+import login from '@/views/login'  //注册
+import register from '@/views/register'  //登录
+import forgetpw from '@/views/forgetpw'  //忘记密码
 
 
 import HomePage from '@/components/ModelHomePage/HomePage'//首页模块
