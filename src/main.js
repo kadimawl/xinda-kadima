@@ -3,11 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'    //vue的路由实例化对象
-<<<<<<< HEAD
 import axios  from 'axios'
-=======
-import axios from 'axios'
->>>>>>> 4dbc4f1b3e8aaf75b202c11de7ae1e9c05637ce1
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
