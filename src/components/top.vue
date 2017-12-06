@@ -5,14 +5,14 @@
       <p class="w-come">欢迎来到信达！</p>
       <div class="please">
         <p>请</p>
-        <div><a href="#/outter/login">登录</a></div>
+        <div @click="login"><a href="#">登录</a></div>
       </div>
-      <div class="item-reg">
-        <a href="#/outter/register">快速注册</a>
+      <div class="item-reg" @click="register">
+        <a href="#">快速注册</a>
       </div>
     </div>
     <div class="box-right">
-      <div class="shop-cart"><p><span></span>购物车<span>0</span>件</p></div>   
+      <div class="shop-cart"><p><span class="bgCart"></span>购物车<span>0</span>件</p></div>   
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
     
@@ -23,6 +23,7 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
 
   data() {
@@ -30,6 +31,17 @@ export default {
   },
   computed:{
     // ...mapGetters(['getNum'])//{getNum:function(){}}
+  },
+  methods:{
+    ...mapActions(['setTitle']),
+    login() {
+      this.$router.push({path: '/outter/login'});
+      this.setTitle('欢迎登录')
+    },
+    register() {
+      this.$router.push({path: '/outter/register'});
+      this.setTitle('欢迎注册')
+    }
   }
 };
 </script>
@@ -85,6 +97,7 @@ export default {
     width: 20%;
     display: flex;
     .shop-cart {
+      display: flex;
       span {
         color: @69c;
       }
@@ -96,5 +109,14 @@ export default {
       }
     }
   }
+}
+
+.bgCart{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  margin-top: 10px;
+  background: url(../assets/index/Sprites.png) 0 -73px ;
 }
 </style>
