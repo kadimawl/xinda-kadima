@@ -1,19 +1,20 @@
 <template>
-<div class="memeber">
-    <div>用户设置</div>
+<div class="userEval">
     <userevalTop/>
     <router-view/>
+    <pageturn/>
 </div>
   
 </template>
 
 <script>
 import userevalTop from './userevalTop'
+import pageturn from './pageturn'
 export default {
   data() {
     return {};
   },
-   components: { userevalTop }
+   components: { userevalTop,pageturn }
 };
 </script>
 
@@ -23,18 +24,6 @@ export default {
   margin: 0;
   padding: 0;
 }
-.dispf{
-  display: flex;
-}
-.member{
-  .member-body{
-      .dispf;
-}
-}
 
-
-
-  
-  
  
 </style>

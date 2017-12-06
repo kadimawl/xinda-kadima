@@ -20,9 +20,7 @@
 
 <script>
 export default {
-  created() {
-    // this.ajax.post('/xinda-api/register/sendsms', canshu, {}).then((res) => {console.log('验证码验证', res)})
-  },
+  created() {},
   data() {
     return {
       show: true,
@@ -70,6 +68,7 @@ export default {
           }
         }, 1000);
       }
+      //短信验证码发送
       this.ajax
         .post(
           "/xinda-api/register/sendsms",
@@ -82,22 +81,44 @@ export default {
         .then(data => {
           console.log(data);
         });
+      //验证手机号是否已经注册
+      this.ajax
+        .post(
+          "/xinda-api/register/valid-sms",
+          this.qs.stringify({
+            cellphone: this.phoneInput,
+            smsType: 1,
+            validCode: 111111
+          })
+        )
+        .then(data => {
+          console.log("验证手机号是否已经注册", data);
+        });
     },
+
     //验证码刷新-
     reImg() {
       this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
     },
     //立即注册
     submit() {
-      // let storage = window.sessionStorage;
       var user = this.phoneInput;
       var pw = this.pwInput;
       console.log(pw, user);
-      // this.ajax.post('/xinda-api/register/sendsms',this.qs.stringify({cellphone:user,smsType:1,imgCode:this.imgV})).then(data=>{console.log(data);
-      // })
-      // if (storage) {
-      // storage.setItem(user, pw);
-      // }
+      this.ajax
+        .post(
+          "/xinda-api/register/register",
+          this.qs.stringify({
+            cellphone: user,
+            smsType: 1,
+            validCode: 111111,
+            password: pw,
+            regionId: 110010
+          })
+        )
+        .then(data => {
+          console.log('注册提交',data);
+        });
     }
   }
 };
@@ -215,7 +236,7 @@ export default {
     width: 88px;
     height: 33px;
     font-size: 12px;
-    padding: .5rem .15rem;
+    padding: 0.5rem 0.15rem;
     border: none;
     outline: 0;
     border: 1px solid #cbcbcb;

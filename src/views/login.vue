@@ -82,17 +82,30 @@ export default {
     iLogin() {
       var user = this.phoneInput;
       var pw = this.pwInput;
-      console.log(user, pw);
-      if (!user == "") {
-        if (window.sessionStorage) {
-          let storage = window.sessionStorage;
-          if (storage.user) {
-            console.log(storage.user);
+      // console.log(user, pw);
+      // if (!user == "") {
+      //   if (window.sessionStorage) {
+      //     let storage = window.sessionStorage;
+      //     if (storage.user) {
+      //       console.log(storage.user);
+      //     }
+      //     console.log("11===", storage.user);
+      //   }
+      // }
+      this.ajax.post(
+        "/xinda-api/sso/login",
+        this.qs.stringify({
+          loginId: user,
+          password: pw,
+          imgCode: this.imgVInput
+        })).then(data => {
+          let status = data.data.status;
+          if(status== 1){
+            this.$router.push({path: '/HomePage'})  //页面跳转
           }
-          console.log("11===", storage.user);
-        }
-      }
-      // this.$router.push({path: '/HomePage'})  //页面跳转
+        })
+      
+      // 
     }
   }
 };

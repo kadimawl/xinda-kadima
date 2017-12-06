@@ -26,8 +26,6 @@ import evalAlready from '@/members/evalAlready'
 import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
-
-
 import detial from '@/components/detial' //商品详情
 import shopIndex from '@/components/shopIndex' //店铺首页
 import Order from '@/components/Order' //订单详情路由
@@ -47,151 +45,195 @@ import payBank from '@/components/order/payBank' //银行支付
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
 export default new Router({
-  routes: [
-    //首页
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      children: [{
-        path: '/HomePage',
-        alias: '/',
-        component: HomePage,
-      }, {
-        path: 'tabs',
-        component: tabs,
-        children: [{
-            path: 'toJoinIn',
-            component: toJoinIn,
-          },
-          {
-            path: '/taxationList', //财税服务
-            name: 'taxationList',
-            component: taxationList
-          },
-          {
-            path: 'companyList', //公司工商
-            name: 'companyList',
-            component: companyList
-          },
-          {
-            path: '/goodsDetails', //商品详情
-            name: 'goodsDetails',
-            component: goodsDetails
-          },
-          {
-            path: '/shoppingCart', //购物车
-            name: 'shoppingCart',
-            component: shoppingCart
-          },
-          {
-            path: '/toJoinIn', //加入我们
-            component: toJoinIn
-          },
-        ]
-      }, ]
-    },
+    routes: [
+        //首页
+        {
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld,
+            children: [{
+                path: '/HomePage',
+                alias: '/',
+                component: HomePage,
+            }, {
+                path: 'tabs',
+                component: tabs,
+                children: [{
+                        path: 'toJoinIn',
+                        component: toJoinIn,
+                    },
+                    {
+                        path: '/taxationList', //财税服务
+                        name: 'taxationList',
+                        component: taxationList
+                    },
+                    {
+                        path: 'companyList', //公司工商
+                        name: 'companyList',
+                        component: companyList
+                    },
+                    {
+                        path: '/goodsDetails', //商品详情
+                        name: 'goodsDetails',
+                        component: goodsDetails
+                    },
+                    {
+                        path: '/shoppingCart', //购物车
+                        name: 'shoppingCart',
+                        component: shoppingCart
+                    },
+                    {
+                        path: '/toJoinIn', //加入我们
+                        component: toJoinIn
+                    },
+                ]
+            }, ]
+        },
 
-    {
-      path: 'outter',
-      name: 'outter',
-      component: outter,
-      children: [{
-        path: '/outter/login',
-        component: login,
-      }, {
-        path: '/outter/register',
-        component: register
-      }, {
-        path: '/outter/forgetpw',
-        component: forgetpw
-      }]
-    },
-
-
+        {
+            path: 'outter',
+            name: 'outter',
+            component: outter,
+            children: [{
+                path: '/outter/login',
+                component: login,
+            }, {
+                path: '/outter/register',
+                component: register
+            }, {
+                path: '/outter/forgetpw',
+                component: forgetpw
+            }]
+        },
 
 
 
 
 
+        {
+            path: '/member',
+            redirect: '/member/memberBody',
+            component: member,
+            children: [{
+                    name: 'memberBody',
+                    path: 'memberBody', //父级特有模块路径
+                    // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                    component: memberBody //父级特有模块
+                },
+                {
+                    path: 'userEval',
+                    name: 'userEval',
+                    redirect: 'userEval/evalNone',
+                    component: userEval,
+                    children: [{
+                            path: 'evalNone',
+                            component: evalNone
+                        },
+                        {
+                            path: 'evalAlready',
+                            component: evalAlready
+                        }
+                    ]
+                },
+                {
+                    path: 'gotoeval',
+                    component: gotoeval
+                },
+                {
+                    name: 'accountSet',
+                    path: 'accountSet',
+                    component: accountSet,
+                    redirect: 'accountSet/accountsetBody',
+                    children: [{
+                            path: 'accountsetBody',
+                            component: accountsetBody
+                        },
+                        {
+                            path: 'changePd',
+                            component: changePd
+                        }
+                    ]
+                }
+            ]
+        },
 
-    {
-      path: '/member',
-      name: 'member',
-      component: member,
-      children: [{
-          path: '/memberBody', //父级特有模块路径
-          alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-          component: memberBody //父级特有模块
+        {
+            path: '/member',
+            name: 'member',
+            component: member,
+            children: [{
+                    path: '/memberBody', //父级特有模块路径
+                    alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                    component: memberBody //父级特有模块
+                },
+                {
+                    path: 'evalAlready',
+                    component: evalAlready
+                }
+            ]
+        },
+
+        {
+            path: 'gotoeval',
+            component: gotoeval
         },
         {
-          path: 'evalAlready',
-          component: evalAlready
-        }
-      ]
-    },
-
-    {
-      path: 'gotoeval',
-      component: gotoeval
-    },
-    {
-      path: 'accountSet',
-      component: accountSet,
-      children: [{
-          path: 'accountsetBody',
-          alias: 'accountSet',
-          component: accountsetBody
+            path: 'accountSet',
+            component: accountSet,
+            children: [{
+                    path: 'accountsetBody',
+                    alias: 'accountSet',
+                    component: accountsetBody
+                },
+                {
+                    path: 'changePd',
+                    component: changePd
+                }
+            ]
         },
+
+
+
+
+
         {
-          path: 'changePd',
-          component: changePd
+            path: '/Order',
+            component: Order,
+            children: [{
+                path: '/',
+                component: order
+            }, {
+                path: 'success',
+                component: paymentSuccess
+            }, {
+                path: 'failure',
+                component: paymentFailure
+            }, {
+                path: 'payZfb',
+                component: payZfb
+            }, {
+                path: 'payBank',
+                component: payBank
+            }]
+        }, {
+            path: '/detial',
+            component: detial
+        }, {
+            path: '/shopIndex',
+            component: shopIndex
+        }, {
+            path: '/shopList',
+            component: shopList,
+            children: [{
+                path: '/',
+                component: credentials
+            }, {
+                path: 'custom',
+                component: custom
+            }, {
+                path: 'product',
+                component: product
+            }]
         }
-      ]
-    },
-
-
-
-
-
-    {
-      path: '/Order',
-      component: Order,
-      children: [{
-        path: '/',
-        component: order
-      }, {
-        path: 'success',
-        component: paymentSuccess
-      }, {
-        path: 'failure',
-        component: paymentFailure
-      }, {
-        path: 'payZfb',
-        component: payZfb
-      }, {
-        path: 'payBank',
-        component: payBank
-      }]
-    }, {
-      path: '/detial',
-      component: detial
-    }, {
-      path: '/shopIndex',
-      component: shopIndex
-    }, {
-      path: '/shopList',
-      component: shopList,
-      children: [{
-        path: '/',
-        component: credentials
-      }, {
-        path: 'custom',
-        component: custom
-      }, {
-        path: 'product',
-        component: product
-      }]
-    }
-  ]
+    ]
 })
