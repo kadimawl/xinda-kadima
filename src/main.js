@@ -7,6 +7,8 @@ import store from './store'
 import axios  from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import store from './store'
+import qs from 'qs'
 
 import qs from 'qs'
 
