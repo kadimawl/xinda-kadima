@@ -22,6 +22,16 @@
 </template>
 
 <script>
+<<<<<<< HEAD
+// import {mapGetters} from 'vuex'
+export default {
+    data() {
+        return {};
+    },
+    computed:{
+        // ...mapGetters([getNum])
+    }
+=======
 import {mapGetters} from 'vuex'
 export default {
 
@@ -31,6 +41,7 @@ export default {
   computed:{
     // ...mapGetters(['getNum'])//{getNum:function(){}}
   }
+>>>>>>> b7937919843b48a3bc0478ebb0ce66a2436dacb7
 };
 </script>
 

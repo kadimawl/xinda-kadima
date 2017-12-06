@@ -27,7 +27,11 @@ import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
 
+<<<<<<< HEAD
+import Order from '@/components/Order' //订单详情
+=======
 
+>>>>>>> b7937919843b48a3bc0478ebb0ce66a2436dacb7
 import detial from '@/components/detial' //商品详情
 import shopIndex from '@/components/shopIndex' //店铺首页
 import Order from '@/components/Order' //订单详情路由
@@ -47,6 +51,27 @@ import payBank from '@/components/order/payBank' //银行支付
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
 export default new Router({
+<<<<<<< HEAD
+    routes: [{
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld
+        }, {
+            path: '/outter',
+            name: 'outter',
+            component: outter,
+            children: [{
+                path: '/login',
+                component: login,
+            }, {
+                path: '/register',
+                component: register
+            }, {
+                path: '/forgetpw',
+                component: forgetpw
+            }]
+        },
+=======
   routes: [
     //首页
     {
@@ -92,6 +117,7 @@ export default new Router({
         ]
       }, ]
     },
+>>>>>>> b7937919843b48a3bc0478ebb0ce66a2436dacb7
 
     {
       path: 'outter',
@@ -112,6 +138,56 @@ export default new Router({
 
 
 
+<<<<<<< HEAD
+        {
+            path: '/member',
+            name: 'member',
+            redirect: '/member/memberBody',
+            component: member,
+            children: [{
+                    name: 'memberBody',
+                    path: 'memberBody', //父级特有模块路径
+                    // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                    component: memberBody //父级特有模块
+                },
+                {
+                    path: 'userEval',
+                    name: 'userEval',
+                    redirect: 'userEval/evalNone',
+                    component: userEval,
+                    children: [{
+                            path: 'evalNone',
+                            component: evalNone
+                        },
+                        {
+                            path: 'evalAlready',
+                            component: evalAlready
+                        }
+                    ]
+                },
+                {
+                    path: 'gotoeval',
+                    component: gotoeval
+                },
+                {
+                    name: 'accountSet',
+                    path: 'accountSet',
+                    component: accountSet,
+                    redirect: 'accountSet/accountsetBody',
+                    children: [{
+                            path: 'accountsetBody',
+                            component: accountsetBody
+                        },
+                        {
+                            path: 'changePd',
+                            component: changePd
+                        }
+                    ]
+                }
+            ]
+        },
+=======
+>>>>>>> b7937919843b48a3bc0478ebb0ce66a2436dacb7
 
 
 

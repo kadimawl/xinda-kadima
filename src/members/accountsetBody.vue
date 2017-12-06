@@ -1,39 +1,138 @@
 <template>
-<div class="memeber">
-    <!-- <select/> -->
-    <div class="member-body">
-         <user/>
-         <router-view/>
+<div class="acBody">
+    <div class="nowtx">
+        <p>当前头像：</p><img src="../assets/index/user.png" alt="">
+    </div>
+    <div class="name">
+        <p>姓名：</p><input type="text" placeholder="请输入姓名">
+    </div>
+    <div class="sex">
+        <p>性别：</p><input type="radio" name="sexs"><span>男</span><input type="radio" name="sexs"><span>女</span>
+    </div>
+    <div class="mailbox" >
+        <p>邮箱：</p><input type="text" placeholder="请输入邮箱">
+    </div>
+    <div class="inarea">
+        <p>所在地区:</p><v-distpicker province="北京市" city="北京市" area="海淀区"></v-distpicker>
+    </div>
+    <div class="storage">
+        <button>保存</button>
     </div>
 </div>
   
 </template>
 
 <script>
-// import select from 
-import user from './user'
+import VDistpicker from 'v-distpicker'
 export default {
   data() {
     return {};
   },
-   components: { user }
+   components: {VDistpicker  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 * {
   margin: 0;
   padding: 0;
 }
-.dispf{
-  display: flex;
+.acBody{
+    width: 1000px;
+    height: 450px;
+    margin-left: 20px;
+    .nowtx{
+        width: 300px;
+        height: 100px;
+        display: flex;
+        line-height: 100px;
+        margin-left: 10px;
+        margin-top: 30px;
+        p{
+            margin-right: 50px;
+        }
+    }
+    .name{
+        width: 400px;
+        height: 30px;
+        display: flex;
+        margin-left: 10px;
+        margin-top: 20px;
+        p{
+            margin-right: 70px;
+        }
+        input{
+            width: 180px;
+            height: 25px;
+            border: 1px solid #b0b0b0;
+        }
+    }
+    .sex{
+        width: 400px;
+        height: 30px;
+        display: flex;
+        margin-left: 10px;
+        margin-top: 20px;
+        p{
+            margin-right: 70px;
+        }
+        input{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-right: 5px;
+            margin-top: 5px;
+            background: #fff;
+        }
+        span{
+            display: block;
+            margin-right: 40px;
+        }
+    }
+    .mailbox{
+        width: 400px;
+        height: 30px;
+        display: flex;
+        margin-left: 10px;
+        margin-top: 20px;
+        p{
+            margin-right: 70px;
+        }
+        input{
+            width: 180px;
+            height: 25px;
+            border: 1px solid #b0b0b0;
+        }
+    }
+    .inarea{
+        width: 800px;
+        height: 50px;
+        display: flex;
+        margin-left: 10px;
+        margin-top: 20px;
+        line-height: 50px;
+        p{
+            margin-right: 50px;
+        }
+    }
+    .storage{
+        width: 400px;
+        height: 50px;
+        margin-left: 10px;
+        margin-top: 25px;
+        line-height: 50px;
+        button{
+            width: 70px;
+            height: 27px;
+            border: 1px solid #2793d4;
+            color: #2793d4;
+            margin-left: 116px;
+            background: #fff;
+            border-radius: 5px;
+        }
+    }
 }
-.member{
-  .member-body{
-      .dispf;
-}
-}
+
 
 
 
