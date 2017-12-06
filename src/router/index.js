@@ -14,11 +14,7 @@ import taxationList from '@/components/ModelHomePage/taxationList' //财税服�
 import companyList from '@/components/ModelHomePage/companyList' //公司工商模块
 import goodsDetails from '@/components/ModelHomePage/goodsDetails' //商品详情模块
 import shoppingCart from '@/components/ModelHomePage/shoppingCart' //购物车模块
-<<<<<<< HEAD
 import toJoinIn from '@/components/ModelHomePage/toJoinIn' //加入我们模块
-=======
-import toJoinIn from '@/components/ModelHomePage/toJoinIn' //购物车模块
->>>>>>> 9f41f1fe98fc284dce50dce9181261eab34ca2f2
 
 import member from '@/members/member'
 import memberBody from '@/members/memberBody'
