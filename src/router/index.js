@@ -13,6 +13,7 @@ import taxationList from '@/components/ModelHomePage/taxationList' //财税服�
 import companyList from '@/components/ModelHomePage/companyList' //公司工商模块
 import goodsDetails from '@/components/ModelHomePage/goodsDetails' //商品详情模块
 import shoppingCart from '@/components/ModelHomePage/shoppingCart' //购物车模块
+import toJoinIn from '@/components/ModelHomePage/toJoinIn' //加入我们模块
 
 import member from '@/members/member'
 import memberBody from '@/members/memberBody'
@@ -93,6 +94,10 @@ export default new Router({
       path: '/shoppingCart', //购物车
       name: 'shoppingCart',
       component: shoppingCart
+    },
+    {
+      path: '/toJoinIn',  //加入我们
+      component: toJoinIn
     },
 
 
