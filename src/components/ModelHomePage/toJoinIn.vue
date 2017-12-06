@@ -1,6 +1,10 @@
 <template>
   <div>
+<<<<<<< HEAD
       <h3>这是join</h3>
+=======
+      <h3>这是加入我们</h3>
+>>>>>>> 9f41f1fe98fc284dce50dce9181261eab34ca2f2
   </div>
 </template>
 
