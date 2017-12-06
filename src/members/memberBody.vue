@@ -67,38 +67,33 @@
              </div>
         </div>
     </div>
-    <div class="turn">
-        <div class="tprevious pageturn">上一页</div>
-        <div class="firstpage diamond">1</div>
-        <div class="tnext pageturn">下一页</div>
-    </div>
-    
-    
+    <pageturn/>
 </div>
+ 
   
 </template>
 
 <script>
+import pageturn from './pageturn'
 export default {
-    created(){
-        
-        this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/business-order/grid',{
-            businessNo:'1',
-            startTime:'2017-03-28',
-            endTime:'2017-03-28',
-            start:'0'
-        })
-        .then(function(aa){
-            console.log(aa);
-            
-        })
-    },
+    // created(){
+    //     this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/business-order/grid',{
+    //         businessNo:'1',
+    //         startTime:'2017-03-28',
+    //         endTime:'2017-03-28',
+    //         start:'0'
+    //     })
+    //     .then(function(aa){
+    //         console.log(aa);
+    //     })
+    // },
     data() {
         return {
             ordercode:'未知',
             ordertime:'2017-2-23'
         };
-    }
+    },
+    components:{pageturn}
 };
 </script>
 
@@ -292,33 +287,6 @@ export default {
             }
         }
     }
-    .turn{
-        width: 940px;
-        height: 50px;
-        margin: 0 auto;
-        text-align: center;
-        display: flex;
-        margin-top: 40px;
-        div{
-            margin-left: 10px;
-        }
-        .tprevious{
-            margin-left: 340px;
-        }
-        .pageturn{
-            width: 68px;
-            height: 38px;
-            border: 1px solid #cccccc;
-            color: #cccccc;
-            line-height: 38px;
-        }
-        .diamond{
-            width: 38px;
-            height: 38px;
-            color:#2792d6;
-            border: 1px solid #2693d4;
-            line-height: 38px;
-        }  
-     }
+    
 }
 </style>

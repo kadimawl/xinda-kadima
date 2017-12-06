@@ -17,8 +17,7 @@ import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
 
-<<<<<<< HEAD
-import Order from '@/components/Order' //订单详情http://localhost:9090
+import Order from '@/components/Order' //订单详情
 import detial from '@/components/detial' //商品详情
 import shopIndex from '@/components/shopIndex' //店铺首页
 import shopList from '@/components/shopList' //店铺列表
@@ -29,26 +28,11 @@ import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
 import paymentFailure from '@/components/order/paymentFailure' //支付失败
 import payZfb from '@/components/order/payZfb' //支付宝支付
 import payBank from '@/components/order/payBank' //银行支付
-=======
-
-import detial from '@/components/detial'//商品详情
-import shopIndex from '@/components/shopIndex'//店铺首页
-import shopList from '@/components/shopList'//店铺列表
-import Order from '@/components/Order'//订单详情路由
-
-import order from '@/components/order/order'//订单详情
-import paymentSuccess from '@/components/order/paymentSuccess'//支付成功
-import paymentFailure from '@/components/order/paymentFailure'//支付失败
-import payZfb from '@/components/order/payZfb'//支付宝支付
-import payBank from '@/components/order/payBank'//银行支付
-
->>>>>>> b94f9efa3f8b06890802c03d6b1dc9a21117cdbe
 
 
 Vue.use(Router)
 export default new Router({
     routes: [{
-<<<<<<< HEAD
             path: '/',
             name: 'HelloWorld',
             component: HelloWorld
@@ -67,26 +51,6 @@ export default new Router({
                 component: forgetpw
             }]
         },
-=======
-        path: '/',
-        name: 'HelloWorld',
-        component: HelloWorld
-    }, {
-        path: '/outter',
-        name: 'outter',
-        component: outter,
-        children: [{
-            path: '/login',
-            component: login,
-        }, {
-            path: '/register',
-            component: register
-        }, {
-            path: '/forgetpw',
-            component: forgetpw
-        }]
-    },
->>>>>>> b94f9efa3f8b06890802c03d6b1dc9a21117cdbe
 
 
 
@@ -95,18 +59,21 @@ export default new Router({
         {
             path: '/member',
             name: 'member',
+            redirect: '/member/memberBody',
             component: member,
             children: [{
-                    path: '/memberBody', //父级特有模块路径
-                    alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                    name: 'memberBody',
+                    path: 'memberBody', //父级特有模块路径
+                    // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
                     component: memberBody //父级特有模块
                 },
                 {
                     path: 'userEval',
+                    name: 'userEval',
+                    redirect: 'userEval/evalNone',
                     component: userEval,
                     children: [{
                             path: 'evalNone',
-                            alias: 'userEval',
                             component: evalNone
                         },
                         {
@@ -120,11 +87,12 @@ export default new Router({
                     component: gotoeval
                 },
                 {
+                    name: 'accountSet',
                     path: 'accountSet',
                     component: accountSet,
+                    redirect: 'accountSet/accountsetBody',
                     children: [{
                             path: 'accountsetBody',
-                            alias: 'accountSet',
                             component: accountsetBody
                         },
                         {
