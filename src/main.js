@@ -6,6 +6,8 @@ import router from './router'    //vue的路由实例化对象
 import axios  from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import store from './store'
+import qs from 'qs'
 
 
 var objSort = function (name) {
@@ -28,6 +30,7 @@ var objSort = function (name) {
 };
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
+Vue.prototype.qs = qs;
 Vue.use(ElementUI)
 Vue.config.productionTip = false;
 Vue.config.devtools = false;

@@ -53,25 +53,71 @@
         </div>
       </div>
     </div>
+    <div class="starsShow">
+      <div class="topFrame">
+        <h3>明星产品推荐</h3>
+      </div>
+      <div class="starContent">
+        <div class="boxFrame">
+          <div class="showBox">
+            <div class="boxImgI">
+            </div>
+            <h4>标准五险一金</h4>
+            <p>定制化社保代理，定制化代缴服务</p>
+            <span>20
+              <p>元/人/月</p>
+            </span>
+          </div>
+        </div>
+        <div class="boxFrame">
+          <div class="showBox">
+            <div class="boxImgII"></div>
+            <h4>内资有限公司注册</h4>
+            <p>一键完成注册，快速开办公司</p>
+            <span>600
+              <p>元/次</p>
+            </span>
+          </div>
+        </div>
+        <div class="boxFrame">
+          <div class="showBox">
+            <div class="boxImgIII"></div>
+            <h4>小规模代理记账/年</h4>
+            <p>专业会计报税，高效、便捷、贴心</p>
+            <span>3000
+              <p>元/年</p>
+            </span>
+          </div>
+        </div>
+        <div class="boxFrame">
+          <div class="showBox">
+            <div class="boxImgIV"></div>
+            <h4>国内普通商标注册</h4>
+            <p>次日提交商标申请，最快保护品牌价值</p>
+            <span>1000
+              <p>元/次</p>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </template>
 
 <script>
-import sele from '@/components/sele'
+import sele from "@/components/sele";
 export default {
-components: { sele },
+  components: { sele },
   created() {
     // console.log('bottom model is created')
     var that = this;
-    this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
-      .then(function(data) {
-        // console.log(data);
-        var rData = data.data.data;
-        that.ItemLists = rData;
-        console.log(that.ItemLists);
-      });
+    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      // console.log(data);
+      var rData = data.data.data;
+      that.ItemLists = rData;
+      console.log(that.ItemLists);
+    });
   },
   data() {
     return {
@@ -209,16 +255,17 @@ components: { sele },
       height: 40px;
       display: flex;
       align-content: space-around;
-      margin-top: 10px;
+      margin: 8px auto;
     }
     .ListNameII {
-      margin-top:10px;
+      margin-top: 10px;
       height: 20px;
       p {
-        height: 16px;
+        height: 14px;
         font-size: 14px;
         color: #fff;
-        line-height: 16px;
+        line-height: 14px;
+        margin: 2px auto;
         padding-left: 10px;
         padding-right: 10px;
       }
@@ -226,13 +273,14 @@ components: { sele },
     .ListNameIII {
       width: 900px;
       height: 20px;
-      margin-top:10px;
+      margin-top: 10px;
       display: flex;
       flex-wrap: wrap;
       p {
-        height: 16px;
+        height: 14px;
         border-left: 1px solid #fff;
-        line-height: 16px;
+        line-height: 14px;
+        margin: 2px auto;
         a {
           text-decoration: none;
           font-size: 14px;
@@ -243,5 +291,42 @@ components: { sele },
       }
     }
   }
+}
+.starsShow {
+  width: 1200px;
+  margin: 40px auto;
+  .topFrame {
+    width: 1200px;
+    height: 35px;
+    border-bottom: 2px solid #2693d4;
+    h3{
+      margin-left:20px;
+    }
+  }
+  .starContent {
+    width: 1200px;
+    height: 400px;
+    margin-top:50px;
+    display: flex;
+    justify-content: space-around;
+    .boxFrame {
+      width: 270px;
+      height: 400px;
+      border: 1px solid #fafafa;
+      .showBox{
+        width: 256px;
+        height: 386px;
+        background-color: #fafafa;
+        margin: 7px;
+
+      }
+    }
+  }
+}
+.boxImgI{
+  width: 125px;
+  height: 125px;
+  margin: 0 auto;
+  background: url(../../assets/HomePageimages/i1.jpg) no-repeat;
 }
 </style>
