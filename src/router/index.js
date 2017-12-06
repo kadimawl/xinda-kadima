@@ -86,7 +86,8 @@ export default new Router({
           },
           {
             path: '/toJoinIn', //加入我们
-            component: toJoinIn
+            component: toJoinIn,
+            
           },
         ]
       }, ]
