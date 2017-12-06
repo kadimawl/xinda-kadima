@@ -11,8 +11,13 @@ module.exports = {
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         proxyTable: {
+<<<<<<< HEAD
             '/xinda-api/': {
                 target: "http://115.182.107.203:8088/xinda",
+=======
+            '/xinda-api/':{    //包含命令都会动态代理拦截，替换为真正的地址
+                target:"http://115.182.107.203:8088/xinda",
+>>>>>>> 9e6c482c5159c4a9717094225c9ae009f01f26a3
                 changeOrigin: true,
             }
         },

@@ -3,10 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'    //vue的路由实例化对象
+import store from './store'
 import axios  from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import store from './store'
+import qs from 'qs'
+
 import qs from 'qs'
 
 
@@ -39,6 +42,7 @@ Vue.config.devtools = false;
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',   //用字符串的内容<App/>替换了#app的标签
   components: { App }
 })

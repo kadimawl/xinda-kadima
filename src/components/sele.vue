@@ -33,7 +33,7 @@
       <a href="javascript:void(0)" class="">全部商品</a>
       <a href="javascript:void(0)" class="">财税服务</a>
       <a href="javascript:void(0)" class="">公司工商</a>
-      <a href="javascript:void(0)" class="">加盟我们</a>
+      <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
       <a href="javascript:void(0)" class="">店铺</a>
     </div>
   </div>
@@ -113,6 +113,7 @@ h1 {
       background: url("../assets/index/memCen.png") no-repeat -21px -401px;
       background-color: #2693d4;
       vertical-align: bottom;
+      cursor: pointer;
     }
     span {
       display: inline-block;

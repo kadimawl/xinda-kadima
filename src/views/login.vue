@@ -1,9 +1,9 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus"><p class="errorMsg" v-show="!registered">该手机号已被注册</p>
-      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus"> <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img  @click="reImg" :src="imgUrl" alt=""></div>
+      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus"><p class="errorMsg" v-show="!registered">该手机号未注册</p><p class="errorMsg" v-show="!correctness">请输入正确的手机号</p></div>
+      <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus"> <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p><p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img  @click="reImg" :src="imgUrl" alt=""><p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p></div>
       <div class="forget"><a href="/#/outter/forgetpw">忘记密码？</a></div>
       <button @click="iLogin">立即登录</button>
     </div>
@@ -22,9 +22,13 @@ export default {
     return {
       phoneInput: "",
       registered: true,
+      correctness: true,
       pwInput: "",
       pwShow: false,
-      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode"
+      pwEShow: false,
+      imgVInput: "",
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      imgShow: false
     };
   },
 
@@ -34,21 +38,21 @@ export default {
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
       let result = pReg.test(this.phoneInput);
       if (!this.phoneInput == "") {
-        this.registered = true;
+        this.correctness = true;
         if (!result) {
-          this.registered = false;
+          this.correctness = false;
         }
       }
     },
-    pFocus(){
-      this.registered = true;
+    pFocus() {
+      this.correctness = true;
     },
 
     //密码输入验证
     pw() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
-      if(!pwResult){
+      if (!pwResult) {
         this.pwShow = true;
       }
     },
@@ -57,24 +61,35 @@ export default {
     },
     //验证码刷新-
     reImg() {
-      this.imgUrl =
-        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
-        Math.random()
-          .toString()
-          .substr(2, 4);
+      this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
     },
+    //验证码输入校验
+    imgVB() {
+      let vReg = /^[0-9a-zA-Z]{4}$/;
+      let imgVR = vReg.test(this.imgVInput);
+      if (!imgVR && this.imgVInput !== "") {
+        this.imgShow = true;
+      }
+    },
+    imgVA() {
+      if (this.imgVInput !== "") {
+        this.imgShow = false;
+        this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+      }
+    },
+
     //立即登录
     iLogin() {
       var user = this.phoneInput;
       var pw = this.pwInput;
-      console.log(user,pw);
-      if(!user == ''){
-        if(window.sessionStorage){
+      console.log(user, pw);
+      if (!user == "") {
+        if (window.sessionStorage) {
           let storage = window.sessionStorage;
-          if(storage.user){
-          console.log(storage.user);
+          if (storage.user) {
+            console.log(storage.user);
           }
-          console.log('11===',storage.user);
+          console.log("11===", storage.user);
         }
       }
       // this.$router.push({path: '/HomePage'})  //页面跳转
@@ -102,7 +117,7 @@ export default {
     margin-bottom: 24px;
   }
   .v-box {
-    width: 281px;
+    // width: 281px;
     display: flex;
     img {
       height: 34px;
@@ -141,10 +156,9 @@ export default {
     }
     .forget {
       width: 281px;
-      height: 20px;
+      height: 13px;
       a {
         display: block;
-        margin-top: 7px;
         font-size: 13px;
         color: #2693d4;
         text-decoration: none;
@@ -175,13 +189,20 @@ export default {
     }
   }
 }
+.phoneBox {
+  display: flex;
+}
+.pwBox {
+  display: flex;
+}
 .errorMsg {
   width: 281px;
-  height: 33px;
-  border: 1px solid #f33;
+  height: 12px;
+  font-size: 12px;
   color: #f33;
-  line-height: 33px;
-  text-align: center;
-  margin: 0 0 5px;
+  line-height: 12px;
+  display: inline-block;
+  margin-top: 11px;
+  margin-left: 10px;
 }
 </style>
