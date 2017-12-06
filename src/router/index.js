@@ -61,9 +61,34 @@ export default new Router({
         path: 'tabs',
         component: tabs,
         children: [{
-          path: 'toJoinIn',
-          component: toJoinIn,
-        }, ]
+            path: 'toJoinIn',
+            component: toJoinIn,
+          },
+          {
+            path: '/taxationList', //财税服务
+            name: 'taxationList',
+            component: taxationList
+          },
+          {
+            path: 'companyList', //公司工商
+            name: 'companyList',
+            component: companyList
+          },
+          {
+            path: '/goodsDetails', //商品详情
+            name: 'goodsDetails',
+            component: goodsDetails
+          },
+          {
+            path: '/shoppingCart', //购物车
+            name: 'shoppingCart',
+            component: shoppingCart
+          },
+          {
+            path: '/toJoinIn', //加入我们
+            component: toJoinIn
+          },
+        ]
       }, ]
     },
 
@@ -86,30 +111,8 @@ export default new Router({
 
 
 
-    {
-      path: '/taxationList', //财税服务
-      name: 'taxationList',
-      component: taxationList
-    },
-    {
-      path: '/companyList', //公司工商
-      name: 'companyList',
-      component: companyList
-    },
-    {
-      path: '/goodsDetails', //商品详情
-      name: 'goodsDetails',
-      component: goodsDetails
-    },
-    {
-      path: '/shoppingCart', //购物车
-      name: 'shoppingCart',
-      component: shoppingCart
-    },
-    {
-      path: '/toJoinIn',  //加入我们
-      component: toJoinIn
-    },
+
+
 
 
     {

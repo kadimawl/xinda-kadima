@@ -30,9 +30,9 @@
         </div>
     </div>
     <div class="navigation">
-      <a href="javascript:void(0)" class="">全部商品</a>
-      <a href="javascript:void(0)" class="">财税服务</a>
-      <a href="javascript:void(0)" class="">公司工商</a>
+      <a href="HomePage" class="">全部商品</a>
+      <a href="/#/taxationList" class="">财税服务</a>
+      <a href="/#/tabs/companyList" class="">公司工商</a>
       <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
       <a href="javascript:void(0)" class="">店铺</a>
     </div>
