@@ -5,10 +5,10 @@
       <p class="w-come">欢迎来到信达！</p>
       <div class="please">
         <p>请</p>
-        <div><a href="#/login">登录</a></div>
+        <div><a href="#/outter/login">登录</a></div>
       </div>
       <div class="item-reg">
-        <a href="#/register">快速注册</a>
+        <a href="#/outter/register">快速注册</a>
       </div>
     </div>
     <div class="box-right">
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 // import {mapGetters} from 'vuex'
 export default {
     data() {
@@ -30,6 +31,17 @@ export default {
     computed:{
         // ...mapGetters([getNum])
     }
+=======
+import {mapGetters} from 'vuex'
+export default {
+
+  data() {
+    return {};
+  },
+  computed:{
+    // ...mapGetters(['getNum'])//{getNum:function(){}}
+  }
+>>>>>>> b7937919843b48a3bc0478ebb0ce66a2436dacb7
 };
 </script>
 

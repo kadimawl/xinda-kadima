@@ -3,14 +3,16 @@
     <div class="imgBox"></div>
     <div class="sinda"><p >信达</p></div>
     <div class="nullLine"></div>
-    <div class="welcome">欢迎登录</div>
+    <div class="welcome">{{headMsg[2]}}</div>
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      headMsg:['欢迎登录','欢迎注册','找回密码']
+    };
   }
 };
 </script>

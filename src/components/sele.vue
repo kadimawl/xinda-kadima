@@ -1,5 +1,5 @@
 <template>
-    <div class="Select">
+    <div class="Select" v-show="seleShow">
       <div class="sele">
         <div class="logo">
             <div class="backG"></div>
@@ -30,10 +30,10 @@
         </div>
     </div>
     <div class="navigation">
-      <a href="javascript:void(0)" class="">全部商品</a>
-      <a href="javascript:void(0)" class="">财税服务</a>
-      <a href="javascript:void(0)" class="">公司工商</a>
-      <a href="javascript:void(0)" class="">加盟我们</a>
+      <a href="HomePage" class="">全部商品</a>
+      <a href="/#/taxationList" class="">财税服务</a>
+      <a href="/#/tabs/companyList" class="">公司工商</a>
+      <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
       <a href="javascript:void(0)" class="">店铺</a>
     </div>
   </div>
@@ -42,7 +42,9 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      seleShow: true
+    };
   }
 };
 </script>
@@ -111,6 +113,7 @@ h1 {
       background: url("../assets/index/memCen.png") no-repeat -21px -401px;
       background-color: #2693d4;
       vertical-align: bottom;
+      cursor: pointer;
     }
     span {
       display: inline-block;

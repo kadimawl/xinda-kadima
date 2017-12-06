@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <top/>
-    <sele/>
     <router-view/>
     <bottom/>
   </div>  
@@ -9,11 +8,11 @@
 
 <script>
 import top from "./components/top";
-import sele from "./components/sele";
 import bottom from "./components/bottom";
+
 export default {
   name: "app",
-  components: { top, sele, bottom } //需要在当前组件内注册（添加）
+  components: { top, bottom } //需要在当前组件内注册（添加）
 };
 </script>
 
