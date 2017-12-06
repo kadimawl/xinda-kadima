@@ -1,7 +1,7 @@
 <template>
 <div class="acTop">
-    <router-link to="/member/accountSet/accountsetBody" class="acSet common" active-class="active">账户设置<span></span></router-link>
-    <router-link to="/member/accountSet/changePd" class="changePd common" active-class="active">修改密码<span></span></router-link>
+    <router-link to="/member/accountSet/accountsetBody" class="acSet common" active-class="active">账户设置</router-link>
+    <router-link to="/member/accountSet/changePd" class="changePd common" active-class="active">修改密码</router-link>
 </div>
   
 </template>

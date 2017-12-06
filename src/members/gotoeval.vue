@@ -17,30 +17,35 @@
         </div>
         <div class="score">
             <p>评分:</p>
-            <star/> 
+            <el-rate v-model="value2" :colors="['#99A9BF', '#F7BA2A', '#FF9900']"></el-rate>
         </div>
         <div class="think">
             <p>感受：</p><textarea></textarea>
         </div>
     </div>
     <div class="bot">
-        <button>提交</button>
+        <button @click="submit">提交</button>
     </div>
 </div>
   
 </template>
 
 <script>
-import star from './star'
 export default {
-  data() {
-    return {
-        code:'1234',
-        cont:'test',
-        btime:'2016-1-12'
-    };
-  },
-  components:{star}
+    data() {
+        return {
+            code:'1234',
+            cont:'test',
+            btime:'2016-1-12',
+            value2:null
+        };
+    },
+    components:{},
+    methods:{
+        submit:function(){
+            console.log(this.value2)
+        }
+    }
 };
 </script>
 
@@ -117,7 +122,7 @@ export default {
             margin-left: 20px;
             p{
                 font-size: 14px;
-                margin-right: 30px;
+                margin-right: 40px;
             }
         }
         .think{

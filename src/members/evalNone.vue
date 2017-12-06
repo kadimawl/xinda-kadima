@@ -1,16 +1,16 @@
 <template>
 <div class="evalNone">
-     <div class="Nleft">
-       <div class="gslogo"><img :src="tupian" alt=""></div>
-       <div class="shangpin">
-         <p class="name">{{gsname}}</p>
-         <p class="information"><span class="spanf">服务单号：{{code}}</span><span>购买时间：{{buytime}}</span></p>
-         <p class="cont">购买内容：{{cont}}</p>
-       </div>
-     </div>
-     <div class="Nright">
-        <button>去评价</button>
-     </div>
+    <div class="Nleft">
+    <div class="gslogo"><img :src="tupian" alt=""></div>
+    <div class="shangpin">
+        <p class="name">{{gsname}}</p>
+        <p class="information"><span class="spanf">服务单号：{{code}}</span><span>购买时间：{{buytime}}</span></p>
+        <p class="cont">购买内容：{{cont}}</p>
+    </div>
+    </div>
+    <div class="Nright">
+        <router-link :to="{path:'/member/gotoeval'}" tag="button" class="gotoeval">去评价</router-link>
+    </div>
 </div>
   
 </template>
@@ -18,14 +18,14 @@
 <script>
 
 export default {
-  created(){
-    this.ajax.post('http://115.182.107.203:8088/xinda/xinda-api/service/judge/grid',{
-        status:'2',
-    })
-    .then(function(a){
-          console.log(a);
-    })
-  },
+//   created(){
+//     this.ajax.post('/xinda/xinda-api/service/judge/grid',{
+//         status:'2',
+//     })
+//     .then(function(a){
+//           console.log(a);
+//     })
+//   },
   data() {
       return {
         tupian:'',
@@ -81,7 +81,7 @@ export default {
         height: 154px;
         text-align: center;
         line-height: 154px;
-        button{
+        .gotoeval{
             width: 118px;
             height: 38px;
             border: 1px solid #2494d4;
