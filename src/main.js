@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'    //vue的路由实例化对象
+import store from './store'
 import axios from 'axios'
 import qs from 'qs'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -39,6 +40,7 @@ Vue.config.devtools = false;
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',   //用字符串的内容<App/>替换了#app的标签
   components: { App }
 })

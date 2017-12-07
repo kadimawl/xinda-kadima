@@ -1,11 +1,14 @@
 <template>
   <div class="body">
-      <router-view/>
+    <sele/>
+    <router-view/>
   </div>
 </template>
 
 <script>
+import sele from "./sele";
 export default {
+  components: { sele }, //需要在当前组件内注册（添加）
   data() {
     return {};
   }

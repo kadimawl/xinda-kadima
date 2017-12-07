@@ -27,6 +27,9 @@ import changePd from '@/members/changePd'
 
 
 import detial from '@/components/detial'//商品详情
+import service from '@/components/ShopDetial/service'//商品详情
+import evaluate from '@/components/ShopDetial/evaluate'//商品详情
+
 import shopIndex from '@/components/shopIndex'//店铺首页
 import Order from '@/components/Order'//订单详情路由
 
@@ -101,14 +104,14 @@ export default new Router({
       name: 'member',
       component: member,
       children: [{
-          path: '/memberBody', //父级特有模块路径
-          alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-          component: memberBody //父级特有模块
-        },
-        {
-          path: 'evalAlready',
-          component: evalAlready
-        }
+        path: '/memberBody', //父级特有模块路径
+        alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+        component: memberBody //父级特有模块
+      },
+      {
+        path: 'evalAlready',
+        component: evalAlready
+      }
       ]
     },
 
@@ -120,14 +123,14 @@ export default new Router({
       path: 'accountSet',
       component: accountSet,
       children: [{
-          path: 'accountsetBody',
-          alias: 'accountSet',
-          component: accountsetBody
-        },
-        {
-          path: 'changePd',
-          component: changePd
-        }
+        path: 'accountsetBody',
+        alias: 'accountSet',
+        component: accountsetBody
+      },
+      {
+        path: 'changePd',
+        component: changePd
+      }
       ]
     },
 
@@ -156,22 +159,30 @@ export default new Router({
       }]
     }, {
       path: '/detial',
-      component: detial
+      component: detial,
+      redirect: '/detial/service',
+      children: [{
+        path: 'service',
+        component: service
+      }, {
+        path: 'evaluate',
+        component: evaluate
+      }],
+}, {
+    path: '/shopIndex',
+    component: shopIndex
+  }, {
+    path: '/shopList',
+    component: shopList,
+    children: [{
+      path: '/',
+      component: credentials
     }, {
-      path: '/shopIndex',
-      component: shopIndex
+      path: 'custom',
+      component: custom
     }, {
-        path: '/shopList',
-        component: shopList,
-        children: [{
-            path: '/',
-            component: credentials
-        }, {
-            path: 'custom',
-            component: custom
-        }, {
-            path: 'product',
-            component: product
-        }]
+      path: 'product',
+      component: product
     }]
+  }]
 })

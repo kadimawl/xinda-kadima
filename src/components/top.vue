@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="box-right">
-      <div class="shop-cart"><p><span></span>购物车<span>0</span>件</p></div>   
+      <div class="shop-cart"><p><span></span>购物车<span>{{getNum}}</span>件</p></div>   
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
     
@@ -22,19 +22,19 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
 export default {
   data() {
     return {};
+  },
+  computed:{
+    ...mapGetters(["getNum"])
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-* {
-  margin: 0;
-  padding: 0;
-}
 @69c: #69c;
 .Top{
   background: rgba(242, 242, 242, 0.6);
@@ -64,7 +64,6 @@ export default {
       display: flex;
       margin: 0 24px 0 16px;
       a {
-        // display: inline-block;
         color: @69c;
       }
     }
