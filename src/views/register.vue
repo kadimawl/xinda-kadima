@@ -188,7 +188,6 @@ export default {
     margin-bottom: 19px;
   }
   .v-box {
-    // width: 381px;
     display: flex;
     img {
       height: 33px;
@@ -299,7 +298,6 @@ export default {
   display: flex;
 }
 .errorMsg {
-  // width: 281px;
   height: 12px;
   font-size: 12px;
   color: #f33;

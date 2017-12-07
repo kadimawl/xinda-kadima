@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="box-right">
-      <div class="shop-cart"><p><span class="bgCart"></span>购物车<span>0</span>件</p></div>   
+      <div class="shop-cart"><span class="bgCart"></span><p>购物车 <span>0</span>件</p></div>   
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
     
@@ -119,4 +119,7 @@ export default {
   margin-top: 10px;
   background: url(../assets/index/Sprites.png) 0 -73px ;
 }
+// span{
+//   display: inline-block;
+// }
 </style>
