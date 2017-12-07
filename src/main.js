@@ -44,7 +44,7 @@ new Vue({
   components: { App }
 })
 
-
+//判断移动端还是pc端
 function browserRedirect() {
     var sUserAgent = navigator.userAgent.toLowerCase();
     var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";

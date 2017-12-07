@@ -17,9 +17,13 @@ export default new Vuex.Store({
     actions: { //操作集合
         setTitle({ commit }, title) {
             commit('SET_TITLE', title)
+        },
+        setNum({commit},num) {
+            commit('SET_NUM',num)
         }
     },
     getters: { //显示集合
-        gitTitle: state => state.title
+        getTitle: state => state.title,
+        getNum:state => state.num
     }
 })

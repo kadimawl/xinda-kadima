@@ -1,25 +1,46 @@
 <template>
-<div class="lOut">
+  <div class="lOut">
     <div class="leftOut">
-      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p></div>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt=""><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p></div>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus"><button  class="clickGet" @click="clickGet"><span  v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button><p class="errorMsg" v-show="!pVShow">验证码为六位数字</p></div>
-      <div class="selected"><v-distpicker id="select" province="省" city="市" ></v-distpicker></div>
-      <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus"><p  class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p></div>
+      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
+        <p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
+      </div>
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+        <img @click="reImg" :src="imgUrl" alt="">
+        <p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
+      </div>
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
+        <button class="clickGet" @click="clickGet">
+          <span v-show="show">点击获取</span>
+          <span class="countdown" v-show="!show">重新发送{{count}}</span>
+        </button>
+        <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
+      </div>
+      <div class="selected">
+        <v-distpicker id="select" province="省" city="市"></v-distpicker>
+      </div>
+      <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
+        <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
+      </div>
       <button class="i-register" @click="submit">立即注册</button>
-      <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
+      <p class="agree">注册即同意遵守
+        <a href="jacascript:void(0)">《服务协议》</a>
+      </p>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
-      <p class="immediately" @click="login"><a href="#">立即登录>></a></p>
-      <img src="../assets/index/okman.jpg" alt="">
+      <p class="immediately" @click="login">
+        <a href="#">立即登录>></a>
+      </p>
+      <img src="../assets/index/okmanr.jpg" alt="">
     </div>
   </div>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
   created() {},
@@ -40,11 +61,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['setTitle']),
+    ...mapActions(["setTitle"]),
     created() {},
     login() {
-      this.$router.push({path: '/outter/login'});
-      this.setTitle('欢迎登录')
+      this.$router.push({ path: "/outter/login" });
+      this.setTitle("欢迎登录");
     },
     //手机号输入
     phone() {
@@ -121,7 +142,7 @@ export default {
     //手机验证码输入验证
     pvBlur() {
       let pVReg = /^\d{6}$/;
-      if (!pVReg.test(this.phoneV)&&this.phoneV!=='') {
+      if (!pVReg.test(this.phoneV) && this.phoneV !== "") {
         this.pVShow = false;
       }
     },
@@ -148,7 +169,7 @@ export default {
     submit() {
       var user = this.phoneInput;
       var pw = this.pwInput;
-      var md5 = require('md5');
+      var md5 = require("md5");
 
       this.ajax
         .post(

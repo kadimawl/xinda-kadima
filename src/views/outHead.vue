@@ -3,7 +3,7 @@
     <div class="imgBox"></div>
     <div class="sinda"><p >信达</p></div>
     <div class="nullLine"></div>
-    <div class="welcome">{{gitTitle}}</div>
+    <div class="welcome">{{getTitle}}</div>
   </div>
 </template>
 
@@ -13,11 +13,10 @@ import {mapActions} from 'vuex'
 export default {
   data() {
     return {
-      // headMsg:['欢迎登录','欢迎注册','找回密码']
     };
   },
   computed: {
-    ...mapGetters(['gitTitle'])
+    ...mapGetters(['getTitle'])
   },
   methods:{
     ...mapActions(['setTitle']),
