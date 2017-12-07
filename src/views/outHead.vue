@@ -3,16 +3,25 @@
     <div class="imgBox"></div>
     <div class="sinda"><p >信达</p></div>
     <div class="nullLine"></div>
-    <div class="welcome">{{headMsg[2]}}</div>
+    <div class="welcome">{{gitTitle}}</div>
   </div>
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   data() {
     return {
-      headMsg:['欢迎登录','欢迎注册','找回密码']
+      // headMsg:['欢迎登录','欢迎注册','找回密码']
     };
+  },
+  computed: {
+    ...mapGetters(['gitTitle'])
+  },
+  methods:{
+    ...mapActions(['setTitle']),
+    
   }
 };
 </script>

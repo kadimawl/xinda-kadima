@@ -5,10 +5,10 @@
       <p class="w-come">欢迎来到信达！</p>
       <div class="please">
         <p>请</p>
-        <div><a href="#/outter/login">登录</a></div>
+        <div @click="login"><a href="#">登录</a></div>
       </div>
-      <div class="item-reg">
-        <a href="#/outter/register">快速注册</a>
+      <div class="item-reg" @click="register">
+        <a href="#">快速注册</a>
       </div>
     </div>
     <div class="box-right">
@@ -22,19 +22,47 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import {mapGetters} from "vuex";
+=======
+import {mapGetters} from 'vuex'
+import {mapActions} from 'vuex'
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 export default {
+
   data() {
     return {};
   },
   computed:{
+<<<<<<< HEAD
     ...mapGetters(["getNum"])
+=======
+    // ...mapGetters(['getNum'])//{getNum:function(){}}
+  },
+  methods:{
+    ...mapActions(['setTitle']),
+    login() {
+      this.$router.push({path: '/outter/login'});
+      this.setTitle('欢迎登录')
+    },
+    register() {
+      this.$router.push({path: '/outter/register'});
+      this.setTitle('欢迎注册')
+    }
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+<<<<<<< HEAD
+=======
+*{
+  margin: 0;
+  padding: 0;
+}
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 @69c: #69c;
 .Top{
   background: rgba(242, 242, 242, 0.6);
@@ -79,6 +107,7 @@ export default {
     width: 20%;
     display: flex;
     .shop-cart {
+      display: flex;
       span {
         color: @69c;
       }
@@ -90,5 +119,14 @@ export default {
       }
     }
   }
+}
+
+.bgCart{
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+  margin-top: 10px;
+  background: url(../assets/index/Sprites.png) 0 -73px ;
 }
 </style>

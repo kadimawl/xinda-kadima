@@ -1,32 +1,34 @@
 <template>
 <div class="user">
     <p>首页&nbsp/&nbsp个人主页</p>
+    <!-- 头像框，用户登录后会显示用户头像和name -->
     <div class="touxiang">
-         <img src="../assets/index/user.png" alt="用户头像">
-         <p>{{userphone}}</p>
+        <img src="../assets/index/user.png" alt="用户头像">
+        <p>{{userphone}}</p>
     </div>
+    <!-- 导航栏，控制了我的订单、用户评价和账户设置 的跳转 -->
     <div class="nav">
-         <div class="myorder active"><span></span><p>我的订单</p></div>
-         <div class="usereval"><span></span><p>用户评价</p></div>
-         <div class="accountset"><span></span><p>账户设置</p></div>
+        <router-link :to="{path:'/member/memberBody'}"  class="myorder common" active-class="active"><span></span>我的订单</router-link>
+        <router-link :to="{path:'/member/userEval'}"  class="usereval common" active-class="active"><span></span>用户评价</router-link>
+        <router-link :to="{path:'/member/accountSet'}"  class="accountset common" active-class="active"><span></span>账户设置</router-link>
     </div>
-
 </div>
   
 </template>
 
 <script>
-// import select from 
 export default {
-  data() {
-    return {
-        userphone:'13854285852' 
+    data() {
+        return {
+            userphone:'13854285852',
+        }
+    },
+    methods:{
+        
     }
-  }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 * {
     margin: 0;
@@ -34,9 +36,10 @@ export default {
 }
 .user{
     width: 250px;
-    height: 580px;
+    height: 480px;
     display: flex;
     flex-direction: column;
+    margin-left: 20px;
     .touxiang{
         width: 240px;
         height: 145px;
@@ -58,12 +61,14 @@ export default {
         flex-direction: column;
         background: #f7f7f7;
         margin: 0 5px;
-        div{
+        .common{
             width: 100%;
             height: 50px;
             display: flex;
             line-height: 50px;
             cursor: pointer;
+            font-size: 20px;
+            text-decoration: none;
             span{
                 display: block;
                 width: 27px;
@@ -72,26 +77,23 @@ export default {
                 margin-left: 55px;
                 margin-right: 10px;
             }
-            p{
-                font-size: 20px;
-            }
         }
         .myorder{
             span{
-              background: url('../assets/index/memCen.png') no-repeat;
-              background-position: -25px -125px;
+                background: url('../assets/index/memCen.png') no-repeat;
+                background-position: -25px -125px;
             }
         }
         .usereval{
             span{
-              background: url('../assets/index/memCen.png') no-repeat;
-              background-position: -25px -157px;
+                background: url('../assets/index/memCen.png') no-repeat;
+                background-position: -25px -157px;
             }
         }
         .accountset{
             span{
-              background: url('../assets/index/memCen.png') no-repeat;
-              background-position: -25px -190px;
+                background: url('../assets/index/memCen.png') no-repeat;
+                background-position: -25px -190px;
             }
         }
     }

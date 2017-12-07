@@ -1,42 +1,51 @@
 <template>
 <div class="lOut">
     <div class="leftOut">
-      <input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><img @click="reImg" :src="imgUrl" alt=""></div><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification"><button  class="clickGet" @click="clickGet"><span v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button></div>
-      <v-distpicker id="select" province="省" city="市" ></v-distpicker>
-      <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput">
+      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码"  v-model="phoneInput" @blur="phone" @focus="focus"><p class="errorMsg" v-show="!pshow">请输入正确手机号</p></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt=""><p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p></div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus"><button  class="clickGet" @click="clickGet"><span  v-show="show">点击获取</span><span class="countdown" v-show="!show">重新发送{{count}}</span></button><p class="errorMsg" v-show="!pVShow">验证码为六位数字</p></div>
+      <div class="selected"><v-distpicker id="select" province="省" city="市" ></v-distpicker></div>
+      <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus"><p  class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p></div>
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守<a href="jacascript:void(0)">《服务协议》</a></p>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
-      <p class="immediately"><a href="/#/outter/login">立即登录>></a></p>
+      <p class="immediately" @click="login"><a href="#">立即登录>></a></p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
-  created(){
-    // this.ajax.post('/xinda-api/register/sendsms', canshu, {}).then((res) => {console.log('验证码验证', res)})
-  },
+  created() {},
   data() {
     return {
       show: true,
       count: "",
       timer: null,
-      imgUrl: "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode",
+      imgUrl: "/xinda-api/ajaxAuthcode",
       imgShow: true,
       phoneInput: "",
+      imgVInput: "",
+      phoneV: "",
+      pVShow: true,
       pshow: true,
-      pwInput: ""
+      pwInput: "",
+      pwShow: false
     };
   },
   methods: {
-    
+    ...mapActions(['setTitle']),
+    created() {},
+    login() {
+      this.$router.push({path: '/outter/login'});
+      this.setTitle('欢迎登录')
+    },
     //手机号输入
     phone() {
       let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
@@ -51,6 +60,20 @@ export default {
     //重新获得焦点，提示框消失
     focus() {
       this.pshow = true;
+    },
+    //图片验证码输入错误
+    imgVB() {
+      let vReg = /^[0-9a-zA-Z]{4}$/;
+      let imgVR = vReg.test(this.imgVInput);
+      if (!imgVR && this.imgVInput !== "") {
+        this.imgShow = false;
+      }
+    },
+    imgVA() {
+      if (this.imgVInput !== "") {
+        this.imgShow = true;
+        this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+      }
     },
     //点击获取倒计时
     clickGet: function() {
@@ -68,26 +91,79 @@ export default {
           }
         }, 1000);
       }
+      //短信验证码发送
+      this.ajax
+        .post(
+          "/xinda-api/register/sendsms",
+          this.qs.stringify({
+            cellphone: this.phoneInput,
+            smsType: 1,
+            imgCode: this.imgVInput
+          })
+        )
+        .then(data => {
+          console.log(data);
+        });
+      //验证手机号是否已经注册
+      this.ajax
+        .post(
+          "/xinda-api/register/valid-sms",
+          this.qs.stringify({
+            cellphone: this.phoneInput,
+            smsType: 1,
+            validCode: 111111
+          })
+        )
+        .then(data => {
+          console.log("验证手机号是否已经注册", data.data);
+        });
+    },
+    //手机验证码输入验证
+    pvBlur() {
+      let pVReg = /^\d{6}$/;
+      if (!pVReg.test(this.phoneV)&&this.phoneV!=='') {
+        this.pVShow = false;
+      }
+    },
+    pVFocus() {
+      this.pVShow = true;
     },
     //验证码刷新-
     reImg() {
-      this.imgUrl =
-        "http://115.182.107.203:8088/xinda/xinda-api/ajaxAuthcode?r=" +
-        Math.random()
-          .toString()
-          .substr(2, 4);
+      this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+    },
+    //密码输入验证
+    pwBlur() {
+      let pwResult = pwReg.test(this.pwInput);
+      if (this.pwInput !== "") {
+        if (!pwResult) {
+          this.pwShow = true;
+        }
+      }
+    },
+    pwFocus() {
+      this.pwShow = false;
     },
     //立即注册
     submit() {
-      let storage = window.sessionStorage;
       var user = this.phoneInput;
       var pw = this.pwInput;
-      console.log(pw,user);
-      
-      if (storage) {
-        storage.setItem(user, pw);
-      }
-      
+      var md5 = require('md5');
+
+      this.ajax
+        .post(
+          "/xinda-api/register/register",
+          this.qs.stringify({
+            cellphone: user,
+            smsType: 1,
+            validCode: 111111,
+            password: md5(pw),
+            regionId: 110010
+          })
+        )
+        .then(data => {
+          console.log("注册提交", data);
+        });
     }
   }
 };
@@ -112,7 +188,7 @@ export default {
     margin-bottom: 19px;
   }
   .v-box {
-    width: 281px;
+    // width: 381px;
     display: flex;
     img {
       height: 33px;
@@ -124,7 +200,7 @@ export default {
     height: 39px;
     color: #2693d4;
     background: #fff;
-    font-size: 16px;
+    font-size: 12px;
     border: none;
     border: 1px solid #2693d4;
     border-radius: 3px;
@@ -199,30 +275,41 @@ export default {
     color: #409cd7;
   }
 }
-#select {
-  font-size: 12px;
-}
-select {
-  width: 78px;
-  height: 33px;
-  border: none;
-  outline: 0;
-  border: 1px solid #cbcbcb;
-  border-radius: 3px;
-  margin-right: 15px;
-  option {
+.selected {
+  display: flex;
+  select {
+    width: 88px;
+    height: 33px;
     font-size: 12px;
+    padding: 0.5rem 0.15rem;
+    border: none;
+    outline: 0;
+    border: 1px solid #cbcbcb;
+    border-radius: 3px;
+    option {
+      font-size: 12px;
+    }
   }
 }
 
+.phoneBox {
+  display: flex;
+}
+.pwBox {
+  display: flex;
+}
 .errorMsg {
-  width: 281px;
-  height: 33px;
-  border: 1px solid #f33;
+  // width: 281px;
+  height: 12px;
+  font-size: 12px;
   color: #f33;
-  line-height: 33px;
-  text-align: center;
-  margin: 0 0 5px;
+  line-height: 12px;
+  display: inline-block;
+  margin-top: 11px;
+  margin-left: 10px;
+}
+.exception {
+  margin-top: 35px;
 }
 .countdown {
   color: #000;

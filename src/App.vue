@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <top/>
-    <!-- <sele /> -->
     <router-view/>
     <bottom/>
   </div>  
@@ -9,7 +8,6 @@
 
 <script>
 import top from "./components/top";
-// import sele from "./components/sele";
 import bottom from "./components/bottom";
 
 export default {
@@ -18,9 +16,14 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style lang="less">
   *{
     margin: 0;
     padding: 0;
   }
+=======
+<style>
+
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 </style>

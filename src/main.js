@@ -2,32 +2,35 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
+<<<<<<< HEAD
 import router from './router'    //vue的路由实例化对象
+=======
+import router from './router' //vue的路由实例化对象
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 import store from './store'
 import axios from 'axios'
-import qs from 'qs'
-axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import qs from 'qs'
 
 
-var objSort = function (name) {
-  return function (o, p) {
-    var a, b;
-    if (typeof o === "object" && typeof p === "object" && o && p) {
-      a = o[name];
-      b = p[name];
-      if (a === b) {
-        return 0;
-      }
-      if (typeof a === typeof b) {
-        return a < b ? -1 : 1;
-      }
-      return typeof a < typeof b ? -1 : 1;
-    } else {
-      throw "error";
-    }
-  };
+var objSort = function(name) {
+    return function(o, p) {
+        var a, b;
+        if (typeof o === "object" && typeof p === "object" && o && p) {
+            a = o[name];
+            b = p[name];
+            if (a === b) {
+                return 0;
+            }
+            if (typeof a === typeof b) {
+                return a < b ? -1 : 1;
+            }
+            return typeof a < typeof b ? -1 : 1;
+        } else {
+            throw "error";
+        }
+    };
 };
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
@@ -38,11 +41,17 @@ Vue.config.devtools = false;
 
 /* eslint-disable no-new */
 new Vue({
+<<<<<<< HEAD
   el: '#app',
   router,
   store,
   template: '<App/>',   //用字符串的内容<App/>替换了#app的标签
   components: { App }
+=======
+    el: '#app',
+    router,
+    store,
+    template: '<App/>', //用字符串的内容<App/>替换了#app的标签
+    components: { App }
+>>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 })
-
-
