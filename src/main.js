@@ -2,11 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-<<<<<<< HEAD
-import router from './router'    //vue的路由实例化对象
-=======
 import router from './router' //vue的路由实例化对象
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 import store from './store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
@@ -41,17 +37,9 @@ Vue.config.devtools = false;
 
 /* eslint-disable no-new */
 new Vue({
-<<<<<<< HEAD
   el: '#app',
   router,
   store,
   template: '<App/>',   //用字符串的内容<App/>替换了#app的标签
   components: { App }
-=======
-    el: '#app',
-    router,
-    store,
-    template: '<App/>', //用字符串的内容<App/>替换了#app的标签
-    components: { App }
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 })

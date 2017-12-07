@@ -22,21 +22,14 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import {mapGetters} from "vuex";
-=======
 import {mapGetters} from 'vuex'
 import {mapActions} from 'vuex'
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 export default {
 
   data() {
     return {};
   },
   computed:{
-<<<<<<< HEAD
-    ...mapGetters(["getNum"])
-=======
     // ...mapGetters(['getNum'])//{getNum:function(){}}
   },
   methods:{
@@ -49,20 +42,16 @@ export default {
       this.$router.push({path: '/outter/register'});
       this.setTitle('欢迎注册')
     }
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
   }
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-<<<<<<< HEAD
-=======
 *{
   margin: 0;
   padding: 0;
 }
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 @69c: #69c;
 .Top{
   background: rgba(242, 242, 242, 0.6);

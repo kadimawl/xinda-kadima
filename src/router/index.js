@@ -26,13 +26,9 @@ import evalAlready from '@/members/evalAlready'
 import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
-import shopIndex from '@/components/shopIndex' //店铺首页
-import Order from '@/components/Order' //订单详情路由
-
-
 import detial from '@/components/detial'//商品详情路由
-import service from '@/components/ShopDetial/service'//商品详情服务
-import evaluate from '@/components/ShopDetial/evaluate'//商品详情评价
+import service from '@/components/ShopDetial/service'//商品详情
+import evaluate from '@/components/ShopDetial/evaluate'//商品详情
 
 import shopIndex from '@/components/shopIndex'//店铺首页
 import Order from '@/components/Order'//订单详情路由
@@ -52,146 +48,6 @@ import payBank from '@/components/order/payBank' //银行支付
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
 export default new Router({
-<<<<<<< HEAD
-  routes: [
-    //首页
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      children: [{
-        path: '/HomePage',
-        alias: '/',
-        component: HomePage,
-      }]
-    },
-
-    {
-      path: 'outter',
-      name: 'outter',
-      component: outter,
-      children: [{
-        path: '/outter/login',
-        component: login,
-      }, {
-        path: '/outter/register',
-        component: register
-      }, {
-        path: '/outter/forgetpw',
-        component: forgetpw
-      }]
-    },
-
-    {
-      path: '/taxationList', //财税服务
-      name: 'taxationList',
-      component: taxationList
-    },
-    {
-      path: '/companyList', //公司工商
-      name: 'companyList',
-      component: companyList
-    },
-    {
-      path: '/goodsDetails', //商品详情
-      name: 'goodsDetails',
-      component: goodsDetails
-    },
-    {
-      path: '/shoppingCart', //购物车
-      name: 'shoppingCart',
-      component: shoppingCart
-    },
-
-
-    {
-      path: '/member',
-      name: 'member',
-      component: member,
-      children: [{
-        path: '/memberBody', //父级特有模块路径
-        alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-        component: memberBody //父级特有模块
-      },
-      {
-        path: 'evalAlready',
-        component: evalAlready
-      }
-      ]
-    },
-
-    {
-      path: 'gotoeval',
-      component: gotoeval
-    },
-    {
-      path: 'accountSet',
-      component: accountSet,
-      children: [{
-        path: 'accountsetBody',
-        alias: 'accountSet',
-        component: accountsetBody
-      },
-      {
-        path: 'changePd',
-        component: changePd
-      }
-      ]
-    },
-
-
-
-
-
-    {
-      path: '/Order',
-      component: Order,
-      children: [{
-        path: '/',
-        component: order
-      }, {
-        path: 'success',
-        component: paymentSuccess
-      }, {
-        path: 'failure',
-        component: paymentFailure
-      }, {
-        path: 'payZfb',
-        component: payZfb
-      }, {
-        path: 'payBank',
-        component: payBank
-      }]
-    }, {
-      path: '/detial',
-      component: detial,
-      redirect: '/detial/service',
-      children: [{
-        path: 'service',
-        component: service
-      }, {
-        path: 'evaluate',
-        component: evaluate
-      }],
-}, {
-    path: '/shopIndex',
-    component: shopIndex
-  }, {
-    path: '/shopList',
-    component: shopList,
-    children: [{
-      path: '/',
-      component: credentials
-    }, {
-      path: 'custom',
-      component: custom
-    }, {
-      path: 'product',
-      component: product
-    }]
-  }]
-})
-=======
     routes: [
         //首页
         {
@@ -363,13 +219,21 @@ export default new Router({
                 component: payBank
             }]
         }, {
-            path: '/detial',
-            component: detial
-        }, {
-            path: '/shopIndex',
+          path: '/detial',
+          component: detial,
+          redirect: '/detial/service',
+          children: [{
+            path: 'service',
+            component: service
+          }, {
+            path: 'evaluate',
+            component: evaluate
+          }],
+    }, {
+            path: '/shopIndex',//店铺首页
             component: shopIndex
         }, {
-            path: '/shopList',
+            path: '/shopList',//店铺列表
             component: shopList,
             children: [{
                 path: '/',
@@ -384,4 +248,3 @@ export default new Router({
         }
     ]
 })
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd

@@ -16,14 +16,9 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
 <style lang="less">
   *{
     margin: 0;
     padding: 0;
   }
-=======
-<style>
-
->>>>>>> 989622f11ab76cca1765fb1f016e6137e9c765bd
 </style>
