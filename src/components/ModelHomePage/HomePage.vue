@@ -7,7 +7,7 @@
       <!-- 轮播 -->
       <div class="block">
         <span class="demonstrantion"></span>
-        <el-carousel trigger="click" height="400px" initial-index=0>
+        <el-carousel trigger="click" height="400px">
           <el-carousel-item v-for="item in 4" :key="item">
           </el-carousel-item>
         </el-carousel>
@@ -117,6 +117,77 @@
         </div>
       </div>
     </div>
+    <!-- 知识产权 -->
+    <div class="iProperty">
+      <div class="topFrame">
+        <h3>知识产权</h3>
+      </div>
+      <div class="IP-AD">
+        <div class="ad-Pic">
+          <div class="picLeft"></div>
+          <div class="picRight">
+            <div class="rightTop">
+              <div class="topI"></div>
+              <div class="topII"></div>
+            </div>
+            <div class="rightBottom"></div>
+          </div>
+        </div>
+        <div class="ad-special"></div>
+      </div>
+    </div>
+    <!-- 推荐服务 -->
+    <div class="recommend">
+      <div class="topFrame">
+        <h3>推荐服务商</h3>
+        <span>推荐服务</span>
+      </div>
+      <div class="providers">
+        <div class="provider" v-for="Providers in providers" :key="Providers">
+          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <h4>{{Providers.providerName}}</h4>
+          <p>服务指数：8.9分</p>
+          <p>提供的服务：</p>
+          <div class="service-infs">
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+          </div>
+
+        </div>
+        <div class="provider" v-for="Providers in providers" :key="Providers">
+          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <h4>{{Providers.providerName}}</h4>
+          <p>服务指数：8.9分</p>
+          <p>提供的服务：</p>
+          <div class="service-infs">
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+            <div class="service-inf">{{Providers.products}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="com-inf" style="display:none;">
+        <div class="services" v-for="Service in services" :key="Service">
+          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Service.providerImg" alt=""></div>
+          <h4>{{Service.providerName}}</h4>
+          <p class="service">{{Service.serviceName}}</p>
+          <p class="service-inf">{{Service.serviceInfo}}</p>
+          <span class="price">￥{{Service.marketPrice}}</span>
+          <span class="unit">{{Service.unit}}</span>
+          <button>查看详情</button>
+        </div>
+      </div>
+    </div>
+    <!-- 合作伙伴 -->
+    <div class="partners">
+      <div class="topFrame">
+        <h3>合作伙伴</h3>
+      </div>
+      <div class="partnerImg"></div>
+    </div>
   </div>
 </template>
 
@@ -129,19 +200,23 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
-      console.log(that.ItemLists);
     });
     this.ajax.post("/xinda-api/recommend/list").then(function(data) {
       var tData = data.data.data.hq;
-      console.log(tData);
+      var gData = data.data.data.provider;
+      var lData = data.data.data.product;
+      console.log(data.data.data);
       that.products = tData;
-      console.log(that.products[0].providerName);
+      that.providers = gData;
+      that.services = lData;
     });
   },
   data() {
     return {
       ItemLists: [],
-      products: []
+      products: [],
+      providers: [],
+      services: []
     };
   }
 };
@@ -313,8 +388,10 @@ export default {
   width: 1200px;
   height: 35px;
   border-bottom: 2px solid #2693d4;
+  display: flex;
   h3 {
     margin-left: 20px;
+    cursor: pointer;
   }
 }
 .starsShow {
@@ -449,6 +526,248 @@ export default {
   }
   .price {
     margin-top: 0px;
+  }
+}
+.iProperty {
+  width: 1200px;
+  height: 750px;
+  margin: 0 auto;
+  .IP-AD {
+    width: 1200px;
+    height: 680px;
+    margin-top: 35px;
+    .ad-Pic {
+      width: 1200px;
+      height: 480px;
+      display: flex;
+      justify-content: space-between;
+      .picLeft {
+        width: 325px;
+        height: 480px;
+        background: url(../../assets/HomePageimages/i4.jpg);
+      }
+      .picRight {
+        width: 850px;
+        height: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        .rightTop {
+          width: 850px;
+          height: 230px;
+          display: flex;
+          justify-content: space-between;
+          .topI {
+            width: 413px;
+            height: 230px;
+            background: url(../../assets/HomePageimages/i5.jpg);
+          }
+          .topII {
+            width: 413px;
+            height: 230px;
+            background: url(../../assets/HomePageimages/i6.png);
+          }
+        }
+        .rightBottom {
+          width: 850px;
+          height: 230px;
+          background: url(../../assets/HomePageimages/i7.jpg) no-repeat;
+        }
+      }
+    }
+    .ad-special {
+      width: 1200px;
+      height: 154px;
+      margin-top: 45px;
+      background: url(../../assets/HomePageimages/i9_03.png);
+    }
+  }
+}
+.recommend {
+  width: 1200px;
+  margin: 40px auto;
+  .topFrame {
+    width: 1200px;
+    height: 35px;
+    border-bottom: 2px solid #2693d4;
+    display: flex;
+    h3 {
+      color: #2693d4;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+    span {
+      display: inline-block;
+      font-size: 18px;
+      margin-left: 50px;
+      cursor: pointer;
+    }
+  }
+  .providers {
+    width: 1200px;
+    height: 400px;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 30px;
+    .provider {
+      width: 270px;
+      height: 400px;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      .pro-logo {
+        width: 125px;
+        height: 125px;
+        margin-top: 30px;
+        margin-left: 65px;
+        margin-bottom: 30px;
+        background-color: #fff;
+        border-radius: 50%;
+        overflow: hidden;
+        img {
+          margin: 40px 29px;
+        }
+      }
+      h4 {
+        text-align: center;
+        margin-bottom: 10px;
+      }
+      p {
+        font-size: 14px;
+        margin-left: 20px;
+      }
+      .service-infs {
+        width: 160px;
+        height: 75px;
+        margin: 20px auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .service-inf {
+          width: 75px;
+          height: 25px;
+          background-color: #ffecb7;
+          border-radius: 3px;
+          overflow: hidden;
+          text-align: center;
+        }
+      }
+    }
+  }
+  .com-inf {
+    width: 1200px;
+    height: 400px;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+  }
+  .services {
+    width: 270px;
+    height: 400px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    .pro-logo {
+      width: 125px;
+      height: 125px;
+      margin-top: 30px;
+      margin-left: 65px;
+      margin-bottom: 30px;
+      background-color: #fff;
+      border-radius: 50%;
+      overflow: hidden;
+      img {
+        margin: 40px 29px;
+      }
+    }
+    h4 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .service {
+      font-size: 15px;
+      text-align: center;
+      color: #000;
+      margin-bottom: 10px;
+    }
+    .service-inf {
+      width: 250px;
+      font-size: 14px;
+      margin: 0px auto;
+      text-align: left;
+      color: #3f3f3f;
+    }
+    .price {
+      font-size: 20px;
+      color: #2693d4;
+      margin-left: 75px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+    button {
+      display: block;
+      width: 100px;
+      height: 30px;
+      margin: 10px auto;
+      line-height: 30px;
+      text-align: center;
+      color: #2693d4;
+      border: 1px solid #2693d4;
+      border-radius: 2px;
+      background-color: #fff;
+    }
+  }
+}
+.provider:nth-child(1) {
+  img {
+    width: 146px;
+    margin: 40px auto !important;
+    margin-left: -10px !important;
+  }
+}
+.provider:nth-child(3) {
+  img {
+    width: 146px;
+    margin: 40px auto !important;
+    margin-left: -10px !important;
+  }
+}
+.services:nth-child(1) {
+  img {
+    width: 146px;
+    margin: 40px auto !important;
+    margin-left: -10px !important;
+  }
+}
+.services:nth-child(4) {
+  .service {
+    margin-bottom: 0px;
+  }
+  .price {
+    margin-top: 0px;
+  }
+}
+.partners {
+  width: 1200px;
+  margin: 30px auto;
+  .topFrame {
+    width: 1200px;
+    height: 35px;
+    border-bottom: 2px solid #2693d4;
+    display: flex;
+    h3 {
+      color: #2693d4;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+  }
+  .partnerImg {
+    width: 1200px;
+    height: 147px;
+    margin-top: 35px;
+    background: url(../../assets/HomePageimages/i10_03.png);
   }
 }
 </style>
