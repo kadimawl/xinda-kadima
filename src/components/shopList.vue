@@ -1,33 +1,37 @@
 <template>
 <div class="shopList">
-        <!-- <h3>这是店铺首页</h3> -->
-        <div class="logo">
-            <img src="" alt="">
-            <div>
-              <h1>{{providerName}}</h1>
-              <p>{{regionName}}</p>
-            </div>    
-        </div>
-        <div class="body">
-            <div class="shopName">
-                <div>
-                    <h3>公司介绍</h3>
-                    <p>{{providerInfo}}</p>
-                </div>
-                <div class="serverLogo">
-                  <img src="../assets/shop/shopIMG.png" alt="">
-                </div>
-            </div>
-
-            <div class="commodityList">
-                <router-view/>
-            </div>
-        </div>
+  <sele/>
+    <!-- <h3>这是店铺首页</h3> -->
+    <div class="logo">
+      <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+LogoUrl"alt=""> -->
+      <div>
+        <h1>{{providerName}}</h1>
+        <p>{{regionName}}</p>
+      </div>    
     </div>
+    <div class="body">
+      <div class="shopName">
+        <div>
+            <h3>公司介绍</h3>
+            <p>{{providerInfo}}</p>
+        </div>
+        <div class="serverLogo">
+          <img src="../assets/shop/shopIMG.png" alt="">
+        </div>
+      </div>
+
+      <div class="commodityList">
+          <router-view/>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import sele from "./sele";
+
 export default {
+  components: { sele }, //需要在当前组件内注册（添加）
   data() {
     return {
       providerName: "",
@@ -37,40 +41,40 @@ export default {
   },
   created() {
     var shopID = sessionStorage.getItem("shopID");
-    console.log(shopID)
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/provider/detail", this.qs.stringify({
-        id: shopID
-        //请求店铺信息
-      }))
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/provider/detail",
+        this.qs.stringify({
+          id: shopID
+          //请求店铺信息
+        })
+      )
       .then(function(data) {
-        console.log(data)
         var shop = data.data.data;
-        console.log(shop);
-        // for (var key in shops) {
-        //   if (shops[key].id === shopID) {
-        //     var shop = shops[key];
-        //   }
-        // }
-        that.providerName = shop.providerName;
+        that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
+        console.log(shop)
+        // that.LogoUrl = shop.logoPath;
       });
-    // this.ajax //请求店铺商品a7304eecbd7246b4b424874e0359eab0
-    //   .post(
-    //     "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-    //     {
-    //       start: 0,
-    //       limit: 8,
-    //       productTypeCode: "1",
-    //       providerId: "a7304eecbd7246b4b424874e0359eab0",
-    //       sort: 2
-    //     }
-    //   )
-    //   .then(function(data) {
-    //     console.log(data.data.data);
-    //   });
+
+
+    this.ajax //请求店铺商品
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        this.qs.stringify({
+          //请求店铺信息
+          start: 1,
+          limit: 6,
+          providerId: shopID,
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        var shopList = JSON.stringify(data.data.data);
+        sessionStorage.setItem("shopList",shopList);
+      });
   }
 };
 </script>

@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="box-right">
-      <div class="shop-cart"><span class="bgCart"></span><p>购物车 <span>0</span>件</p></div>   
+      <div class="shop-cart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></div>   
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
     
@@ -81,7 +81,6 @@ export default {
       display: flex;
       margin: 0 24px 0 16px;
       a {
-        // display: inline-block;
         color: @69c;
       }
     }
