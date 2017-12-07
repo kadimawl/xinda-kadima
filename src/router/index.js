@@ -26,14 +26,17 @@ import evalAlready from '@/members/evalAlready'
 import accountsetBody from '@/members/accountsetBody'
 import changePd from '@/members/changePd'
 
-import detial from '@/components/detial' //商品详情
-import shopIndex from '@/components/shopIndex' //店铺首页
-import Order from '@/components/Order' //订单详情路由
+import detial from '@/components/detial'//商品详情路由
+import service from '@/components/ShopDetial/service'//商品详情
+import evaluate from '@/components/ShopDetial/evaluate'//商品详情
 
-import shopList from '@/components/shopList' //店铺列表路由
-import credentials from '@/components/ShopList/credentials' //店铺列表路由
-import custom from '@/components/ShopList/custom' //店铺列表路由
-import product from '@/components/ShopList/product' //店铺列表路由
+import shopIndex from '@/components/shopIndex'//店铺首页
+import Order from '@/components/Order'//订单详情路由
+
+import shopList from '@/components/shopList'//店铺列表路由
+import credentials from '@/components/ShopList/credentials'//店铺列表路由
+import custom from '@/components/ShopList/custom'//店铺列表路由
+import product from '@/components/ShopList/product'//店铺列表路由
 
 import order from '@/components/order/order' //订单详情
 import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
@@ -216,13 +219,21 @@ export default new Router({
                 component: payBank
             }]
         }, {
-            path: '/detial',
-            component: detial
-        }, {
-            path: '/shopIndex',
+          path: '/detial',
+          component: detial,
+          redirect: '/detial/service',
+          children: [{
+            path: 'service',
+            component: service
+          }, {
+            path: 'evaluate',
+            component: evaluate
+          }],
+    }, {
+            path: '/shopIndex',//店铺首页
             component: shopIndex
         }, {
-            path: '/shopList',
+            path: '/shopList',//店铺列表
             component: shopList,
             children: [{
                 path: '/',
