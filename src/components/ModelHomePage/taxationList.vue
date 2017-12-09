@@ -1,20 +1,37 @@
 <template>
   <div class="page">
-    <div class="home">首页/{{name}}</div>
+    <div class="home" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">首页/{{itemName.name}}</div>
     <div class="box">
       <div class="left">
         <div class="innerT">
           <div class="serverRow Row">
             <div class="server">服务分类</div>
-            <div class="serverList"></div>
+            <div class="serverList">
+              <div v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
+                <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
+                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
+                  <div class="lists">{{itemNameII.name}}</div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div class="typrList"></div>
+            <div class="typeList">
+              <div v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
+                <div v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==2">
+                  <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
+                    <div class="lists">{{itemNameIII.name}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
-            <div class="spaceList"></div>
+            <div class="spaceList">
+              <v-distpicker></v-distpicker>
+            </div>
           </div>
         </div>
         <div class="innerB"></div>
@@ -35,9 +52,25 @@
 </template>
 
 <script>
+import VDistpicker from 'v-distpicker'
 export default {
+  components: { VDistpicker },
+  created() {
+    var that = this;
+    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      var rData = data.data.data;
+      that.ItemLists = rData;
+      // for (var i in rData){
+      //   console.log(rData[i])
+      //   that.ItemListsI = rData[i];
+      // }
+      console.log(that.ItemLists);
+    });
+  },
   data() {
-    return {};
+    return {
+      ItemLists: []
+    };
   }
 };
 </script>
@@ -77,34 +110,34 @@ export default {
     border: 1px solid #ccc;
     padding: 0 37px 0 28px;
     box-sizing: border-box;
-    div{
+    div {
       width: 93px;
       height: 93px;
       margin: 13px auto 29px;
       border-radius: 50%;
       background: url(../../assets/index/Sprites.png);
     }
-    p{
+    p {
       width: 171px;
       height: 29px;
       border-bottom: 1px solid #ccc;
       font-size: 18px;
       line-height: 29px;
-      text-align: center; 
+      text-align: center;
     }
-    P:last-child{
+    p:last-child {
       border: none;
     }
-    .platform{
+    .platform {
       background-position: -239px 20px;
     }
-    .quality{
+    .quality {
       background-position: -239px -76px;
     }
-    .process{
+    .process {
       background-position: -230px -160px;
     }
-    .added{
+    .added {
       background-position: -250px -270px;
     }
   }
@@ -113,7 +146,49 @@ export default {
   height: 40px;
   border-top: 1px solid #ccc;
   display: flex;
-  div:first-child {
+  .type {
+    width: 98px;
+    height: 40px;
+    border-right: 1px solid #ccc;
+    font-size: 15px;
+    color: #000;
+    line-height: 40px;
+    text-align: center;
+  }
+  .server {
+    width: 98px;
+    height: 40px;
+    border-right: 1px solid #ccc;
+    font-size: 15px;
+    color: #000;
+    line-height: 40px;
+    text-align: center;
+  }
+  .serverList {
+    width: 850px;
+    height: 40px;
+    display: flex;
+    .lists {
+      height: 25px;
+      border-radius: 5px;
+      border: 1px solid #000;
+      font-size: 14px;
+      float: left;
+    }
+  }
+  .typeList {
+    width: 850px;
+    height: 40px;
+    display: flex;
+    .lists {
+      height: 25px;
+      border-radius: 5px;
+      border: 1px solid #000;
+      font-size: 14px;
+      float: left;
+    }
+  }
+  .space {
     width: 98px;
     height: 40px;
     border-right: 1px solid #ccc;
