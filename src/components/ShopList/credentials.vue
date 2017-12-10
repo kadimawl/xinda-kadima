@@ -1,12 +1,12 @@
 <template>
   <div class="credentials">
     <div class="navgation">
-        <a href="/#/shopList">服务产品</a>
-        <a href="/#/shopList/custom">客服</a>
-        <a href="/#/shopList/product">资质证书</a>
+        <router-link :to="{ path: '/shopList'}" replace>服务产品</router-link>
+        <router-link :to="{ path: '/shopList/custom'}" replace>客服</router-link>
+        <router-link :to="{ path: '/shopList/product'}" replace>资质证书</router-link>
     </div>
     <h1>服务内容</h1>
-    <div class="shopping">
+    <div class="shopping">  
         <div v-for="list in lists" :key="list.id">
           <h3>{{list.serviceName}}</h3>
           <img src="../../assets/shop/blue.png" alt="">
@@ -15,6 +15,7 @@
           <h2>￥{{list.marketPrice}}.00</h2>
           <del>原价：￥{{list.price}}.00</del>
           <a href="#/detial" :id="list.id" @click="GoToShop(list.id)">查看详情>></a>
+          <!-- <router-link :to="{ path: '#/detial'}" @click="GoToShop(list.id)" replace>查看详情>></router-link> -->
         </div>
     </div>
   </div>
@@ -24,11 +25,25 @@
 export default {
   created() {
     var that = this;
-    var shopList = JSON.parse(sessionStorage.getItem("shopList"));
-    !(function(list) {
+
+    var shopID = sessionStorage.getItem("shopID");
+    this.ajax //请求店铺商品
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        this.qs.stringify({
+          start: 1,
+          limit: 6,
+          providerId: shopID,
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        list(data.data.data);
+      });
+
+    var list = function(list) {
       var lists = list;
       for (var key in lists) {
-        // var XXX = Math.floor(Math.random() * 9 + 1) / 10;
         lists[key].price = Math.floor(lists[key].marketPrice * (0.2 + 1));
         if (lists[key].serviceName.length > 13) {
           lists[key].serviceName = lists[key].serviceName.substr(0, 13);
@@ -40,16 +55,16 @@ export default {
         }
       }
       that.lists = lists;
-    })(shopList);
+    };
   },
   data() {
     return {
       lists: []
     };
   },
-  methods:{
-    GoToShop(id){
-      sessionStorage.setItem("shoppingID",id)
+  methods: {
+    GoToShop(id) {
+      sessionStorage.setItem("shoppingID", id);
     }
   }
 };
@@ -98,17 +113,17 @@ h1 {
       font-size: 17px;
       font-weight: normal;
     }
-    p{
+    p {
       font-size: 14px;
     }
-    h2{
+    h2 {
       font-size: 35px;
       color: #2693d4;
     }
-    del{
+    del {
       font-size: 13px;
     }
-    a{
+    a {
       font-size: 13px;
       color: #2693d4;
       text-decoration: none;
