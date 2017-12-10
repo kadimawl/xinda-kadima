@@ -56,7 +56,6 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        sessionStorage.setItem("shopping",JSON.stringify(shop))
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
