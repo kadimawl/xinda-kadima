@@ -5,10 +5,10 @@
       <p class="w-come">欢迎来到信达！</p>
       <div class="please">
         <p>请</p>
-        <div @click="login"><a href="#">登录</a></div>
+        <div @click="login"><a href="/#/outter/login">登录</a></div>
       </div>
       <div class="item-reg" @click="register">
-        <a href="#">快速注册</a>
+        <a href="/#/outter/register">快速注册</a>
       </div>
     </div>
     <div class="box-right">
@@ -49,11 +49,9 @@ export default {
   methods: {
     ...mapActions(["setTitle"]),
     login() {
-      this.$router.push({ path: "/outter/login" });
       this.setTitle("欢迎登录");
     },
     register() {
-      this.$router.push({ path: "/outter/register" });
       this.setTitle("欢迎注册");
     }
   }

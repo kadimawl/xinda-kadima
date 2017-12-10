@@ -3,7 +3,7 @@
   <sele/>
     <!-- <h3>这是店铺首页</h3> -->
     <div class="logo">
-      <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+LogoUrl"alt=""> -->
+      <img :src="'http://115.182.107.203:8088/xinda/pic'+LogoUrl" alt="">
       <div>
         <h1>{{providerName}}</h1>
         <p>{{regionName}}</p>
@@ -36,7 +36,8 @@ export default {
     return {
       providerName: "",
       regionName: "",
-      providerInfo: ""
+      providerInfo: "",
+      LogoUrl: ""
     };
   },
   created() {
@@ -55,25 +56,9 @@ export default {
         that.providerName = shop.name;
         that.regionName = shop.regionName;
         that.providerInfo = shop.providerInfo;
-        console.log(shop)
-        // that.LogoUrl = shop.logoPath;
-      });
-
-
-    this.ajax //请求店铺商品
-      .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
-        this.qs.stringify({
-          //请求店铺信息
-          start: 1,
-          limit: 6,
-          providerId: shopID,
-          sort: 2
-        })
-      )
-      .then(function(data) {
-        var shopList = JSON.stringify(data.data.data);
-        sessionStorage.setItem("shopList",shopList);
+        that.LogoUrl = shop.providerImg;
+        var shopStory = JSON.stringify(shop);
+        sessionStorage.setItem("GoToshop", shopStory);
       });
   }
 };
@@ -93,10 +78,8 @@ export default {
   height: 180px;
   margin-bottom: 30px;
   img {
-    width: 80px;
     margin: 0 30px 0 60px;
-    height: 80px;
-    background: pink;
+    height: 60px;
   }
 }
 .body {

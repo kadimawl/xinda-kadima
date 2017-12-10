@@ -97,7 +97,7 @@ export default {
       console.log(123123);
     },
     shopGoto: function(e) {
-      //商品页面跳转事件//获取店铺ID
+      //商品页面跳转事件
       var shopID = e.target.getAttribute("id"); //获取店铺ID
       sessionStorage.setItem("shopID", shopID);
       location.href = "#/shopList";
