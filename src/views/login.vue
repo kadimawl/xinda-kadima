@@ -129,6 +129,7 @@ export default {
 
           if (status == 1) {
             this.$router.push({ path: "/HomePage" }); //页面跳转
+            this.ligined = true;
           }
         });
 
