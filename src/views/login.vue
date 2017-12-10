@@ -113,12 +113,15 @@ export default {
           imgCode: this.imgVInput
         })).then(data => {
           let status = data.data.status;
+          console.log(status);
+          
           if(status== 1){
+            
             this.$router.push({path: '/HomePage'})  //页面跳转
           }
         })
 
-      this.ajax.post('/xinda-api/member/info').then(data =>{console.log(data.data);
+      this.ajax.post('/xinda-api/sso/login-info').then(data =>{console.log('登录信息',data.data);
       })
 
     
