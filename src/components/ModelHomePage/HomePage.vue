@@ -106,7 +106,7 @@
         <h3>初创企业必备</h3>
       </div>
       <div class="com-inf">
-        <div class="infBox" v-for="product in products" :key="product">
+        <div class="infBox" v-for="product in products" :key="product.id">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+product.providerImg" alt=""></div>
           <h4>{{product.providerName}}</h4>
           <p class="service">{{product.serviceName}}</p>
@@ -143,7 +143,7 @@
         <span>推荐服务</span>
       </div>
       <div class="providers">
-        <div class="provider" v-for="Providers in providers" :key="Providers">
+        <div class="provider" v-for="Providers in providers" :key="Providers.id">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
@@ -156,7 +156,7 @@
           </div>
 
         </div>
-        <div class="provider" v-for="Providers in providers" :key="Providers">
+        <div class="provider" v-for="Providers in providers" :key="Providers.id">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
@@ -170,7 +170,7 @@
         </div>
       </div>
       <div class="com-inf" style="display:none;">
-        <div class="services" v-for="Service in services" :key="Service">
+        <div class="services" v-for="Service in services" :key="Service.id">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Service.providerImg" alt=""></div>
           <h4>{{Service.providerName}}</h4>
           <p class="service">{{Service.serviceName}}</p>
