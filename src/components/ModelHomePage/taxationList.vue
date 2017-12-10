@@ -7,9 +7,9 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
+              <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
                 <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
+                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
                   <div class="lists">{{itemNameII.name}}</div>
                 </div>
               </div>
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import VDistpicker from 'v-distpicker'
+import VDistpicker from "v-distpicker";
 export default {
   components: { VDistpicker },
   created() {
@@ -175,6 +175,12 @@ export default {
       font-size: 14px;
       float: left;
     }
+    .innerServer {
+      display: flex;
+    }
+  }
+  .innerServer {
+    display: flex;
   }
   .typeList {
     width: 850px;

@@ -32,8 +32,9 @@ export default {
 }
 .buttonSum {
   margin: 26px 23% 163px;
+  width: 52%;
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   button {
       width: 154px;
       height: 57px;
@@ -41,10 +42,14 @@ export default {
       border: 1px solid #2693d4;
       border-radius: 4px;
       background: #2693d4;
+      outline: 0;
       font-size: 28px;
       font-weight: 600;
       color: #fff;
       font-family: '宋体';
+      &:first-child{
+        margin-right: 35px;
+      }
   }
 }
 .e9{
