@@ -6,19 +6,12 @@
         <div class="innerT">
           <div class="serverRow Row">
             <div class="server">服务分类</div>
-<<<<<<< HEAD
-            <div class="serverList" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-              <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-              <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
-                <div class="lists">{{itemNameII.name}}</div>
-=======
             <div class="serverList">
               <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
                 <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
                 <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
                   <div class="lists">{{itemNameII.name}}</div>
                 </div>
->>>>>>> 488850fff1e707451dd4324ea6e92736cd13bdc8
               </div>
             </div>
           </div>
