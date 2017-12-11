@@ -37,7 +37,7 @@ export default {
   padding: 0;
 }
 .already{
-    width: 954px;
+    width: 900px;
     height: 154px;
     border: 1px solid #cccccc;
     margin-left: 20px;

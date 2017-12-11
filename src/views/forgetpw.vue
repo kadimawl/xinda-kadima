@@ -84,32 +84,35 @@ export default {
     //点击获取倒计时
     clickGet: function() {
       const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
+      if (this.phoneInput !== "" && this.imgV !== "") {
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+        this.ajax
+          .post(
+            "/xinda-api/register/sendsms",
+            this.qs.stringify({
+              cellphone: this.phoneInput,
+              smsType: 1,
+              imgCode: this.imgV
+            })
+          )
+          .then(data => {
+            console.log(data.data.msg);
+          });
       }
-      this.ajax
-        .post(
-          "/xinda-api/register/sendsms",
-          this.qs.stringify({
-            cellphone: this.phoneInput,
-            smsType: 1,
-            imgCode: this.imgV
-          })
-        )
-        .then(data => {
-          console.log(data);
-        });
     },
+
     //验证码刷新-
     reImg() {
       this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
@@ -155,7 +158,7 @@ export default {
           })
         )
         .then(data => {
-          console.log(data.data);
+          console.log(data.data.msg);
         });
     }
   }

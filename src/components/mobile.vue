@@ -50,9 +50,9 @@ export default {};
     line-height: 57px;
     width: 154px;
     height: 57px;
-    border: 1px solid #2693d4;
+    border: 1px solid #04d9ae;
     border-radius: 4px;
-    background: #2693d4;
+    background: #04d9ae;
     font-size: 28px;
     font-weight: 600;
     color: #fff;
@@ -83,7 +83,7 @@ export default {};
     width: 15px;
     height: 30px;
     background: url(../assets/mobile/mobileS.png) -280px -55px;
-    margin-left: 47%;
+    margin-left: 40%;
     margin-top: 24px;
   }
 }

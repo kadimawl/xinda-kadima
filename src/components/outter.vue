@@ -1,19 +1,22 @@
 <template>
   <div >
+    <top/>
     <outHead ></outHead>
     <div class="outBox">
       <div class="content">
         <router-view/>
       </div>
     </div>
-    
+    <anotherBottom/>
   </div>
 </template>
 
 <script>
 import outHead from "@/views/outHead";
+import top from "./top";
+import anotherBottom from "./anotherBottom";
 export default {
-  components: { outHead },
+  components: { outHead ,top,anotherBottom},
   data() {
     return {
       // seleShow: false,

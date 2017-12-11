@@ -82,17 +82,18 @@
 import pageturn from './pageturn'
 export default {
     created(){
-        this.ajax.post('/xinda-api/business-order/grid',{
+        this.ajax.post('/xinda-api/service-order/grid',{
             businessNo:'1',
             startTime:'2017-03-28',
             endTime:'2017-03-28',
             start:'0'
         }).then(function(data){
-            console.log(data);
+            console.log('data==',data);
         })
     },
     data() {
         return {
+            datas:[],
             value1:'',
             value2:'',
             ordercode:'未知',
@@ -106,12 +107,16 @@ export default {
     methods:{
         searchs:function(){
             this.msg='false';
+            console.log( this.value1);
+            // if(this.value1==''){
+
+            // }
             if(this.inputcode==''){
-                console.log(this.msg);
                 this.sermsg='订单号为空';
                 this.msg='true';
                 return;
             }
+            // if(/^S1\d{18}$/.test(this.inputcode)==)
         }
     }
 };
@@ -151,6 +156,11 @@ export default {
         line-height: 40px;
         display: flex;
         margin-top:25px;
+        span{
+            display: block;
+            margin-left: 40px;
+            color:#e42b12;
+        }
         p{
             width: 80px;
             color: #888888;
