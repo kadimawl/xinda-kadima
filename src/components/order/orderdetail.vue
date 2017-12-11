@@ -1,7 +1,5 @@
 <template>
     <div class="order">
-        <!-- 公共搜索头组件 -->
-        <sele/>
         <p class="homepay">首页/支付</p>
         <!-- 订单详情框 -->
         <div class="orderDe">
@@ -59,15 +57,15 @@
             <div><p>错误提示</p><span @click="errorstop">&#10005</span></div>
             <p>{{error}}</p>
         </div>
+        <waitpay v-if="waitshow"></waitpay>
     </div>
 </template>
 
 <script>
 //   所有功能都写完了，就差订单明细隐藏内容的js样式
 
-// 引用组件
-import sele from '../sele'
 // vuex引用
+import waitpay from './waitpay' //等待支付
 import {mapActions} from 'vuex'
 export default {
     data() {
@@ -80,9 +78,10 @@ export default {
             xz:false,//订单明细小三角旋转的控制条件
             error:'',//错误信息
             errorts:false,//控制错误提示的出现
+            waitshow:false,//控制支付等待框的出现
         };
     },
-    components:{sele},
+    components:{waitpay},
     methods:{
         // 引入vuex方法
         ...mapActions(['setRadio']),
@@ -104,7 +103,7 @@ export default {
                     return;
                 }else{//跳转支付等待界面// 调用vuex方法，并传参
                     this.setRadio(this.radio);
-                    location.href='http://localhost:8080/#/order/waitpay'
+                    this.waitshow=true;
                 }
             }else{
                 this.errorts=true;

@@ -31,14 +31,11 @@
 import {mapGetters} from 'vuex'
 export default {
     created(){
-       console.log(this.getRadio);
-       if(this.getRadio==1||this.radio==3){
-           console.log('1==',this.radio)
+       if(this.getRadio==1||this.getRadio==3){
            this.payback=true;
            return;
        }
        if(this.getRadio==2){
-           console.log('2==',this.radio)
            this.wxbox=true;
            return;
        }
@@ -62,7 +59,8 @@ export default {
             this.tsbox=true;
             this.error='2秒后返回支付方式界面';
             setTimeout(function(){
-                location.href='http://localhost:8080/#/Order';
+                this.waitshow=false;
+                // location.href='http://localhost:8080/#/Order';
             },2000)
         },
         paybackstop:function(){
