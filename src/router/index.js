@@ -35,7 +35,8 @@ import credentials from '@/components/ShopList/credentials' //店铺列表路由
 import custom from '@/components/ShopList/custom' //店铺列表路由
 import product from '@/components/ShopList/product' //店铺列表路由
 
-import order from '@/components/order/order' //订单详情
+import orderdetail from '@/components/order/orderdetail' //订单详情
+import waitpay from '@/components/order/waitpay' //等待支付
 import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
 import paymentFailure from '@/components/order/paymentFailure' //支付失败
 import payZfb from '@/components/order/payZfb' //支付宝支付
@@ -136,7 +137,7 @@ export default new Router({
                     ]
                 },
                 {
-                    path: 'gotoeval',
+                    path: 'userEval/gotoeval',
                     component: gotoeval
                 },
                 {
@@ -157,64 +158,33 @@ export default new Router({
             ]
         },
 
-        {
-            path: '/member',
-            name: 'member',
-            component: member,
-            children: [{
-                    path: '/memberBody', //父级特有模块路径
-                    alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-                    component: memberBody //父级特有模块
-                },
-                {
-                    path: 'evalAlready',
-                    component: evalAlready
-                }
-            ]
-        },
-
-        {
-            path: 'gotoeval',
-            component: gotoeval
-        },
-        {
-            path: 'accountSet',
-            component: accountSet,
-            children: [{
-                    path: 'accountsetBody',
-                    alias: 'accountSet',
-                    component: accountsetBody
-                },
-                {
-                    path: 'changePd',
-                    component: changePd
-                }
-            ]
-        },
-
-
-
-
 
         {
             path: '/Order',
             component: Order,
             children: [{
-                path: '/',
-                component: order
-            }, {
-                path: 'success',
-                component: paymentSuccess
-            }, {
-                path: 'failure',
-                component: paymentFailure
-            }, {
-                path: 'payZfb',
-                component: payZfb
-            }, {
-                path: 'payBank',
-                component: payBank
-            }]
+                    path: 'orderdetail',
+                    alias: '/Order',
+                    component: orderdetail
+                },
+                {
+                    path: "waitpay",
+                    component: waitpay
+                },
+                {
+                    path: 'success',
+                    component: paymentSuccess
+                }, {
+                    path: 'failure',
+                    component: paymentFailure
+                }, {
+                    path: 'payZfb',
+                    component: payZfb
+                }, {
+                    path: 'payBank',
+                    component: payBank
+                }
+            ]
         }, {
             path: '/detial',
             component: detial
