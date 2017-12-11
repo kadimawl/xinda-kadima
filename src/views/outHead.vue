@@ -42,6 +42,7 @@ export default {
   .sinda {
     width: 98px;
     height: 28px;
+    margin: auto 0;
     line-height: 28px;
     font-size: 28px;
     font-weight: 700;

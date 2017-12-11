@@ -174,28 +174,15 @@ export default new Router({
             }
           ]
         },
-        {
-          path: 'outter',
-          name: 'outter',
-          component: outter,
-          children: [{
-            path: '/outter/login',
-            component: login,
-          }, {
-            path: '/outter/register',
-            component: register
-          }, {
-            path: '/outter/forgetpw',
-            component: forgetpw
-          }]
-        },
+
+
+        
+
+        //pc端支付
         {
           path: '/Order',
           component: Order,
-          children: [{
-            path: '/',
-            component: order
-          }, {
+          children: [ {
             path: 'success',
             component: paymentSuccess
           }, {
@@ -209,30 +196,49 @@ export default new Router({
             component: payBank
           }]
         },
-        //移动端临时路由
-        {
-          path: '/mobile', //我的（未注册）
-          component: mobile,
-        },
-        {
-          path: '/mobileRegister', //我的（注册页）
-          component: mobileRegister
-        },
-        {
-          path: '/mobileLogin', //我的（登录页）
-          component: mobileLogin
-        },
-        {
-          path: '/logined', //我的（已登录）
-          component: logined
-        }, {
-          path: '/mobileForgetPw', //我的（忘记密码）
-          component: mobileForgetPw
-        },
-
+        
 
 
       ]
-    }
+    },
+
+    //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
+    {
+      path: 'outter',
+      name: 'outter',
+      component: outter,
+      children: [{
+        path: '/outter/login',
+        component: login,
+      }, {
+        path: '/outter/register',
+        component: register
+      }, {
+        path: '/outter/forgetpw',
+        component: forgetpw
+      }]
+    },
+    //移动端临时路由
+    {
+      path: '/mobile', //我的（未注册）
+      component: mobile,
+    },
+    {
+      path: '/mobileRegister', //我的（注册页）
+      component: mobileRegister
+    },
+    {
+      path: '/mobileLogin', //我的（登录页）
+      component: mobileLogin
+    },
+    {
+      path: '/logined', //我的（已登录）
+      component: logined
+    }, {
+      path: '/mobileForgetPw', //我的（忘记密码）
+      component: mobileForgetPw
+    },
+
+
   ]
 })
