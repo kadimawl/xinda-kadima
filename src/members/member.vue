@@ -1,5 +1,6 @@
 <template>
 <div class="member">
+    <top/>
     <!-- 公共头放在盒子里 -->
     <div class="membertop">
         <sele/>
@@ -9,7 +10,7 @@
         <user/>
         <router-view/>
     </div>
-        
+    <bottom/>   
 </div>
   
 </template>
@@ -17,11 +18,14 @@
 <script>
 import user from './user'
 import sele from '@/components/sele'
+import top from '@/components/top'
+import bottom from '@/components/bottom'
+
 export default {
     data() {
         return {};
     },
-    components: { user,sele }
+    components: { user,sele,top,bottom }
 };
 </script>
 
