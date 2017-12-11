@@ -12,7 +12,7 @@
       </div>
     </div>
     <div class="box-right">
-      <div class="shop-cart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></div>   
+      <div class="shop-cart"><a class="cartLink" href="/#/tabs/shoppingCart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></a></div>   
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
   </div>
@@ -24,7 +24,7 @@
       <a href="#" class="exit">【退出】</a>
     </div>
     <div class="box-Right">
-      <div class="shop-cart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></div> 
+      <div class="shop-cart"><a class="cartLink" href="/#/tabs/shoppingCart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></a></div>
       <div class="myOrder"><span class="bgOrder"></span><a href="#">我的订单</a></div>  
       <div class="entrance"><a href="#">服务商入口</a></div>
     </div>
@@ -168,5 +168,9 @@ export default {
     display: inline-block;
     color: @69c;
     margin-right: 10px;
+  }
+  .cartLink{
+    display: flex;
+    color: #000;
   }
 </style>

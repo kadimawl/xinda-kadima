@@ -1,6 +1,5 @@
 <template>
   <div class="ShopIndex">
-    <sele/>
     <!-- <h3>这是店铺首页</h3> -->
     <p>首页/公司工商</p>
     <table cellspacing ="0">
@@ -58,10 +57,8 @@
 </template>
 
 <script>
-import sele from "../sele";
 
 export default {
-  components: { sele }, //需要在当前组件内注册（添加）
   created() {
     this.getShop(); //调用商品列表请求函数
 

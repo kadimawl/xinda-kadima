@@ -73,7 +73,7 @@ export default new Router({
               component: toJoinIn,
             },
             {
-              path: '/taxationList', //财税服务
+              path: 'taxationList', //财税服务
               name: 'taxationList',
               component: taxationList
             },
@@ -83,17 +83,17 @@ export default new Router({
               component: companyList
             },
             {
-              path: '/goodsDetails', //商品详情
+              path: 'goodsDetails', //商品详情
               name: 'goodsDetails',
               component: goodsDetails
             },
             {
-              path: '/shoppingCart', //购物车
+              path: 'shoppingCart', //购物车
               name: 'shoppingCart',
               component: shoppingCart
             },
             {
-              path: '/toJoinIn', //加入我们
+              path: 'toJoinIn', //加入我们
               component: toJoinIn
             },
             {

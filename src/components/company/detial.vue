@@ -1,6 +1,5 @@
 <template>
 <div class="body">
-  <sele/>
   <p class="topP">首页/{{product.info}}</p>
   <div class="shopBuy">
     <img src="" alt="">
@@ -33,9 +32,7 @@
 </template>
 
 <script>
-import sele from "../sele";
 export default {
-  components: { sele }, //需要在当前组件内注册（添加）
   data() {
     return {
       shops: [],
