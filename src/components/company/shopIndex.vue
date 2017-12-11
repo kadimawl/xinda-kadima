@@ -1,5 +1,6 @@
 <template>
   <div class="ShopIndex">
+    <sele/>
     <!-- <h3>这是店铺首页</h3> -->
     <p>首页/公司工商</p>
     <table cellspacing ="0">
@@ -35,7 +36,8 @@
     <div class="shopTypes">
       <div v-for="shopType in shopTypes" :key="shopType.id">
         <div class="logo">
-          <img src="" alt=""><img src="" alt="">
+          <img :src="'http://115.182.107.203:8088/xinda/pic'+shopType.providerImg" alt="" class="logoImg">
+          <img class="logoGold" src="../../assets/shop/GoldShop.png" alt="">
         </div>
         <div class="shopText">
           <p>{{shopType.providerName}}</p>
@@ -56,7 +58,10 @@
 </template>
 
 <script>
+import sele from "../sele";
+
 export default {
+  components: { sele }, //需要在当前组件内注册（添加）
   created() {
     this.getShop(); //调用商品列表请求函数
 
@@ -87,15 +92,18 @@ export default {
     };
   },
   methods: {
-    productTypesC: function(event) {//商品分类单击事件
+    productTypesC: function(event) {
+      //商品分类单击事件
       console.log(123123);
     },
-    shopGoto: function(e) {//商品页面跳转事件//获取店铺ID
-      var shopID=e.target.getAttribute('id');//获取店铺ID
-      sessionStorage.setItem("shopID",shopID);
-      location.href="#/shopList";
+    shopGoto: function(e) {
+      //商品页面跳转事件
+      var shopID = e.target.getAttribute("id"); //获取店铺ID
+      sessionStorage.setItem("shopID", shopID);
+      location.href = "#/shopList";
     },
-    getShop: function(TypeCode) {//商品列表请求函数
+    getShop: function(TypeCode) {
+      //商品列表请求函数
       var that = this;
       this.ajax
         .post("http://115.182.107.203:8088/xinda/xinda-api/provider/grid", {
@@ -123,10 +131,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-* {
-  margin: 0;
-  padding: 0;
-}
 .ShopIndex {
   width: 1200px;
   margin: 0 auto;
@@ -213,7 +217,18 @@ table {
 .logo {
   width: 200px;
   height: 250px;
-  background: pink;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .logoImg {
+    width: 80%;
+  }
+  .logoGold{
+    position: absolute;
+    bottom: 20px;
+    left: 40px;
+  }
 }
 .shopText {
   padding: 10px 0;
