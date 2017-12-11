@@ -13,7 +13,7 @@
         <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
       </div>
       <div class="forget" @click="forgetpw">
-        <a href="#">忘记密码？</a>
+        <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
       <button @click="iLogin">立即登录</button>
     </div>
@@ -21,7 +21,7 @@
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
       <p class="immediately" @click="register">
-        <a href="#">立即注册>></a>
+        <a href="/#/outter/register">立即注册>></a>
       </p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
@@ -52,11 +52,11 @@ export default {
   methods: {
     ...mapActions(["setTitle"]),
     forgetpw() {
-      this.$router.push({ path: "/outter/forgetpw" });
+      // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");
     },
     register() {
-      this.$router.push({ path: "/outter/register" });
+      // this.$router.push({ path: "/outter/register" });
       this.setTitle("欢迎注册");
     },
     //手机号输入验证

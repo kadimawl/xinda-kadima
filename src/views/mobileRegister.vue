@@ -61,8 +61,8 @@ export default {
   box-sizing: border-box;
   border: 1px solid;
   input {
-    width: 73%;
-    height: 73px;
+    width: 80%;
+    height: 40px;
     border: none;
     border: 1px solid #cbcbcb;
     border-radius: 3px;
@@ -71,14 +71,19 @@ export default {
     margin-bottom: 19px;
   }
   .v-box {
+    width: 80%;
     display: flex;
+    justify-content: space-between;
     img {
+      width: 33%;
       height: 33px;
-      margin-left: 9px;
+    }
+    input{
+      width: 55%;
     }
   }
   .clickGet {
-    width: 100px;
+    width: 33%;
     height: 39px;
     color: #fff;
     background: #2693d4;
@@ -89,14 +94,40 @@ export default {
     outline: none;
     margin-left: 9px;
   }
-  #verification {
-    width: 172px;
-  }
   .v-img {
     width: 85px;
     height: 35px;
     border: 1px solid;
   }
+}
+.selected{
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+select{
+  width: 30%;
+  outline: 0;
+}
+.pwBox{
+  margin: 32px 0 145px;
+  width: 100;
+  input{
+    width: 80%;
+  }
+}
+button{
+  width: 80%;
+  height: 45px;
+  border: none;
+  border: 1px solid #2693d4;
+  border-radius: 1px;
+  background: #2693d4;
+  font-size: 26px;
+  color: #fff;
+  font-weight: 400;
+  line-height: 45px;
+  text-align: center;
 }
 </style>
 
