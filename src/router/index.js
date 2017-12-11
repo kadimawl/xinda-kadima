@@ -50,6 +50,7 @@ import mobile from '@/components/mobile' //移动端我的框架页
 import mobileRegister from '@/views/mobileRegister' //移动端我的注册页
 import logined from '@/views/logined' //移动端我的已登录页
 import mobileLogin from '@/views/mobileLogin' //移动端我的登录页
+import mobileForgetPw from '@/views/mobileForgetPw' //移动端我的忘记密码页
 
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
@@ -68,33 +69,33 @@ export default new Router({
         path: 'tabs',
         component: tabs,
         children: [{
-          path: 'toJoinIn',
-          component: toJoinIn,
-        },
-        {
-          path: '/taxationList', //财税服务
-          name: 'taxationList',
-          component: taxationList
-        },
-        {
-          path: 'companyList', //公司工商
-          name: 'companyList',
-          component: companyList
-        },
-        {
-          path: '/goodsDetails', //商品详情
-          name: 'goodsDetails',
-          component: goodsDetails
-        },
-        {
-          path: '/shoppingCart', //购物车
-          name: 'shoppingCart',
-          component: shoppingCart
-        },
-        {
-          path: '/toJoinIn', //加入我们
-          component: toJoinIn
-        },
+            path: 'toJoinIn',
+            component: toJoinIn,
+          },
+          {
+            path: '/taxationList', //财税服务
+            name: 'taxationList',
+            component: taxationList
+          },
+          {
+            path: 'companyList', //公司工商
+            name: 'companyList',
+            component: companyList
+          },
+          {
+            path: '/goodsDetails', //商品详情
+            name: 'goodsDetails',
+            component: goodsDetails
+          },
+          {
+            path: '/shoppingCart', //购物车
+            name: 'shoppingCart',
+            component: shoppingCart
+          },
+          {
+            path: '/toJoinIn', //加入我们
+            component: toJoinIn
+          },
         ]
       }, {
         path: '/detial',
@@ -124,8 +125,7 @@ export default new Router({
           component: product
         }]
       }]
-    }
-    ,
+    },
     {
       path: 'outter',
       name: 'outter',
@@ -140,91 +140,86 @@ export default new Router({
         path: '/outter/forgetpw',
         component: forgetpw
       }]
-    }
-    ,
+    },
     {
       path: '/member',
       redirect: '/member/memberBody',
       component: member,
       children: [{
-        name: 'memberBody',
-        path: 'memberBody', //父级特有模块路径
-        // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-        component: memberBody //父级特有模块
-      },
-      {
-        path: 'userEval',
-        name: 'userEval',
-        redirect: 'userEval/evalNone',
-        component: userEval,
-        children: [{
-          path: 'evalNone',
-          component: evalNone
+          name: 'memberBody',
+          path: 'memberBody', //父级特有模块路径
+          // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+          component: memberBody //父级特有模块
+        },
+        {
+          path: 'userEval',
+          name: 'userEval',
+          redirect: 'userEval/evalNone',
+          component: userEval,
+          children: [{
+              path: 'evalNone',
+              component: evalNone
+            },
+            {
+              path: 'evalAlready',
+              component: evalAlready
+            }
+          ]
+        },
+        {
+          path: 'gotoeval',
+          component: gotoeval
+        },
+        {
+          name: 'accountSet',
+          path: 'accountSet',
+          component: accountSet,
+          redirect: 'accountSet/accountsetBody',
+          children: [{
+              path: 'accountsetBody',
+              component: accountsetBody
+            },
+            {
+              path: 'changePd',
+              component: changePd
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: '/member',
+      name: 'member',
+      component: member,
+      children: [{
+          path: '/memberBody', //父级特有模块路径
+          alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+          component: memberBody //父级特有模块
         },
         {
           path: 'evalAlready',
           component: evalAlready
         }
-        ]
-      },
-      {
-        path: 'gotoeval',
-        component: gotoeval
-      },
-      {
-        name: 'accountSet',
-        path: 'accountSet',
-        component: accountSet,
-        redirect: 'accountSet/accountsetBody',
-        children: [{
+      ]
+    },
+    {
+      path: 'gotoeval',
+      component: gotoeval
+    },
+    {
+      path: 'accountSet',
+      component: accountSet,
+      children: [{
           path: 'accountsetBody',
+          alias: 'accountSet',
           component: accountsetBody
         },
         {
           path: 'changePd',
           component: changePd
         }
-        ]
-      }
       ]
-    }
-    ,
-    {
-      path: '/member',
-      name: 'member',
-      component: member,
-      children: [{
-        path: '/memberBody', //父级特有模块路径
-        alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-        component: memberBody //父级特有模块
-      },
-      {
-        path: 'evalAlready',
-        component: evalAlready
-      }
-      ]
-    }
-    ,
-    {
-      path: 'gotoeval',
-      component: gotoeval
-    }
-    ,
-    {
-      path: 'accountSet',
-      component: accountSet,
-      children: [{
-        path: 'accountsetBody',
-        alias: 'accountSet',
-        component: accountsetBody
-      },
-      {
-        path: 'changePd',
-        component: changePd
-      }
-      ]
-    }
-    ,
+    },
     {
       path: '/Order',
       component: Order,
@@ -247,16 +242,20 @@ export default new Router({
     },
     //移动端临时路由
     {
-      path: '/mobile',   //我的（未注册）
+      path: '/mobile', //我的（未注册）
       component: mobile,
     }, {
-      path: '/mobileRegister',   //我的（注册页）
+      path: '/mobileRegister', //我的（注册页）
       component: mobileRegister
-    },{
-      path: '/mobileLogin',      //我的（登录页）
+    }, {
+      path: '/mobileLogin', //我的（登录页）
       component: mobileLogin
-    },{
-      path: '/logined',   //我的（已登录）
+    },
+    {
+      path: '/mobileForgetPw', //我的（忘记密码）
+      component: mobileForgetPw
+    }, {
+      path: '/logined', //我的（已登录）
       component: logined
     }
 
