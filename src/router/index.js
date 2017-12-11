@@ -38,7 +38,6 @@ import custom from '@/components/company/ShopList/custom' //店铺列表客服
 import product from '@/components/company/ShopList/product' //店铺列表资质
 
 import orderdetail from '@/components/order/orderdetail' //订单详情
-import waitpay from '@/components/order/waitpay' //等待支付
 import Order from '@/components/Order' //订单详情路由
 import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
 import paymentFailure from '@/components/order/paymentFailure' //支付失败
