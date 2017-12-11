@@ -112,6 +112,8 @@ export default {
     //立即登录
     iLogin() {
       let user = this.phoneInput;
+      let pw =  this.pwInput;
+      let storage = window.sessionStorage;
       this.ajax
         .post(
           "/xinda-api/sso/login",
@@ -124,16 +126,15 @@ export default {
         .then(data => {
           let msg = data.data.msg;
           let status = data.data.status;
-          console.log(msg, status);
-
           if (status == 1) {
+            if(storage){
+              storage.setItem(user,JSON.parse(user));
+            }
             this.$router.push({ path: "/HomePage" }); //页面跳转
-            // this.ligined = true;
             this.ajax.post("/xinda-api/sso/login-info").then(data => {
               let name =  data.data.data.name;
-              if(name !==''){
-                console.log(name);
-                this.setName(name) ;
+              if(name !==''&&storage.getItem(user)==name){
+                this.setName(storage.getItem(user)) ;
               }
             });
           } else if (status == -1) {

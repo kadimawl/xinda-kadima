@@ -1,48 +1,60 @@
 <template>
-<div class="Top">
-  <!-- 未登录顶部 -->
-  <div class="topBox notLoggedIn">
-    <div class="box-left" v-show="!getName">
-      <p class="w-come">欢迎来到信达！</p>
-      <div class="please" >
-        <p>请</p>
-        <div @click="login"><a href="/#/outter/login">登录</a></div>
+  <div class="Top">
+    <!-- 未登录顶部 -->
+    <div class="topBox notLoggedIn">
+      <div class="box-left" v-show="!getName">
+        <p class="w-come">欢迎来到信达！</p>
+        <div class="please">
+          <p>请</p>
+          <div @click="login">
+            <a href="/#/outter/login">登录</a>
+          </div>
+        </div>
+        <div class="item-reg" @click="register">
+          <a href="/#/outter/register">快速注册</a>
+        </div>
       </div>
-      <div class="item-reg" @click="register"  >
-        <a href="/#/outter/register">快速注册</a>
+      <div class="box-left" v-show="getName">
+        <a href="/#/member" class="username">{{getName}}</a>
+        <p class="w-come">欢迎来到信达！</p>
+        <a href="#" class="exit" @click="exit">【退出】</a>
       </div>
-    </div>
-    <div class="box-left" v-show="getName">
-      <a href="#" class="username">{{getName}}</a>
-      <p class="w-come">欢迎来到信达！</p>
-      <a href="#" class="exit" @click="exit">【退出】</a>
-    </div>
-    <div class="box-right">
-      <div class="shop-cart"><a class="cartLink" href="/#/tabs/shoppingCart"><span class="bgCart"></span><p>购物车 <span>{{getNum}}</span>件</p></a></div>
-      <div class="myOrder " v-show="getName"><span class="bgOrder"></span><a href="#">我的订单</a></div>  
-      <div class="entrance"><a href="#">服务商入口</a></div>
+      <div class="box-right">
+        <div class="shop-cart">
+          <a class="cartLink" href="/#/tabs/shoppingCart">
+            <span class="bgCart"></span>
+            <p>购物车
+              <span>{{getNum}}</span>件</p>
+          </a>
+        </div>
+        <div class="myOrder " v-show="getName">
+          <span class="bgOrder"></span>
+          <a href="#">我的订单</a>
+        </div>
+        <div class="entrance">
+          <a href="#">服务商入口</a>
+        </div>
+      </div>
     </div>
   </div>
-</div>
- 
-  
+
 </template>
 
 <script>
-import { mapGetters,mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
       ligined: false,
       lR: true,
-      name: '',
+      name: ""
     };
   },
   computed: {
-    ...mapGetters(["getNum",'getName']) //{getNum:function(){}}
+    ...mapGetters(["getNum", "getName"]) //{getNum:function(){}}
   },
   methods: {
-    ...mapActions(["setTitle",'setName']),
+    ...mapActions(["setTitle", "setName"]),
     login() {
       this.setTitle("欢迎登录");
     },
@@ -50,9 +62,9 @@ export default {
       this.setTitle("欢迎注册");
     },
     exit() {
-      this.ajax.post('/xinda-api/sso/logout').then(data=>{
-        this.setName('')
-      })
+      this.ajax.post("/xinda-api/sso/logout").then(data => {
+        this.setName("");
+      });
     }
   }
 };
@@ -142,35 +154,36 @@ export default {
       color: @69c;
     }
   }
-  .bgCart {
-    margin-left: 10px;
-  }
-  
-  .bgOrder {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-    margin-left: 5px;
-    margin-top: 5px;
-    background: url(../assets/index/u619.png) no-repeat;
-  }
 }
-.myOrder{
-  a{
+.bgCart {
+  margin-left: 10px;
+}
+
+.bgOrder {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  background: url(../assets/index/u619.png) no-repeat;
+}
+
+.myOrder {
+  a {
     color: #000;
   }
 }
-.exit{
+.exit {
   color: #000;
 }
-.username{
-    display: inline-block;
-    color: @69c;
-    margin-right: 10px;
-  }
-  .cartLink{
-    display: flex;
-    color: #000;
-  }
+.username {
+  display: inline-block;
+  color: @69c;
+  margin-right: 10px;
+}
+.cartLink {
+  display: flex;
+  color: #000;
+}
 </style>
