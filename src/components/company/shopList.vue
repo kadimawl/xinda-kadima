@@ -16,7 +16,7 @@
             <p>{{providerInfo}}</p>
         </div>
         <div class="serverLogo">
-          <img src="../assets/shop/shopIMG.png" alt="">
+          <img src="../../assets/shop/shopIMG.png" alt="">
         </div>
       </div>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import sele from "./sele";
+import sele from "../sele";
 
 export default {
   components: { sele }, //需要在当前组件内注册（添加）

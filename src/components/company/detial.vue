@@ -3,7 +3,6 @@
   <sele/>
   <p class="topP">首页/{{product.info}}</p>
   <div class="shopBuy">
-    <!-- <img :src="'http://115.182.107.203:8088/xinda/pic'+product.img" alt=""> -->
     <img src="" alt="">
     <div>
       <h3>{{product.info}}</h3>
@@ -34,7 +33,7 @@
 </template>
 
 <script>
-import sele from "./sele";
+import sele from "../sele";
 export default {
   components: { sele }, //需要在当前组件内注册（添加）
   data() {

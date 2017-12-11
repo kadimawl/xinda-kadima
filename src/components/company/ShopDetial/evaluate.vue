@@ -2,7 +2,7 @@
   <div class="service">
       <div class="serviceTop">
           <router-link :to="{ path: '/detial/service'}" replace>服务内容</router-link>
-          <router-link :to="{ path: '/'}" replace>商品评价</router-link>
+          <a href="javascript:void(0)">商品评价</a>
           <span></span>
       </div>
       <div class="serviceBody" v-html="evaluate">
@@ -19,7 +19,8 @@ export default {
   },
   created() {
     var that = this;
-    var shop = JSON.parse(sessionStorage.getItem("shopping"));
+    var shopID = sessionStorage.getItem("shoppingID");
+    var shop = JSON.parse(sessionStorage.getItem(shopID));
     !(function(shops) {
       that.evaluate = shops.serviceList[0].serviceContent;
     })(shop);

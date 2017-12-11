@@ -20,21 +20,34 @@ export default {
   created() {
     var that = this;
     var shopID = sessionStorage.getItem("shoppingID");
-    this.ajax
-      .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/detail",
-        this.qs.stringify({
-          sId: shopID
-        })
-      )
-      .then(function(data) {
-        var shop = data.data.data;
-        sessionStorage.setItem("shopping", JSON.stringify(shop));
-        shops(shop);
-      });
-    var shops = function(shop) {
-      that.servers = shop.serviceList[0].serviceContent;
-    };
+    var ifff = JSON.parse(sessionStorage.getItem(shopID));
+    if (ifff == null) {
+      console.log(123);
+
+      console.log(shopID);
+      this.ajax
+        .post(
+          "http://115.182.107.203:8088/xinda/xinda-api/product/package/detail",
+          this.qs.stringify({
+            sId: shopID
+          })
+        )
+        .then(function(data) {
+          var shop = data.data.data;
+          sessionStorage.setItem(shopID, JSON.stringify(shop));
+          shops(shop);
+          console.log(shop);
+        });
+      var shops = function(shop) {
+        that.servers = shop.serviceList[0].serviceContent;
+      };
+    } else {
+      console.log(321);
+      var shopSer = JSON.parse(sessionStorage.getItem(shopID));
+      !(function(shops) {
+        that.servers = shops.serviceList[0].serviceContent;
+      })(shopSer);
+    }
   }
 };
 </script>
