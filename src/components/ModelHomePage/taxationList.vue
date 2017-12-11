@@ -7,9 +7,9 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
+              <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
                 <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
+                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
                   <div class="lists">{{itemNameII.name}}</div>
                 </div>
               </div>
@@ -17,12 +17,10 @@
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div class="typeList">
-              <div v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-                <div v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==2">
-                  <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
-                    <div class="lists">{{itemNameIII.name}}</div>
-                  </div>
+            <div class="typeList" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
+              <div class="typeList" v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==2">
+                <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
+                  <div class="lists">{{itemNameIII.name}}</div>
                 </div>
               </div>
             </div>
@@ -30,12 +28,44 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-              <v-distpicker></v-distpicker>
+              <v-distpicker province="北京市" city="市辖区" area=""></v-distpicker>
             </div>
           </div>
         </div>
-        <div class="innerB"></div>
-
+        <div class="innerB">
+          <div class="innerBt">
+            <div class="infBox">综合排序</div>
+            <div class="infBox">价格↑↑</div>
+          </div>
+          <div class="innerBb">
+            <div class="B-lable">
+              <div class="lables">商品</div>
+              <div class="lables">价格</div>
+            </div>
+            <div class="B-lists" v-for="(Product,key,index) in products" :key="Product.id">
+              <div class="listImg">
+                <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
+              </div>
+              <div class="listInf">
+                <div class="infLeft">
+                  <b>{{Product.serviceName}}</b>
+                  <p>{{Product.serviceInfo}}</p>
+                  <p>
+                    <span>{{Product.providerName}}</span>
+                    <span>{{Product.regionName}}</span>
+                  </p>
+                </div>
+                <div class="infRight">
+                  <h2>￥{{Product.marketPrice}}</h2>
+                  <div class="buttons">
+                    <button>立即购买</button>
+                    <button>加入购物车</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="right">
         <div class="platform"></div>
@@ -52,7 +82,7 @@
 </template>
 
 <script>
-import VDistpicker from 'v-distpicker'
+import VDistpicker from "v-distpicker";
 export default {
   components: { VDistpicker },
   created() {
@@ -60,16 +90,28 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
-      // for (var i in rData){
-      //   console.log(rData[i])
-      //   that.ItemListsI = rData[i];
-      // }
-      console.log(that.ItemLists);
+      // console.log(that.ItemLists);
     });
+    this.ajax
+      .post(
+        "/xinda-api/product/package/grid",
+        this.qs.stringify({
+          start: 0,
+          limit: 8,
+          productTypeCode: "1",
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        var gData = data.data.data;
+        that.products = gData;
+        console.log(that.products);
+      });
   },
   data() {
     return {
-      ItemLists: []
+      ItemLists: [],
+      products: []
     };
   }
 };
@@ -96,13 +138,109 @@ export default {
       border: 1px solid #ccc;
       border-top: none;
       margin-bottom: 25px;
+      background-color: #eee;
     }
     .innerB {
-      height: 468px;
+      width: 946px;
       border: 1px solid #ccc;
+      .innerBt {
+        width: 946px;
+        height: 40px;
+        display: flex;
+        background-color: #eee;
+        border-bottom: 1px solid #ccc;
+        .infBox {
+          width: 100px;
+          height: 40px;
+          font-size: 12px;
+          line-height: 40px;
+          text-align: center;
+        }
+        .infBox:hover {
+          background-color: #2693d4;
+          color: #fff;
+          cursor: pointer;
+        }
+      }
+      .innerBb {
+        width: 946px;
+        .B-lable {
+          width: 926px;
+          margin: 0 auto;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #ccc;
+          display: flex;
+          justify-content: space-between;
+          .lables {
+            width: 100px;
+            height: 40px;
+            font-size: 12px;
+            line-height: 40px;
+            text-align: center;
+          }
+        }
+        .B-lists {
+          width: 926px;
+          height: 110px;
+          margin: 0 auto;
+          margin-bottom: 10px;
+          border-bottom: 1px solid #ccc;
+          display: flex;
+          .listImg {
+            width: 98px;
+            height: 98px;
+            border: 1px solid #ccc;
+            img {
+              width: 98px;
+              height: 98px;
+            }
+          }
+          .listInf {
+            width: 826px;
+            height: 110px;
+            display: flex;
+            .infLeft {
+              width: 640px;
+              height: 100px;
+              b{
+                display: block;
+                font-size: 16px;
+                margin-left: 20px;
+                margin-bottom: 20px;
+              }
+              p{
+                font-size: 14px;
+                margin-left: 20px;
+                margin-bottom: 15px;
+                span{
+                  margin-right: 50px;
+                }
+              }
+            }
+            .infRight {
+              width: 186px;
+              height: 100px;
+              h2{
+                color:red;
+                text-align: center;
+                margin: 20px auto;
+              }
+              .buttons{
+                button{
+                  width: 90px;
+                  height: 30px;
+                  color:#fff;
+                  border-radius: 3px;
+                  background-color: #2693d4;
+                  border:0;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
-
   .right {
     width: 236px;
     height: 658px;
@@ -142,52 +280,67 @@ export default {
     }
   }
 }
+
 .Row {
   height: 40px;
   border-top: 1px solid #ccc;
   display: flex;
-  .type {
-    width: 98px;
-    height: 40px;
-    border-right: 1px solid #ccc;
-    font-size: 15px;
-    color: #000;
-    line-height: 40px;
-    text-align: center;
-  }
   .server {
     width: 98px;
     height: 40px;
     border-right: 1px solid #ccc;
     font-size: 15px;
-    color: #000;
     line-height: 40px;
     text-align: center;
   }
   .serverList {
-    width: 850px;
+    width: 847px;
     height: 40px;
     display: flex;
+    flex-wrap: wrap;
     .lists {
       height: 25px;
       border-radius: 5px;
-      border: 1px solid #000;
       font-size: 14px;
-      float: left;
+      line-height: 25px;
+      margin: 5px 10px;
+      padding: 2px 5px;
     }
+    .innerServer {
+      display: flex;
+    }
+  }
+  .innerServer {
+    display: flex;
+  }
+  .type {
+    width: 98px;
+    height: 40px;
+    border-right: 1px solid #ccc;
+    font-size: 15px;
+    line-height: 40px;
+    text-align: center;
   }
   .typeList {
-    width: 850px;
+    width: 847px;
     height: 40px;
     display: flex;
+    flex-wrap: wrap;
     .lists {
       height: 25px;
       border-radius: 5px;
-      border: 1px solid #000;
       font-size: 14px;
-      float: left;
+      line-height: 25px;
+      margin: 5px 10px;
+      padding: 2px 5px;
     }
   }
+  .lists:hover {
+    background-color: #2693d4;
+    color: #fff;
+    cursor: pointer;
+  }
+
   .space {
     width: 98px;
     height: 40px;

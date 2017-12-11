@@ -3,6 +3,7 @@
     <div class="leftOut">
       <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
         <p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
+        <p class="errorMsg" v-show="!rshow">该手机号已注册</p>
       </div>
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
@@ -18,7 +19,7 @@
         <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
       </div>
       <div class="selected">
-        <v-distpicker id="select" province="省" city="市"></v-distpicker>
+        <v-distpicker id="select" province="省" city="市" @selected="selected" ></v-distpicker>
       </div>
       <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
         <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
@@ -55,14 +56,19 @@ export default {
       imgVInput: "",
       phoneV: "",
       pVShow: true,
+      rshow: true,
       pshow: true,
       pwInput: "",
-      pwShow: false
+      pwShow: false,
+      seleCode: ''
     };
   },
   methods: {
     ...mapActions(["setTitle"]),
     created() {},
+    selected: function(data){
+        this.seleCode =  data.area.code; 
+    },
     login() {
       this.$router.push({ path: "/outter/login" });
       this.setTitle("欢迎登录");
@@ -81,6 +87,7 @@ export default {
     //重新获得焦点，提示框消失
     focus() {
       this.pshow = true;
+      this.rshow = true;
     },
     //图片验证码输入错误
     imgVB() {
@@ -89,42 +96,6 @@ export default {
       if (!imgVR && this.imgVInput !== "") {
         this.imgShow = false;
       }
-    },
-    imgVA() {
-      if (this.imgVInput !== "") {
-        this.imgShow = true;
-        this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
-      }
-    },
-    //点击获取倒计时
-    clickGet: function() {
-      const TIME_COUNT = 60;
-      if (!this.timer) {
-        this.count = TIME_COUNT;
-        this.show = false;
-        this.timer = setInterval(() => {
-          if (this.count > 0 && this.count <= TIME_COUNT) {
-            this.count--;
-          } else {
-            this.show = true;
-            clearInterval(this.timer);
-            this.timer = null;
-          }
-        }, 1000);
-      }
-      //短信验证码发送
-      this.ajax
-        .post(
-          "/xinda-api/register/sendsms",
-          this.qs.stringify({
-            cellphone: this.phoneInput,
-            smsType: 1,
-            imgCode: this.imgVInput
-          })
-        )
-        .then(data => {
-          console.log(data);
-        });
       //验证手机号是否已经注册
       this.ajax
         .post(
@@ -136,9 +107,51 @@ export default {
           })
         )
         .then(data => {
-          console.log("验证手机号是否已经注册", data.data);
+          if (data.data.status == -2) {
+            this.rshow = false;
+          }
         });
     },
+    imgVA() {
+      if (this.imgVInput !== "") {
+        this.imgShow = true;
+        this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+      }
+    },
+    //点击获取倒计时
+    clickGet: function() {
+      const TIME_COUNT = 60;
+
+      //短信验证码发送
+      if (this.phoneInput !== "" && this.imgVInput !== "") {
+        if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+            if (this.count > 0 && this.count <= TIME_COUNT) {
+              this.count--;
+            } else {
+              this.show = true;
+              clearInterval(this.timer);
+              this.timer = null;
+            }
+          }, 1000);
+        }
+        this.ajax
+          .post(
+            "/xinda-api/register/sendsms",
+            this.qs.stringify({
+              cellphone: this.phoneInput,
+              smsType: 1,
+              imgCode: this.imgVInput
+            })
+          )
+          .then(data => {
+            console.log(data);
+          });
+      }
+    },
+
     //手机验证码输入验证
     pvBlur() {
       let pVReg = /^\d{6}$/;
@@ -179,11 +192,11 @@ export default {
             smsType: 1,
             validCode: 111111,
             password: md5(pw),
-            regionId: 110010
+            regionId: this.seleCode
           })
         )
         .then(data => {
-          console.log("注册提交", data);
+          console.log("注册提交", data.data.msg, data.data.status);
         });
     }
   }
@@ -286,6 +299,7 @@ export default {
 .agree {
   width: 281px;
   height: 14px;
+  margin-top: 3px;
   line-height: 14px;
   font-size: 14px;
   text-align: center;

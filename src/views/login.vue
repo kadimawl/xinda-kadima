@@ -1,24 +1,38 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus"><p class="errorMsg" v-show="!registered">该手机号未注册</p><p class="errorMsg" v-show="!correctness">请输入正确的手机号</p></div>
-      <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus"> <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p><p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p></div>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img  @click="reImg" :src="imgUrl" alt=""><p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p></div>
-      <div class="forget" @click="forgetpw"><a href="#">忘记密码？</a></div>
+      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
+        <p class="errorMsg" v-show="!registered">该手机号未注册</p>
+        <p class="errorMsg" v-show="!correctness">请输入正确的手机号</p>
+      </div>
+      <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+        <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
+        <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
+      </div>
+      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt="">
+        <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
+      </div>
+      <div class="forget" @click="forgetpw">
+        <a href="#">忘记密码？</a>
+      </div>
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
-      <p class="immediately" @click="register"><a href="#">立即注册>></a></p>
+      <p class="immediately" @click="register">
+        <a href="#">立即注册>></a>
+      </p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
 </template>
 
 <script>
-var md5 = require('md5');
-import {mapActions} from 'vuex'
+   
+var md5 = require("md5");
+
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -36,23 +50,29 @@ export default {
   },
 
   methods: {
-    ...mapActions(['setTitle']),
+    ...mapActions(["setTitle"]),
     forgetpw() {
-      this.$router.push({path: '/outter/forgetpw'});
-      this.setTitle('忘记密码')
+      this.$router.push({ path: "/outter/forgetpw" });
+      this.setTitle("忘记密码");
     },
     register() {
-      this.$router.push({path: '/outter/register'});
-      this.setTitle('欢迎注册')
+      this.$router.push({ path: "/outter/register" });
+      this.setTitle("欢迎注册");
     },
     //手机号输入验证
     phone() {
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
       let result = pReg.test(this.phoneInput);
+      let user = this.phoneInput;
       if (!this.phoneInput == "") {
         this.correctness = true;
         if (!result) {
           this.correctness = false;
+          let user = this.phoneInput;
+
+          if (storage.user) {
+            console.log("该手机号已注册");
+          }
         }
       }
     },
@@ -64,7 +84,7 @@ export default {
     pw() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
-      if (!pwResult&&this.pwInput!=='') {
+      if (!pwResult && this.pwInput !== "") {
         this.pwShow = true;
       }
     },
@@ -92,39 +112,30 @@ export default {
 
     //立即登录
     iLogin() {
-      var user = this.phoneInput;
-      var pw = this.pwInput;
-      console.log(md5(pw));
-      // console.log(user, pw);
-      // if (!user == "") {
-      //   if (window.sessionStorage) {
-      //     let storage = window.sessionStorage;
-      //     if (storage.user) {
-      //       console.log(storage.user);
-      //     }
-      //     console.log("11===", storage.user);
-      //   }
-      // }
-      this.ajax.post(
-        "/xinda-api/sso/login",
-        this.qs.stringify({
-          loginId: user,
-          password: md5(pw),
-          imgCode: this.imgVInput
-        })).then(data => {
+      let user = this.phoneInput;
+      this.ajax
+        .post(
+          "/xinda-api/sso/login",
+          this.qs.stringify({
+            loginId: user,
+            password: md5(this.pwInput),
+            imgCode: this.imgVInput
+          })
+        )
+        .then(data => {
+          let msg = data.data.msg;
           let status = data.data.status;
-          console.log(status);
-          
-          if(status== 1){
-            
-            this.$router.push({path: '/HomePage'})  //页面跳转
+          console.log(msg);
+
+          if (status == 1) {
+            this.$router.push({ path: "/HomePage" }); //页面跳转
+            this.ligined = true;
           }
-        })
+        });
 
-      this.ajax.post('/xinda-api/sso/login-info').then(data =>{console.log('登录信息',data.data);
-      })
-
-    
+      // this.ajax.post("/xinda-api/sso/login-info").then(data => {
+      //   console.log("登录信息", data.data);
+      // });
     }
   }
 };

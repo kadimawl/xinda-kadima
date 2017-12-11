@@ -46,7 +46,10 @@ import payBank from '@/components/order/payBank' //银行支付
 
 
 //移动端
-import mobile from '@/components/mobile'
+import mobile from '@/components/mobile' //移动端我的框架页
+import mobileRegister from '@/views/mobileRegister' //移动端我的注册页
+import logined from '@/views/logined' //移动端我的已登录页
+import mobileLogin from '@/views/mobileLogin' //移动端我的登录页
 
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
@@ -244,8 +247,20 @@ export default new Router({
     },
     //移动端临时路由
     {
-      path: '/mobile',
-      component: mobile
+      path: '/mobile',   //我的（未注册）
+      component: mobile,
+    }, {
+      path: '/mobileRegister',   //我的（注册页）
+      component: mobileRegister
+    },{
+      path: '/mobileLogin',      //我的（登录页）
+      component: mobileLogin
+    },{
+      path: '/logined',   //我的（已登录）
+      component: logined
     }
+
+
+
   ]
 })
