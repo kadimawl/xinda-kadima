@@ -26,7 +26,6 @@ export default {
 </script>
 
 <style lang="less">
-<<<<<<< HEAD
 * {
   margin: 0;
   padding: 0;
@@ -34,13 +33,7 @@ export default {
 a{
   text-decoration: none;
 }
-=======
-  *{
-    margin: 0;
-    padding: 0;
-  }
-  button{
+button{
     outline:0;
   }
->>>>>>> 69b99f888140cdff93e7ba8a109c4d79372323a9
 </style>
