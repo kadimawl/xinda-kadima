@@ -21,4 +21,7 @@ export default {
     margin: 0;
     padding: 0;
   }
+  button{
+    outline:0;
+  }
 </style>

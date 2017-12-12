@@ -210,24 +210,25 @@ export default new Router({
                         }
                     ]
                 },
-                //移动端临时路由
-                {
-                    path: '/mobile', //我的（未注册）
-                    component: mobile,
-                },
-                {
-                    path: '/mobileRegister', //我的（注册页）
-                    component: mobileRegister
-                },
-                {
-                    path: '/mobileLogin', //我的（登录页）
-                    component: mobileLogin
-                },
-                {
-                    path: '/logined', //我的（已登录）
-                    component: logined
-                }
+
             ]
+        },
+        //移动端临时路由
+        {
+            path: '/mobile', //我的（未注册）
+            component: mobile,
+        },
+        {
+            path: '/mobileRegister', //我的（注册页）
+            component: mobileRegister
+        },
+        {
+            path: '/mobileLogin', //我的（登录页）
+            component: mobileLogin
+        },
+        {
+            path: '/logined', //我的（已登录）
+            component: logined
         }
     ]
 })
