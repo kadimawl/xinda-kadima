@@ -14,8 +14,13 @@
                 </div>
             </div>
             <!-- 订单明细隐藏内容，需通过外界传数据再创建 -->
-            <div v-if="mingxi">
-
+            <div v-if="mingxi" class="mingxi">
+                <div v-for="list in lists" :key="list.id" class="hidebox">
+                    <p>服务名称：{{list.providerId}}</p>
+                    <p>单价：<span>￥{{list.unitPrice}}</span>元</p>
+                    <p>数量：<span>{{list.buyNum}}</span></p>
+                    <p>服务总额：<span>{{list.totalPrice}}</span></p>
+                </div>
             </div>
         </div>
         <!-- 支付方式框 -->
@@ -57,17 +62,41 @@
             <div><p>错误提示</p><span @click="errorstop">&#10005</span></div>
             <p>{{error}}</p>
         </div>
-        <waitpay v-if="waitshow"></waitpay>
+        <waitpay :displays="paywait" :type="type" @close="close" @ts="tsbox"></waitpay>
     </div>
 </template>
 
 <script>
-//   所有功能都写完了，就差订单明细隐藏内容的js样式
+//   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
 
-// vuex引用
-import waitpay from './waitpay' //等待支付
-import {mapActions} from 'vuex'
+import waitpay from './waitpay'//等待支付
 export default {
+    created(){
+        // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
+        if(sessionStorage.getItem('S1704040001075133085')==null){
+                this.ajax.post('/xinda-api/business-order/detail',
+                this.qs.stringify({
+                businessNo:'S1704040001075133085',
+            })).then(function(data){
+                if(data.data.status==1){
+                // var databusi=data.data.data.businessOrder;
+                // this.lists=data.data.data.serviceOrderList;
+                // this.code=databusi.businessNo;
+                // this.createT=databusi.createTime;
+                // this.price=databusi.totalPrice;
+                console.log(data);
+                sessionStorage.setItem('S1704040001075133085',JSON.stringify(data));
+                }
+            })
+        }else{
+            var data=JSON.parse(sessionStorage.getItem('S1704040001075133085'));
+             // var databusi=data.data.data.businessOrder;
+                // this.lists=data.data.data.serviceOrderList;
+                // this.code=databusi.businessNo;
+                // this.createT=databusi.createTime;
+                // this.price=databusi.totalPrice;
+        }
+    },
     data() {
         return {
             code:'',//产品编号
@@ -78,18 +107,17 @@ export default {
             xz:false,//订单明细小三角旋转的控制条件
             error:'',//错误信息
             errorts:false,//控制错误提示的出现
-            waitshow:false,//控制支付等待框的出现
+            paywait:false,//传参控制支付等待框
+            type:'',//支付方式传参
+            lists:[],//订单明细隐藏内容框
         };
     },
     components:{waitpay},
     methods:{
-        // 引入vuex方法
-        ...mapActions(['setRadio']),
         // 订单明细点击事件，通过订单数据去创建隐藏框的内容，待完成
         liston:function(){
             this.xz=!this.xz;
             this.mingxi=!this.mingxi;
-
         },
         // 去结算按钮的点击事件，跳转支付等待页面，然后根据支付状况去跳转其他页
         pay(){
@@ -100,16 +128,23 @@ export default {
                 if(this.radio==4){
                     this.errorts=true;
                     this.error='亲，该支付方式还未开通，请选择别的支付方式';
-                    return;
-                }else{//跳转支付等待界面// 调用vuex方法，并传参
-                    this.setRadio(this.radio);
-                    this.waitshow=true;
+                }else{
+                    this.paywait=true;
+                    this.type=this.radio;
                 }
             }else{
                 this.errorts=true;
                 this.error='请选择支付方式!!';
                 return;
             }
+        },
+        // 关闭支付等待框
+        close(){
+            this.paywait = false;
+        },
+        // 出现提示框
+        tsbox(){
+            this.type='6';
         },
         // 关闭错误提示框
         errorstop:function(){
@@ -193,7 +228,29 @@ export default {
         // 订单明细隐藏数据的样式，其余部分在js部分
         .mingxi{
             width: 100%;
+            height: auto;
             background: #f7f7f7;
+            .hidebox{
+                height: 70px;
+                width: 100%;
+                border: 1px solid #bcbdbd;
+                margin-top: 2px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                p{
+                    font-size: 18px;
+                    span{
+                        color: #5db9cb;
+                    }
+                }
+                p:nth-child(1){
+                    margin-left: 40px;
+                }
+                p:nth-child(4){
+                    margin-right: 40px;
+                }
+            }
         }
     }
     // 支付方式的盒子
@@ -328,150 +385,5 @@ export default {
             text-align: center;
         }
     }
-    // 微信扫码框的样式
-    .scanCode{
-        width: 336px;
-        height: 370px;
-        position: absolute;
-        top: 500px;
-        left: 900px;
-        box-shadow: 3px 3px 2px #8d8d8d;
-        // 顶部
-        .topbox{
-            width:336px;
-            height: 45px;
-            display: flex;
-            justify-content: space-between;
-            background: #f8f8f8;
-            line-height: 45px;
-            >p{
-                height: 45px;
-                line-height: 45px;
-                margin-left: 20px;
-            }
-            >span{
-                display: block;
-                width: 30px;
-                height: 30px;
-                font-size: 20px;
-                cursor: pointer;
-                margin-right: 20px;
-            }
-        }
-        // 二维码
-        .scan{
-            width: 336px;
-            height: 230px;
-            text-align: center;
-            img{
-                padding-top: 14px;
-            }
-            >p{
-                height: 18px;
-                font-size: 16px;
-                line-height: 18px;
-                margin-left: 0;
-            }
-        }
-        // 支付结果
-        .payresult{
-            width: 336px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content:center;
-            button{
-                width: 112px;
-                height: 30px;
-                border: 1px solid #90d0d4;
-                color: #90d0d4;
-                background:#fff;
-                border-radius: 5px;
-                font-size: 14px;
-            }
-        }
-        // 重新选择支付方式
-        p{
-            font-size: 12px;
-            color: #90d0d4;
-            margin-left: 60px;
-            cursor: pointer;
-        }
-    }
-    // 支付反馈框的样式
-    .payBack{
-        width: 450px;
-        height: 280px;
-        position: absolute;
-        top: 500px;
-        left: 800px;
-        box-shadow: 3px 3px 2px #8d8d8d;
-        // 顶部
-        .topbox{
-            width:450px;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            background: #f8f8f8;
-            line-height: 60px;
-            >p{
-                height: 60px;
-                line-height: 60px;
-                margin-left: 20px;
-            }
-            >span{
-                display: block;
-                width: 30px;
-                height: 30px;
-                font-size: 20px;
-                cursor: pointer;
-                margin-right: 20px;
-            }
-        }
-        // 第一个p标签
-        .firp{
-            font-size: 22px;
-            margin-left: 40px;
-            margin-top: 20px;
-        }
-        // 第二个p标签
-        .secp{
-            font-size: 16px;
-            color: #666666;
-            margin-left: 40px;
-            margin-top: 12px;
-            margin-bottom: 12px;
-        }
-        // 支付结果
-        .payresult{
-            width: 450px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            margin-bottom: 14px;
-            button{
-                width: 150px;
-                height: 42px;
-                border: 1px solid #90d0d4;
-                color: #90d0d4;
-                background:#fff;
-                border-radius: 10px;
-                font-size: 17px;
-            }
-            // 左边按钮
-            .firbtn{
-                margin-left: 40px;
-                margin-right: 10px;
-            }
-        }
-        // 第三个p标签,重新选择支付方式
-        .thip{
-            font-size: 14px;
-            color: #90d0d4;
-            margin-left: 40px;
-            cursor: pointer;
-        }
-    }
-    
 }
 </style>

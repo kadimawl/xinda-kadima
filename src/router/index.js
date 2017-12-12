@@ -58,130 +58,155 @@ import myOrder from '@/mobile/cart/myOrder' //WX端我的我的订单页
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
 export default new Router({
-  routes: [
-    //首页
-    {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld,
-      children: [{
-          path: '/HomePage',
-          alias: '/',
-          component: HomePage,
-        }, {
-          path: 'tabs',
-          component: tabs,
-          children: [{
-              path: 'toJoinIn',
-              component: toJoinIn,
-            },
-            {
-              path: 'taxationList', //财税服务
-              name: 'taxationList',
-              component: taxationList
-            },
-            {
-              path: 'companyList', //公司工商
-              name: 'companyList',
-              component: companyList
-            },
-            {
-              path: 'goodsDetails', //商品详情
-              name: 'goodsDetails',
-              component: goodsDetails
-            },
-            {
-              path: 'shoppingCart', //购物车
-              name: 'shoppingCart',
-              component: shoppingCart
-            },
-            {
-              path: 'toJoinIn', //加入我们
-              component: toJoinIn
-            },
-            {
-              path: '/detial',
-              component: detial,
-              redirect: '/detial/service',
-              children: [{
-                path: 'service',
-                component: service
-              }, {
-                path: 'evaluate',
-                component: evaluate
-              }],
-            },
-            {
-              path: '/shopIndex', //店铺首页
-              component: shopIndex
-            },
-            {
-              path: '/shopList', //店铺列表
-              component: shopList,
-              children: [{
-                path: '/',
-                component: credentials
-              }, {
-                path: 'custom',
-                component: custom
-              }, {
-                path: 'product',
-                component: product
-              }]
-            }
-          ]
-        },
-        { //会员中心模块路径
-          path: 'member',
-          redirect: '/member/memberBody',
-          component: member,
-          children: [{
-              name: 'memberBody',
-              path: 'memberBody', //父级特有模块路径
-              // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
-              component: memberBody //父级特有模块
-            },
-            {
-              path: 'userEval',
-              name: 'userEval',
-              redirect: 'userEval/evalNone',
-              component: userEval,
-              children: [{
-                  path: 'evalNone',
-                  component: evalNone
+    routes: [
+        //首页
+        {
+            path: '/',
+            name: 'HelloWorld',
+            component: HelloWorld,
+            children: [{
+                    path: '/HomePage',
+                    alias: '/',
+                    component: HomePage,
+                }, {
+                    path: 'tabs',
+                    component: tabs,
+                    children: [{
+                            path: 'toJoinIn',
+                            component: toJoinIn,
+                        },
+                        {
+                            path: 'taxationList', //财税服务
+                            name: 'taxationList',
+                            component: taxationList
+                        },
+                        {
+                            path: 'companyList', //公司工商
+                            name: 'companyList',
+                            component: companyList
+                        },
+                        {
+                            path: 'goodsDetails', //商品详情
+                            name: 'goodsDetails',
+                            component: goodsDetails
+                        },
+                        {
+                            path: 'shoppingCart', //购物车
+                            name: 'shoppingCart',
+                            component: shoppingCart
+                        },
+                        {
+                            path: 'toJoinIn', //加入我们
+                            component: toJoinIn
+                        },
+                        {
+                            path: '/detial',
+                            component: detial,
+                            redirect: '/detial/service',
+                            children: [{
+                                path: 'service',
+                                component: service
+                            }, {
+                                path: 'evaluate',
+                                component: evaluate
+                            }],
+                        },
+                        {
+                            path: '/shopIndex', //店铺首页
+                            component: shopIndex
+                        },
+                        {
+                            path: '/shopList', //店铺列表
+                            component: shopList,
+                            children: [{
+                                path: '/',
+                                component: credentials
+                            }, {
+                                path: 'custom',
+                                component: custom
+                            }, {
+                                path: 'product',
+                                component: product
+                            }]
+                        }
+                    ]
                 },
-                {
-                  path: 'evalAlready',
-                  component: evalAlready
-                }
-              ]
-            },
-            {
-              path: 'userEval/gotoeval',
-              component: gotoeval
-            },
-            {
-              name: 'accountSet',
-              path: 'accountSet',
-              component: accountSet,
-              redirect: 'accountSet/accountsetBody',
-              children: [{
-                  path: 'accountsetBody',
-                  component: accountsetBody
+                { //会员中心模块路径
+                    path: 'member',
+                    redirect: '/member/memberBody',
+                    component: member,
+                    children: [{
+                            name: 'memberBody',
+                            path: 'memberBody', //父级特有模块路径
+                            // alias: '/member', //父级路径   当加载父级路径，父级特有模块也会被加载
+                            component: memberBody //父级特有模块
+                        },
+                        {
+                            path: 'userEval',
+                            name: 'userEval',
+                            redirect: 'userEval/evalNone',
+                            component: userEval,
+                            children: [{
+                                    path: 'evalNone',
+                                    component: evalNone
+                                },
+                                {
+                                    path: 'evalAlready',
+                                    component: evalAlready
+                                }
+                            ]
+                        },
+                        {
+                            path: 'userEval/gotoeval',
+                            component: gotoeval
+                        },
+                        {
+                            name: 'accountSet',
+                            path: 'accountSet',
+                            component: accountSet,
+                            redirect: 'accountSet/accountsetBody',
+                            children: [{
+                                    path: 'accountsetBody',
+                                    component: accountsetBody
+                                },
+                                {
+                                    path: 'changePd',
+                                    component: changePd
+                                }
+                            ]
+                        }
+                    ]
                 },
+
+
+
+
+                //pc端支付
                 {
-                  path: 'changePd',
-                  component: changePd
-                }
-              ]
-            }
-          ]
-        },
+                    path: '/Order',
+                    component: Order,
+                    children: [{
+                        path: '/',
+                        component: orderdetail
+                    }, {
+                        path: 'success',
+                        component: paymentSuccess
+                    }, {
+                        path: 'failure',
+                        component: paymentFailure
+                    }, {
+                        path: 'payZfb',
+                        component: payZfb
+                    }, {
+                        path: 'payBank',
+                        component: payBank
+                    }]
+                },
 
 
 
 
-        //pc端支付
+        //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
         {
           path: '/Order',
           component: Order,
