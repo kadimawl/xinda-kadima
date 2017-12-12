@@ -31,7 +31,7 @@ var objSort = function(name) {
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
-Vue.use(ElementUI)
+Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 

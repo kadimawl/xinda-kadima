@@ -50,6 +50,7 @@ import mobile from '@/components/mobile' //移动端我的框架页
 import mobileRegister from '@/views/mobileRegister' //移动端我的注册页
 import logined from '@/views/logined' //移动端我的已登录页
 import mobileLogin from '@/views/mobileLogin' //移动端我的登录页
+import mobileForgetPw from '@/views/mobileForgetPw' //移动端我的忘记密码页
 
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
@@ -72,7 +73,7 @@ export default new Router({
                             component: toJoinIn,
                         },
                         {
-                            path: '/taxationList', //财税服务
+                            path: 'taxationList', //财税服务
                             name: 'taxationList',
                             component: taxationList
                         },
@@ -82,17 +83,17 @@ export default new Router({
                             component: companyList
                         },
                         {
-                            path: '/goodsDetails', //商品详情
+                            path: 'goodsDetails', //商品详情
                             name: 'goodsDetails',
                             component: goodsDetails
                         },
                         {
-                            path: '/shoppingCart', //购物车
+                            path: 'shoppingCart', //购物车
                             name: 'shoppingCart',
                             component: shoppingCart
                         },
                         {
-                            path: '/toJoinIn', //加入我们
+                            path: 'toJoinIn', //加入我们
                             component: toJoinIn
                         },
                         {
@@ -173,45 +174,52 @@ export default new Router({
                         }
                     ]
                 },
-                {
-                    path: 'outter',
-                    name: 'outter',
-                    component: outter,
-                    children: [{
-                        path: '/outter/login',
-                        component: login,
-                    }, {
-                        path: '/outter/register',
-                        component: register
-                    }, {
-                        path: '/outter/forgetpw',
-                        component: forgetpw
-                    }]
-                },
+
+
+
+
+                //pc端支付
                 {
                     path: '/Order',
                     component: Order,
                     children: [{
-                            path: '/',
-                            component: orderdetail
-                        },
-                        {
-                            path: 'success',
-                            component: paymentSuccess
-                        }, {
-                            path: 'failure',
-                            component: paymentFailure
-                        }, {
-                            path: 'payZfb',
-                            component: payZfb
-                        }, {
-                            path: 'payBank',
-                            component: payBank
-                        }
-                    ]
+                        path: '/',
+                        component: orderdetail
+                    }, {
+                        path: 'success',
+                        component: paymentSuccess
+                    }, {
+                        path: 'failure',
+                        component: paymentFailure
+                    }, {
+                        path: 'payZfb',
+                        component: payZfb
+                    }, {
+                        path: 'payBank',
+                        component: payBank
+                    }]
                 },
 
+
+
             ]
+        },
+
+        //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
+        {
+            path: 'outter',
+            name: 'outter',
+            component: outter,
+            children: [{
+                path: '/outter/login',
+                component: login,
+            }, {
+                path: '/outter/register',
+                component: register
+            }, {
+                path: '/outter/forgetpw',
+                component: forgetpw
+            }]
         },
         //移动端临时路由
         {
@@ -229,6 +237,11 @@ export default new Router({
         {
             path: '/logined', //我的（已登录）
             component: logined
-        }
+        }, {
+            path: '/mobileForgetPw', //我的（忘记密码）
+            component: mobileForgetPw
+        },
+
+
     ]
 })
