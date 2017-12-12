@@ -11,17 +11,19 @@
       </div>
       <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt="">
         <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
+        <p class="errorMsg" v-show="imgShowError">图片验证码错误！</p>
       </div>
       <div class="forget" @click="forgetpw">
-        <a href="#">忘记密码？</a>
+        <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
+      <p  class="errorMsg" v-show="EShow">账号或密码不正确！</p>
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
       <p class="immediately" @click="register">
-        <a href="#">立即注册>></a>
+        <a href="/#/outter/register">立即注册>></a>
       </p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
@@ -29,7 +31,6 @@
 </template>
 
 <script>
-   
 var md5 = require("md5");
 
 import { mapActions } from "vuex";
@@ -45,18 +46,20 @@ export default {
       pwEShow: false,
       imgVInput: "",
       imgUrl: "/xinda-api/ajaxAuthcode",
-      imgShow: false
+      imgShow: false,
+      imgShowError: false,
+      EShow: false
     };
   },
 
   methods: {
-    ...mapActions(["setTitle"]),
+    ...mapActions(["setTitle",'setName']),
     forgetpw() {
-      this.$router.push({ path: "/outter/forgetpw" });
+      // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");
     },
     register() {
-      this.$router.push({ path: "/outter/register" });
+      // this.$router.push({ path: "/outter/register" });
       this.setTitle("欢迎注册");
     },
     //手机号输入验证
@@ -69,10 +72,6 @@ export default {
         if (!result) {
           this.correctness = false;
           let user = this.phoneInput;
-
-          if (storage.user) {
-            console.log("该手机号已注册");
-          }
         }
       }
     },
@@ -113,6 +112,8 @@ export default {
     //立即登录
     iLogin() {
       let user = this.phoneInput;
+      let pw =  this.pwInput;
+      let storage = window.sessionStorage;
       this.ajax
         .post(
           "/xinda-api/sso/login",
@@ -125,17 +126,27 @@ export default {
         .then(data => {
           let msg = data.data.msg;
           let status = data.data.status;
-          console.log(msg);
-
           if (status == 1) {
+            if(storage){
+              storage.setItem(user,JSON.parse(user));
+            }
             this.$router.push({ path: "/HomePage" }); //页面跳转
-            this.ligined = true;
+            this.ajax.post("/xinda-api/sso/login-info").then(data => {
+              let name =  data.data.data.name;
+              if(name !==''&&storage.getItem(user)==name){
+                this.setName(storage.getItem(user)) ;
+              }
+            });
+          } else if (status == -1) {
+            if(msg=='图片验证码错误！'){
+              this.imgShowError = true;
+            }else if(msg=='账号或密码不正确！') {
+              this.EShow = true;
+            }else if(msg=='账号不存在'){
+               this.registered = false;
+            }
           }
         });
-
-      // this.ajax.post("/xinda-api/sso/login-info").then(data => {
-      //   console.log("登录信息", data.data);
-      // });
     }
   }
 };

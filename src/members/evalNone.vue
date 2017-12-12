@@ -9,7 +9,7 @@
     </div>
     </div>
     <div class="Nright">
-        <router-link :to="{path:'/member/gotoeval'}" tag="button" class="gotoeval">去评价</router-link>
+        <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval">去评价</router-link>
     </div>
 </div>
   
@@ -18,24 +18,25 @@
 <script>
 
 export default {
-//   created(){
-//     this.ajax.post('/xinda/xinda-api/service/judge/grid',{
-//         status:'2',
-//     })
-//     .then(function(a){
-//           console.log(a);
-//     })
-//   },
-  data() {
-      return {
-        tupian:'',
-        gsname:'信达北京服务中心',
-        code:'B1B23',
-        buytime:'2016-1-12',
-        cont:'test'
-      };
-    }
-  };
+    created(){
+        this.ajax.post('/xinda-api/service/judge/grid',{
+            start:0,
+            limit:6,
+            status:2	
+        }).then(function(a){
+            console.log(a);
+        })
+    },
+    data() {
+        return {
+            tupian:'',
+            gsname:'信达北京服务中心',
+            code:'B1B23',
+            buytime:'2016-1-12',
+            cont:'test'
+            };
+        }
+    };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -45,7 +46,7 @@ export default {
     padding: 0;
 }
 .evalNone{
-    width: 954px;
+    width: 900px;
     height: 154px;
     border: 1px solid #cccccc;
     margin-left: 20px;

@@ -4,26 +4,43 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: { //状态集合
         num: 123,
-        title: '欢迎登录'
+        radios: '',
+        title: '欢迎登录',
+        name: ''
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
             state.num = num;
         },
-        SET_TITLE: (state,title) =>{
+        SetRadio: (state, radios) => {
+            state.radios = radios;
+        },
+        SET_TITLE: (state, title) => {
             state.title = title;
+        },
+        SET_NAME: (state,name) => {
+            state.name = name;
         }
     },
     actions: { //操作集合
+        setNum({ commit }, num) {
+            commit('SET_NUM', num)
+        },
+        setRadio({ commit }, radios) {
+            commit('SetRadio', radios)
+        },
         setTitle({ commit }, title) {
             commit('SET_TITLE', title)
         },
-        setNum({commit},num) {
-            commit('SET_NUM',num)
+        setName({commit}, name) {
+            commit('SET_NAME',name)
         }
     },
     getters: { //显示集合
+        getNum: state => state.num,
+        getRadio: state => state.radios,
         getTitle: state => state.title,
-        getNum:state => state.num
+        getName: state => state.name,   //顶部用户名显示
     }
+
 })

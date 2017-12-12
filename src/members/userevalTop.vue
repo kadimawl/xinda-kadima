@@ -30,7 +30,7 @@ export default {
     padding: 0;
 }
 .userevalTop{
-    width: 960px;
+    width: 900px;
     height:101px;
     margin: 30px 0 0 20px;
     display: flex;
@@ -50,7 +50,7 @@ export default {
         }
     }
     .evalStatus{
-        width: 954px;
+        width: 900px;
         height: 44px;
         display: flex; 
         background: #f7f7f7; 

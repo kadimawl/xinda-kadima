@@ -1,6 +1,5 @@
 <template>
 <div class="shopList">
-  <sele/>
     <!-- <h3>这是店铺首页</h3> -->
     <div class="logo">
       <img :src="'http://115.182.107.203:8088/xinda/pic'+LogoUrl" alt="">
@@ -33,10 +32,8 @@
 </template>
 
 <script>
-import sele from "../sele";
 
 export default {
-  components: { sele }, //需要在当前组件内注册（添加）
   data() {
     return {
       providerName: "",

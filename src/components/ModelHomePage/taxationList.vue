@@ -78,6 +78,8 @@
         <p class="">增值服务</p>
       </div>
     </div>
+    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
+    </el-pagination>
   </div>
 </template>
 
@@ -85,6 +87,26 @@
 import VDistpicker from "v-distpicker";
 export default {
   components: { VDistpicker },
+  methods: {
+    changePage: function() {
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 5,
+            limit: 5,
+            productTypeCode: "1",
+            sort: 2
+          })
+        )
+        .then(function(data) {
+          var gData = data.data.data;
+          that.products = gData;
+          // console.log(that.products);
+        });
+    }
+  },
   created() {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
@@ -97,7 +119,7 @@ export default {
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 8,
+          limit: 5,
           productTypeCode: "1",
           sort: 2
         })
@@ -105,7 +127,7 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
-        console.log(that.products);
+        // console.log(that.products);
       });
   },
   data() {
@@ -202,17 +224,17 @@ export default {
             .infLeft {
               width: 640px;
               height: 100px;
-              b{
+              b {
                 display: block;
                 font-size: 16px;
                 margin-left: 20px;
                 margin-bottom: 20px;
               }
-              p{
+              p {
                 font-size: 14px;
                 margin-left: 20px;
                 margin-bottom: 15px;
-                span{
+                span {
                   margin-right: 50px;
                 }
               }
@@ -220,19 +242,19 @@ export default {
             .infRight {
               width: 186px;
               height: 100px;
-              h2{
-                color:red;
+              h2 {
+                color: red;
                 text-align: center;
                 margin: 20px auto;
               }
-              .buttons{
-                button{
+              .buttons {
+                button {
                   width: 90px;
                   height: 30px;
-                  color:#fff;
+                  color: #fff;
                   border-radius: 3px;
                   background-color: #2693d4;
-                  border:0;
+                  border: 0;
                 }
               }
             }

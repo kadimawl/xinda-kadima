@@ -33,7 +33,7 @@
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
       <p class="immediately" @click="login">
-        <a href="#">立即登录>></a>
+        <a href="/#/outter/login">立即登录>></a>
       </p>
       <img src="../assets/index/okmanr.jpg" alt="">
     </div>
@@ -70,7 +70,7 @@ export default {
         this.seleCode =  data.area.code; 
     },
     login() {
-      this.$router.push({ path: "/outter/login" });
+      // this.$router.push({ path: "/outter/login" });
       this.setTitle("欢迎登录");
     },
     //手机号输入

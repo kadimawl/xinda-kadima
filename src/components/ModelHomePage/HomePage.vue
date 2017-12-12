@@ -205,7 +205,7 @@ export default {
       var tData = data.data.data.hq;
       var gData = data.data.data.provider;
       var lData = data.data.data.product;
-      console.log(data.data.data);
+      // console.log(data.data.data);
       that.products = tData;
       that.providers = gData;
       that.services = lData;
