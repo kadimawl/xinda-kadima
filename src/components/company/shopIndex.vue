@@ -49,11 +49,6 @@
         </div>
       </div>
     </div>
-    <div class="page">
-      <button>上一页</button>
-      <a href="javascript:viod(0)">1</a>
-      <button>下一页</button>
-    </div>
   </div>
 </template>
 

@@ -30,7 +30,6 @@ export default {
     var that = this;
     var shopList = JSON.parse(sessionStorage.getItem("GoToshop"));
     !(function(list) {
-      console.log(list);
       that.img1 = list.businessCertPath;
       that.img2 = list.hrCertPath;
       that.img3 = list.orgCertPath;
