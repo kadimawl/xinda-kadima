@@ -45,12 +45,15 @@ import payZfb from '@/components/order/payZfb' //支付宝支付
 import payBank from '@/components/order/payBank' //银行支付
 
 
-//移动端
-import mobile from '@/components/mobile' //移动端我的框架页
-import mobileRegister from '@/views/mobileRegister' //移动端我的注册页
-import logined from '@/views/logined' //移动端我的已登录页
-import mobileLogin from '@/views/mobileLogin' //移动端我的登录页
-import mobileForgetPw from '@/views/mobileForgetPw' //移动端我的忘记密码页
+//WX端
+import m from '@/mobile/m' //WX端一级路由
+import mobile from '@/components/mobile' //WX端我的框架页
+import mobileRegister from '@/views/mobileRegister' //WX端我的注册页
+import logined from '@/views/logined' //WX端我的已登录页
+import mobileLogin from '@/views/mobileLogin' //WX端我的登录页
+import mobileForgetPw from '@/views/mobileForgetPw' //WX端我的忘记密码页
+import accountSetting from '@/views/accountSetting' //WX端我的忘记密码页
+import myOrder from '@/mobile/cart/myOrder' //WX端我的我的订单页
 
 Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
@@ -202,46 +205,81 @@ export default new Router({
 
 
 
-            ]
-        },
 
         //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
         {
-            path: 'outter',
-            name: 'outter',
-            component: outter,
-            children: [{
-                path: '/outter/login',
-                component: login,
-            }, {
-                path: '/outter/register',
-                component: register
-            }, {
-                path: '/outter/forgetpw',
-                component: forgetpw
-            }]
-        },
-        //移动端临时路由
-        {
-            path: '/mobile', //我的（未注册）
-            component: mobile,
-        },
-        {
-            path: '/mobileRegister', //我的（注册页）
-            component: mobileRegister
-        },
-        {
-            path: '/mobileLogin', //我的（登录页）
-            component: mobileLogin
-        },
-        {
-            path: '/logined', //我的（已登录）
-            component: logined
-        }, {
-            path: '/mobileForgetPw', //我的（忘记密码）
-            component: mobileForgetPw
+          path: '/Order',
+          component: Order,
+          children: [{
+            path: 'success',
+            component: paymentSuccess
+          }, {
+            path: 'failure',
+            component: paymentFailure
+          }, {
+            path: 'payZfb',
+            component: payZfb
+          }, {
+            path: 'payBank',
+            component: payBank
+          }]
         },
 
 
-    ]
+
+      ]
+    },
+
+    //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
+    {
+      path: 'outter',
+      name: 'outter',
+      component: outter,
+      children: [{
+        path: '/outter/login',
+        component: login,
+      }, {
+        path: '/outter/register',
+        component: register
+      }, {
+        path: '/outter/forgetpw',
+        component: forgetpw
+      }]
+    },
+
+
+
+    //WX端临时路由
+    {
+      path: '/m', //是不应该先判断登录状态 登录了默认页为首页，未登录默认页为登录注册页
+      component: m,
+      children: [{
+        path: 'mobile', //我的（二级路由===未注册）
+        component: mobile
+      }, {
+        path: 'mobileRegister', //我的（注册页）
+        component: mobileRegister
+      }, {
+        path: 'mobileLogin', //我的（登录页）
+        component: mobileLogin
+      }, {
+        path: 'logined', //我的（已登录）
+        component: logined
+      }, {
+        path: 'mobileForgetPw', //我的（忘记密码）
+        component: mobileForgetPw
+      }, {
+        path: 'accountSetting', //账户设置
+        component: accountSetting,
+      }, {
+        path: 'myOrder', //我的订单
+        component: myOrder
+
+
+
+      }]
+    },
+
+
+  ]
 })
