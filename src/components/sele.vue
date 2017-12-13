@@ -1,40 +1,46 @@
 <template>
-    <div class="Select" v-show="seleShow">
-      <div class="sele">
-        <div class="logo">
-            <div class="backG"></div>
-            <h1>信达</h1>
-            <div>
-                <p>北京市</p>
-                <a href="javascript:void(0)">[切换城市]</a>
-            </div>
+  <div class="Select" v-show="seleShow">
+    <div class="sele">
+      <div class="logo">
+        <div class="backG"></div>
+        <h1>信达</h1>
+        <div>
+          <p>北京市</p>
+          <a href="javascript:void(0)">[切换城市]</a>
         </div>
-        <div class="select">
-            <div>
-                <a href="javascript:void(0)">产品</a>
-                <span></span>
-                <a href="javascript:void(0)" class="act">服务商</a>
-            </div>
-            <div>
-                <input type="text" placeholder="搜索您需要的服务或服务商"><button></button>
-            </div>
-            <div class="inpB">
-                <p>热门服务：</p>
-                <a href="javascript:void(0)"><p>社保开户</p></a>
-                <a href="javascript:void(0)"><p>公司注册</p></a>
-            </div>
+      </div>
+      <div class="select">
+        <div>
+          <a href="javascript:void(0)">产品</a>
+          <span></span>
+          <a href="javascript:void(0)" class="act">服务商</a>
         </div>
-        <div class="tel">
-            <div class="telI"></div>
-            <div class="telP">010-83421842</div>
+        <div>
+          <input type="text" placeholder="搜索您需要的服务或服务商">
+          <button></button>
         </div>
+        <div class="inpB">
+          <p>热门服务：</p>
+          <a href="javascript:void(0)">
+            <p>社保开户</p>
+          </a>
+          <a href="javascript:void(0)">
+            <p>公司注册</p>
+          </a>
+        </div>
+      </div>
+      <div class="tel">
+        <div class="telI"></div>
+        <div class="telP">010-83421842</div>
+      </div>
     </div>
     <div class="navigation">
-      <a href="HomePage" class="">全部商品</a>
-      <a href="/#/tabs/taxationList" class="">财税服务</a>
-      <a href="/#/tabs/companyList" class="">公司工商</a>
-      <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
-      <a href="#/shopIndex" class="">店铺</a>
+      <router-link class="defaults" active-class="colorChange" to="/HomePage/" @mouseover.native="over">全部商品</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/tabs/taxationList">财税服务</router-link>
+      <router-link class="defaults" active-class="colorChange" to='/tabs/companyList'>公司工商</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/tabs/toJoinIn">加盟我们</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/shopIndex">店铺</router-link>
+
     </div>
   </div>
 </template>
@@ -45,6 +51,11 @@ export default {
     return {
       seleShow: true
     };
+  },
+  methods: {
+    over: function() {
+      this.$emit('display');
+    }
   }
 };
 </script>
@@ -55,7 +66,7 @@ export default {
   margin: 0;
   padding: 0;
 }
-.Select{
+.Select {
   border-bottom: 1px solid #2693d4;
 }
 .sele {
@@ -154,17 +165,29 @@ h1 {
 
 .navigation {
   width: 1200px;
+  height: 50px;
   margin: 0 auto;
-  a {
-    text-decoration: none;
-    font-size: 18px;
-    color: #2b2b2b;
-    font-weight: normal;
-    text-align: center;
-    line-height: 50px;
-    display: inline-block;
-    width: 200px;
-    height: 50px;
-  }
+}
+.defaults {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: normal;
+  text-align: center;
+  display: inline-block;
+  color: #2b2b2b;
+  width: 100px;
+  height: 45px;
+  margin: 0 50px;
+}
+
+.colorChange {
+  color: #169bd5;
+  border-bottom: 3px solid #169bd5;
+  z-index: -1;
+}
+.colorFFF {
+  color: #2b2b2b;
+  border-bottom: none;
+  z-index: -1;
 }
 </style>

@@ -127,7 +127,7 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
-        console.log(that.products);
+        // console.log(that.products);
       });
   },
   data() {
