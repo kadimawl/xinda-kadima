@@ -9,7 +9,6 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import qs from 'qs'
 
-
 var objSort = function(name) {
     return function(o, p) {
         var a, b;
@@ -37,11 +36,11 @@ Vue.config.devtools = false;
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',   //用字符串的内容<App/>替换了#app的标签
-  components: { App }
+    el: '#app',
+    router,
+    store,
+    template: '<App/>', //用字符串的内容<App/>替换了#app的标签
+    components: { App }
 })
 
 //判断移动端还是pc端
