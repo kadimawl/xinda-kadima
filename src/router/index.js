@@ -96,10 +96,6 @@ export default new Router({
                             component: shoppingCart
                         },
                         {
-                            path: 'toJoinIn', //加入我们
-                            component: toJoinIn
-                        },
-                        {
                             path: '/detial',
                             component: detial,
                             redirect: '/detial/service',

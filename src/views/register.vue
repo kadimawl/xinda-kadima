@@ -19,7 +19,19 @@
         <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
       </div>
       <div class="selected">
-        <v-distpicker id="select" province="省" city="市" @selected="selected" ></v-distpicker>
+        <v-distpicker id="select" province="省" city="市"  @selected="selected" ></v-distpicker>
+          <!-- <select name="" id="" @change="proChange" v-model="province">
+            <option value="0">省</option>
+            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
+          </select>
+          <select name="" id=""  @change="cityChange" v-model="city">
+            <option value="0">市</option>
+            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
+          </select>
+          <select name="" id="">
+            <option value="0">区</option>
+            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
+          </select> -->
       </div>
       <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
         <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
@@ -60,10 +72,19 @@ export default {
       pshow: true,
       pwInput: "",
       pwShow: false,
-      seleCode: ''
+      seleCode: '',
+
+      
     };
   },
   methods: {
+    //三级联动
+    // proChange(){
+    //   this.citys = dist[this.province];
+    // },
+    // cityChange(){
+    //   this.areas=dist[this.city];
+    // },
     ...mapActions(["setTitle"]),
     created() {},
     selected: function(data){

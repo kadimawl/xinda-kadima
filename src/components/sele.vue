@@ -1,40 +1,55 @@
 <template>
-    <div class="Select" v-show="seleShow">
-      <div class="sele">
-        <div class="logo">
-            <div class="backG"></div>
-            <h1>信达</h1>
-            <div>
-                <p>北京市</p>
-                <a href="javascript:void(0)">[切换城市]</a>
-            </div>
+  <div class="Select" v-show="seleShow">
+    <div class="sele">
+      <div class="logo">
+        <div class="backG"></div>
+        <h1>信达</h1>
+        <div>
+          <p>北京市</p>
+          <a href="javascript:void(0)">[切换城市]</a>
         </div>
-        <div class="select">
-            <div>
-                <a href="javascript:void(0)">产品</a>
-                <span></span>
-                <a href="javascript:void(0)" class="act">服务商</a>
-            </div>
-            <div>
-                <input type="text" placeholder="搜索您需要的服务或服务商"><button></button>
-            </div>
-            <div class="inpB">
-                <p>热门服务：</p>
-                <a href="javascript:void(0)"><p>社保开户</p></a>
-                <a href="javascript:void(0)"><p>公司注册</p></a>
-            </div>
+      </div>
+      <div class="select">
+        <div>
+          <a href="javascript:void(0)">产品</a>
+          <span></span>
+          <a href="javascript:void(0)" class="act">服务商</a>
         </div>
-        <div class="tel">
-            <div class="telI"></div>
-            <div class="telP">010-83421842</div>
+        <div>
+          <input type="text" placeholder="搜索您需要的服务或服务商">
+          <button></button>
         </div>
+        <div class="inpB">
+          <p>热门服务：</p>
+          <a href="javascript:void(0)">
+            <p>社保开户</p>
+          </a>
+          <a href="javascript:void(0)">
+            <p>公司注册</p>
+          </a>
+        </div>
+      </div>
+      <div class="tel">
+        <div class="telI"></div>
+        <div class="telP">010-83421842</div>
+      </div>
     </div>
     <div class="navigation">
-      <a href="/#/HomePage/" class="">全部商品</a>
-      <a href="/#/tabs/taxationList" class="">财税服务</a>
-      <a href="/#/tabs/companyList" class="">公司工商</a>
-      <a href="/#/tabs/toJoinIn" class="">加盟我们</a>
-      <a href="#/shopIndex" class="">店铺</a>
+      <a href="/#/HomePage/" class="">
+        <p class="colorChange" :class="style" @click="all">全部商品</p>
+      </a>
+      <a href="/#/tabs/taxationList" class="">
+        <p :class="styleTax" @click="tax">财税服务</p>
+      </a>
+      <a href="/#/tabs/companyList" class="">
+        <p :class="styleCom" @click="com">公司工商</p>
+      </a>
+      <a href="/#/tabs/toJoinIn" class="">
+        <p :class="styleJ" @click="join">加盟我们</p>
+      </a>
+      <a href="#/shopIndex" class="">
+        <p :class="styleShop" @click="shop">店铺</p>
+      </a>
     </div>
   </div>
 </template>
@@ -43,8 +58,50 @@
 export default {
   data() {
     return {
-      seleShow: true
+      seleShow: true,
+      style: "",
+      styleTax: "",
+      styleCom: "",
+      styleJ: "",
+      styleShop: ""
     };
+  },
+  methods: {
+    all() {
+      this.style = "colorChange";
+      this.styleTax = "";
+      this.styleCom = "";
+      this.styleJ = "";
+      this.styleShop = "";
+    },
+    tax() {
+      this.style = "colorFFF";
+      this.styleTax = "colorChange";
+      this.styleCom = "";
+      this.styleJ = "";
+      this.styleShop = "";
+    },
+    com() {
+      this.style = "colorFFF";
+      this.styleTax = "";
+      this.styleCom = "colorChange";
+      this.styleJ = "";
+      this.styleShop = "";
+    },
+    join() {
+      this.style = "colorFFF";
+      this.styleTax = "";
+      this.styleCom = "";
+      this.styleJ = "colorChange";
+      this.styleShop = "";
+    },
+    shop() {
+      this.style = "colorFFF";
+      this.styleTax = "";
+      this.styleCom = "";
+      this.styleJ = "";
+      this.styleShop = "colorChange";
+    }
   }
 };
 </script>
@@ -55,7 +112,7 @@ export default {
   margin: 0;
   padding: 0;
 }
-.Select{
+.Select {
   border-bottom: 1px solid #2693d4;
 }
 .sele {
@@ -158,13 +215,29 @@ h1 {
   a {
     text-decoration: none;
     font-size: 18px;
-    color: #2b2b2b;
     font-weight: normal;
     text-align: center;
-    line-height: 50px;
     display: inline-block;
+    color: #2b2b2b;
     width: 200px;
-    height: 50px;
+    height: 47px;
   }
+  p {
+    width: 80px;
+    margin: auto;
+    height: 46px;
+    line-height: 46px;
+  }
+}
+
+.colorChange {
+  color: #169bd5;
+  border-bottom: 3px solid #169bd5;
+  z-index: -1;
+}
+.colorFFF {
+  color: #2b2b2b;
+  border-bottom: none;
+  z-index: -1;
 }
 </style>
