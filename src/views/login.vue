@@ -126,19 +126,12 @@ export default {
         .then(data => {
           let msg = data.data.msg;
           let status = data.data.status;
+
           if (status == 1) {
-            if (storage) {
-              storage.setItem(userName, JSON.stringify(userName));
-            }
-
-            
-
             this.$router.push({ path: "/HomePage" }); //页面跳转
             this.ajax.post("/xinda-api/sso/login-info").then(data => {
               let name = data.data.data.name;
-              if (name !== "" && storage.getItem(userName) == name) {
-                this.setName(storage.getItem(userName));
-              }
+              this.setName(name);
             });
           } else if (status == -1) {
             if (msg == "图片验证码错误！") {
