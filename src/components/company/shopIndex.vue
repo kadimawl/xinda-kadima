@@ -48,11 +48,14 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
+=======
     <div class="page">
       <button>上一页</button>
       <a href="javascript:void(0)">1</a>
       <button>下一页</button>
     </div>
+>>>>>>> abdf5bea6f82d50e03aa437f44fe811db9f3d8b4
   </div>
 </template>
 

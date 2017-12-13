@@ -16,7 +16,7 @@
       <div class="forget" @click="forgetpw">
         <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
-      <p  class="errorMsg" v-show="EShow">账号或密码不正确！</p>
+      <p class="errorMsg" v-show="EShow">账号或密码不正确！</p>
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
@@ -53,7 +53,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setTitle",'setName']),
+    ...mapActions(["setTitle", "setName"]),
     forgetpw() {
       // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");
@@ -111,14 +111,14 @@ export default {
 
     //立即登录
     iLogin() {
-      let user = this.phoneInput;
-      let pw =  this.pwInput;
+      let userName = this.phoneInput;
+      let pw = this.pwInput;
       let storage = window.sessionStorage;
       this.ajax
         .post(
           "/xinda-api/sso/login",
           this.qs.stringify({
-            loginId: user,
+            loginId: userName,
             password: md5(this.pwInput),
             imgCode: this.imgVInput
           })
@@ -127,23 +127,26 @@ export default {
           let msg = data.data.msg;
           let status = data.data.status;
           if (status == 1) {
-            if(storage){
-              storage.setItem(user,JSON.parse(user));
+            if (storage) {
+              storage.setItem(userName, JSON.stringify(userName));
             }
+
+            
+
             this.$router.push({ path: "/HomePage" }); //页面跳转
             this.ajax.post("/xinda-api/sso/login-info").then(data => {
-              let name =  data.data.data.name;
-              if(name !==''&&storage.getItem(user)==name){
-                this.setName(storage.getItem(user)) ;
+              let name = data.data.data.name;
+              if (name !== "" && storage.getItem(userName) == name) {
+                this.setName(storage.getItem(userName));
               }
             });
           } else if (status == -1) {
-            if(msg=='图片验证码错误！'){
+            if (msg == "图片验证码错误！") {
               this.imgShowError = true;
-            }else if(msg=='账号或密码不正确！') {
+            } else if (msg == "账号或密码不正确！") {
               this.EShow = true;
-            }else if(msg=='账号不存在'){
-               this.registered = false;
+            } else if (msg == "账号不存在") {
+              this.registered = false;
             }
           }
         });
