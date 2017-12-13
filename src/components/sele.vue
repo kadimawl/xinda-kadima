@@ -171,8 +171,9 @@ h1 {
   text-align: center;
   display: inline-block;
   color: #2b2b2b;
-  width: 200px;
+  width: 100px;
   height: 45px;
+  margin: 0 50px;
 }
 
 .colorChange {
