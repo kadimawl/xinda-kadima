@@ -68,34 +68,37 @@
 
 <script>
 //   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
-
+import {mapGetters} from 'vuex'
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
         // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-        if(sessionStorage.getItem('S1704040001075133085')==null){
+        if(sessionStorage.getItem(this.getCode)==null){
                 this.ajax.post('/xinda-api/business-order/detail',
                 this.qs.stringify({
-                businessNo:'S1704040001075133085',
+                businessNo:this.getCode,
             })).then(function(data){
                 if(data.data.status==1){
                 // var databusi=data.data.data.businessOrder;
                 // this.lists=data.data.data.serviceOrderList;
                 // this.code=databusi.businessNo;
-                // this.createT=databusi.createTime;
+                // this.createT=new Date(databusi.createTime);
                 // this.price=databusi.totalPrice;
                 console.log(data);
-                sessionStorage.setItem('S1704040001075133085',JSON.stringify(data));
+                sessionStorage.setItem(this.getCode,JSON.stringify(data));
                 }
             })
         }else{
-            var data=JSON.parse(sessionStorage.getItem('S1704040001075133085'));
+            var data=JSON.parse(sessionStorage.getItem(this.getCode));
              // var databusi=data.data.data.businessOrder;
                 // this.lists=data.data.data.serviceOrderList;
                 // this.code=databusi.businessNo;
                 // this.createT=databusi.createTime;
                 // this.price=databusi.totalPrice;
         }
+    },
+    computed:{
+        ...mapGetters(['getCode'])
     },
     data() {
         return {
