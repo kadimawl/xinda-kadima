@@ -38,7 +38,10 @@
 <script>
 var md5 = require("md5");
 import { mapActions } from "vuex";
-const eyes = [require("../assets/visible/invisible.png"),require("../assets/visible/visible.png")];
+const eyes = [
+  require("../assets/visible/invisible.png"),
+  require("../assets/visible/visible.png")
+];
 export default {
   data() {
     return {
@@ -98,10 +101,10 @@ export default {
     },
     //密码可视
     visible() {
-      this.pwType = this.pwType === 'password'?'text':'password';
-      if(this.pwType=='password'){
-        this.invisibleUrl =eyes[0];
-      }else{
+      this.pwType = this.pwType === "password" ? "text" : "password";
+      if (this.pwType == "password") {
+        this.invisibleUrl = eyes[0];
+      } else {
         this.invisibleUrl = eyes[1];
       }
     },
@@ -121,6 +124,7 @@ export default {
       if (this.imgVInput !== "") {
         this.imgShow = false;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgVInput = "";
       }
     },
 
@@ -143,10 +147,12 @@ export default {
           let status = data.data.status;
 
           if (status == 1) {
+            //成功登陆
+            sessionStorage.setItem("user", this.phoneInput);
             this.$router.push({ path: "/HomePage" }); //页面跳转
             this.ajax.post("/xinda-api/sso/login-info").then(data => {
               let name = data.data.data.name;
-              this.setName(name);
+              this.setName(this.phoneInput);
             });
           } else if (status == -1) {
             if (msg == "图片验证码错误！") {
@@ -181,7 +187,7 @@ export default {
     outline: 0;
     margin-bottom: 24px;
     position: relative;
-    padding: 5px ;
+    padding: 5px;
     box-sizing: border-box;
   }
   .visible {

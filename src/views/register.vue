@@ -139,6 +139,7 @@ export default {
       if (this.imgVInput !== "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgVInput == ""
       }
     },
     //点击获取倒计时

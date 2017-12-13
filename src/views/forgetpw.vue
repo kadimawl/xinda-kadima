@@ -94,6 +94,7 @@ export default {
       if (!this.imgV == "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgV == ""
       }
     },
     //点击获取倒计时
