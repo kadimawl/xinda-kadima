@@ -60,6 +60,7 @@
 </template>
 
 <script>
+//功能就差一个翻页功能
 // 引入模块
 import {mapActions,mapGetters} from 'vuex' 
 import pageturn from './pageturn'
