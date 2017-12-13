@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="navigation">
-      <router-link class="defaults" active-class="colorChange" to="/HomePage/">全部商品</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/HomePage/" @mouseover.native="over">全部商品</router-link>
       <router-link class="defaults" active-class="colorChange" to="/tabs/taxationList">财税服务</router-link>
       <router-link class="defaults" active-class="colorChange" to='/tabs/companyList'>公司工商</router-link>
       <router-link class="defaults" active-class="colorChange" to="/tabs/toJoinIn">加盟我们</router-link>
@@ -52,7 +52,11 @@ export default {
       seleShow: true
     };
   },
-  methods: {}
+  methods: {
+    over: function() {
+      this.$emit('display');
+    }
+  }
 };
 </script>
 
