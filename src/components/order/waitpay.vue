@@ -38,9 +38,6 @@
 
 <script>
 export default {
-    created() {
-        
-    },
     // 父组件向子组件传参
     props:{
         displays:Boolean,
@@ -64,6 +61,7 @@ export default {
                 that.$emit('close');
             }, 1000);
         },
+        //关闭支付反馈框
         paybackstop: function() {
             this.$emit('ts');
             this.error = "1秒后返回支付方式界面";
@@ -79,14 +77,14 @@ export default {
         //支付成功,要与返回的数据进行验证
         payR: function() {
             location.href = "http://localhost:8080/#/order/success";
-        // if(){//验证成功
-            // this.$emit('close');
-        //     loaction.href='http://localhost:8080/#/order/success';
-        // }else{//验证失败
-            // this.$emit('close');
-            
-        //     loaction.href='http://localhost:8080/#/order/failure';
-        // }
+            // if(){//验证成功
+                // this.$emit('close');
+            //     loaction.href='http://localhost:8080/#/order/success';
+            // }else{//验证失败
+                // this.$emit('close');
+                
+            //     loaction.href='http://localhost:8080/#/order/failure';
+            // }
         },
         // 支付失败
         payno: function() {

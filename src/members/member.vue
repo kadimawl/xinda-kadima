@@ -17,7 +17,6 @@
 // 引用组件
 import user from './user'
 import sele from '@/components/sele'
-
 export default {
     data() {
         return {};
