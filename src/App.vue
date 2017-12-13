@@ -1,24 +1,39 @@
 <template>
   <div id="app">
-    <!-- <top/> -->
-    <router-view/>
-    <!-- <bottom/> -->
-  </div>  
+    <keep-alive>
+      <router-view @userSignIn="userSignIn"></router-view>
+    </keep-alive>
+  </div>
 </template>
 
 <script>
-// import top from "./components/top";
-// import bottom from "./components/bottom";
 
 export default {
+  data() {
+    return{
+       userName: sessionStorage.userName
+    }
+  },
   name: "app",
-  // components: { top, bottom } //需要在当前组件内注册（添加）
+  methods:{
+    //子组件(login)将用户名传过来
+    userSignIn(userName){
+      sessionStorage.userName = userName;
+      this.userName = sessionStorage.userName;
+    }
+  }
 };
 </script>
 
 <style lang="less">
-  *{
-    margin: 0;
-    padding: 0;
+* {
+  margin: 0;
+  padding: 0;
+}
+a{
+  text-decoration: none;
+}
+button{
+    outline:0;
   }
 </style>

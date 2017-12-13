@@ -23,15 +23,30 @@
 </template>
 
 <script>
+// 引入
 import VDistpicker from 'v-distpicker'
+import md5 from 'js-md5'
+
 export default {
-  data() {
-    return {
-        inputN:'',
-        inputM:'',
-        radio:''
-    };
-  },
+    created(){
+        this.ajax.post('/xinda-api/member/info').then(function(data){
+            console.log(data);
+            if(data.data.status==1){
+            console.log('succ');
+                
+            }else{
+            console.log('false');
+                
+            }
+        })
+    },
+    data() {
+        return {
+            inputN:'',
+            inputM:'',
+            radio:''
+        };
+    },
    components: {VDistpicker  }
 };
 </script>

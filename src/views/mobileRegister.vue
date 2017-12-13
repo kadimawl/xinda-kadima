@@ -53,13 +53,12 @@ export default {
 
 <style lang="less">
 .lOut {
-  max-width: 768px;
-  width: 100%;
+  // max-width: 768px;
+  // width: 100%;
   height: 1334px;
-  margin: 0 auto;
+  // margin: 0 auto;
   padding: 13% 9%;
   box-sizing: border-box;
-  border: 1px solid;
   input {
     width: 80%;
     height: 40px;

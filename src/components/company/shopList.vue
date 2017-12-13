@@ -23,6 +23,11 @@
           <router-view/>
       </div>
     </div>
+    <!-- <div class="number">
+      <button>上一页</button>
+      <button v-for="num in nums" :key="num.id">{{num}}</button>
+      <button>下一页</button>
+    </div> -->
   </div>
 </template>
 
@@ -35,6 +40,7 @@ export default {
       regionName: "",
       providerInfo: "",
       LogoUrl: ""
+      // nums: []
     };
   },
   created() {
@@ -83,7 +89,7 @@ export default {
   display: flex;
   justify-content: space-between;
   height: 580px;
-  margin-bottom: 40px;
+  margin-bottom: 140px;
   .shopName {
     width: 300px;
     border: 1px solid #e9e9e9;

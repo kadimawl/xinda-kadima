@@ -22,7 +22,6 @@ export default {
     margin: 0;
     padding: 0;
 }
-
 .account{
     width: 930px;
     height: 500px;
