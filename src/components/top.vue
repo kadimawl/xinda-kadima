@@ -62,9 +62,12 @@ export default {
       this.setTitle("欢迎注册");
     },
     exit() {
-      this.ajax.post("/xinda-api/sso/logout").then(data => {
-        this.setName("");
-      });
+      // this.ajax.post("/xinda-api/sso/logout").then(data => {
+        // if (data.data.status == 1) {
+          sessionStorage.clear();
+        // }
+      // });
+      location.reload();
     }
   }
 };

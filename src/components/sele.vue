@@ -35,21 +35,12 @@
       </div>
     </div>
     <div class="navigation">
-      <a href="/#/HomePage/" class="">
-        <p class="colorChange" :class="style" @click="all">全部商品</p>
-      </a>
-      <a href="/#/tabs/taxationList" class="">
-        <p :class="styleTax" @click="tax">财税服务</p>
-      </a>
-      <a href="/#/tabs/companyList" class="">
-        <p :class="styleCom" @click="com">公司工商</p>
-      </a>
-      <a href="/#/tabs/toJoinIn" class="">
-        <p :class="styleJ" @click="join">加盟我们</p>
-      </a>
-      <a href="#/shopIndex" class="">
-        <p :class="styleShop" @click="shop">店铺</p>
-      </a>
+      <router-link class="defaults" active-class="colorChange" to="/HomePage/" @mouseover.native="over">全部商品</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/tabs/taxationList">财税服务</router-link>
+      <router-link class="defaults" active-class="colorChange" to='/tabs/companyList'>公司工商</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/tabs/toJoinIn">加盟我们</router-link>
+      <router-link class="defaults" active-class="colorChange" to="/shopIndex">店铺</router-link>
+
     </div>
   </div>
 </template>
@@ -58,49 +49,12 @@
 export default {
   data() {
     return {
-      seleShow: true,
-      style: "",
-      styleTax: "",
-      styleCom: "",
-      styleJ: "",
-      styleShop: ""
+      seleShow: true
     };
   },
   methods: {
-    all() {
-      this.style = "colorChange";
-      this.styleTax = "";
-      this.styleCom = "";
-      this.styleJ = "";
-      this.styleShop = "";
-    },
-    tax() {
-      this.style = "colorFFF";
-      this.styleTax = "colorChange";
-      this.styleCom = "";
-      this.styleJ = "";
-      this.styleShop = "";
-    },
-    com() {
-      this.style = "colorFFF";
-      this.styleTax = "";
-      this.styleCom = "colorChange";
-      this.styleJ = "";
-      this.styleShop = "";
-    },
-    join() {
-      this.style = "colorFFF";
-      this.styleTax = "";
-      this.styleCom = "";
-      this.styleJ = "colorChange";
-      this.styleShop = "";
-    },
-    shop() {
-      this.style = "colorFFF";
-      this.styleTax = "";
-      this.styleCom = "";
-      this.styleJ = "";
-      this.styleShop = "colorChange";
+    over: function() {
+      this.$emit('display');
     }
   }
 };
@@ -211,23 +165,19 @@ h1 {
 
 .navigation {
   width: 1200px;
+  height: 50px;
   margin: 0 auto;
-  a {
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: normal;
-    text-align: center;
-    display: inline-block;
-    color: #2b2b2b;
-    width: 200px;
-    height: 47px;
-  }
-  p {
-    width: 80px;
-    margin: auto;
-    height: 46px;
-    line-height: 46px;
-  }
+}
+.defaults {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: normal;
+  text-align: center;
+  display: inline-block;
+  color: #2b2b2b;
+  width: 100px;
+  height: 45px;
+  margin: 0 50px;
 }
 
 .colorChange {

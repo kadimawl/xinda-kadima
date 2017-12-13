@@ -46,7 +46,13 @@ export default new Vuex.Store({
     getters: { //显示集合
         getNum: state => state.num,
         getTitle: state => state.title,
-        getName: state => state.name, //顶部用户名显示
+        getName: state => {
+            if(state.name){
+              return state.name;
+            }else{
+              return  sessionStorage.getItem('user');
+            }
+        }, //顶部用户名显示
         getCode: state => state.code, //用户中心向订单详情发送的订单编号
         getheadX: state => state.headX, //用户头像
     }

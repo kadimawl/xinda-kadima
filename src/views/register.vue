@@ -11,7 +11,7 @@
         <p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
       </div>
       <div class="v-box">
-        <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
+        <input type="text" placeholder="  请输入验证码" class="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
         <button class="clickGet" @click="clickGet">
           <span v-show="show">点击获取</span>
           <span class="countdown" v-show="!show">重新发送{{count}}</span>
@@ -19,8 +19,8 @@
         <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
       </div>
       <div class="selected">
-        <v-distpicker id="select" province="省" city="市"  @selected="selected" ></v-distpicker>
-          <!-- <select name="" id="" @change="proChange" v-model="province">
+        <v-distpicker id="select" province="省" city="市" @selected="selected"></v-distpicker>
+        <!-- <select name="" id="" @change="proChange" v-model="province">
             <option value="0">省</option>
             <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
           </select>
@@ -33,7 +33,8 @@
             <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
           </select> -->
       </div>
-      <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
+      <div class="pwBox"><input :type="pwType" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
+        <img class="visible" :src="invisibleUrl" @click="visible">
         <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
       </div>
       <button class="i-register" @click="submit">立即注册</button>
@@ -54,11 +55,13 @@
 
 <script>
 import { mapActions } from "vuex";
+const eyes = [require("../assets/visible/invisible.png"),require("../assets/visible/visible.png")];
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
   created() {},
   data() {
     return {
+      pwType: "password",
       show: true,
       count: "",
       timer: null,
@@ -72,9 +75,8 @@ export default {
       pshow: true,
       pwInput: "",
       pwShow: false,
-      seleCode: '',
-
-      
+      seleCode: "",
+      invisibleUrl: eyes[0],
     };
   },
   methods: {
@@ -87,8 +89,8 @@ export default {
     // },
     ...mapActions(["setTitle"]),
     created() {},
-    selected: function(data){
-        this.seleCode =  data.area.code; 
+    selected: function(data) {
+      this.seleCode = data.area.code;
     },
     login() {
       // this.$router.push({ path: "/outter/login" });
@@ -137,6 +139,7 @@ export default {
       if (this.imgVInput !== "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgVInput == ""
       }
     },
     //点击获取倒计时
@@ -199,6 +202,15 @@ export default {
     pwFocus() {
       this.pwShow = false;
     },
+    //密码可视
+    visible() {
+      this.pwType = this.pwType === "password" ? "text" : "password";
+      if (this.pwType == "password") {
+        this.invisibleUrl = eyes[0];
+      } else {
+        this.invisibleUrl = eyes[1];
+      }
+    },
     //立即注册
     submit() {
       var user = this.phoneInput;
@@ -238,7 +250,8 @@ export default {
     border: none;
     border: 1px solid #cbcbcb;
     border-radius: 3px;
-    padding: 1px 0;
+    padding: 5px ;
+    box-sizing: border-box;
     outline: 0;
     margin-bottom: 19px;
   }
@@ -262,6 +275,9 @@ export default {
     margin-left: 9px;
   }
   #verification {
+    width: 172px;
+  }
+  .verification {
     width: 172px;
   }
   .v-img {
@@ -352,7 +368,18 @@ export default {
 }
 .pwBox {
   display: flex;
+  input{
+    position: relative;
+  }
 }
+.visible {
+    cursor: pointer;
+    width: 17px;
+    height: 12px;
+    position: relative;
+    top: 40px;
+    right: 30px;
+  }
 .errorMsg {
   height: 12px;
   font-size: 12px;

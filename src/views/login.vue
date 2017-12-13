@@ -1,15 +1,20 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
+      <div class="phoneBox">
+        <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
         <p class="errorMsg" v-show="!registered">该手机号未注册</p>
         <p class="errorMsg" v-show="!correctness">请输入正确的手机号</p>
       </div>
-      <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+      <div class="pwBox">
+        <input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+        <img class="visible" :src="invisibleUrl" @click="visible">
         <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
         <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
       </div>
-      <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt="">
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+        <img @click="reImg" :src="imgUrl" alt="">
         <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
         <p class="errorMsg" v-show="imgShowError">图片验证码错误！</p>
       </div>
@@ -32,12 +37,15 @@
 
 <script>
 var md5 = require("md5");
-
 import { mapActions } from "vuex";
-
+const eyes = [
+  require("../assets/visible/invisible.png"),
+  require("../assets/visible/visible.png")
+];
 export default {
   data() {
     return {
+      pwType: "password",
       phoneInput: "",
       registered: true,
       correctness: true,
@@ -46,6 +54,7 @@ export default {
       pwEShow: false,
       imgVInput: "",
       imgUrl: "/xinda-api/ajaxAuthcode",
+      invisibleUrl: eyes[0],
       imgShow: false,
       imgShowError: false,
       EShow: false
@@ -90,6 +99,15 @@ export default {
     pwFocus() {
       this.pwShow = false;
     },
+    //密码可视
+    visible() {
+      this.pwType = this.pwType === "password" ? "text" : "password";
+      if (this.pwType == "password") {
+        this.invisibleUrl = eyes[0];
+      } else {
+        this.invisibleUrl = eyes[1];
+      }
+    },
     //验证码刷新-
     reImg() {
       this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
@@ -106,6 +124,7 @@ export default {
       if (this.imgVInput !== "") {
         this.imgShow = false;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgVInput = "";
       }
     },
 
@@ -128,10 +147,12 @@ export default {
           let status = data.data.status;
 
           if (status == 1) {
+            //成功登陆
+            sessionStorage.setItem("user", this.phoneInput);
             this.$router.push({ path: "/HomePage" }); //页面跳转
             this.ajax.post("/xinda-api/sso/login-info").then(data => {
               let name = data.data.data.name;
-              this.setName(name);
+              this.setName(this.phoneInput);
             });
           } else if (status == -1) {
             if (msg == "图片验证码错误！") {
@@ -165,6 +186,17 @@ export default {
     padding: 1px 0;
     outline: 0;
     margin-bottom: 24px;
+    position: relative;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+  .visible {
+    cursor: pointer;
+    width: 17px;
+    height: 12px;
+    position: relative;
+    top: 15px;
+    right: 30px;
   }
   .v-box {
     // width: 281px;
@@ -246,7 +278,7 @@ export default {
   display: flex;
 }
 .errorMsg {
-  width: 281px;
+  width: 130px;
   height: 12px;
   font-size: 12px;
   color: #f33;
