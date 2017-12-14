@@ -3,20 +3,17 @@
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-        <p class="errorMsg" v-show="!registered">该手机号未注册</p>
-        <p class="errorMsg" v-show="!correctness">请输入正确的手机号</p>
+        <p class="errorMsg" >{{phoneMsg}}</p>
       </div>
       <div class="pwBox">
         <input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
         <img class="visible" :src="invisibleUrl" @click="visible">
-        <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
-        <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
+        <p class="errorMsg">{{pwMsg}}</p>
       </div>
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
-        <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
-        <p class="errorMsg" v-show="imgShowError">图片验证码错误！</p>
+        <p class="errorMsg" >{{imgVMsg}} </p>
       </div>
       <div class="forget" @click="forgetpw">
         <a href="/#/outter/forgetpw">忘记密码？</a>
@@ -47,16 +44,13 @@ export default {
     return {
       pwType: "password",
       phoneInput: "",
-      registered: true,
-      correctness: true,
+      phoneMsg: '',
       pwInput: "",
-      pwShow: false,
-      pwEShow: false,
+      pwMsg: '',
       imgVInput: "",
+      imgVMsg: '',
       imgUrl: "/xinda-api/ajaxAuthcode",
       invisibleUrl: eyes[0],
-      imgShow: false,
-      imgShowError: false,
       EShow: false
     };
   },
@@ -77,15 +71,15 @@ export default {
       let result = pReg.test(this.phoneInput);
       let user = this.phoneInput;
       if (!this.phoneInput == "") {
-        this.correctness = true;
+        this.phoneMsg = '';
         if (!result) {
-          this.correctness = false;
+          this.phoneMsg = '请输入正确的手机号';
           let user = this.phoneInput;
         }
       }
     },
     pFocus() {
-      this.correctness = true;
+      this.phoneMsg = '';
     },
 
     //密码输入验证
@@ -93,11 +87,11 @@ export default {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (!pwResult && this.pwInput !== "") {
-        this.pwShow = true;
+        this.pwMsg = '请输入（8-20位）数字、大小写字母';
       }
     },
     pwFocus() {
-      this.pwShow = false;
+      this.pwMsg = '';
     },
     //密码可视
     visible() {
@@ -117,12 +111,12 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgShow = true;
+        this.imgVMsg = '图片验证码为4位（数字或者大小写字母）';
       }
     },
     imgVA() {
       if (this.imgVInput !== "") {
-        this.imgShow = false;
+        this.imgVMsg = '';
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
         this.imgVInput = "";
       }
@@ -133,6 +127,18 @@ export default {
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
+      // if(userName){
+      //   if(pw){
+
+      //   }else{
+      //     this.pwShow = true;
+      //   }
+      // }else{
+      //   this.phoneMsg = '';
+      // }
+
+
+
       this.ajax
         .post(
           "/xinda-api/sso/login",
@@ -157,11 +163,11 @@ export default {
             });
           } else if (status == -1) {
             if (msg == "图片验证码错误！") {
-              this.imgShowError = true;
+              this.imgVMsg = '图片验证码错误！';
             } else if (msg == "账号或密码不正确！") {
               this.EShow = true;
             } else if (msg == "账号不存在") {
-              this.registered = false;
+              this.phoneMsg = '该手机号未注册';
             }
           }
         });
