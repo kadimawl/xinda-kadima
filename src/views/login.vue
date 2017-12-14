@@ -7,7 +7,7 @@
         <p class="errorMsg" v-show="!correctness">请输入正确的手机号</p>
       </div>
       <div class="pwBox">
-        <input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+        <input :type="pwType" placeholder="请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
         <img class="visible" :src="invisibleUrl" @click="visible">
         <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
         <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
@@ -62,7 +62,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setTitle", "setName"]),
+    ...mapActions(["setTitle", "setName",]),
     forgetpw() {
       // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");

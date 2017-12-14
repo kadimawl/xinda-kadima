@@ -39,7 +39,7 @@
         <span class="mark" :style="{color:colorA}">*</span>
     </div>
     <!-- 保存按钮 -->
-    <div class="storage">
+    <div class="storage">   
         <button @click="store">保存</button>
     </div>
     <!-- 错误提示框 -->
@@ -50,9 +50,8 @@
 
 <script>
 // 引入
-import md5 from 'js-md5'
 import {mapActions,mapGetters} from 'vuex' 
-import dist from './districts.js'
+import dist from '../districts/districts'
 
 export default {
     // 页面  性别显示有问题，数据传了，单选框不显示，
@@ -63,6 +62,7 @@ export default {
             if(sessionStorage.getItem('account'+this.getName+'')){
                 console.log('user');
                 var data=JSON.parse(sessionStorage.getItem('account'+this.getName+''));
+                console.log(data);
                 this.pageshow(data);
             }else{
                 // console.log('post');
@@ -70,6 +70,7 @@ export default {
                 that.ajax.post('/xinda-api/member/info').then(function(data){
                     if(data.data.status==1){
                         // console.log('succ')
+                        console.log(data);
                         that.pageshow(data);
                     }else{
                         that.errorshow=true;
@@ -122,6 +123,7 @@ export default {
                 if(datas.gender=='1'||datas.gender=='2'){
                     this.radio=datas.gender;
                     this.choosesex();
+                    console.log(this.radio);
                 }
                 // 处理三级联动
                 this.seleCode=datas.regionId;
@@ -146,7 +148,7 @@ export default {
                 if(!/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(this.inputM)){
                     this.errorshow=true;//提示
                     this.error='请输入正确的邮箱';
-                    this.acolor='#ff4745';
+                    this.acolor='##ff4649';
                 }else{
                     this.errorshow=false;
                     this.colorM='#5d95e8';

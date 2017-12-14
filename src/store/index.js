@@ -3,11 +3,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 export default new Vuex.Store({
     state: { //状态集合
-        num: 0,
+        num: 0, //购物车商品数量
         title: '欢迎登录',
-        name: '',
-        code: '',
+        name: '', //用户名
+        code: '', //订单编号
         headX: '', //用户头像
+        // pd: '', //用户密码加密过的
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         SET_headX: (state, headX) => {
             state.headX = headX;
         },
+        // SET_PD: (state, pd) => {
+        //     state.pd = pd;
+        // },
     },
     actions: { //操作集合
         setNum({ commit }, num) {
@@ -42,19 +46,24 @@ export default new Vuex.Store({
         setheadX({ commit }, headX) {
             commit('SET_headX', headX)
         },
+        // setPd({ commit }, pd) {
+        //     commit('SET_PD', pd)
+        // },
     },
     getters: { //显示集合
         getNum: state => state.num,
         getTitle: state => state.title,
         getName: state => {
-            if(state.name){
-              return state.name;
-            }else{
-              return  sessionStorage.getItem('user');
+            if (state.name) {
+                return state.name;
+            } else {
+                return sessionStorage.getItem('user');
             }
         }, //顶部用户名显示
         getCode: state => state.code, //用户中心向订单详情发送的订单编号
         getheadX: state => state.headX, //用户头像
+        // getPd: state => state.pd, //用户密码
+
     }
 
 })
