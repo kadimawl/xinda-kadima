@@ -175,55 +175,29 @@ export default new Router({
                 },
 
 
+      ]
+    },
 
-
-                //pc端支付
-                {
-                    path: '/Order',
-                    component: Order,
-                    children: [{
-                        path: '/',
-                        component: orderdetail
-                    }, {
-                        path: 'success',
-                        component: paymentSuccess
-                    }, {
-                        path: 'failure',
-                        component: paymentFailure
-                    }, {
-                        path: 'payZfb',
-                        component: payZfb
-                    }, {
-                        path: 'payBank',
-                        component: payBank
-                    }]
-                },
-
-
-
-
-        //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
-        {
-          path: '/Order',
-          component: Order,
-          children: [{
+    //pc端支付
+    {
+        path: '/Order',
+        component: Order,
+        children: [{
+            path: '/',
+            component: orderdetail
+        }, {
             path: 'success',
             component: paymentSuccess
-          }, {
+        }, {
             path: 'failure',
             component: paymentFailure
-          }, {
+        }, {
             path: 'payZfb',
             component: payZfb
-          }, {
+        }, {
             path: 'payBank',
             component: payBank
-          }]
-        },
-
-
-
-      ]
+        }]
     },
 
     //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
@@ -270,9 +244,6 @@ export default new Router({
       }, {
         path: 'myOrder', //我的订单
         component: myOrder
-
-
-
       }]
     },
 

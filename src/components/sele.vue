@@ -165,7 +165,7 @@ h1 {
 
 .navigation {
   width: 1200px;
-  height: 50px;
+  height: 48px;
   margin: 0 auto;
 }
 .defaults {
@@ -178,6 +178,7 @@ h1 {
   width: 100px;
   height: 45px;
   margin: 0 50px;
+  line-height: 45px;
 }
 
 .colorChange {

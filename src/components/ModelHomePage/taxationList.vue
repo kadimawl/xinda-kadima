@@ -79,8 +79,15 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
+    <div class="pChange">
+      <el-pagination 
+      @current-change="handleCurrentChange" 
+      background  
+      layout="prev, pager, next" 
+      :total="8" :page-size="4">
+      </el-pagination>
+    </div>
+
   </div>
 </template>
 
@@ -90,18 +97,18 @@ export default {
   components: { distpicker },
   methods: {
     //三级联动选择code
-    selected: function(code) {    
+    selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode)
+      console.log(this.seleCode);
     },
-    changePage: function() {
+    handleCurrentChange: function() {
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 5,
-            limit: 5,
+            limit: 4,
             productTypeCode: "1",
             sort: 2
           })
@@ -109,9 +116,12 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          // console.log(that.products);
+          console.log(that.products);
         });
     }
+  },
+  handleSizeChange() {
+
   },
   created() {
     var that = this;
@@ -120,13 +130,14 @@ export default {
       that.ItemLists = rData;
       // console.log(that.ItemLists);
     });
+    //默认拉取productTypeCode 审计报告（3）数据，（2）为税务代办，（2）为代理记账
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
-          productTypeCode: "1",
+          limit: 100,
+          productTypeCode: "0",
           sort: 2
         })
       )
@@ -140,7 +151,7 @@ export default {
     return {
       ItemLists: [],
       products: [],
-      seleCode: ''
+      seleCode: ""
     };
   }
 };
@@ -381,14 +392,17 @@ export default {
   }
 }
 
-
-.spaceList{
+.spaceList {
   padding: 5px 0 8px 12px;
   box-sizing: border-box;
-  .area{
+  .area {
     width: 86px;
     height: 20px;
   }
 }
 
+.pChange {
+  margin: 30px 0 200px;
+  padding: 0 500px;
+}
 </style>
