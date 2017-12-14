@@ -1,20 +1,20 @@
 <template>
 
   <div>
-    <sele/>
+    <sele @display='displayShow'></sele>
     <!-- 产品列表及轮播 -->
     <div class="pro-nav">
       <!-- 轮播 -->
       <div class="block">
         <span class="demonstrantion"></span>
-        <el-carousel trigger="click" height="400px">
+        <el-carousel trigger="click" height="405px">
           <el-carousel-item v-for="item in 4" :key="item">
           </el-carousel-item>
         </el-carousel>
       </div>
       <!--菜单 -->
-      <div class="ItemList">
-        <div class="Listleft">
+      <div class="ItemList" @mouseleave="mleave">
+        <div class="Listleft" v-show="SorH">
           <div class="ListImg">
             <div class="ImgI"></div>
             <div class="ImgII"></div>
@@ -22,20 +22,34 @@
             <div class="ImgIV"></div>
           </div>
           <div class="Listnames">
-            <div class="listI" v-for="itemName in ItemLists" :key="itemName.name">
+            <div class="listI" v-for="(itemName,idx) in ItemLists" :key="itemName.name" @mouseover="mover(idx)" >
               <p class="ListNameI">
-                <a href="javascript:void(0)">{{itemName.name}}</a>
+                <a href="">{{itemName.name}}</a>
               </p>
               <div class="listII" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
                 <p>
-                  <a href="javascript:void(0)">{{itemNameII.name}}</a>
+                  <a href="">{{itemNameII.name}}</a>
                 </p>
+              </div>
+              <div class="listIII" v-show="idx==index">
+                <div class="listIII-s" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
+                  <div class="ListNameII">
+                    <p>{{itemNameII.name}}></p>
+                  </div>
+                  <div class="ListNameIII">
+                    <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
+                      <p>
+                        <a href="">{{itemNameIII.name}}</a>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="Listright">
-          <div v-for="itemName in ItemLists" :key="itemName.name" class="listIII">
+        <!-- <div class="Listright">
+          <div v-for="(itemName,idx) in ItemLists" :key="itemName.name" class="listIII" v-show="idx==index">
             <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="listIII-s">
               <div class="ListNameII">
                 <p>{{itemNameII.name}}></p>
@@ -43,13 +57,13 @@
               <div class="ListNameIII">
                 <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
                   <p>
-                    <a href="javascript:void(0)">{{itemNameIII.name}}</a>
+                    <a href="">{{itemNameIII.name}}</a>
                   </p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
     <!-- 明星产品推荐 -->
@@ -200,6 +214,7 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
+      // console.log(that.ItemLists);
     });
     this.ajax.post("/xinda-api/recommend/list").then(function(data) {
       var tData = data.data.data.hq;
@@ -213,11 +228,24 @@ export default {
   },
   data() {
     return {
+      SorH: false,
       ItemLists: [],
       products: [],
       providers: [],
-      services: []
+      services: [],
+      index: -1
     };
+  },
+  methods: {
+    displayShow: function() {
+      this.SorH = true;
+    },
+    mover: function(idx) {
+      this.index = idx;
+    },
+    mleave:function(){
+      this.SorH = false;
+    }
   }
 };
 </script>
@@ -231,27 +259,31 @@ export default {
 }
 .pro-nav {
   width: 1200px;
-  height: 400px;
+  height: 405px;
   margin: 0 auto;
   position: relative;
 }
 .el-carousel {
   width: 1200px;
-  height: 400px;
+  height: 405px;
   .el-carousel__item:nth-child(1) {
     border: 5px solid #000;
   }
   .el-carousel__item:nth-child(3) {
-    background: url(../../assets/HomePageimages/lun1.jpg) no-repeat;
+    background: url(../../assets/HomePageimages/lun1.jpg);
+    background-size:100% 100%;;
   }
   .el-carousel__item:nth-child(4) {
-    background: url(../../assets/HomePageimages/lun2.jpg) no-repeat;
+    background: url(../../assets/HomePageimages/lun2.jpg);
+    background-size:100% 100%;
   }
   .el-carousel__item:nth-child(5) {
-    background: url(../../assets/HomePageimages/lun3.jpg) no-repeat;
+    background: url(../../assets/HomePageimages/lun3.jpg);
+    background-size:100% 100%;
   }
   .el-carousel__item:nth-child(6) {
-    background: url(../../assets/HomePageimages/lun4.jpg) no-repeat;
+    background: url(../../assets/HomePageimages/lun4.jpg);
+    background-size:100% 100%;
   }
 }
 .ItemList {
@@ -265,7 +297,7 @@ export default {
 }
 .Listleft {
   width: 200px;
-  height: 400px;
+  height: 405px;
   background-color: #132336;
   position: relative;
 }
@@ -335,51 +367,45 @@ export default {
     }
   }
 }
-.Listright {
+
+.listIII {
   width: 1000px;
-  height: 400px;
-  display: flex;
-  flex-direction: column;
-  align-content: space-around;
-  .listIII {
+  position: absolute;
+  left: 160px;
+  background-color: rgba(160, 190, 200, 0.5);
+  .listIII-s {
     width: 1000px;
-    height: 108px;
-    margin-top: 7px;
-    background-color: rgba(160, 190, 200, 0.5);
-    .listIII-s {
-      width: 1000px;
-      margin-bottom: 15px;
-      display: flex;
+    margin: 15px;
+    display: flex;
+  }
+  .ListNameII {
+    height: 20px;
+    p {
+      height: 14px;
+      font-size: 14px;
+      color: #fff;
+      line-height: 14px;
+      margin: 2px auto;
+      padding-left: 10px;
+      padding-right: 10px;
     }
-    .ListNameII {
-      height: 20px;
-      p {
-        height: 14px;
+  }
+  .ListNameIII {
+    width: 900px;
+    height: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    p {
+      height: 14px;
+      border-left: 1px solid #fff;
+      line-height: 14px;
+      margin: 2px auto;
+      a {
+        text-decoration: none;
         font-size: 14px;
         color: #fff;
-        line-height: 14px;
-        margin: 2px auto;
         padding-left: 10px;
         padding-right: 10px;
-      }
-    }
-    .ListNameIII {
-      width: 900px;
-      height: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      p {
-        height: 14px;
-        border-left: 1px solid #fff;
-        line-height: 14px;
-        margin: 2px auto;
-        a {
-          text-decoration: none;
-          font-size: 14px;
-          color: #fff;
-          padding-left: 10px;
-          padding-right: 10px;
-        }
       }
     }
   }

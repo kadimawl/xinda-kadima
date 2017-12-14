@@ -109,16 +109,60 @@ export default new Router({
                     component: detial,
                     redirect: '/detial/service',
                     children: [{
-                        path: 'service',
-                        component: service
-                    }, {
-                        path: 'evaluate',
-                        component: evaluate
-                    }],
-                },
-                {
-                    path: '/shopIndex', //店铺首页
-                    component: shopIndex
+                        path: 'toJoinIn',
+                        component: toJoinIn,
+                    },
+                    {
+                        path: 'taxationList', //财税服务
+                        name: 'taxationList',
+                        component: taxationList
+                    },
+                    {
+                        path: 'companyList', //公司工商
+                        name: 'companyList',
+                        component: companyList
+                    },
+                    {
+                        path: 'goodsDetails', //商品详情
+                        name: 'goodsDetails',
+                        component: goodsDetails
+                    },
+                    {
+                        path: 'shoppingCart', //购物车
+                        name: 'shoppingCart',
+                        component: shoppingCart
+                    },
+                    {
+                        path: '/detial',
+                        component: detial,
+                        redirect: '/detial/service',
+                        children: [{
+                            path: 'service',
+                            component: service
+                        }, {
+                            path: 'evaluate',
+                            component: evaluate
+                        }],
+                    },
+                    {
+                        path: '/shopIndex', //店铺首页
+                        component: shopIndex
+                    },
+                    {
+                        path: '/shopList', //店铺列表
+                        component: shopList,
+                        children: [{
+                            path: '/',
+                            component: credentials
+                        }, {
+                            path: 'custom',
+                            component: custom
+                        }, {
+                            path: 'product',
+                            component: product
+                        }]
+                    }
+                    ]
                 },
                 {
                     path: '/shopList', //店铺列表
@@ -194,28 +238,6 @@ export default new Router({
                     path: '/',
                     component: orderdetail
                 }, {
-                    path: 'success',
-                    component: paymentSuccess
-                }, {
-                    path: 'failure',
-                    component: paymentFailure
-                }, {
-                    path: 'payZfb',
-                    component: payZfb
-                }, {
-                    path: 'payBank',
-                    component: payBank
-                }]
-            },
-
-
-
-
-            //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
-            {
-                path: '/Order',
-                component: Order,
-                children: [{
                     path: 'success',
                     component: paymentSuccess
                 }, {
