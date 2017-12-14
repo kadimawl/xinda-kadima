@@ -109,62 +109,16 @@ export default new Router({
                     component: detial,
                     redirect: '/detial/service',
                     children: [{
-                        path: 'toJoinIn',
-                        component: toJoinIn,
-                    },
-                    {
-                        path: 'taxationList', //财税服务
-                        name: 'taxationList',
-                        component: taxationList
-                    },
-                    {
-                        path: 'companyList', //公司工商
-                        name: 'companyList',
-                        component: companyList
-                    },
-                    {
-                        path: 'goodsDetails', //商品详情
-                        name: 'goodsDetails',
-                        component: goodsDetails
-                    },
-                    {
-                        path: 'shoppingCart', //购物车
-                        name: 'shoppingCart',
-                        component: shoppingCart
-                    },
-                    {
-                        path: '/detial',
-                        component: detial,
-                        redirect: '/detial/service',
-                        children: [{
-                            path: 'service',
-                            component: service
-                        }, {
-                            path: 'evaluate',
-                            component: evaluate
-                        }],
-                    },
-                    {
-                        path: '/shopIndex', //店铺首页
-                        component: shopIndex
-                    },
-                    {
-                        path: '/shopList', //店铺列表
-                        component: shopList,
-                        children: [{
-                            path: '/',
-                            component: credentials
-                        }, {
-                            path: 'custom',
-                            component: custom
-                        }, {
-                            path: 'product',
-                            component: product
-                        }]
-                    }
-                    ]
-                },
-                {
+                        path: 'service',
+                        component: service
+                    }, {
+                        path: 'evaluate',
+                        component: evaluate
+                    }],
+                }, {
+                    path: '/shopIndex', //店铺首页
+                    component: shopIndex
+                }, {
                     path: '/shopList', //店铺列表
                     component: shopList,
                     children: [{
