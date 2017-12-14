@@ -1,34 +1,27 @@
 <template>
   <div class="page">
-    <div class="home" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">首页/{{itemName.name}}</div>
+    <div class="home">首页/财税服务</div>
     <div class="box">
       <div class="left">
         <div class="innerT">
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-                <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
-                  <div class="lists">{{itemNameII.name}}</div>
-                </div>
+              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" @click="types(key)" class="innerServer">
+                 <div class="lists">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div class="typeList" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-              <div class="typeList" v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==2">
-                <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
-                  <div class="lists">{{itemNameIII.name}}</div>
-                </div>
+              <div v-for="itemNameIII in subList" :key="itemNameIII.name">
+                <div class="lists">{{itemNameIII.name}}</div>
               </div>
-            </div>
           </div>
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-              <v-distpicker province="北京市" city="市辖区" area=""></v-distpicker>
+              
             </div>
           </div>
         </div>
@@ -78,16 +71,16 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
   </div>
 </template>
 
 <script>
-import VDistpicker from "v-distpicker";
 export default {
-  components: { VDistpicker },
   methods: {
+    types(key){
+      this.subList = this.ItemLists[key].itemList;
+      this.typecode = this.ItemLists[key].code;
+    },
     changePage: function() {
       var that = this;
       this.ajax
@@ -108,11 +101,21 @@ export default {
     }
   },
   created() {
+    // console.log(name);
+    
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+
       var rData = data.data.data;
-      that.ItemLists = rData;
-      // console.log(that.ItemLists);
+      for (const key in rData) {
+        if (rData[key].name=='财税服务') {
+          that.ItemLists = rData[key].itemList;
+          break;
+        }
+      }
+      that.types('09fb10e276744114a232ac04b7b72e5d');
+      
+      console.log(that.ItemLists);
     });
     this.ajax
       .post(
@@ -133,7 +136,10 @@ export default {
   data() {
     return {
       ItemLists: [],
-      products: []
+      products: [],
+      name: "",
+      subList:[],
+      typecode:''
     };
   }
 };
@@ -343,19 +349,13 @@ export default {
     line-height: 40px;
     text-align: center;
   }
-  .typeList {
-    width: 847px;
-    height: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    .lists {
-      height: 25px;
-      border-radius: 5px;
-      font-size: 14px;
-      line-height: 25px;
-      margin: 5px 10px;
-      padding: 2px 5px;
-    }
+  .lists {
+    height: 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 5px 10px;
+    padding: 2px 5px;
   }
   .lists:hover {
     background-color: #2693d4;
