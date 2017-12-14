@@ -6,7 +6,7 @@
         <div><img :src="headimg" alt="用户头像"></div>
         <p>{{getName}}</p>
     </div>
-    <!-- 导航栏，控制了我的订单、用户评价和账户设置 的跳转 -->
+    <!-- 导航栏，控制  我的订单、用户评价和账户设置 的跳转 -->
     <div class="nav">
         <router-link :to="{path:'/member/memberBody'}"  class="myorder common" active-class="active"><span></span>我的订单</router-link>
         <router-link :to="{path:'/member/userEval'}"  class="usereval common" active-class="active"><span></span>用户评价</router-link>
@@ -17,12 +17,10 @@
 </template>
 
 <script>
+// 引入vuex
 import {mapGetters} from 'vuex'
 export default {
     created(){
-        console.log(this.getName);
-        console.log(this.getheadX);
-        
     },
     data() {
         return {
@@ -48,12 +46,14 @@ export default {
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+    // 头像框
     .touxiang{
         width: 240px;
         height: 145px;
         text-align: center;
         background: #e9e9e9;
         margin: 10px 5px;
+        // 头像
         >div{
             margin-left: 70px;
             width: 90px;
@@ -64,11 +64,13 @@ export default {
                 vertical-align: middle;
             }
         }
+        // 用户名
         >p{
             font-size: 20px;
             font-weight: bold;
         }
     }
+    // 导航
     .nav{
         width: 240px;
         height: 380px;
@@ -113,6 +115,7 @@ export default {
             }
         }
     }
+    // 标签激活加的样式
     .active{
         background: #e9e9e9;
     }

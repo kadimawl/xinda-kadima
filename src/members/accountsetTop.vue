@@ -35,6 +35,7 @@ export default {
         font-size: 17px;
         text-align: center;
         text-decoration: none;
+        color: #000;
     }
     // 跳转标签加的样式
     .active{

@@ -24,6 +24,7 @@ export default {
   created() {
     var that = this;
     var shopList = JSON.parse(sessionStorage.getItem("GoToshop"));
+    console.log(shopList)
     !(function(list) {
       that.shops = list;
     })(shopList);

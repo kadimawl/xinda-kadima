@@ -11,8 +11,8 @@
         <p>姓名：</p><el-input v-model="inputN" class="inputname" placeholder="请输入姓名" @blur="inputname"></el-input><span class="mark" :style="{color:colorN}">*</span>
     </div>
     <!-- 性别 -->
-    <div class="sex" @blur="choosesex">
-        <p>性别：</p><el-radio v-model="radio" label="1">男</el-radio><el-radio v-model="radio" label="2">女</el-radio><span class="mark" :style="{color:colorS}">*</span>
+    <div class="sex">
+        <p>性别：</p><el-radio v-model="radio" label="1" @change="choosesex">男</el-radio><el-radio @change="choosesex" v-model="radio" label="2">女</el-radio><span class="mark" :style="{color:colorS}">*</span>
     </div>
     <!-- 邮箱 -->
     <div class="mailbox" >
@@ -22,16 +22,16 @@
     <div class="inarea" >
         <p>所在地区:</p>
         <!-- 三级联动 -->
-        <div class="address" @blur="choosearea">
-            <select @change="proChange" v-model="province">
+        <div class="address" >
+            <select @change="proChange" v-model="province" @blur="choosearea">
                 <option value="0">省</option>
                 <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
             </select>
-            <select @change="cityChange" v-model="city">
+            <select @change="cityChange" v-model="city" @blur="choosearea">
                 <option value="0">市</option>
                 <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
             </select>
-            <select @change="areaChange" v-model="area">
+            <select @change="areaChange" v-model="area" @blur="choosearea">
                 <option value="0">区</option>
                 <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
             </select>
@@ -55,29 +55,33 @@ import {mapActions,mapGetters} from 'vuex'
 import dist from './districts.js'
 
 export default {
+    // 页面  性别显示有问题，数据传了，单选框不显示，
     created(){
-        // 未登录不拉取数据
-        if(sessionStorage.getItem(this.getName)){
-            // 为防止重复拉取数据，第一次拉取会存到缓存里，以后直接从缓存那数据
-            var user=JSON.parse(sessionStorage.getItem(this.getName));
-            if(sessionStorage.getItem('account'+user+'')){
-                var data=JSON.parse(sessionStorage.getItem('account'+user+''));
-                var datas=data.data.data;
-                this.pageshow(datas);
+        // console.log('account');
+        if(this.getName){  // 登录拉取数据
+            // console.log('登录');
+            if(sessionStorage.getItem('account'+this.getName+'')){
+                console.log('user');
+                var data=JSON.parse(sessionStorage.getItem('account'+this.getName+''));
+                this.pageshow(data);
             }else{
-                this.ajax.post('/xinda-api/member/info').then(function(data){
-                // console.log(data);
+                // console.log('post');
+                var that=this;
+                that.ajax.post('/xinda-api/member/info').then(function(data){
                     if(data.data.status==1){
-                        // 头像暂时无法设置，地区选择也有问题
-                        var datas=data.data.data;
-                        this.pageshow(datas);
+                        // console.log('succ')
+                        that.pageshow(data);
                     }else{
-                        this.errorshow=true;//提示
-                        this.error=data.data.msg;
-                        this.acolor='#ff4745';                        
+                        that.errorshow=true;
+                        that.error=data.data.msg;
+                        that.acolor='#ff4745';                        
                     }
                 })
             }
+        }else{// 未登录不拉取数据
+            that.errorshow=true;
+            that.error='亲，先要登录哦';
+            that.acolor='#ff4745';   
         }
     },
     computed:{
@@ -88,7 +92,7 @@ export default {
             headimg:'',//头像
             inputN:'',//输入姓名
             inputM:'',//输入邮箱
-            radio:'',//性别单选框
+            radio:'2',//性别单选框
             errorshow:false,//控制错误框
             error:'',//错误提示
             acolor:'#ff4649',//错误提示的颜色
@@ -109,19 +113,23 @@ export default {
     methods:{
         ...mapActions(['setheadX']),
         // 处理ajax拉取数据
-        pageshow(datas){
-            this.headimg=datas.headImg;
-            this.inputN=datas.name;
-            this.inputM=datas.email;
-            if(datas.gender==1||datas.gender==2){
-                this.radio=datas.gender;
+        pageshow:function(data){
+            if(data){
+                var datas=data.data.data;
+                this.headimg=datas.headImg;
+                this.inputN=datas.name;
+                this.inputM=datas.email;
+                if(datas.gender=='1'||datas.gender=='2'){
+                    this.radio=datas.gender;
+                    this.choosesex();
+                }
+                // 处理三级联动
+                this.seleCode=datas.regionId;
+                this.showarea(this.seleCode);
+                    // vuex传参
+                this.setheadX(this.headimg);
+                sessionStorage.setItem('account'+this.getName+'',JSON.stringify(data))
             }
-            // 处理三级联动
-            this.seleCode=datas.regionId;
-            this.showarea(this.seleCode);
-                // vuex传参
-            this.setheadX(this.headimg);
-            sessionStorage.setItem('account'+user+'',JSON.stringify(data))
         },
         // 页面点击事件
         acBodyclick(){
@@ -146,92 +154,93 @@ export default {
             }
         },
         // 名字失去焦点
-        inputname:()=>{
+        inputname:function(){
             if(this.inputN){
                 this.colorN='#5d95e8';
             }
         },
-        // 性别框失去焦点
-        choosesex:()=>{
+        // 性别框改变
+        choosesex:function(){
             if(this.radio){
                 this.colorS='#5d95e8';
             }
         },
         // 地区失去焦点
-        choosearea:()=>{
-            if(this.province&&this.city&&this.area){
+        choosearea:function(){
+            if(this.province=='0'||this.city=='0'||this.area=='0'){
+                if(this.colorA=='#5d95e8'){
+                    this.colorA='#ff4649';
+                }
+            }else{
                 this.colorA='#5d95e8';
             }
         },
         // 保存
-        store:()=>{
-            if(sessionStorage.getItem(this.getName)){
-                var user=JSON.parse(sessionStorage.getItem(this.getName));
-                if(sessionStorage.getItem('account'+user+'')){
-                    var data=JSON.parse(sessionStorage.getItem('account'+user+''));
-                    var datas=data.data.data;
-                    this.acolor='#ff4745';
-                    if(!this.colorN=='#5d95e8'){
-                        this.errorshow=true;//提示
-                        this.error='请输入名字';
-                        return;
-                    }
-                    if(!this.colorS=='#5d95e8'){
-                        this.errorshow=true;//提示
-                        this.error='请选择性别';
-                        return;
-                    }
-                    if(!this.colorM=='#5d95e8'){
-                        this.errorshow=true;//提示
-                        this.error='请输入正确的邮箱';
-                        return;
-                    }
-                    if(!this.colorA=='#5d95e8'){
-                        this.errorshow=true;//提示
-                        this.error='请选择地区';
-                        return;
-                    }
-                    // 如果数据未发生变化，不会提交
-                    if(this.inputN!=datas.name||this.radio!=datas.gender||this.inputM!=datas.email||this.area!=datas.regionId){
-                        // 更新个人信息
-                        this.ajax.post('/xinda-api/member/update-info',
-                            this.qs.stringify({
-                                headImg:this.headimg,
-                                name:this.inputN,
-                                gender:this.radio,
-                                email:this.inputM,
-                                regionId:this.seleCode,
-                            })
-                        ).then(function(data){
-                            console.log(data);
-                            if(data.data.status==1){//更新成功
-                                this.errorshow=true;
-                                this.error=data.data.msg;
-                                this.acolor='#5d95e8';
-                                // 重新拉取数据
-                                this.ajax.post('/xinda-api/member/info').then(function(data){
-                                // console.log(data);
-                                if(data.data.status==1){
-                                    // 头像暂时无法设置，地区选择也有问题
-                                    var datas=data.data.data;
-                                    this.pageshow(datas);
-                                }else{
-                                    this.errorshow=true;//提示
-                                    this.error=''+data.data.msg+'更新获取最新信息失败';
-                                    this.acolor='#ff4745';                        
-                                }
-                            })
-                            }else{//更新失败
-                                this.errorshow=true;
-                                this.error=data.data.msg;
-                                this.acolor='#ff4745';
+        store:function(){
+
+            if(this.getName){  // 登录
+                this.acolor='#ff4745';
+                if(!this.colorN=='#5d95e8'){//判断名字输入
+                    this.errorshow=true;
+                    this.error='请输入名字';
+                    return;
+                }
+                if(!this.colorS=='#5d95e8'){//判断性别选择
+                    this.errorshow=true;
+                    this.error='请选择性别';
+                    return;
+                }
+                if(!this.colorM=='#5d95e8'){//判断邮箱输入
+                    this.errorshow=true;
+                    this.error='请输入正确的邮箱';
+                    return;
+                }
+                if(!this.colorA=='#5d95e8'){//判断地区选择
+                    this.errorshow=true;
+                    this.error='请选择地区';
+                    return;
+                }
+                var data=JSON.parse(sessionStorage.getItem('account'+this.getName+''));
+                var datas=data.data.data;
+                // 如果数据未发生变化，不会提交
+                if(this.inputN!=datas.name||this.radio!=datas.gender||this.inputM!=datas.email||this.area!=datas.regionId){
+                    // 更新个人信息
+                    var that=this;
+                    that.ajax.post('/xinda-api/member/update-info',
+                        that.qs.stringify({
+                            headImg:that.headimg,
+                            name:that.inputN,
+                            gender:that.radio,
+                            email:that.inputM,
+                            regionId:that.seleCode,
+                        })
+                    ).then(function(data){
+                        console.log(data);
+                        if(data.data.status==1){//更新成功
+                            that.errorshow=true;
+                            that.error='更新成功';
+                            that.acolor='#5d95e8';
+                            // 重新拉取数据
+                            that.ajax.post('/xinda-api/member/info').then(function(data){
+                            if(data.data.status==1){
+                                // 头像暂时无法设置
+                                that.pageshow(data);
+                            }else{
+                                that.errorshow=true;
+                                that.error=''+data.data.msg+'更新获取最新信息失败';
+                                that.acolor='#ff4745';                        
                             }
                         })
-                    }else{
-                        this.errorshow=true;//提示
-                        this.error='请勿重复提交';
-                        this.acolor='#ff4745';  
-                    }
+                        }else{//更新失败
+                            that.errorshow=true;
+                            that.error='更新失败';
+                            that.acolor='#ff4745';
+                        }
+                    })
+                }else{
+                    this.errorshow=true;//提示
+                    this.error='请勿重复提交';
+                    this.acolor='#ff4745';  
                 }
             }
         },
@@ -253,12 +262,17 @@ export default {
         },
         // 三级联动显示
         showarea(code){
-            this.area=code;
             var codearr=code.split('');
             codearr.splice(4,2,'0','0');
-            this.city=codearr.join('');
+            var codecity=codearr.join('');
             codearr.splice(2,2,'0','0');
-            this.province=codearr.join('');
+            var codepro=codearr.join('');
+            this.province=codepro;
+            this.proChange();
+            this.city=codecity;
+            this.cityChange();
+            this.area=code;
+            this.areaChange();
         },
     }
 

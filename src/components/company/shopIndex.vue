@@ -23,7 +23,8 @@
       <tr>
         <td><h5>产品类型</h5></td>
         <td class="productTypes">
-          <a v-for="productType in productTypes" :key="productType.id" v-on:click="productTypesC" href="javascript:void(0)">{{productType.name}}</a>
+          <a v-for="(productType,index) in productTypes" :key="productType.id" v-on:click="productTypesC(index)"
+          href="javascript:void(0)"v-bind:class="{butblue:index==butblue}">{{productType.name}}</a>
         </td>
       </tr>
     </table>
@@ -40,10 +41,11 @@
         </div>
         <div class="shopText">
           <p>{{shopType.providerName}}</p>
-          <p>信誉<span class="xinyu"></span></p>
+          <p>信誉<span class="xinyu">★★★★☆</span></p>
           <p>{{shopType.regionName}}</p>
           <p>累计服务客户次数：{{shopType.orderNum}}<span>丨</span>好评率：100%</p>
-          <a href="javascript:void(0)" v-for="product in shopType.productTypes" :key="product.id">{{product}}</a>
+          <a href="javascript:void(0)" v-for="product in shopType.productTypes"
+           :key="product.id">{{product}}</a>
           <button v-bind:id="shopType.id" v-on:click="shopGoto($event)">进入店铺</button>
         </div>
       </div>
@@ -57,20 +59,16 @@
 </template>
 
 <script>
-
 export default {
   created() {
     this.getShop(); //调用商品列表请求函数
 
     //商品类别导航
     this.ajax
-      .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/style/list",
-        {}
-      )
+      .post("/xinda-api/product/style/list")
       .then(data => {
         var products = data.data.data;
-        var productType = [{ code: 0, name: "所有" }];
+        var productType = [{ code: 0, name: "所有", class: "butblue" }];
         for (var key in products) {
           var newpro = products[key].itemList;
           for (var a in newpro) {
@@ -80,18 +78,20 @@ export default {
         productType.sort(this.objSort("code"));
         this.productTypes = productType;
       });
+    this.productTypesC(0);
   },
   data() {
     return {
       productTypes: [],
       shopTypes: [],
-      shopID: ""
+      shopID: "",
+      butblue: "-1"
     };
   },
   methods: {
-    productTypesC: function(event) {
+    productTypesC: function(index) {
       //商品分类单击事件
-      console.log(123123);
+      this.butblue = index;
     },
     shopGoto: function(e) {
       //商品页面跳转事件
@@ -103,7 +103,7 @@ export default {
       //商品列表请求函数
       var that = this;
       this.ajax
-        .post("http://115.182.107.203:8088/xinda/xinda-api/provider/grid", {
+        .post("/xinda-api/provider/grid", {
           start: 0,
           limit: 6,
           productTypeCode: 10,
@@ -170,11 +170,17 @@ table {
         text-align: center;
         text-decoration: none;
         color: #3c3c3c;
+        margin-right: 5px;
       }
       a:nth-child(1) {
+        margin-right: 10px;
+      }
+      .butblue {
         background: #2393d3;
         color: #ffffff;
-        margin-right: 15px;
+      }
+      a:hover {
+        background: #2393d3;
       }
     }
   }
@@ -221,7 +227,7 @@ table {
   .logoImg {
     width: 80%;
   }
-  .logoGold{
+  .logoGold {
     position: absolute;
     bottom: 20px;
     left: 40px;
@@ -234,6 +240,9 @@ table {
   p {
     font-size: 13px;
     color: #686868;
+    span {
+      color: red;
+    }
   }
   span {
     margin: 0 25px 0 15px;
