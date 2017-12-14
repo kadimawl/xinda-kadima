@@ -4,17 +4,14 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: { //状态集合
         num: 0,
-        radios: '',
         title: '欢迎登录',
         name: '',
         code: '',
+        headX: '', //用户头像
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
             state.num = num;
-        },
-        SetRadio: (state, radios) => {
-            state.radios = radios;
         },
         SET_TITLE: (state, title) => {
             state.title = title;
@@ -25,13 +22,13 @@ export default new Vuex.Store({
         SET_CODE: (state, code) => {
             state.code = code;
         },
+        SET_headX: (state, headX) => {
+            state.headX = headX;
+        },
     },
     actions: { //操作集合
         setNum({ commit }, num) {
             commit('SET_NUM', num)
-        },
-        setRadio({ commit }, radios) {
-            commit('SetRadio', radios)
         },
         setTitle({ commit }, title) {
             commit('SET_TITLE', title)
@@ -40,12 +37,14 @@ export default new Vuex.Store({
             commit('SET_NAME', name)
         },
         setCode({ commit }, code) {
-            commit('SET_CODE', name)
+            commit('SET_CODE', code)
+        },
+        setheadX({ commit }, headX) {
+            commit('SET_headX', headX)
         },
     },
     getters: { //显示集合
         getNum: state => state.num,
-        getRadio: state => state.radios,
         getTitle: state => state.title,
         getName: state => {
             if(state.name){
@@ -55,6 +54,7 @@ export default new Vuex.Store({
             }
         }, //顶部用户名显示
         getCode: state => state.code, //用户中心向订单详情发送的订单编号
+        getheadX: state => state.headX, //用户头像
     }
 
 })

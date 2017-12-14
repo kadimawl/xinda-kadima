@@ -3,8 +3,8 @@
     <p>首页&nbsp/&nbsp个人主页</p>
     <!-- 头像框，用户登录后会显示用户头像和name -->
     <div class="touxiang">
-        <img src="../assets/index/user.png" alt="用户头像">
-        <p>{{userphone}}</p>
+        <div><img :src="headimg" alt="用户头像"></div>
+        <p>{{getName}}</p>
     </div>
     <!-- 导航栏，控制了我的订单、用户评价和账户设置 的跳转 -->
     <div class="nav">
@@ -17,14 +17,22 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
+    created(){
+        console.log(this.getName);
+        console.log(this.getheadX);
+        
+    },
     data() {
         return {
-            userphone:'13854285852',
+            headimg:this.getheadX,//
         }
     },
+    computed:{
+        ...mapGetters(['getheadX','getName']),
+    },
     methods:{
-        
     }
 };
 </script>
@@ -46,10 +54,17 @@ export default {
         text-align: center;
         background: #e9e9e9;
         margin: 10px 5px;
-        img{
-            padding-top: 10px;
+        >div{
+            margin-left: 70px;
+            width: 90px;
+            height: 90px;
+            text-align: center;
+            img{
+                padding-top: 10px;
+                vertical-align: middle;
+            }
         }
-        p{
+        >p{
             font-size: 20px;
             font-weight: bold;
         }
@@ -69,6 +84,7 @@ export default {
             cursor: pointer;
             font-size: 20px;
             text-decoration: none;
+            color:#000;
             span{
                 display: block;
                 width: 27px;

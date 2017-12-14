@@ -1,5 +1,5 @@
 <template>
-<div class="myorder">
+<div class="myorder" @click="myorderclick">
     <!-- 顶部标签 -->
     <div class="topname">
       <p>我的订单</p>
@@ -32,7 +32,7 @@
                 <div>
                     <div>
                         <!-- 公司logo图片 接口数据无logo图片链接-->
-                        <div><img :src="logourl" alt=""></div>
+                        <div><img :src="list.smallImg" alt=""></div>
                         <p>{{list.providerName}}</p>
                     </div>
                     <!-- 单价 -->
@@ -52,6 +52,8 @@
             </div>
         </div>
     </div>
+    <!-- 错误提示框 -->
+    <div class="errorbox" v-if="errorshow"><p :style="{color:acolor}">{{error}}</p></div>
     <!-- 翻页组件 -->
     <pageturn></pageturn>
 </div>
@@ -67,8 +69,10 @@ import pageturn from './pageturn'
 export default {
     // 拉取数据
     created(){
+        this.msg='false';
+        this.errorshow=false;
         // 未登录不拉取数据
-        if(JSON.parse(sessionStorage.getItem(this.getName))){
+        if(sessionStorage.getItem(this.getName)){
             var user=JSON.parse(sessionStorage.getItem(this.getName));
              // 防止重复拉取
             if(sessionStorage.getItem('myorder'+user+'')==null){//未拉取
@@ -78,49 +82,27 @@ export default {
                     endTime:'2017-03-28',
                     start:0
                 })).then(function(data){
-                    console.log('data==',data);
-                    console.log('data.data==',data.data.groupColumn);
-                    console.log('data==',data.data.pageNum);
-                    // this.lists=data.data.data;
-                    // this.lists.length=2;
-                    // for(let i=0;i<this.lists.length;i++){
-                    //     this.lists[i].createTime=new Date(data.data.data[i].createTime);
-                    //     if(this.lists[i].status==1){
-                    //         this.lists[i].status='等待买家付款';
-                    //     }else if(this.lists[i].status==1){
-                    //         this.lists[i].status='已完成';
-                    //     }
-                    // }
-                    // 由于img的src不支持list.smallImg，无法对公司logo给与不同的路径
-                    sessionStorage.setItem('myorder'+user+'',JSON.stringify(data));
+                    // console.log('data==',data);
+                    this.pageshow(data.data.data);
                 })
             }else{//已拉取
                 var data=JSON.parse(sessionStorage.getItem('myorder'+user+''));
-                    // console.log('data==',data);
-                // this.lists=data.data.data;
-                // this.lists.length=2;
-                // for(let i=0;i<this.lists.length;i++){
-                //     this.lists[i].createTime=new Date(data.data.data[i].createTime);
-                //     if(this.lists[i].status==1){
-                //         this.lists[i].status='等待买家付款';
-                //     }else if(this.lists[i].status==1){
-                //         this.lists[i].status='已完成';
-                //     }
-                // }
+                this.pageshow(data.data.data);
             }
         }
     },
     data() {
         return {
-            datas:[],//
             value1:'',//时间输入框开始
             value2:'',//时间输入框结束
             inputcode:'',//订单编号输入
             msg:false,//控制提示框
             sermsg:'',//提示内容
             lists:[],//循环数组
-            logourl:'',//logo图片的动态路径
             searchR:'s',//将搜索的索引赋给本变量
+            errorshow:false,//控制错误框
+            error:'',//错误提示
+            acolor:'#ff4649',//错误提示的颜色
         };
     },
     computed:{
@@ -129,16 +111,37 @@ export default {
     components:{pageturn},
     methods:{
         ...mapActions(['setCode']),
+        // 处理ajax获取的数据显示在页面
+        pageshow(datas){
+            if(datas){
+                this.lists=data.data.data;
+                this.lists.length=2;
+                for(let i=0;i<this.lists.length;i++){
+                    this.lists[i].createTime=new Date(data.data.data[i].createTime);
+                    if(this.lists[i].status==1){
+                        this.lists[i].status='等待买家付款';
+                    }else if(this.lists[i].status==1){
+                        this.lists[i].status='已完成';
+                    }
+                }
+                sessionStorage.setItem('myorder'+user+'',JSON.stringify(data));
+            }
+        },
         // 转换为时间戳   
-        revertT:function(times){
+        revertT(times){
             return  Date.parse(new Date(times))/1000;
+        },
+        //页面点击
+        myorderclick(){
+            var that=this;
+            setTimeout(function(){
+                that.errorshow=false;
+                that.msg='false';
+            },4000)
         },
         // 订单号搜索
         searchs:function(){
-            this.msg='false';
             if(this.inputcode==''){
-                this.sermsg='订单号为空';
-                this.msg='true';
                 return;
             }else{
                 // 简单验证订单号
@@ -163,8 +166,8 @@ export default {
                             this.msg='true';
                             return;
                         }else if(this.value1!=''&&this.value2!=''){//都有时间
-                            var newtstart=revertT(this.value1);
-                            var newtend=revertT(this.value2);
+                            var newtstart=this.revertT(this.value1);
+                            var newtend=this.revertT(this.value2);
                             // 左右时间框大小颠倒会报错
                             if( newtstart>=newtend){
                                 this.sermsg='时间输入有误';
@@ -187,7 +190,7 @@ export default {
                         }else{//有一个是空
                             var newtorder=data.data.data[this.searchR].createTime;
                             if(this.value1==''&&this.value2!=''){
-                                var newtend=revertT(this.value2);
+                                var newtend=this.revertT(this.value2);
                                 if(newtorder<=newtend){
                                     this.lists=data.data.data[this.searchR];
                                     this.sermsg='找到了';
@@ -202,7 +205,7 @@ export default {
                                 return;
                             }
                             if(this.value1!=''&&this.value2==''){
-                                var newtstart=revertT(this.value1);
+                                var newtstart=this.revertT(this.value1);
                                 if(newtorder>=newtstart){
                                     this.lists=data.data.data[this.searchR];
                                     this.sermsg='找到了';
@@ -237,30 +240,26 @@ export default {
             this.qs.stringify(({
                 id:code
             }))).then(function(data){
+                // console.log(data);
                 // 成功后重新获取数据，重新存缓存
-                console.log(data);
-                this.ajax.post('/xinda-api/service-order/grid',this.qs.stringify({
-                    businessNo:1,
-                    startTime:'2017-03-28',
-                    endTime:'2017-03-28',
-                    start:0
-                })).then(function(data){
-                    console.log('data==',data);
-                    console.log('data.data==',data.data.groupColumn);
-                    console.log('data==',data.data.pageNum);
-                    // this.lists=data.data.data;
-                    // this.lists.length=2;
-                    // for(let i=0;i<this.lists.length;i++){
-                    //     this.lists[i].createTime=new Date(data.data.data[i].createTime);
-                    //     if(this.lists[i].status==1){
-                    //         this.lists[i].status='等待买家付款';
-                    //     }else if(this.lists[i].status==1){
-                    //         this.lists[i].status='已完成';
-                    //     }
-                    // }
-                    // 由于img的src不支持list.smallImg，无法对公司logo给与不同的路径
-                    sessionStorage.setItem('myorder'+user+'',JSON.stringify(data));
-                })
+                if(data.data.status==1){
+                    this.ajax.post('/xinda-api/service-order/grid',this.qs.stringify({
+                        businessNo:1,
+                        startTime:'2017-03-28',
+                        endTime:'2017-03-28',
+                        start:0
+                    })).then(function(data){
+                        // console.log('data==',data);
+                        this.errorshow=true;//提示
+                        this.error='删除成功';
+                        this.acolor='#55a4dc';
+                        this.pageshow(data.data.data);
+                    })
+                }else{
+                    this.errorshow=true;//提示
+                    this.error=data.data.msg;
+                    this.acolor='#ff4745';
+                }
             })
         }
 
@@ -478,6 +477,20 @@ export default {
                     }
                 }
             }
+        }
+    }
+    .errorbox{
+        width: 200px;
+        height: 100px;
+        position: fixed;
+        left: 800px;
+        top:300px;
+        text-align: center;
+        line-height: 100px;
+        background: #f7f7f7;
+        z-index:10;
+        p{
+            font-size: 18px;
         }
     }
 }
