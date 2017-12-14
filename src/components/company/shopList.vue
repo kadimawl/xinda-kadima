@@ -23,11 +23,6 @@
           <router-view/>
       </div>
     </div>
-    <!-- <div class="number">
-      <button>上一页</button>
-      <button v-for="num in nums" :key="num.id">{{num}}</button>
-      <button>下一页</button>
-    </div> -->
   </div>
 </template>
 
@@ -48,7 +43,7 @@ export default {
     var that = this;
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/provider/detail",
+        "/xinda-api/provider/detail",
         this.qs.stringify({
           id: shopID
           //请求店铺信息

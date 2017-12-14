@@ -12,7 +12,7 @@
           <img src="../../../assets/shop/blue.png" alt="">
           <p>{{list.serviceInfo}}</p>
           <p>销量:</p>
-          <h2>￥{{list.marketPrice}}c.00</h2>
+          <h2>￥{{list.marketPrice}}.00</h2>
           <del>原价：￥{{list.price}}.00</del>
           <a href="#/detial" :id="list.id" @click="GoToShop(list.id)">查看详情>></a>
         </div>
@@ -32,7 +32,7 @@ export default {
     var shopID = sessionStorage.getItem("shopID");
     this.ajax //请求店铺商品
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/grid",
+        "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 1,
           providerId: shopID,
