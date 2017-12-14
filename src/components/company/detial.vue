@@ -2,7 +2,7 @@
 <div class="body">
   <p class="topP">首页/{{product.info}}</p>
   <div class="shopBuy">
-    <img src="" alt="">
+    <img src="../../assets/shop/u1182.png" alt="">
     <div>
       <h3>{{product.info}}</h3>
       <p>{{product.name}}</p>
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <img class="ad" src="" alt="">
+  <img class="ad" src="../../assets/shop/u1225.png" alt="">
   <div>
     <router-view/>
   </div>
@@ -45,7 +45,7 @@ export default {
     var that = this;
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/package/detail",
+        "/xinda-api/product/package/detail",
         this.qs.stringify({
           sId: shopID
         })

@@ -24,7 +24,7 @@ export default {
     if (ifff == null) {
       this.ajax
         .post(
-          "http://115.182.107.203:8088/xinda/xinda-api/product/package/detail",
+          "/xinda-api/product/package/detail",
           this.qs.stringify({
             sId: shopID
           })

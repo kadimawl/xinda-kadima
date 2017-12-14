@@ -6,7 +6,7 @@
       <span></span>
       <div>
         <h2>支付失败！</h2>
-        <h4>支付未成功：让我们再试一次吧！<button>返回支付页</button></h4>
+        <h4>支付未成功：让我们再试一次吧！<a href="#/order">返回支付页</a></h4>
         <p>如有问题，请联系客服：</p>
         <h3>010-83421842</h3>
       </div>
@@ -63,9 +63,12 @@ h5 {
     }
     h4 {
       font-weight: normal;
-      button{
+      a{
+        display: inline-block;
         width: 124px;
         height: 34px;
+        text-align: center;
+        line-height: 34px;
         background: #f7f7f7;
         border: 1px solid #2693d4;
         border-radius: 5px;

@@ -214,7 +214,7 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
-      // console.log(that.ItemLists);
+      console.log(that.ItemLists);
     });
     this.ajax.post("/xinda-api/recommend/list").then(function(data) {
       var tData = data.data.data.hq;

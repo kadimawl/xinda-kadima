@@ -29,7 +29,7 @@
         </div>
         <div class="myOrder " v-show="getName">
           <span class="bgOrder"></span>
-          <a href="#">我的订单</a>
+          <a href="#/member/memberBody">我的订单</a>
         </div>
         <div class="entrance">
           <a href="#">服务商入口</a>

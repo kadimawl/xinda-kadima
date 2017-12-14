@@ -78,8 +78,11 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
+    <div class="pChange">
+      <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
+      </el-pagination>
+    </div>
+
   </div>
 </template>
 
@@ -89,9 +92,9 @@ export default {
   components: { distpicker },
   methods: {
     //三级联动选择code
-    selected: function(code) {    
+    selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode)
+      console.log(this.seleCode);
     },
     changePage: function() {
       var that = this;
@@ -117,7 +120,7 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
-      // console.log(that.ItemLists);
+      console.log(that.ItemLists);
     });
     this.ajax
       .post(
@@ -132,7 +135,7 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
-        // console.log(that.products);
+        console.log(that.products);
       });
   },
   data() {
@@ -379,12 +382,16 @@ export default {
   }
 }
 
-.spaceList{
+.spaceList {
   padding: 5px 0 8px 12px;
   box-sizing: border-box;
-  .area{
+  .area {
     width: 86px;
     height: 20px;
   }
+}
+.pChange{
+  margin: 30px 0 200px;
+  padding: 0 500px;
 }
 </style>
