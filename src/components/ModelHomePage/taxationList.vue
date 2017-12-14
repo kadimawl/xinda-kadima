@@ -21,7 +21,12 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
+<<<<<<< HEAD
               
+=======
+
+              <distpicker @selected="selected"></distpicker>
+>>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
             </div>
           </div>
         </div>
@@ -71,10 +76,23 @@
         <p class="">增值服务</p>
       </div>
     </div>
+<<<<<<< HEAD
+=======
+    <div class="pChange">
+      <el-pagination 
+      @current-change="handleCurrentChange" 
+      background  
+      layout="prev, pager, next" 
+      :total="8" :page-size="4">
+      </el-pagination>
+    </div>
+
+>>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
   </div>
 </template>
 
 <script>
+<<<<<<< HEAD
 export default {
   methods: {
     types(key){
@@ -82,13 +100,25 @@ export default {
       this.typecode = this.ItemLists[key].code;
     },
     changePage: function() {
+=======
+import distpicker from "../distpicker";
+export default {
+  components: { distpicker },
+  methods: {
+    //三级联动选择code
+    selected: function(code) {
+      this.seleCode = code;
+      console.log(this.seleCode);
+    },
+    handleCurrentChange: function() {
+>>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 5,
-            limit: 5,
+            limit: 4,
             productTypeCode: "1",
             sort: 2
           })
@@ -96,9 +126,12 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          // console.log(that.products);
+          console.log(that.products);
         });
     }
+  },
+  handleSizeChange() {
+
   },
   created() {
     // console.log(name);
@@ -117,13 +150,14 @@ export default {
       
       console.log(that.ItemLists);
     });
+    //默认拉取productTypeCode 审计报告（3）数据，（2）为税务代办，（2）为代理记账
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
-          productTypeCode: "1",
+          limit: 100,
+          productTypeCode: "0",
           sort: 2
         })
       )
@@ -137,9 +171,13 @@ export default {
     return {
       ItemLists: [],
       products: [],
+<<<<<<< HEAD
       name: "",
       subList:[],
       typecode:''
+=======
+      seleCode: ""
+>>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
     };
   }
 };
@@ -372,5 +410,19 @@ export default {
     line-height: 40px;
     text-align: center;
   }
+}
+
+.spaceList {
+  padding: 5px 0 8px 12px;
+  box-sizing: border-box;
+  .area {
+    width: 86px;
+    height: 20px;
+  }
+}
+
+.pChange {
+  margin: 30px 0 200px;
+  padding: 0 500px;
 }
 </style>

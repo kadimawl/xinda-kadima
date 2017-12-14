@@ -7,17 +7,18 @@
 </template>
 
 <script>
-
+// import distpicker from '@/components/distpicker'
 export default {
+  // components: {distpicker},
   data() {
-    return{
-       userName: sessionStorage.userName
-    }
+    return {
+      userName: sessionStorage.userName
+    };
   },
   name: "app",
-  methods:{
+  methods: {
     //子组件(login)将用户名传过来
-    userSignIn(userName){
+    userSignIn(userName) {
       sessionStorage.userName = userName;
       this.userName = sessionStorage.userName;
     }
@@ -30,10 +31,19 @@ export default {
   margin: 0;
   padding: 0;
 }
-a{
+a {
   text-decoration: none;
 }
-button{
-    outline:0;
-  }
+button {
+  outline: 0;
+}
+input {
+  padding: 5px;
+}
+select {
+  outline: 0;
+}
+option {
+  outline: 0;
+}
 </style>

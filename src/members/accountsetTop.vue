@@ -1,8 +1,8 @@
 <template>
 <div class="acTop">
     <!-- 账户设置与修改密码的跳转标签 -->
-    <router-link to="/member/accountSet/accountsetBody" class="acSet common" active-class="active">账户设置</router-link>
-    <router-link to="/member/accountSet/changePd" class="changePd common" active-class="active">修改密码</router-link>
+    <router-link to="/member/accountSet/accountsetBody" class="common" active-class="active">账户设置</router-link>
+    <router-link to="/member/accountSet/changePd" class="common" active-class="active">修改密码</router-link>
 </div>
   
 </template>
@@ -35,6 +35,7 @@ export default {
         font-size: 17px;
         text-align: center;
         text-decoration: none;
+        color: #000;
     }
     // 跳转标签加的样式
     .active{

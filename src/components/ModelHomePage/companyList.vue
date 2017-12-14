@@ -28,7 +28,7 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-              <v-distpicker province="北京市" city="市辖区" area=""></v-distpicker>
+              <distpicker @selected="selected"></distpicker>
             </div>
           </div>
         </div>
@@ -78,16 +78,24 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
+    <div class="pChange">
+      <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
+      </el-pagination>
+    </div>
+
   </div>
 </template>
 
 <script>
-import VDistpicker from "v-distpicker";
+import distpicker from "../distpicker";
 export default {
-  components: { VDistpicker },
+  components: { distpicker },
   methods: {
+    //三级联动选择code
+    selected: function(code) {
+      this.seleCode = code;
+      console.log(this.seleCode);
+    },
     changePage: function() {
       var that = this;
       this.ajax
@@ -112,7 +120,7 @@ export default {
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       that.ItemLists = rData;
-      // console.log(that.ItemLists);
+      console.log(that.ItemLists);
     });
     this.ajax
       .post(
@@ -127,7 +135,7 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
-        // console.log(that.products);
+        console.log(that.products);
       });
   },
   data() {
@@ -304,7 +312,7 @@ export default {
 }
 
 .Row {
-  height: 40px;
+  // height: 40px;
   border-top: 1px solid #ccc;
   display: flex;
   .server {
@@ -337,7 +345,7 @@ export default {
   }
   .type {
     width: 98px;
-    height: 40px;
+    // height: 40px;
     border-right: 1px solid #ccc;
     font-size: 15px;
     line-height: 40px;
@@ -345,7 +353,7 @@ export default {
   }
   .typeList {
     width: 847px;
-    height: 40px;
+    // height: 40px;
     display: flex;
     flex-wrap: wrap;
     .lists {
@@ -372,5 +380,18 @@ export default {
     line-height: 40px;
     text-align: center;
   }
+}
+
+.spaceList {
+  padding: 5px 0 8px 12px;
+  box-sizing: border-box;
+  .area {
+    width: 86px;
+    height: 20px;
+  }
+}
+.pChange{
+  margin: 30px 0 200px;
+  padding: 0 500px;
 }
 </style>

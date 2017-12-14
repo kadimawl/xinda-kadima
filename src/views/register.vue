@@ -1,40 +1,30 @@
 <template>
   <div class="lOut">
     <div class="leftOut">
-      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
-        <p class="errorMsg" v-show="!pshow">请输入正确手机号</p>
-        <p class="errorMsg" v-show="!rshow">该手机号已注册</p>
+      <div class="phoneBox">
+        <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
+        <p class="errorMsg" v-show="!pshow">{{phoneMsg}}</p>
       </div>
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
-        <p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p>
+        <p class="errorMsg" v-show="!imgShow">{{imgMsg}}</p>
       </div>
       <div class="v-box">
-        <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
+        <input type="text" placeholder="  请输入验证码" class="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
         <button class="clickGet" @click="clickGet">
           <span v-show="show">点击获取</span>
           <span class="countdown" v-show="!show">重新发送{{count}}</span>
         </button>
-        <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
+        <p class="errorMsg" v-show="!pVShow">{{pVMsg}}</p>
       </div>
       <div class="selected">
-        <v-distpicker id="select" province="省" city="市"  @selected="selected" ></v-distpicker>
-          <!-- <select name="" id="" @change="proChange" v-model="province">
-            <option value="0">省</option>
-            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
-          </select>
-          <select name="" id=""  @change="cityChange" v-model="city">
-            <option value="0">市</option>
-            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
-          </select>
-          <select name="" id="">
-            <option value="0">区</option>
-            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
-          </select> -->
+        <distpicker @selected="selected"></distpicker>
+        <p class="errorMsg" v-show="addShow">请选择地址信息</p>
       </div>
-      <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
-        <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
+      <div class="pwBox"><input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pwBlur" @focus="pwFocus" class="pw">
+        <img class="visible" :src="invisibleUrl" @click="visible">
+        <p class="errorMsg exception" v-show="pwShow">{{pwMsg}}</p>
       </div>
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守
@@ -54,41 +44,45 @@
 
 <script>
 import { mapActions } from "vuex";
+import distpicker from "@/components/distpicker";
+const eyes = [
+  require("../assets/visible/invisible.png"),
+  require("../assets/visible/visible.png")
+];
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
+  components: { distpicker },
   created() {},
   data() {
     return {
+      phoneMsg: "", //手机号错误提示信息
+      pshow: true, //手机号错误提示框
+      imgMsg: '',  //图片验证码错误提示信息
+      pwType: "password", //密码输入框是否可视
+      pVMsg: "", //手机验证码提示信息
+      pVShow: true, //手机验证码提示框
+      pwMsg: "", //密码错误提示信息
+      pwShow: false, //密码错误提示框
       show: true,
       count: "",
       timer: null,
       imgUrl: "/xinda-api/ajaxAuthcode",
       imgShow: true,
       phoneInput: "",
+      addShow: false, //三级联动提示框
       imgVInput: "",
       phoneV: "",
-      pVShow: true,
-      rshow: true,
-      pshow: true,
       pwInput: "",
-      pwShow: false,
-      seleCode: '',
-
-      
+      seleCode: "",
+      invisibleUrl: eyes[0]
     };
   },
   methods: {
-    //三级联动
-    // proChange(){
-    //   this.citys = dist[this.province];
-    // },
-    // cityChange(){
-    //   this.areas=dist[this.city];
-    // },
     ...mapActions(["setTitle"]),
-    created() {},
-    selected: function(data){
-        this.seleCode =  data.area.code; 
+    //三级联动选择code
+    selected: function(code) {
+      this.seleCode = code;
+      console.log(this.seleCode);
     },
     login() {
       // this.$router.push({ path: "/outter/login" });
@@ -102,13 +96,30 @@ export default {
         this.pshow = true;
         if (!result) {
           this.pshow = false;
+          this.phoneMsg = "请输入正确手机号";
+        } else {
+          //验证手机号是否已经注册
+          this.ajax
+            .post(
+              "/xinda-api/register/valid-sms",
+              this.qs.stringify({
+                cellphone: this.phoneInput,
+                smsType: 1,
+                validCode: 111111
+              })
+            )
+            .then(data => {
+              if (data.data.status == -2) {
+                this.pshow = false;
+                this.phoneMsg = "该手机号已注册";
+              }
+            });
         }
       }
     },
     //重新获得焦点，提示框消失
     focus() {
       this.pshow = true;
-      this.rshow = true;
     },
     //图片验证码输入错误
     imgVB() {
@@ -116,33 +127,19 @@ export default {
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
         this.imgShow = false;
-      }
-      //验证手机号是否已经注册
-      this.ajax
-        .post(
-          "/xinda-api/register/valid-sms",
-          this.qs.stringify({
-            cellphone: this.phoneInput,
-            smsType: 1,
-            validCode: 111111
-          })
-        )
-        .then(data => {
-          if (data.data.status == -2) {
-            this.rshow = false;
-          }
-        });
+        this.imgMsg = "图片验证码为四位（数字或者字母）";
+      } 
     },
     imgVA() {
-      if (this.imgVInput !== "") {
+      if (this.imgVInput != "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgVInput = "";
       }
     },
     //点击获取倒计时
     clickGet: function() {
       const TIME_COUNT = 60;
-
       //短信验证码发送
       if (this.phoneInput !== "" && this.imgVInput !== "") {
         if (!this.timer) {
@@ -168,7 +165,10 @@ export default {
             })
           )
           .then(data => {
-            console.log(data);
+            if (data.data.status == -1) {
+              this.imgShow = false;
+              this.imgMsg = "图片验证码错误";
+            }
           });
       }
     },
@@ -178,6 +178,10 @@ export default {
       let pVReg = /^\d{6}$/;
       if (!pVReg.test(this.phoneV) && this.phoneV !== "") {
         this.pVShow = false;
+        this.pVMsg = "短信验证码为六位数字";
+      }else if(this.phoneV != 111111){
+        this.pVShow = false;
+        this.pVMsg = "短信验证码错误";
       }
     },
     pVFocus() {
@@ -186,6 +190,7 @@ export default {
     //验证码刷新-
     reImg() {
       this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+      this.imgVInput = "";
     },
     //密码输入验证
     pwBlur() {
@@ -193,32 +198,65 @@ export default {
       if (this.pwInput !== "") {
         if (!pwResult) {
           this.pwShow = true;
+          this.pwMsg = "密码为：8-20位数字，大小写字母";
         }
       }
     },
     pwFocus() {
       this.pwShow = false;
     },
+    //密码可视
+    visible() {
+      this.pwType = this.pwType === "password" ? "text" : "password";
+      if (this.pwType == "password") {
+        this.invisibleUrl = eyes[0];
+      } else {
+        this.invisibleUrl = eyes[1];
+      }
+    },
     //立即注册
     submit() {
       var user = this.phoneInput;
       var pw = this.pwInput;
       var md5 = require("md5");
-
-      this.ajax
-        .post(
-          "/xinda-api/register/register",
-          this.qs.stringify({
-            cellphone: user,
-            smsType: 1,
-            validCode: 111111,
-            password: md5(pw),
-            regionId: this.seleCode
-          })
-        )
-        .then(data => {
-          console.log("注册提交", data.data.msg, data.data.status);
-        });
+      if (user != "") {
+        if (this.phoneV != "") {
+          if (this.seleCode != "") {
+            if (pw != "") {
+              this.ajax
+                .post(
+                  "/xinda-api/register/register",
+                  this.qs.stringify({
+                    cellphone: user,
+                    smsType: 1,
+                    validCode: 111111,
+                    password: md5(pw),
+                    regionId: this.seleCode
+                  })
+                )
+                .then(data => {
+                  if (data.data.status == 1) {
+                    this.$router.push({ path: "/outter/login" });
+                  } else {
+                    this.pshow = true;
+                    this.phoneMsg = "请重新注册，谢谢。";
+                  }
+                });
+            } else {
+              this.pwShow = true;
+              this.pwMsg = "请输入密码";
+            }
+          } else {
+            this.addShow = true;
+          }
+        } else {
+          this.pVShow = false;
+          this.pVMsg = "请输入短信验证码";
+        }
+      } else {
+        this.pshow = false;
+        this.phoneMsg = "请输入手机号";
+      }
     }
   }
 };
@@ -238,7 +276,8 @@ export default {
     border: none;
     border: 1px solid #cbcbcb;
     border-radius: 3px;
-    padding: 1px 0;
+    padding: 5px;
+    box-sizing: border-box;
     outline: 0;
     margin-bottom: 19px;
   }
@@ -262,6 +301,9 @@ export default {
     margin-left: 9px;
   }
   #verification {
+    width: 172px;
+  }
+  .verification {
     width: 172px;
   }
   .v-img {
@@ -336,7 +378,6 @@ export default {
     width: 88px;
     height: 33px;
     font-size: 12px;
-    padding: 0.5rem 0.15rem;
     border: none;
     outline: 0;
     border: 1px solid #cbcbcb;
@@ -352,6 +393,17 @@ export default {
 }
 .pwBox {
   display: flex;
+  input {
+    position: relative;
+  }
+}
+.visible {
+  cursor: pointer;
+  width: 17px;
+  height: 12px;
+  position: relative;
+  top: 40px;
+  right: 30px;
 }
 .errorMsg {
   height: 12px;

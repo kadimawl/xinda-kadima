@@ -3,10 +3,10 @@
     <p>首页&nbsp/&nbsp个人主页</p>
     <!-- 头像框，用户登录后会显示用户头像和name -->
     <div class="touxiang">
-        <img src="../assets/index/user.png" alt="用户头像">
-        <p>{{userphone}}</p>
+        <div><img :src="headimg" alt="用户头像"></div>
+        <p>{{getName}}</p>
     </div>
-    <!-- 导航栏，控制了我的订单、用户评价和账户设置 的跳转 -->
+    <!-- 导航栏，控制  我的订单、用户评价和账户设置 的跳转 -->
     <div class="nav">
         <router-link :to="{path:'/member/memberBody'}"  class="myorder common" active-class="active"><span></span>我的订单</router-link>
         <router-link :to="{path:'/member/userEval'}"  class="usereval common" active-class="active"><span></span>用户评价</router-link>
@@ -17,14 +17,20 @@
 </template>
 
 <script>
+// 引入vuex
+import {mapGetters} from 'vuex'
 export default {
+    created(){
+    },
     data() {
         return {
-            userphone:'13854285852',
+            headimg:this.getheadX,//
         }
     },
+    computed:{
+        ...mapGetters(['getheadX','getName']),
+    },
     methods:{
-        
     }
 };
 </script>
@@ -40,20 +46,31 @@ export default {
     display: flex;
     flex-direction: column;
     margin-left: 20px;
+    // 头像框
     .touxiang{
         width: 240px;
         height: 145px;
         text-align: center;
         background: #e9e9e9;
         margin: 10px 5px;
-        img{
-            padding-top: 10px;
+        // 头像
+        >div{
+            margin-left: 70px;
+            width: 90px;
+            height: 90px;
+            text-align: center;
+            img{
+                padding-top: 10px;
+                vertical-align: middle;
+            }
         }
-        p{
+        // 用户名
+        >p{
             font-size: 20px;
             font-weight: bold;
         }
     }
+    // 导航
     .nav{
         width: 240px;
         height: 380px;
@@ -69,6 +86,7 @@ export default {
             cursor: pointer;
             font-size: 20px;
             text-decoration: none;
+            color:#000;
             span{
                 display: block;
                 width: 27px;
@@ -97,6 +115,7 @@ export default {
             }
         }
     }
+    // 标签激活加的样式
     .active{
         background: #e9e9e9;
     }

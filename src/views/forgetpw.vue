@@ -15,10 +15,12 @@
           <p class="errorMsg" v-show="vShow">1分钟内请勿重复请求</p>
         </button>
       </div>
-      <div class="pwBox"><input type="text" placeholder="  请输入新密码" @blur="pwShow" @focus="pwFocus" v-model="pwInput">
+      <div class="pwBox"><input :type="pwType" placeholder="  请输入新密码" @blur="pwShow" @focus="pwFocus" v-model="pwInput">
+        <img class="visible" :src="invisibleUrl" @click="visible">
         <p class="errorMsg" v-show="pwMsg">请输入（8-20位）数字、大小写字母</p>
       </div>
-      <div class="pwBox"><input type="text" placeholder="  请输入新密码" @blur="pwShowAgain" @focus="pwFocusAgain" v-model="pwI">
+      <div class="pwBox"><input :type="pwTypeI" placeholder="  请输入新密码" @blur="pwShowAgain" @focus="pwFocusAgain" v-model="pwI">
+        <img class="visible" :src="invisibleUrlI" @click="visibleII">
         <p class="errorMsg" v-show="pwM">两次密码输入不一致</p>
       </div>
 
@@ -35,9 +37,15 @@
 </template>
 
 <script>
+const eyes = [
+  require("../assets/visible/invisible.png"),
+  require("../assets/visible/visible.png")
+]; //webpack的require
 export default {
   data() {
     return {
+      pwType: "password",
+      pwTypeI: "password",
       phoneInput: "",
       show: true,
       pshow: true,
@@ -52,7 +60,9 @@ export default {
       pwI: "",
       pwM: false,
       vShow: false,
-      imgUrl: "/xinda-api/ajaxAuthcode"
+      imgUrl: "/xinda-api/ajaxAuthcode",
+      invisibleUrl: eyes[0],
+      invisibleUrlI: eyes[0]
     };
   },
   methods: {
@@ -84,6 +94,7 @@ export default {
       if (!this.imgV == "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
+        this.imgV == ""
       }
     },
     //点击获取倒计时
@@ -114,7 +125,7 @@ export default {
           )
           .then(data => {
             if (data.data.status == 1) {
-              console.log(data.data.msg)
+              console.log(data.data.msg);
             } else if (data.data.msg == "1分钟内请勿重复请求") {
               this.vShow = true;
             } else if (data.data.msg == "图片验证码错误！") {
@@ -154,6 +165,23 @@ export default {
     pwFocusAgain() {
       this.pwM = false;
     },
+    //密码可视
+    visible() {
+      this.pwType = this.pwType === "password" ? "text" : "password";
+      if (this.pwType == "password") {
+        this.invisibleUrl = eyes[0];
+      } else {
+        this.invisibleUrl = eyes[1];
+      }
+    },
+    visibleII() {
+      this.pwTypeI = this.pwTypeI === "password" ? "text" : "password";
+      if (this.pwTypeI == "password") {
+        this.invisibleUrlI = eyes[0];
+      } else {
+        this.invisibleUrlI = eyes[1];
+      }
+    },
 
     //确认修改
     confir() {
@@ -188,6 +216,8 @@ input {
   margin-bottom: 19px;
   width: 281px;
   height: 34px;
+  padding: 5px;
+  box-sizing: border-box;
 }
 .v-box {
   margin-left: 9px;
@@ -259,9 +289,12 @@ input {
 }
 .pwBox {
   display: flex;
+  input {
+    position: relative;
+  }
 }
 .errorMsg {
-  width: 281px;
+  width: 130px;
   height: 12px;
   font-size: 12px;
   color: #f33;
@@ -269,6 +302,15 @@ input {
   display: inline-block;
   margin-top: 11px;
   margin-left: 10px;
+}
+
+.visible {
+  cursor: pointer;
+  width: 17px;
+  height: 12px;
+  position: relative;
+  top: 15px;
+  right: 30px;
 }
 .countdown {
   color: #000;
