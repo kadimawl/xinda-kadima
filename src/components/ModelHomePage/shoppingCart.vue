@@ -36,7 +36,7 @@
                 <input type="text" v-model="num" @blur="numC">
                 <button @click="add()">+</button>
               </td>
-              <td class="sumPrice" v-bind="sum">￥1200</td>
+              <td class="sumPrice" >￥1200</td>
               <td class="delete">
                 <div>删除</div>
               </td>
@@ -94,14 +94,16 @@ export default {
   },
   methods: {
     add() {
-      this.num -= -1;
+      this.num -= -1;  //<最大库存
       console.log(this.num);
     },
-    minus(){
-      this.num -= 1;
+    minus(){   //减
+      if(this.num>=1){
+        this.num -= 1;  //>1，否则没有该商品
+      }
       console.log(this.num);
     },
-    numC() {
+    numC() {   //加
       console.log(this.num);
     },
   }

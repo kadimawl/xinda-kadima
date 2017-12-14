@@ -7,7 +7,9 @@
 </template>
 
 <script>
+// import distpicker from '@/components/distpicker'
 export default {
+  // components: {distpicker},
   data() {
     return {
       userName: sessionStorage.userName
@@ -37,5 +39,11 @@ button {
 }
 input {
   padding: 5px;
+}
+select {
+  outline: 0;
+}
+option {
+  outline: 0;
 }
 </style>

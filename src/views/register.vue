@@ -19,19 +19,8 @@
         <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
       </div>
       <div class="selected">
-        <v-distpicker id="select" province="省" city="市" @selected="selected"></v-distpicker>
-        <!-- <select name="" id="" @change="proChange" v-model="province">
-            <option value="0">省</option>
-            <option :value="code" v-for="(province,code) in provinces" :key="province.code">{{province}}</option>
-          </select>
-          <select name="" id=""  @change="cityChange" v-model="city">
-            <option value="0">市</option>
-            <option :value="code" v-for="(city,code) in citys" :key="city.code">{{city}}</option>
-          </select>
-          <select name="" id="">
-            <option value="0">区</option>
-            <option :value="code" v-for="(area,code) in areas" :key="area.code">{{area}}</option>
-          </select> -->
+        <distpicker @selected="selected"></distpicker>
+        <!-- <v-distpicker id="select" province="省" city="市" @selected="selected"></v-distpicker> -->
       </div>
       <div class="pwBox"><input :type="pwType" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
         <img class="visible" :src="invisibleUrl" @click="visible">
@@ -55,9 +44,14 @@
 
 <script>
 import { mapActions } from "vuex";
-const eyes = [require("../assets/visible/invisible.png"),require("../assets/visible/visible.png")];
+import distpicker from "@/components/distpicker";
+const eyes = [
+  require("../assets/visible/invisible.png"),
+  require("../assets/visible/visible.png")
+];
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
+  components: { distpicker },
   created() {},
   data() {
     return {
@@ -76,21 +70,15 @@ export default {
       pwInput: "",
       pwShow: false,
       seleCode: "",
-      invisibleUrl: eyes[0],
+      invisibleUrl: eyes[0]
     };
   },
   methods: {
-    //三级联动
-    // proChange(){
-    //   this.citys = dist[this.province];
-    // },
-    // cityChange(){
-    //   this.areas=dist[this.city];
-    // },
     ...mapActions(["setTitle"]),
-    created() {},
-    selected: function(data) {
-      this.seleCode = data.area.code;
+    //三级联动选择code
+    selected: function(code) {    
+      this.seleCode = code;
+      console.log(this.seleCode)
     },
     login() {
       // this.$router.push({ path: "/outter/login" });
@@ -139,7 +127,7 @@ export default {
       if (this.imgVInput !== "") {
         this.imgShow = true;
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
-        this.imgVInput == ""
+        this.imgVInput == "";
       }
     },
     //点击获取倒计时
@@ -250,7 +238,7 @@ export default {
     border: none;
     border: 1px solid #cbcbcb;
     border-radius: 3px;
-    padding: 5px ;
+    padding: 5px;
     box-sizing: border-box;
     outline: 0;
     margin-bottom: 19px;
@@ -352,7 +340,6 @@ export default {
     width: 88px;
     height: 33px;
     font-size: 12px;
-    padding: 0.5rem 0.15rem;
     border: none;
     outline: 0;
     border: 1px solid #cbcbcb;
@@ -368,18 +355,18 @@ export default {
 }
 .pwBox {
   display: flex;
-  input{
+  input {
     position: relative;
   }
 }
 .visible {
-    cursor: pointer;
-    width: 17px;
-    height: 12px;
-    position: relative;
-    top: 40px;
-    right: 30px;
-  }
+  cursor: pointer;
+  width: 17px;
+  height: 12px;
+  position: relative;
+  top: 40px;
+  right: 30px;
+}
 .errorMsg {
   height: 12px;
   font-size: 12px;
