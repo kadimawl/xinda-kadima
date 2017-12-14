@@ -6,7 +6,7 @@
         <p class="errorMsg" >{{phoneMsg}}</p>
       </div>
       <div class="pwBox">
-        <input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+        <input :type="pwType" placeholder="请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
         <img class="visible" :src="invisibleUrl" @click="visible">
         <p class="errorMsg">{{pwMsg}}</p>
       </div>
@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setTitle", "setName"]),
+    ...mapActions(["setTitle", "setName",]),
     forgetpw() {
       // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");

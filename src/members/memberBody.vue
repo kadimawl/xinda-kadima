@@ -26,7 +26,7 @@
     </div>
     <!-- 订单展示 -->
     <div class="listshow">
-        <div class="innerbox" v-for="list in lists" :key="list.id">
+        <div class="innerbox" v-for="list in lists" :key="list.businessNo">
             <div class="codetime"><p>订单号：{{list.businessNo}}</p><p>下单时间：{{list.createTime}}</p></div>
             <div class="all">
                 <div>
@@ -72,22 +72,23 @@ export default {
         this.msg='false';
         this.errorshow=false;
         // 未登录不拉取数据
-        if(sessionStorage.getItem(this.getName)){
-            var user=JSON.parse(sessionStorage.getItem(this.getName));
+        if(this.getName){
              // 防止重复拉取
-            if(sessionStorage.getItem('myorder'+user+'')==null){//未拉取
-                this.ajax.post('/xinda-api/service-order/grid',this.qs.stringify({
+            if(sessionStorage.getItem('myorder'+this.getName+'')==null){//未拉取
+                var that=this;
+                that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                     businessNo:1,
                     startTime:'2017-03-28',
                     endTime:'2017-03-28',
-                    start:0
+                    start:0,
+                    limit:'2',
                 })).then(function(data){
                     // console.log('data==',data);
-                    this.pageshow(data.data.data);
+                    that.pageshow(data);
                 })
             }else{//已拉取
-                var data=JSON.parse(sessionStorage.getItem('myorder'+user+''));
-                this.pageshow(data.data.data);
+                var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''));
+                this.pageshow(data);
             }
         }
     },
@@ -112,19 +113,18 @@ export default {
     methods:{
         ...mapActions(['setCode']),
         // 处理ajax获取的数据显示在页面
-        pageshow(datas){
-            if(datas){
+        pageshow(data){
+            if(data.data.data){
                 this.lists=data.data.data;
-                this.lists.length=2;
                 for(let i=0;i<this.lists.length;i++){
                     this.lists[i].createTime=new Date(data.data.data[i].createTime);
-                    if(this.lists[i].status==1){
+                    if(this.lists[i].status==1){//关于订单状态的code纯属猜测
                         this.lists[i].status='等待买家付款';
-                    }else if(this.lists[i].status==1){
+                    }else if(this.lists[i].status==2){
                         this.lists[i].status='已完成';
                     }
                 }
-                sessionStorage.setItem('myorder'+user+'',JSON.stringify(data));
+                sessionStorage.setItem('myorder'+this.getName+'',JSON.stringify(data));
             }
         },
         // 转换为时间戳   
@@ -146,7 +146,7 @@ export default {
             }else{
                 // 简单验证订单号
                 if(/^S1\d{18}$/.test(this.inputcode)==true){
-                    var data=JSON.parse(sessionStorage.getItem('myorder'+user+''));
+                    var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''));
                     // 去获取的数据里搜索订单编号
                     for(let i=0;i<data.data.data.length;i++){
                         if(data.data.data[i].businessNo==this.inputcode){
@@ -236,27 +236,35 @@ export default {
         // 删除订单
         remove:function(code){
             // 向后台发送删除请求
-            this.ajax.post('/xinda-api/ business-order/del',
-            this.qs.stringify(({
+            var that=this;
+            that.ajax.post('/xinda-api/business-order/del',
+            that.qs.stringify(({
                 id:code
             }))).then(function(data){
                 // console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
-                    this.ajax.post('/xinda-api/service-order/grid',this.qs.stringify({
+                    that.errorshow=true;//提示
+                    that.error='删除成功';
+                    that.acolor='#55a4dc';
+                    that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:1,
                         startTime:'2017-03-28',
                         endTime:'2017-03-28',
-                        start:0
+                        start:0,
+                        limit:'2',
                     })).then(function(data){
-                        // console.log('data==',data);
-                        this.errorshow=true;//提示
-                        this.error='删除成功';
-                        this.acolor='#55a4dc';
-                        this.pageshow(data.data.data);
+                        if(data.data.status==1){
+                             // console.log('data==',data);
+                            that.pageshow(data);
+                        }else{
+                            that.errorshow=true;//提示
+                            that.error='更新失败';
+                            that.acolor='#ff4745';
+                        }
                     })
                 }else{
-                    this.errorshow=true;//提示
+                    that.errorshow=true;//提示
                     this.error=data.data.msg;
                     this.acolor='#ff4745';
                 }
