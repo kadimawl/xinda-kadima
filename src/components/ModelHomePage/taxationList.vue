@@ -28,7 +28,8 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-              <v-distpicker province="北京市" city="市辖区" area=""></v-distpicker>
+
+              <distpicker @selected="selected"></distpicker>
             </div>
           </div>
         </div>
@@ -84,10 +85,15 @@
 </template>
 
 <script>
-import VDistpicker from "v-distpicker";
+import distpicker from "../distpicker";
 export default {
-  components: { VDistpicker },
+  components: { distpicker },
   methods: {
+    //三级联动选择code
+    selected: function(code) {    
+      this.seleCode = code;
+      console.log(this.seleCode)
+    },
     changePage: function() {
       var that = this;
       this.ajax
@@ -133,7 +139,8 @@ export default {
   data() {
     return {
       ItemLists: [],
-      products: []
+      products: [],
+      seleCode: ''
     };
   }
 };
@@ -373,4 +380,15 @@ export default {
     text-align: center;
   }
 }
+
+
+.spaceList{
+  padding: 5px 0 8px 12px;
+  box-sizing: border-box;
+  .area{
+    width: 86px;
+    height: 20px;
+  }
+}
+
 </style>
