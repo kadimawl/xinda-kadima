@@ -12,7 +12,7 @@
     </div>
     <!-- 性别 -->
     <div class="sex">
-        <p>性别：</p><el-radio v-model="radio" label="1" @change="choosesex">男</el-radio><el-radio @change="choosesex" v-model="radio" label="2">女</el-radio><span class="mark" :style="{color:colorS}">*</span>
+        <p>性别：</p><el-radio v-model="radio" :label="1" checked>男</el-radio><el-radio v-model="radio" :label="2">女</el-radio><span class="mark" :style="{color:colorS}">*</span>
     </div>
     <!-- 邮箱 -->
     <div class="mailbox" >
@@ -93,7 +93,7 @@ export default {
             headimg:'',//头像
             inputN:'',//输入姓名
             inputM:'',//输入邮箱
-            radio:'2',//性别单选框
+            radio:'1',//性别单选框
             errorshow:false,//控制错误框
             error:'',//错误提示
             acolor:'#ff4649',//错误提示的颜色
@@ -122,7 +122,7 @@ export default {
                 this.inputM=datas.email;
                 if(datas.gender=='1'||datas.gender=='2'){
                     this.radio=datas.gender;
-                    this.choosesex();
+                    // this.choosesex();
                     console.log(this.radio);
                 }
                 // 处理三级联动
@@ -161,12 +161,12 @@ export default {
                 this.colorN='#5d95e8';
             }
         },
-        // 性别框改变
-        choosesex:function(){
-            if(this.radio){
-                this.colorS='#5d95e8';
-            }
-        },
+        // // 性别框改变
+        // choosesex:function(){
+        //     if(this.radio){
+        //         this.colorS='#5d95e8';
+        //     }
+        // },
         // 地区失去焦点
         choosearea:function(){
             if(this.province=='0'||this.city=='0'||this.area=='0'){
