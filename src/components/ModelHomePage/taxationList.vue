@@ -21,12 +21,8 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-<<<<<<< HEAD
-              
-=======
 
               <distpicker @selected="selected"></distpicker>
->>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
             </div>
           </div>
         </div>
@@ -76,8 +72,6 @@
         <p class="">增值服务</p>
       </div>
     </div>
-<<<<<<< HEAD
-=======
     <div class="pChange">
       <el-pagination 
       @current-change="handleCurrentChange" 
@@ -87,20 +81,10 @@
       </el-pagination>
     </div>
 
->>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-  methods: {
-    types(key){
-      this.subList = this.ItemLists[key].itemList;
-      this.typecode = this.ItemLists[key].code;
-    },
-    changePage: function() {
-=======
 import distpicker from "../distpicker";
 export default {
   components: { distpicker },
@@ -111,7 +95,6 @@ export default {
       console.log(this.seleCode);
     },
     handleCurrentChange: function() {
->>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
       var that = this;
       this.ajax
         .post(
@@ -171,13 +154,7 @@ export default {
     return {
       ItemLists: [],
       products: [],
-<<<<<<< HEAD
-      name: "",
-      subList:[],
-      typecode:''
-=======
       seleCode: ""
->>>>>>> 5e872fe9fa711662673b0a7beb8ac16a2e9148fc
     };
   }
 };
