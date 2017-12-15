@@ -18,7 +18,7 @@
       <div class="forget" @click="forgetpw">
         <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
-      <p class="errorMsg" v-show="EShow">账号或密码不正确！</p>
+      
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
@@ -156,7 +156,7 @@ export default {
                   if (msg == "图片验证码错误！") {
                     this.imgVMsg = "图片验证码错误！";
                   } else if (msg == "账号或密码不正确！") {
-                    this.EShow = true;
+                    this.phoneMsg = '账号或密码不正确！';
                   } else if (msg == "账号不存在") {
                     this.phoneMsg = "该手机号未注册";
                   }
