@@ -7,15 +7,15 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" class="innerServer">
-                <div class="lists" @click="types(key)">{{itemNameII.name}}</div>
+              <div v-for="(itemNameII,key,typeCode) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key,typeCode)" :class="[(currentIndex|0)===typeCode?'color2693d4':'color000']">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div v-for="(itemNameIII,key) in subList" :key="itemNameIII.name">
-              <div class="lists" @click="kinds(key)">{{itemNameIII.name}}</div>
+            <div v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name">
+              <div class="lists" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
             </div>
           </div>
           <div class="spaceRow Row">
@@ -59,18 +59,26 @@
             </div>
           </div>
         </div>
+        <div class="pageC" v-show="pageShow">
+          <div class="prev" @click="prev(typecode)">上一页</div>
+          <ul>
+            <li v-for="(currentPage,index) in pageObj" :class="{pageColor:index==currentPage}" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
+          </ul>
+          <div class="next" @click="next(typecode)">下一页</div>
+        </div>
       </div>
       <div class="right">
         <div class="platform"></div>
         <p class="">平台担保</p>
         <div class="quality"></div>
-        <p class="">优质服务</p>
+        <p class="">优质服务</p>,
         <div class="process"></div>
         <p class="">过程监督</p>
         <div class="added"></div>
         <p class="">增值服务</p>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -84,17 +92,17 @@ export default {
       this.seleCode = code;
       console.log(this.seleCode);
     },
-    types(key) {
+    types(key, typeCode) {
+      this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
-      // console.log(this);
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
-      // console.log(typeCode);
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
-    kinds(key) {
+    kinds(key, index) {
       // console.log(this.subList[key].id);
+      this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);
     },
@@ -106,7 +114,7 @@ export default {
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 5,
+            limit: 3,
             productTypeCode: typecode,
             sort: 2
           })
@@ -114,7 +122,20 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          // console.log(that.products);
+          var totalCount = data.data.totalCount;
+          if (totalCount <= 3) {
+            that.pageShow = false;
+          } else {
+            that.pageShow = true;
+            var count = Math.ceil(totalCount / 3);
+            that.lastCount = count;
+            var pageObj = {};
+            for (var i = 0; i < count; i++) {
+              pageObj[i] = i + 1;
+            }
+            that.pageObj = pageObj;
+            that.pageChange = 0;
+          }
         });
     },
     getData(productId) {
@@ -124,7 +145,7 @@ export default {
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 5,
+            limit: 3,
             productTypeCode: "0",
             productId: productId,
             sort: 2
@@ -137,13 +158,86 @@ export default {
         });
     },
     changePage: function() {
-      var that = this;
       this.reqData();
     },
+    //翻页
+    pageIna(currentPage, index, typecode) {
+      // console.log(currentPage);  //value
+      // console.log(index);        //key
+      this.pageChange = index;
+      console.log("this.pageChange", this.pageChange);
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0 + 3 * (currentPage - 1),
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //上一页
+    prev(typecode) {
+      var that = this;
+      this.pageChange < 1 ? 0 : (this.pageChange -= 1);
+      console.log(this.pageChange);
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //下一页
+    next(typecode) {
+      var that = this;
+      console.log(this.pageChange);
+      // var pages =
+      //   this.pageChange < this.lastCount - 1
+      //     ? (this.pageChange -= -1)
+      //     : this.lastCount;
+      if (this.pageChange < this.lastCount - 1) {
+        this.pageChange -= -1;
+        console.log('上',this.pageChange);
+      } else {
+        this.pageChange = this.lastCount - 1;
+        console.log('xia',this.pageChange);
+      }
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+          // if(this.pageChange==(this.lastCount-1)){
+          //   this.pageChange = 0;
+          // }
+        });
+    }
   },
   created() {
     // console.log(name);
-
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
@@ -153,22 +247,22 @@ export default {
           break;
         }
       }
-      that.types("09fb10e276744114a232ac04b7b72e5d");//默认渲染审计报告
-
+      that.types("09fb10e276744114a232ac04b7b72e5d"); //默认渲染审计报告
       // console.log(that.ItemLists);
     });
-  
+
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
+          limit: 3,
           productTypeCode: "3",
           sort: 2
         })
       )
       .then(function(data) {
+        // console.log(data.data);
         var gData = data.data.data;
         that.products = gData;
         // console.log(that.products);
@@ -182,7 +276,13 @@ export default {
       subList: [],
       typecode: "",
       productId: "",
-      seleCode: ""
+      seleCode: "",
+      currentIndex: "",
+      listIndex: "",
+      pageShow: true,
+      pageObj: {},
+      lastCount: "",
+      pageChange: 0,
     };
   }
 };
@@ -252,7 +352,7 @@ export default {
         }
         .B-lists {
           width: 926px;
-          height: 110px;
+          // height: 110px;
           margin: 0 auto;
           margin-bottom: 10px;
           border-bottom: 1px solid #ccc;
@@ -426,8 +526,43 @@ export default {
   }
 }
 
-.pChange {
+.pageC {
   margin: 30px 0 200px;
-  padding: 0 500px;
+  padding: 0 350px;
+  display: flex;
+  div {
+    width: 66px;
+    height: 34px;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    color: #ccc;
+    text-align: center;
+    line-height: 34px;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+    li {
+      width: 37px;
+      height: 34px;
+      border: 1px solid #ccc;
+      color: #ccc;
+      text-align: center;
+      line-height: 34px;
+      margin: 0 6px;
+    }
+  }
+}
+.pageColor {
+  color: #2693d4;
+  border: 1px solid #2693d4;
+}
+.color2693d4 {
+  background-color: #2693d4;
+  color: #fff;
+}
+.color000 {
+  background: #eee;
+  color: #000;
 }
 </style>

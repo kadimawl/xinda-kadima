@@ -7,15 +7,15 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" class="innerServer">
-                <div class="lists" @click="types(key)">{{itemNameII.name}}</div>
+              <div v-for="(itemNameII,key,typeCode) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key,typeCode)" :class="[(currentIndex|0)===typeCode?'color2693d4':'color000']">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div v-for="(itemNameIII,key) in subList" :key="itemNameIII.name">
-              <div class="lists" @click="kinds(key)">{{itemNameIII.name}}</div>
+            <div v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name">
+              <div class="lists" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
             </div>
           </div>
           <div class="spaceRow Row">
@@ -71,6 +71,13 @@
         <p class="">增值服务</p>
       </div>
     </div>
+    <div class="pageC" v-show="pageShow">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -79,21 +86,22 @@ import distpicker from "../distpicker";
 export default {
   components: { distpicker },
   methods: {
-    selected: function(code) {//省市区三级联动
+    selected: function(code) {
+      //省市区三级联动
       this.seleCode = code;
       console.log(this.seleCode);
     },
-    types(key) {
+    types(key, typeCode) {
+      this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
-      // console.log(this);
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
-      // console.log(typeCode);
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
-    kinds(key) {
+    kinds(key, index) {
       // console.log(this.subList[key].id);
+      this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);
     },
@@ -113,6 +121,8 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
+          console.log(data.data.totalCount);
+          
           // console.log(that.products);
         });
     },
@@ -123,7 +133,7 @@ export default {
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 5,
+            limit: 100,
             productTypeCode: "0",
             productId: productId,
             sort: 2
@@ -133,6 +143,12 @@ export default {
           var gData = data.data.data;
           that.products = gData;
           // console.log(that.products);
+           if(data.data.totalCount<=4){
+            that.pageShow = false;
+          }else{
+            that.pageShow = true;
+            console.log(typecode);
+          }
         });
     },
     changePage: function() {
@@ -154,7 +170,7 @@ export default {
       }
       that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染公司注册
 
-      console.log(that.ItemLists);
+      // console.log(that.ItemLists);
     });
 
     this.ajax
@@ -162,7 +178,7 @@ export default {
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
+          limit: 100,
           productTypeCode: "4",
           sort: 2
         })
@@ -181,7 +197,10 @@ export default {
       subList: [],
       typecode: "",
       productId: "",
-      seleCode: ""
+      seleCode: "",
+      currentIndex: "",
+      listIndex: "",
+      pageShow: true,
     };
   }
 };
@@ -425,8 +444,16 @@ export default {
   }
 }
 
-.pChange {
+.pageC {
   margin: 30px 0 200px;
-  padding: 0 500px;
+  padding: 0 400px;
+}
+.color2693d4 {
+  background-color: #2693d4;
+  color: #fff;
+}
+.color000{
+  background: #eee;
+  color: #000;
 }
 </style>
