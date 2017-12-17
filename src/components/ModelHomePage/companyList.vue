@@ -49,7 +49,7 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
                     <button>立即购买</button>
                     <button>加入购物车</button>
@@ -126,7 +126,7 @@ export default {
           // console.log(that.products);
         });
     },
-    getData(productId) {
+    getData(productId) { //按类型渲染列表
       var that = this;
       this.ajax
         .post(

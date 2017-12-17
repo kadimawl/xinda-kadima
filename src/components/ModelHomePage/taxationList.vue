@@ -49,10 +49,10 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
-                    <button>立即购买</button>
-                    <button>加入购物车</button>
+                    <button @click="toPay(Product.id)">立即购买</button>
+                    <button @click="addCart(Product.id)">加入购物车</button>
                   </div>
                 </div>
               </div>
@@ -139,6 +139,7 @@ export default {
         });
     },
     getData(productId) {
+      //按类型渲染列表
       var that = this;
       this.ajax
         .post(
@@ -155,6 +156,22 @@ export default {
           var gData = data.data.data;
           that.products = gData;
           // console.log(that.products);
+        });
+    },
+    toPay: function(id) { //立即购买
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          console.log(data);
+        });
+      that.$router.push({ path: "/tabs/shoppingCart"});
+    },
+    addCart: function(id) {
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) { //添加购物车
+          console.log(data);
         });
     },
     changePage: function() {

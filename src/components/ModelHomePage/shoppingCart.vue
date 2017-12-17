@@ -9,7 +9,7 @@
         <div class="Cart-head">
           <div>
             <p>全部商品</p>
-            <p>(1)</p>
+            <p>({{cartLists.length}})</p>
           </div>
         </div>
         <table>
@@ -23,22 +23,22 @@
               <th>操作</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="store">
-              <p>店铺：</p>
+          <tbody class="store" v-for="(Goods,idx) in cartLists" :key="Goods[idx]">
+            <tr>
+              <p class="storeName">店铺：{{Goods.providerName}}</p>
             </tr>
             <tr class="itemLists">
-              <td class="itemPic"><img src="" alt=""></td>
-              <td>代理记账</td>
-              <td>￥1200</td>
+              <td class="itemPic"><img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
+              <td>{{Goods.serviceName}}</td>
+              <td>￥{{Goods.unitPrice}}</td>
               <td>
-                <button @click="minus()">-</button>
-                <input type="text" v-model="num" @blur="numC">
-                <button @click="add()">+</button>
+                <button @click="minus(Goods.serviceId)">-</button>
+                <input type="text" v-model="Goods.buyNum" @blur="numC">
+                <button @click="add(Goods.serviceId)">+</button>
               </td>
-              <td class="sumPrice" >￥1200</td>
+              <td class="sumPrice">￥{{Goods.totalPrice}}</td>
               <td class="delete">
-                <div>删除</div>
+                <div @click="dele(Goods.serviceId)">删除</div>
               </td>
             </tr>
           </tbody>
@@ -58,8 +58,8 @@
               <div class="imgs"></div>
               <p>{{product.serviceInfo}}</p>
               <p>销量：{{product.buyNum}}</p>
-              <h2>￥{{product.marketPrice}}</h2>
-              <del>原价：￥250000</del>
+              <h2>￥{{product.price}}</h2>
+              <del>原价：￥1200</del>
               <span>
                 <a href="">查看详情>>></a>
               </span>
@@ -68,7 +68,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -80,32 +79,58 @@ export default {
       var tData = data.data.data.hq;
       that.products = tData;
     });
-    // this.ajax.post("/xinda-api/cart/list").then(function(data) {
-    //   var tData = data.data.data;
-    //   that.cartLists = rData;
-    // });
+    this.recData();
   },
   data() {
     return {
       products: [],
       cartLists: [],
-      num: 1,
+      num: ""
     };
   },
   methods: {
-    add() {
-      this.num -= -1;  //<最大库存
+    recData() {
+      var that = this;
+      this.ajax.post("/xinda-api/cart/list").then(function(data) {
+        var rData = data.data.data;
+        that.cartLists = rData;
+        console.log(rData);
+        for (var key in rData) {
+          that.num = rData[key].buyNum;
+          break;
+        }
+      });
+    },
+    add(id) {
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          //添加购物车
+          console.log(data);
+        });
+    },
+    minus(id) {
+      //减
+      this.ajax
+        .post("/xinda-api/cart/del", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          console.log(data);
+          // console.log(data.data.data);
+        });
+    },
+    numC() {
+      //加
       console.log(this.num);
     },
-    minus(){   //减
-      if(this.num>=1){
-        this.num -= 1;  //>1，否则没有该商品
-      }
-      console.log(this.num);
-    },
-    numC() {   //加
-      console.log(this.num);
-    },
+    dele(id) {
+      //删除
+      this.ajax
+        .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
+        .then(function(data) {
+          console.log(data);
+          // console.log(data.data.data);
+        });
+    }
   }
 };
 </script>
@@ -135,6 +160,7 @@ export default {
     display: inline-block;
   }
 }
+
 table {
   width: 1200px;
 }
@@ -149,16 +175,13 @@ thead {
     justify-content: space-around;
   }
 }
-tbody {
+.store {
   width: 1200px;
-  .store {
-    width: 1200px;
-    height: 40px;
-    p {
-      font-size: 14px;
-      color: #686868;
-      margin-left:70px;
-    }
+  height: 40px;
+  p {
+    font-size: 14px;
+    color: #686868;
+    margin-left: 70px;
   }
   .itemLists {
     font-size: 14px;
@@ -178,6 +201,10 @@ tbody {
       width: 50px;
       height: 50px;
       border: 1px solid #eee;
+      img {
+        width: 50px;
+        height: 50px;
+      }
     }
     button {
       width: 20px;
