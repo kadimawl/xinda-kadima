@@ -63,7 +63,6 @@ import { mapActions, mapGetters } from "vuex";
 import dist from "../districts/districts";
 
 export default {
-  // 页面  性别显示有问题，数据传了，单选框不显示，
   created() {
     // console.log('account');
     if (this.getName) {
@@ -382,7 +381,8 @@ export default {
     margin-left: 10px;
     margin-top: 20px;
     .el-input {
-      width: 180px;
+      width: 180px; 
+    font-size: .8em;
     }
     p {
       margin-right: 70px;
