@@ -3,12 +3,12 @@
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
-        <p class="errorMsg" v-show="!pshow">{{phoneMsg}}</p>
+        <p class="errorMsg">{{phoneMsg}}</p>
       </div>
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
-        <p class="errorMsg" v-show="!imgShow">{{imgMsg}}</p>
+        <p class="errorMsg">{{imgMsg}}</p>
       </div>
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" class="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
@@ -16,7 +16,7 @@
           <span v-show="show">点击获取</span>
           <span class="countdown" v-show="!show">重新发送{{count}}</span>
         </button>
-        <p class="errorMsg" v-show="!pVShow">{{pVMsg}}</p>
+        <p class="errorMsg">{{pVMsg}}</p>
       </div>
       <div class="selected">
         <distpicker @selected="selected"></distpicker>
@@ -24,7 +24,7 @@
       </div>
       <div class="pwBox"><input :type="pwType" placeholder="  请输入密码" v-model="pwInput" @blur="pwBlur" @focus="pwFocus" class="pw">
         <img class="visible" :src="invisibleUrl" @click="visible">
-        <p class="errorMsg exception" v-show="pwShow">{{pwMsg}}</p>
+        <p class="errorMsg exception">{{pwMsg}}</p>
       </div>
       <button class="i-register" @click="submit">立即注册</button>
       <p class="agree">注册即同意遵守
@@ -56,24 +56,20 @@ export default {
   data() {
     return {
       phoneMsg: "", //手机号错误提示信息
-      pshow: true, //手机号错误提示框
-      imgMsg: '',  //图片验证码错误提示信息
+      imgMsg: "", //图片验证码错误提示信息
       pwType: "password", //密码输入框是否可视
       pVMsg: "", //手机验证码提示信息
-      pVShow: true, //手机验证码提示框
       pwMsg: "", //密码错误提示信息
-      pwShow: false, //密码错误提示框
       show: true,
       count: "",
       timer: null,
       imgUrl: "/xinda-api/ajaxAuthcode",
-      imgShow: true,
       phoneInput: "",
-      addShow: false, //三级联动提示框
       imgVInput: "",
       phoneV: "",
       pwInput: "",
       seleCode: "",
+      addShow: false,
       invisibleUrl: eyes[0]
     };
   },
@@ -93,10 +89,9 @@ export default {
       let pReg = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0135678]|18[0-9]|14[579])[0-9]{8}$/;
       let result = pReg.test(this.phoneInput);
       if (!this.phoneInput == "") {
-        this.pshow = true;
+        this.phoneMsg = "";
         if (!result) {
-          this.pshow = false;
-          this.phoneMsg = "请输入正确手机号";
+          this.phoneMsg = "请输入正确的手机号";
         } else {
           //验证手机号是否已经注册
           this.ajax
@@ -110,7 +105,6 @@ export default {
             )
             .then(data => {
               if (data.data.status == -2) {
-                this.pshow = false;
                 this.phoneMsg = "该手机号已注册";
               }
             });
@@ -119,20 +113,19 @@ export default {
     },
     //重新获得焦点，提示框消失
     focus() {
-      this.pshow = true;
+      this.phoneMsg = "";
     },
     //图片验证码输入错误
     imgVB() {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgShow = false;
         this.imgMsg = "图片验证码为四位（数字或者字母）";
-      } 
+      }
     },
     imgVA() {
       if (this.imgVInput != "") {
-        this.imgShow = true;
+        this.imgMsg = "";
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
         this.imgVInput = "";
       }
@@ -166,7 +159,6 @@ export default {
           )
           .then(data => {
             if (data.data.status == -1) {
-              this.imgShow = false;
               this.imgMsg = "图片验证码错误";
             }
           });
@@ -177,15 +169,13 @@ export default {
     pvBlur() {
       let pVReg = /^\d{6}$/;
       if (!pVReg.test(this.phoneV) && this.phoneV !== "") {
-        this.pVShow = false;
         this.pVMsg = "短信验证码为六位数字";
-      }else if(this.phoneV != 111111){
-        this.pVShow = false;
+      } else if (this.phoneV != 111111) {
         this.pVMsg = "短信验证码错误";
       }
     },
     pVFocus() {
-      this.pVShow = true;
+      this.pVMsg = "";
     },
     //验证码刷新-
     reImg() {
@@ -197,13 +187,12 @@ export default {
       let pwResult = pwReg.test(this.pwInput);
       if (this.pwInput !== "") {
         if (!pwResult) {
-          this.pwShow = true;
           this.pwMsg = "密码为：8-20位数字，大小写字母";
         }
       }
     },
     pwFocus() {
-      this.pwShow = false;
+      this.pwMsg = "";
     },
     //密码可视
     visible() {
@@ -220,41 +209,41 @@ export default {
       var pw = this.pwInput;
       var md5 = require("md5");
       if (user != "") {
-        if (this.phoneV != "") {
-          if (this.seleCode != "") {
-            if (pw != "") {
-              this.ajax
-                .post(
-                  "/xinda-api/register/register",
-                  this.qs.stringify({
-                    cellphone: user,
-                    smsType: 1,
-                    validCode: 111111,
-                    password: md5(pw),
-                    regionId: this.seleCode
-                  })
-                )
-                .then(data => {
-                  if (data.data.status == 1) {
-                    this.$router.push({ path: "/outter/login" });
-                  } else {
-                    this.pshow = true;
-                    this.phoneMsg = "请重新注册，谢谢。";
-                  }
-                });
+        if (this.imgVInput != "") {
+          if (this.phoneV != "") {
+            if (this.seleCode != "") {
+              if (pw != "") {
+                this.ajax
+                  .post(
+                    "/xinda-api/register/register",
+                    this.qs.stringify({
+                      cellphone: user,
+                      smsType: 1,
+                      validCode: 111111,
+                      password: md5(pw),
+                      regionId: this.seleCode
+                    })
+                  )
+                  .then(data => {
+                    if (data.data.status == 1) {
+                      this.$router.push({ path: "/outter/login" });
+                    } else {
+                      this.phoneMsg = "请重新注册，谢谢。";
+                    }
+                  });
+              } else {
+                this.pwMsg = "请输入密码";
+              }
             } else {
-              this.pwShow = true;
-              this.pwMsg = "请输入密码";
+              this.addShow = true;
             }
           } else {
-            this.addShow = true;
+            this.pVMsg = "请输入短信验证码";
           }
         } else {
-          this.pVShow = false;
-          this.pVMsg = "请输入短信验证码";
+          this.imgMsg = "请输入图片验证码";
         }
       } else {
-        this.pshow = false;
         this.phoneMsg = "请输入手机号";
       }
     }
