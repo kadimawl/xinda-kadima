@@ -7,21 +7,20 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" @click="types(key)" class="innerServer">
-                 <div class="lists">{{itemNameII.name}}</div>
+              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key)">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-              <div v-for="itemNameIII in subList" :key="itemNameIII.name">
-                <div class="lists">{{itemNameIII.name}}</div>
-              </div>
+            <div v-for="(itemNameIII,key) in subList" :key="itemNameIII.name">
+              <div class="lists" @click="kinds(key)">{{itemNameIII.name}}</div>
+            </div>
           </div>
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-
               <distpicker @selected="selected"></distpicker>
             </div>
           </div>
@@ -36,7 +35,7 @@
               <div class="lables">商品</div>
               <div class="lables">价格</div>
             </div>
-            <div class="B-lists" v-for="(Product,key,index) in products" :key="Product.id">
+            <div class="B-lists" v-for="Product in products" :key="Product.id">
               <div class="listImg">
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
@@ -72,15 +71,6 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <div class="pChange">
-      <el-pagination 
-      @current-change="handleCurrentChange" 
-      background  
-      layout="prev, pager, next" 
-      :total="8" :page-size="4">
-      </el-pagination>
-    </div>
-
   </div>
 </template>
 
@@ -94,53 +84,87 @@ export default {
       this.seleCode = code;
       console.log(this.seleCode);
     },
-    handleCurrentChange: function() {
+    types(key) {
+      //类型菜单匹配分类菜单
+      // console.log(this);
+      this.subList = this.ItemLists[key].itemList;
+      this.typecode = this.ItemLists[key].code;
+      var typeCode = this.typecode;
+      // console.log(typeCode);
+      this.reqData(typeCode); //按分类传递code参数切换列表
+    },
+    kinds(key) {
+      // console.log(this.subList[key].id);
+      var productId = this.subList[key].id;
+      this.getData(productId);
+    },
+    reqData: function(typecode) {
+      //按分类选择列表渲染
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
-            start: 5,
-            limit: 4,
-            productTypeCode: "1",
+            start: 0,
+            limit: 5,
+            productTypeCode: typecode,
             sort: 2
           })
         )
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          console.log(that.products);
+          // console.log(that.products);
         });
-    }
-  },
-  handleSizeChange() {
-
+    },
+    getData(productId) {
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 5,
+            productTypeCode: "0",
+            productId: productId,
+            sort: 2
+          })
+        )
+        .then(function(data) {
+          var gData = data.data.data;
+          that.products = gData;
+          // console.log(that.products);
+        });
+    },
+    changePage: function() {
+      var that = this;
+      this.reqData();
+    },
   },
   created() {
     // console.log(name);
-    
+
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-
       var rData = data.data.data;
       for (const key in rData) {
-        if (rData[key].name=='财税服务') {
+        if (rData[key].name == "财税服务") {
           that.ItemLists = rData[key].itemList;
           break;
         }
       }
-      that.types('09fb10e276744114a232ac04b7b72e5d');
-      
-      console.log(that.ItemLists);
+      that.types("09fb10e276744114a232ac04b7b72e5d");//默认渲染审计报告
+
+      // console.log(that.ItemLists);
     });
-    //默认拉取productTypeCode 审计报告（3）数据，（2）为税务代办，（2）为代理记账
+  
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 100,
-          productTypeCode: "0",
+          limit: 5,
+          productTypeCode: "3",
           sort: 2
         })
       )
@@ -154,6 +178,10 @@ export default {
     return {
       ItemLists: [],
       products: [],
+      name: "",
+      subList: [],
+      typecode: "",
+      productId: "",
       seleCode: ""
     };
   }
