@@ -21,7 +21,7 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-
+              <distpicker @selected="selected"></distpicker>
             </div>
           </div>
         </div>
@@ -75,8 +75,14 @@
 </template>
 
 <script>
+import distpicker from "../distpicker";
 export default {
+  components: { distpicker },
   methods: {
+    selected: function(code) {//省市区三级联动
+      this.seleCode = code;
+      console.log(this.seleCode);
+    },
     types(key) {
       //类型菜单匹配分类菜单
       // console.log(this);
@@ -146,11 +152,11 @@ export default {
           break;
         }
       }
-      that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e");//默认渲染公司注册
+      that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染公司注册
 
       console.log(that.ItemLists);
     });
-    
+
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
@@ -174,7 +180,8 @@ export default {
       name: "",
       subList: [],
       typecode: "",
-      productId: ""
+      productId: "",
+      seleCode: ""
     };
   }
 };

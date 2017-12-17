@@ -3,7 +3,7 @@
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-        <p class="errorMsg" >{{phoneMsg}}</p>
+        <p class="errorMsg">{{phoneMsg}}</p>
       </div>
       <div class="pwBox">
         <input :type="pwType" placeholder="请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
@@ -13,12 +13,12 @@
       <div class="v-box">
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
-        <p class="errorMsg" >{{imgVMsg}} </p>
+        <p class="errorMsg">{{imgVMsg}} </p>
       </div>
       <div class="forget" @click="forgetpw">
         <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
-      <p class="errorMsg" v-show="EShow">账号或密码不正确！</p>
+      
       <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
@@ -44,11 +44,11 @@ export default {
     return {
       pwType: "password",
       phoneInput: "",
-      phoneMsg: '',
+      phoneMsg: "",
       pwInput: "",
-      pwMsg: '',
+      pwMsg: "",
       imgVInput: "",
-      imgVMsg: '',
+      imgVMsg: "",
       imgUrl: "/xinda-api/ajaxAuthcode",
       invisibleUrl: eyes[0],
       EShow: false
@@ -56,7 +56,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(["setTitle", "setName",]),
+    ...mapActions(["setTitle", "setName"]),
     forgetpw() {
       // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");
@@ -71,15 +71,15 @@ export default {
       let result = pReg.test(this.phoneInput);
       let user = this.phoneInput;
       if (!this.phoneInput == "") {
-        this.phoneMsg = '';
+        this.phoneMsg = "";
         if (!result) {
-          this.phoneMsg = '请输入正确的手机号';
+          this.phoneMsg = "请输入正确的手机号";
           let user = this.phoneInput;
         }
       }
     },
     pFocus() {
-      this.phoneMsg = '';
+      this.phoneMsg = "";
     },
 
     //密码输入验证
@@ -87,11 +87,11 @@ export default {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (!pwResult && this.pwInput !== "") {
-        this.pwMsg = '请输入（8-20位）数字、大小写字母';
+        this.pwMsg = "请输入（8-20位）数字、大小写字母";
       }
     },
     pwFocus() {
-      this.pwMsg = '';
+      this.pwMsg = "";
     },
     //密码可视
     visible() {
@@ -111,12 +111,12 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgVMsg = '图片验证码为4位（数字或者大小写字母）';
+        this.imgVMsg = "图片验证码为4位（数字或者大小写字母）";
       }
     },
     imgVA() {
       if (this.imgVInput !== "") {
-        this.imgVMsg = '';
+        this.imgVMsg = "";
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
         this.imgVInput = "";
       }
@@ -127,50 +127,50 @@ export default {
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
-      // if(userName){
-      //   if(pw){
+      if (userName != "") {
+        if (pw != "") {
+          if (this.imgVInput != "") {
+            this.ajax
+              .post(
+                "/xinda-api/sso/login",
+                this.qs.stringify({
+                  loginId: userName,
+                  password: md5(this.pwInput),
+                  imgCode: this.imgVInput
+                })
+              )
+              .then(data => {
+                let msg = data.data.msg;
+                let status = data.data.status;
 
-      //   }else{
-      //     this.pwShow = true;
-      //   }
-      // }else{
-      //   this.phoneMsg = '';
-      // }
-
-
-
-      this.ajax
-        .post(
-          "/xinda-api/sso/login",
-          this.qs.stringify({
-            loginId: userName,
-            password: md5(this.pwInput),
-            imgCode: this.imgVInput
-          })
-        )
-        .then(data => {
-          let msg = data.data.msg;
-          let status = data.data.status;
-
-          if (status == 1) {
-            //成功登陆
-            sessionStorage.setItem("user", this.phoneInput);
-            this.$router.push({ path: "/HomePage" }); //页面跳转
-            this.ajax.post("/xinda-api/sso/login-info").then(data => {
-              console.log(data);
-              let name = data.data.data.name;
-              this.setName(this.phoneInput);
-            });
-          } else if (status == -1) {
-            if (msg == "图片验证码错误！") {
-              this.imgVMsg = '图片验证码错误！';
-            } else if (msg == "账号或密码不正确！") {
-              this.EShow = true;
-            } else if (msg == "账号不存在") {
-              this.phoneMsg = '该手机号未注册';
-            }
+                if (status == 1) {
+                  //成功登陆
+                  sessionStorage.setItem("user", this.phoneInput);
+                  this.$router.push({ path: "/HomePage" }); //页面跳转
+                  this.ajax.post("/xinda-api/sso/login-info").then(data => {
+                    console.log(data);
+                    let name = data.data.data.name;
+                    this.setName(this.phoneInput);
+                  });
+                } else if (status == -1) {
+                  if (msg == "图片验证码错误！") {
+                    this.imgVMsg = "图片验证码错误！";
+                  } else if (msg == "账号或密码不正确！") {
+                    this.phoneMsg = '账号或密码不正确！';
+                  } else if (msg == "账号不存在") {
+                    this.phoneMsg = "该手机号未注册";
+                  }
+                }
+              });
+          } else {
+            this.imgVMsg = "请输入验证码";
           }
-        });
+        } else {
+          this.pwMsg = "请输入密码";
+        }
+      } else {
+        this.phoneMsg = "请输入手机号";
+      }
     }
   }
 };

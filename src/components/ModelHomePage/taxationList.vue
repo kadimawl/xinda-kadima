@@ -21,7 +21,7 @@
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-
+              <distpicker @selected="selected"></distpicker>
             </div>
           </div>
         </div>
@@ -75,8 +75,15 @@
 </template>
 
 <script>
+import distpicker from "../distpicker";
 export default {
+  components: { distpicker },
   methods: {
+    //三级联动选择code
+    selected: function(code) {
+      this.seleCode = code;
+      console.log(this.seleCode);
+    },
     types(key) {
       //类型菜单匹配分类菜单
       // console.log(this);
@@ -132,7 +139,7 @@ export default {
     changePage: function() {
       var that = this;
       this.reqData();
-    }
+    },
   },
   created() {
     // console.log(name);
@@ -174,7 +181,8 @@ export default {
       name: "",
       subList: [],
       typecode: "",
-      productId: ""
+      productId: "",
+      seleCode: ""
     };
   }
 };

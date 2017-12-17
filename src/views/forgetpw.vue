@@ -2,18 +2,19 @@
   <div class="lBox">
     <div class="leftB">
       <div class="phoneBox"><input type="text" v-model="phoneInput" @blur="phone" @focus="focus" placeholder="  请输入手机号码" class="phone">
-        <span class="errorMsg" v-show="!pshow">请输入正确手机号</span>
+        <span class="errorMsg">{{phoneMsg}}</span>
       </div>
       <div class="Verification"><input type="text" placeholder="  请输入验证码" @blur="imgBlur" @focus="imgVA" v-model="imgV">
         <div class="v-box"><img @click="reImg" :src="imgUrl" alt=""></div>
-        <p class="errorMsg" v-show="!imgShow">请输入正确的图片验证码</p>
+        <p class="errorMsg"> {{imgVMsg}}</p>
       </div>
-      <div class="Verification"><input type="text" placeholder="  请输入验证码">
+      <div class="Verification">
+        <input type="text" placeholder="  请输入验证码" v-model="phoneV" @blur="pVBlur" @focus="pVFocus">
         <button @click="clickGet">
           <span v-show="show">点击获取</span>
           <span v-show="!show" class="countdown">正在发送({{count}})</span>
-          <p class="errorMsg" v-show="vShow">1分钟内请勿重复请求</p>
         </button>
+        <p class="errorMsg">{{pVMsg}}</p>
       </div>
       <div class="pwBox"><input :type="pwType" placeholder="  请输入新密码" @blur="pwShow" @focus="pwFocus" v-model="pwInput">
         <img class="visible" :src="invisibleUrl" @click="visible">
@@ -47,19 +48,20 @@ export default {
       pwType: "password",
       pwTypeI: "password",
       phoneInput: "",
+      phoneMsg: "",
       show: true,
-      pshow: true,
-      imgShow: true,
+      imgVMsg: "",
       imgV: "",
       pwInput: "",
       validationInput: "",
+      phoneV: "",
+      pVMsg: "",
       pwMsg: false,
       pwMSG: false,
       count: "",
       timer: null,
       pwI: "",
       pwM: false,
-      vShow: false,
       imgUrl: "/xinda-api/ajaxAuthcode",
       invisibleUrl: eyes[0],
       invisibleUrlI: eyes[0]
@@ -71,15 +73,15 @@ export default {
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
       let result = pReg.test(this.phoneInput);
       if (!this.phoneInput == "") {
-        this.pshow = true;
+        this.phoneMsg = "";
         if (!result) {
-          this.pshow = false;
+          this.phoneMsg = "请输入正确手机号";
         }
       }
     },
     //重新获得焦点，提示框消失
     focus() {
-      this.pshow = true;
+      this.phoneMsg = "";
     },
 
     //图片验证码
@@ -87,14 +89,14 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgV);
       if (!imgVR && this.imgV !== "") {
-        this.imgShow = false;
+        this.imgVMsg = "请输入正确的图片验证码";
       }
     },
     imgVA() {
       if (!this.imgV == "") {
-        this.imgShow = true;
+        this.imgVMsg = "";
         this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
-        this.imgV == ""
+        this.imgV = "";
       }
     },
     //点击获取倒计时
@@ -125,20 +127,28 @@ export default {
           )
           .then(data => {
             if (data.data.status == 1) {
-              console.log(data.data.msg);
+              this.pVMsg = "短信已成功发送";
             } else if (data.data.msg == "1分钟内请勿重复请求") {
-              this.vShow = true;
+              this.pVMsg = "1分钟内请勿重复请求";
             } else if (data.data.msg == "图片验证码错误！") {
-              this.imgShow = false;
+              this.imgVMsg = "图片验证码错误！";
             }
           });
       }
     },
-
+    pVBlur() {
+      if(this.phoneV != 111111){
+        this.pVMsg = '短信验证码错误'
+      }
+    },
+    pVFocus() {
+      this.pVMsg = '';
+    },
     //验证码刷新-
     reImg() {
       this.imgUrl = this.imgUrl + "?r=" + new Date().getTime();
-      this.imgShow = true;
+      this.imgVMsg = "";
+      this.imgV = "";
     },
     //密码验证
     pwShow() {
@@ -186,21 +196,33 @@ export default {
     //确认修改
     confir() {
       var md5 = require("md5");
-      this.ajax
-        .post(
-          "/xinda-api/register/findpas",
-          this.qs.stringify({
-            cellphone: this.phoneInput,
-            smsType: 1,
-            validCode: 111111,
-            password: md5(this.pwInput)
-          })
-        )
-        .then(data => {
-          if (data.data.status == 1) {
-            this.$router.push({ path: "/outter/login" });
+      if (this.phoneInput != "") {
+        if (this.imgV != "") {
+          if (this.phoneV != 111111) {
+            this.pVMsg = "短信验证码错误";
+          } else {
+            this.ajax
+              .post(
+                "/xinda-api/register/findpas",
+                this.qs.stringify({
+                  cellphone: this.phoneInput,
+                  smsType: 1,
+                  validCode: 111111,
+                  password: md5(this.pwInput)
+                })
+              )
+              .then(data => {
+                if (data.data.status == 1) {
+                  this.$router.push({ path: "/outter/login" });
+                }
+              });
           }
-        });
+        } else {
+          this.imgVMsg = "请输入验证码";
+        }
+      } else {
+        this.phoneMsg = "请输入手机号";
+      }
     }
   }
 };
