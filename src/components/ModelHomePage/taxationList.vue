@@ -7,8 +7,8 @@
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div v-for="(itemNameII,key) in ItemLists" :key="itemNameII.name" class="innerServer">
-                <div class="lists" @click="types(key)">{{itemNameII.name}}</div>
+              <div v-for="(itemNameII,key,index) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key,index)">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
@@ -49,10 +49,10 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
-                    <button>立即购买</button>
-                    <button>加入购物车</button>
+                    <button @click="toPay(Product.id)">立即购买</button>
+                    <button @click="addCart(Product.id)">加入购物车</button>
                   </div>
                 </div>
               </div>
@@ -94,6 +94,7 @@ export default {
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key) {
+      //点击三级菜单切换列表匹配
       // console.log(this.subList[key].id);
       var productId = this.subList[key].id;
       this.getData(productId);
@@ -118,6 +119,7 @@ export default {
         });
     },
     getData(productId) {
+      //按类型渲染列表
       var that = this;
       this.ajax
         .post(
@@ -136,14 +138,29 @@ export default {
           // console.log(that.products);
         });
     },
+    toPay: function(id) { //立即购买
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          console.log(data);
+        });
+      that.$router.push({ path: "/tabs/shoppingCart"});
+    },
+    addCart: function(id) {
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) { //添加购物车
+          console.log(data);
+        });
+    },
     changePage: function() {
       var that = this;
       this.reqData();
-    },
+    }
   },
   created() {
     // console.log(name);
-
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
@@ -153,11 +170,10 @@ export default {
           break;
         }
       }
-      that.types("09fb10e276744114a232ac04b7b72e5d");//默认渲染审计报告
-
+      that.types("09fb10e276744114a232ac04b7b72e5d"); //默认渲染审计报告
       // console.log(that.ItemLists);
     });
-  
+
     this.ajax
       .post(
         "/xinda-api/product/package/grid",

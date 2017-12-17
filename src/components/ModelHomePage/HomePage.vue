@@ -108,7 +108,7 @@
           <h4>{{product.providerName}}</h4>
           <p class="service">{{product.serviceName}}</p>
           <p class="service-inf">{{product.serviceInfo}}</p>
-          <span class="price">￥{{product.marketPrice}}</span>
+          <span class="price">￥{{product.price}}</span>
           <span class="unit">{{product.unit}}</span>
           <button>查看详情</button>
         </div>
@@ -172,7 +172,7 @@
           <h4>{{Service.providerName}}</h4>
           <p class="service">{{Service.serviceName}}</p>
           <p class="service-inf">{{Service.serviceInfo}}</p>
-          <span class="price">￥{{Service.marketPrice}}</span>
+          <span class="price">￥{{Service.price}}</span>
           <span class="unit">{{Service.unit}}</span>
           <button>查看详情</button>
         </div>

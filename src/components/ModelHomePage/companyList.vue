@@ -49,7 +49,7 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
                     <button>立即购买</button>
                     <button>加入购物车</button>
@@ -92,7 +92,7 @@ export default {
       // console.log(typeCode);
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
-    kinds(key) {
+    kinds(key) {//点击三级菜单切换列表匹配
       // console.log(this.subList[key].id);
       var productId = this.subList[key].id;
       this.getData(productId);
@@ -116,7 +116,7 @@ export default {
           // console.log(that.products);
         });
     },
-    getData(productId) {
+    getData(productId) { //按类型渲染列表
       var that = this;
       this.ajax
         .post(
