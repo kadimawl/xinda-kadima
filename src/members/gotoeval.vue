@@ -44,10 +44,11 @@ import {mapGetters,mapActions} from 'vuex'
 
 export default {
     created(){//获得服务信息
+
         if(this.getEvaldetail.code){//验证是否空对象
             this.code=this.getEvaldetail.codes;
             this.cont=this.getEvaldetail.conts;
-            this.btime=new Date(this.getEvaldetail.btimes);
+            this.btime=this.getEvaldetail.btimes;
         }
     },
     data() {
@@ -95,7 +96,6 @@ export default {
                         that.error='评价成功';
                         that.acolor='#5d95e8';
                         that.setEvaldetail({});
-                        sessionStorage.clear();
                         location.href='http://localhost:8080/#/member/userEval/evalNone';
                     }else{
                         that.errorshow=true;

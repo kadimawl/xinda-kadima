@@ -73,8 +73,7 @@ export default {
         this.errorshow=false;
         // 未登录不拉取数据
         if(this.getName){
-             // 防止重复拉取
-            if(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+'')==null){//未拉取
+            if(this.datas[this.pagenum]){//未拉取
                 var that=this;
                 that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                     businessNo:1,
@@ -87,8 +86,7 @@ export default {
                     that.pageshow(data);
                 })
             }else{//已拉取
-                var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+''));
-                this.pageshow(data);
+                this.lists=this.datas.splice(this.pagenum,this.pagesize);
             }
         }
     },
@@ -107,6 +105,7 @@ export default {
             pagenum:0,//
             pagesize:2,//
             tatal:'',//总条目
+            datas:[],//所有data.data.data数据放入datas
         };
     },
     computed:{
@@ -123,16 +122,18 @@ export default {
         pageshow(data){
             if(data.data.data){
                 this.total=data.data.totalCount;
-                this.lists=data.data.data;
+                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
+                    var dataindex=i-this.pagethum;
+                    this.datas[i].createTime=new Date(data.data.data[dataindex].createTime);
+                }
+                this.lists=this.datas.splice(this.pagenum,this.pagesize);
                 for(let i=0;i<this.lists.length;i++){
-                    this.lists[i].createTime=new Date(data.data.data[i].createTime);
                     if(this.lists[i].status==1){//关于订单状态的code纯属猜测
                         this.lists[i].status='等待买家付款';
                     }else if(this.lists[i].status==2){
                         this.lists[i].status='已完成';
                     }
                 }
-                sessionStorage.setItem('myorder'+this.getName+''+this.pagenum+'',JSON.stringify(data));
             }
         },
         // 转换为时间戳   

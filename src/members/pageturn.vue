@@ -25,8 +25,13 @@ export default {
             // maxshow:false,//
         };
     },
+<<<<<<< HEAD
     props:{
         total:Number,
+=======
+    props:{//['total','pagesize']
+        total:String,
+>>>>>>> d7e1595feb4fd47285e6b03d55bdf3a4b71f23b7
         pagesize:Number,
     },
     methods:{
