@@ -118,17 +118,17 @@ p {
     }
     input {
       width: 30px;
-      height: 26px;
+      height: 32px;
       background: #f7f8fa;
       border: 1px solid #cccccc;
       font-size: 15px;
       margin: 20px 0;
     }
     .math {
-      height: 24px;
+      height: 20px;
       background: #ffffff;
       width: 50px;
-      line-height: 24px;
+      line-height: 20px;
     }
     button {
       width: 95px;

@@ -205,25 +205,23 @@ export default new Router({
                     component: payBank
                 }]
             },
-
-
-
             ]
         },
 
         //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
         {
-            path: 'outter',
+            path: '/outter',
             name: 'outter',
+            redirect:'/outter/login',
             component: outter,
             children: [{
-                path: '/outter/login',
+                path: 'login',
                 component: login,
             }, {
-                path: '/outter/register',
+                path: 'register',
                 component: register
             }, {
-                path: '/outter/forgetpw',
+                path: 'forgetpw',
                 component: forgetpw
             }]
         },
@@ -272,12 +270,7 @@ export default new Router({
                 }, {
                     path: 'myOrder', //我的订单
                     component: myOrder
-
-
-
                 }]
         },
-
-
     ]
 })
