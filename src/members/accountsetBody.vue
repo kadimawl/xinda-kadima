@@ -63,118 +63,63 @@ import { mapActions, mapGetters } from "vuex";
 import dist from "../districts/districts";
 
 export default {
-  created() {
-    // console.log('account');
-    if (this.getName) {
-      // 登录拉取数据
-      // console.log('登录');
-      if (sessionStorage.getItem("account" + this.getName + "")) {
-        console.log("user");
-        var data = JSON.parse(
-          sessionStorage.getItem("account" + this.getName + "")
-        );
-        console.log(data);
-        this.pageshow(data);
-      } else {
-        // console.log('post');
-        var that = this;
-        that.ajax.post("/xinda-api/member/info").then(function(data) {
-          if (data.data.status == 1) {
-            // console.log('succ')
-            console.log(data);
-            that.pageshow(data);
-          } else {
-            that.errorshow = true;
-            that.error = data.data.msg;
-            that.acolor = "#ff4745";
-          }
-        });
-      }
-    } else {
-      // 未登录不拉取数据
-      that.errorshow = true;
-      that.error = "亲，先要登录哦";
-      that.acolor = "#ff4745";
-    }
-  },
-  computed: {
-    ...mapGetters(["getName"])
-  },
-  data() {
-    return {
-      headimg: "", //头像
-      inputN: "", //输入姓名
-      inputM: "", //输入邮箱
-      radio: "1", //性别单选框
-      errorshow: false, //控制错误框
-      error: "", //错误提示
-      acolor: "#ff4649", //错误提示的颜色
-      colorN: "#ff4649", //
-      colorS: "#ff4649", //
-      colorM: "#ff4649", //
-      colorA: "#ff4649", //
-      seleCode: "", //地区编号
-      provinces: dist[100000], //省
-      citys: [], //市
-      areas: [], //区
-      province: "0", //省
-      city: "0", //市
-      area: "0" //区
-    };
-  },
-  components: {},
-  methods: {
-    ...mapActions(["setheadX"]),
-    // 处理ajax拉取数据
-    pageshow: function(data) {
-      if (data) {
-        var datas = data.data.data;
-        this.headimg = datas.headImg;
-        this.inputN = datas.name;
-        this.inputM = datas.email;
-        if (datas.gender == "1" || datas.gender == "2") {
-          this.radio = datas.gender;
-          // this.choosesex();
-          console.log(this.radio);
-        }
-        // 处理三级联动
-        this.seleCode = datas.regionId;
-        this.showarea(this.seleCode);
-        // vuex传参
-        this.setheadX(this.headimg);
-        sessionStorage.setItem(
-          "account" + this.getName + "",
-          JSON.stringify(data)
-        );
-      }
-    },
-    // 页面点击事件
-    acBodyclick() {
-      if (this.errorshow == true) {
-        var that = this;
-        setTimeout(function() {
-          that.errorshow = false;
-        }, 4000);
-      }
-    },
-    // 邮箱失去焦点
-    mail: function() {
-      if (this.inputM) {
-        if (
-          !/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(
-            this.inputM
-          )
-        ) {
-          this.errorshow = true; //提示
-          this.error = "请输入正确的邮箱";
-          this.acolor = "##ff4649";
+    created() {
+        // console.log('account');
+        if (this.getName) {
+            // 登录拉取数据
+            // console.log('登录');
+            if (sessionStorage.getItem("account" + this.getName + "")) {
+                console.log("user");
+                var data = JSON.parse(sessionStorage.getItem("account" + this.getName + ""));
+                console.log(data);
+                this.pageshow(data);
+            } else {
+                // console.log('post');
+                var that = this;
+                that.ajax.post("/xinda-api/member/info").then(function(data) {
+                if (data.data.status == 1) {
+                    // console.log('succ')
+                    console.log(data);
+                    that.pageshow(data);
+                } else {
+                    that.errorshow = true;
+                    that.error = data.data.msg;
+                    that.acolor = "#ff4745";
+                }
+                });
+            }
         } else {
-          this.errorshow = false;
-          this.colorM = "#5d95e8";
+            // 未登录不拉取数据
+            this.errorshow = true;
+            this.error = "亲，先要登录哦";
+            this.acolor = "#ff4745";
         }
-      }
     },
-<<<<<<< HEAD
+    computed: {
+        ...mapGetters(["getName"])
+    },
+    data() {
+        return {
+        headimg: "", //头像
+        inputN: "", //输入姓名
+        inputM: "", //输入邮箱
+        radio: "1", //性别单选框
+        errorshow: false, //控制错误框
+        error: "", //错误提示
+        acolor: "#ff4649", //错误提示的颜色
+        colorN: "#ff4649", //
+        colorS: "#ff4649", //
+        colorM: "#ff4649", //
+        colorA: "#ff4649", //
+        seleCode: "", //地区编号
+        provinces: dist[100000], //省
+        citys: [], //市
+        areas: [], //区
+        province: "0", //省
+        city: "0", //市
+        area: "0" //区
+        };
+    },
     components: {},
     methods:{
         ...mapActions(['setheadX']),
@@ -341,149 +286,8 @@ export default {
             this.area=code;
             this.areaChange();
         },
-=======
-    // 名字失去焦点
-    inputname: function() {
-      if (this.inputN) {
-        this.colorN = "#5d95e8";
-      }
-    },
-    // // 性别框改变
-    // choosesex:function(){
-    //     if(this.radio){
-    //         this.colorS='#5d95e8';
-    //     }
-    // },
-    // 地区失去焦点
-    choosearea: function() {
-      if (this.province == "0" || this.city == "0" || this.area == "0") {
-        if (this.colorA == "#5d95e8") {
-          this.colorA = "#ff4649";
-        }
-      } else {
-        this.colorA = "#5d95e8";
-      }
-    },
-    // 保存
-    store: function() {
-      if (this.getName) {
-        // 登录
-        this.acolor = "#ff4745";
-        if (!this.colorN == "#5d95e8") {
-          //判断名字输入
-          this.errorshow = true;
-          this.error = "请输入名字";
-          return;
-        }
-        if (!this.colorS == "#5d95e8") {
-          //判断性别选择
-          this.errorshow = true;
-          this.error = "请选择性别";
-          return;
-        }
-        if (!this.colorM == "#5d95e8") {
-          //判断邮箱输入
-          this.errorshow = true;
-          this.error = "请输入正确的邮箱";
-          return;
-        }
-        if (!this.colorA == "#5d95e8") {
-          //判断地区选择
-          this.errorshow = true;
-          this.error = "请选择地区";
-          return;
-        }
-        var data = JSON.parse(
-          sessionStorage.getItem("account" + this.getName + "")
-        );
-        var datas = data.data.data;
-        // 如果数据未发生变化，不会提交
-        if (
-          this.inputN != datas.name ||
-          this.radio != datas.gender ||
-          this.inputM != datas.email ||
-          this.area != datas.regionId
-        ) {
-          // 更新个人信息
-          var that = this;
-          that.ajax
-            .post(
-              "/xinda-api/member/update-info",
-              that.qs.stringify({
-                headImg: that.headimg,
-                name: that.inputN,
-                gender: that.radio,
-                email: that.inputM,
-                regionId: that.seleCode
-              })
-            )
-            .then(function(data) {
-              console.log(data);
-              if (data.data.status == 1) {
-                //更新成功
-                that.errorshow = true;
-                that.error = "更新成功";
-                that.acolor = "#5d95e8";
-                // 重新拉取数据
-                that.ajax.post("/xinda-api/member/info").then(function(data) {
-                  if (data.data.status == 1) {
-                    // 头像暂时无法设置
-                    that.pageshow(data);
-                  } else {
-                    that.errorshow = true;
-                    that.error = "" + data.data.msg + "更新获取最新信息失败";
-                    that.acolor = "#ff4745";
-                  }
-                });
-              } else {
-                //更新失败
-                that.errorshow = true;
-                that.error = "更新失败";
-                that.acolor = "#ff4745";
-              }
-            });
-        } else {
-          this.errorshow = true; //提示
-          this.error = "请勿重复提交";
-          this.acolor = "#ff4745";
-        }
-      }
-    },
-    // 三级联动
-    proChange() {
-      //  省
-      this.city = "0";
-      this.area = "0";
-      if (this.province != "0") {
-        this.citys = dist[this.province];
-      }
-    },
-    cityChange() {
-      // 市
-      this.areas = dist[this.city];
-      // console.log(this.city)
-    },
-    areaChange() {
-      // 区
-      this.seleCode = this.area;
-      // console.log(this.seleCode)
-    },
-    // 三级联动显示
-    showarea(code) {
-      var codearr = code.split("");
-      codearr.splice(4, 2, "0", "0");
-      var codecity = codearr.join("");
-      codearr.splice(2, 2, "0", "0");
-      var codepro = codearr.join("");
-      this.province = codepro;
-      this.proChange();
-      this.city = codecity;
-      this.cityChange();
-      this.area = code;
-      this.areaChange();
->>>>>>> 3024e3fba2f77fae6bf039ed3ec4a9dd614552d6
     }
-  }
+  
 };
 </script>
 

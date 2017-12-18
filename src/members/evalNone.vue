@@ -1,7 +1,7 @@
 <template>
 <div class="">
     <!-- 未评价的项目 -->
-    <div class="evalNone" v-for="usereval in evals" :key="usereval.id">
+    <div class="evalNone" v-for="(usereval,index) in evals" :key="usereval.index">
         <div class="Nleft">
             <!-- 用户logo -->
             <div class="gslogo"><img :src="usereval.providerImg" alt=""></div>
@@ -12,7 +12,7 @@
             </div>
         </div>
         <div class="Nright">
-            <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval" @click="gotoEval">去评价</router-link>
+            <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval" @click="gotoEval(index)">去评价</router-link>
         </div>
     </div>
     <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
@@ -21,15 +21,13 @@
 </template>
 
 <script>
+// 思路如下，ajax拉取数据，把数据处理，存入datas这个数组，evals得到截取值。根据页数拉取，分位置存入datas。
 import pageturn from './pageturn'
 import {mapActions,mapGetters} from 'vuex' 
 export default {
     created(){
         if(this.getName){//是否登录
-            if(sessionStorage.getItem('userevalno'+this.getName+''+this.pagenum+'')){//缓存有,防止重复拉取
-                var data=JSON.parse(sessionStorage.getItem('userevalno'+this.getName+''+his.pagenum+''));
-                this.datashow(data);
-            }else{
+            if(!this.datas[this.pagenum]){
                 var that=this;
                 that.ajax.post('/xinda-api/service/judge/grid',{
                     start:that.pagenum,
@@ -39,6 +37,8 @@ export default {
                     console.log(data);
                     that.datashow(data);
                 })
+            }else{
+                this.evals=this.datas.splice(this.pagenum,this.pagesize);
             }
         }
     },
@@ -51,6 +51,7 @@ export default {
             pagenum:0,//
             pagesize:2,//
             tatal:'',//总条目
+            datas:[],//所有data.data.data数据放入datas
         };
     },
     components:{pageturn},
@@ -58,22 +59,24 @@ export default {
         ...mapActions(['setEvaldetail']),
         // 自定义事件
         pagevary(msg){
-            this.pagenum=msg*2;
+            this.pagenum=msg*this.pagesize;
         },
         // 拉取数据处理
         datashow(data){
             if(data.data.data){
+                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
+                    var dataindex=i-this.pagethum;
+                    this.datas[i]=data.data.data[dataindex];
+                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data[dataindex].providerImg+'';
+                    this.datas[i].buyTime=new Date(data.data.data[dataindex].buyTime);
+                }
                 this.total=data.data.totalCount;
-                this.evals=data.data.data;
-                this.evals.providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data.providerImg+'';
-                this.evals.buyTime=new Date(data.data.data.buyTime);
-                sessionStorage.setItem('userevalno'+this.getName+''+his.pagenum+'',JSON.stringify(data));
+                this.evals=this.datas.splice(this.pagenum,this.pagesize);
             }
         },
         // 去评价点击,传参
-        gotoEval(){
-            var data=JSON.parse(sessionStorage.getItem('userevalno'+this.getName+''+his.pagenum+''));
-            this.setEvaldetail({codes:data.data.data.serviceNo,conts:data.data.data.serviceInfo,btimes:data.data.data.buyTime});
+        gotoEval(index){
+            this.setEvaldetail({codes:this.datas[index].serviceNo,conts:this.datas[index].serviceInfo,btimes:this.datas[index].buyTime});
         },
     }
     
