@@ -11,9 +11,9 @@
       </div>
       <div class="select">
         <div>
-          <a href="javascript:void(0)">产品</a>
+          <a href="javascript:void(0)" class="color2a" :class="[!isTrue?'color2a':'act']" @click="active">产品</a>
           <span></span>
-          <a href="javascript:void(0)" class="act">服务商</a>
+          <a href="javascript:void(0)" class="color2a"  :class="[isTrue?'color2a':'act']"  @click="active">服务商</a>
         </div>
         <div>
           <input type="text" placeholder="搜索您需要的服务或服务商">
@@ -49,12 +49,16 @@
 export default {
   data() {
     return {
-      seleShow: true
+      seleShow: true,
+      isTrue: true,
     };
   },
   methods: {
     over: function() {
-      this.$emit('display');
+      this.$emit("display");
+    },
+    active() {
+      this.isTrue = !this.isTrue;
     }
   }
 };
@@ -88,7 +92,7 @@ export default {
       font-size: 14px;
       font-weight: 400;
       text-decoration: none;
-      color: #2693d4;
+      color: #2a2a2a;
     }
   }
 }
@@ -134,7 +138,7 @@ h1 {
       vertical-align: bottom;
     }
     .act {
-      color: #2a2a2a;
+      color: #2693d4;
     }
   }
   .inpB {

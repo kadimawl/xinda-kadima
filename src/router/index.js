@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Distpicker from 'v-distpicker' //三级联动插件
 import HelloWorld from '@/components/HelloWorld' //默认首页
 import outter from '../components/outter' //一级路由（登录、注册、忘记密码）
 import tabs from '../components/tabs'
@@ -60,7 +59,6 @@ import mIndex from '@/mobile/index/index' //WX端主页
 import mIndexList from '@/mobile/index/indexList' //WX端列表
 import mProduct from '@/mobile/index/product' //WX端产品
 
-Vue.component('v-distpicker', Distpicker)
 Vue.use(Router)
 export default new Router({
     routes: [

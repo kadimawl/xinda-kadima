@@ -35,7 +35,7 @@ export default {};
   height: 1334px;
   background: #f8f8f8;
   margin: 0 auto;
-  padding: 30% 9%;
+  padding: 35% 9%;
   box-sizing: border-box;
 }
 .portrait {
