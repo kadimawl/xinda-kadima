@@ -24,7 +24,7 @@
         <td><h5>产品类型</h5></td>
         <td class="productTypes">
           <a v-for="(productType,index) in productTypes" :key="productType.id" v-on:click="productTypesC(index)"
-          href="javascript:void(0)"v-bind:class="{butblue:index==butblue}">{{productType.name}}</a>
+          href="javascript:void(0)" v-bind:class="{butblue:index==butblue}">{{productType.name}}</a>
         </td>
       </tr>
     </table>
