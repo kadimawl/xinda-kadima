@@ -1,32 +1,77 @@
 <template>
-<div class="already">
-    <div class="Nleft">
-        <div class="gslogo"><img :src="tupian" alt=""></div>
-        <div class="shangpin">
-          <p class="name">{{gsname}}</p>
-          <p class="information"><span class="spanf">服务单号：{{code}}</span><span>购买时间：{{buytime}}</span></p>
-          <p class="cont">购买内容：{{cont}}</p>
+<div class="">
+    <!-- 已评价盒子 -->
+    <div class="already" v-for="aleval in alevals" :key="aleval.id">
+        <!-- 左边盒子 -->
+        <div class="Nleft" >
+            <div class="gslogo"><img :src="aleval.providerImg" alt=""></div>
+            <div class="shangpin">
+                <p class="name">{{aleval.providerName}}</p>
+                <p class="information"><span class="spanf">服务单号：{{aleval.serviceNo}}</span><span>购买时间：{{aleval.buyTime}}</span></p>
+                <p class="cont">购买内容：{{aleval.serviceInfo}}</p>
+            </div>
+        </div>
+        <!-- 右边盒子 -->
+        <div class="Nright">
+            <button>已评价</button>
         </div>
     </div>
-    <div class="Nright">
-          <button>已评价</button>
-    </div>
+    <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
 </div>
   
 </template>
 
 <script>
+import pageturn from './pageturn'
+import {mapActions,mapGetters} from 'vuex' 
 
 export default {
-  data() {
-    return {
-        tupian:'',
-        gsname:'信达北京服务中心',
-        code:'B1B23',
-        buytime:'2016-1-12',
-        cont:'test'
-    };
-  }
+    // 注：不确定已评价的status是多少，暂且默认为1
+    created(){
+        if(this.getName){//是否登录
+            if(sessionStorage.getItem('userevalAl'+this.getName+'')){//缓存有,防止重复拉取
+                var data=JSON.parse(sessionStorage.getItem('userevalAl'+this.getName+''));
+                this.datashow(data);
+            }else{
+                var that=this;
+                that.ajax.post('/xinda-api/service/judge/grid',{
+                    start:that.pagenum,
+                    limit:that.pagesize,
+                    status:1	
+                }).then(function(data){
+                    console.log(data);
+                    that.datashow(data);
+                })
+            }
+        }
+    },
+    computed:{
+        ...mapGetters(['getName']),
+    },
+    data() {
+        return {
+            alevals:[],
+            pagenum:0,//
+            pagesize:2,//
+            tatal:'',//总条目
+        };
+    },
+    components:{pageturn},
+    methods:{
+        // 自定义事件
+        pagevary(msg){
+            this.pagenum=msg*2;
+        },
+        // 拉取数据处理
+        datashow(data){
+            if(data.data.data){
+                this.alevals=data.data.data;
+                this.alevals.providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data.providerImg+'';
+                this.alevals.buyTime=new Date(data.data.data.buyTime);
+                sessionStorage.setItem('userevalAl'+this.getName+'',JSON.stringify(data));
+            }
+        },
+    }
 };
 </script>
 

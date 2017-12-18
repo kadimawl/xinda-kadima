@@ -9,6 +9,7 @@ export default new Vuex.Store({
         code: '', //订单编号
         headX: '', //用户头像
         // pd: '', //用户密码加密过的
+        evaldetail: {}, //用户未评价订单信息，传给去评价界面
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         SET_headX: (state, headX) => {
             state.headX = headX;
+        },
+        SET_evaldetail: (state, evaldetail) => {
+            state.evaldetail = evaldetail;
         },
         // SET_PD: (state, pd) => {
         //     state.pd = pd;
@@ -46,6 +50,9 @@ export default new Vuex.Store({
         setheadX({ commit }, headX) {
             commit('SET_headX', headX)
         },
+        setEvaldetail({ commit }, evaldetail) {
+            commit('SET_evaldetail', evaldetail)
+        },
         // setPd({ commit }, pd) {
         //     commit('SET_PD', pd)
         // },
@@ -63,6 +70,7 @@ export default new Vuex.Store({
         getCode: state => state.code, //用户中心向订单详情发送的订单编号
         getheadX: state => state.headX, //用户头像
         // getPd: state => state.pd, //用户密码
+        getEvaldetail: state => state.evaldetail, //用户评价传参
 
     }
 
