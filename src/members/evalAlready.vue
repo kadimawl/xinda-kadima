@@ -29,9 +29,8 @@ export default {
     // 注：不确定已评价的status是多少，暂且默认为1
     created(){
         if(this.getName){//是否登录
-            if(sessionStorage.getItem('userevalAl'+this.getName+'')){//缓存有,防止重复拉取
-                var data=JSON.parse(sessionStorage.getItem('userevalAl'+this.getName+''));
-                this.datashow(data);
+            if(this.datas[this.pagenum]){
+                this.alevals=this.datas.splice(this.pagenum,this.pagesize);
             }else{
                 var that=this;
                 that.ajax.post('/xinda-api/service/judge/grid',{
@@ -54,6 +53,7 @@ export default {
             pagenum:0,//
             pagesize:2,//
             tatal:'',//总条目
+            datas:[],//所有data.data.data数据放入datas
         };
     },
     components:{pageturn},
@@ -65,10 +65,14 @@ export default {
         // 拉取数据处理
         datashow(data){
             if(data.data.data){
-                this.alevals=data.data.data;
-                this.alevals.providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data.providerImg+'';
-                this.alevals.buyTime=new Date(data.data.data.buyTime);
-                sessionStorage.setItem('userevalAl'+this.getName+'',JSON.stringify(data));
+                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
+                    var dataindex=i-this.pagethum;
+                    this.datas[i]=data.data.data[dataindex];
+                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data[dataindex].providerImg+'';
+                    this.datas[i].buyTime=new Date(data.data.data[dataindex].buyTime);
+                }
+                this.total=data.data.totalCount;
+                this.alevals=this.datas.splice(this.pagenum,this.pagesize);
             }
         },
     }

@@ -97,8 +97,6 @@ export default {
               this.getSele.push(this.seleList[key]);
               this.seleId.push(this.seleList[key].id);
             }
-            console.log(this.getSele);
-            console.log(this.seleId);
           });
       }
     },
@@ -108,8 +106,6 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
-      console.log(id);
-
       if (id) {
         this.$router.push({ path: "/detial", query: { shoppingId: id } });
         this.selebox = false;

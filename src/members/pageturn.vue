@@ -25,9 +25,9 @@ export default {
             // maxshow:false,//
         };
     },
-    props:{
-        total:Number,
-        pagesize: 'Number',
+    props:{//['total','pagesize']
+        total:String,
+        pagesize:Number,
     },
     methods:{
         // 上一页
