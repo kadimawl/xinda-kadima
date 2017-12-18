@@ -46,7 +46,7 @@
           <p>累计服务客户次数：{{shopType.orderNum}}<span>丨</span>好评率：100%</p>
           <a href="javascript:void(0)" v-for="product in shopType.productTypes"
            :key="product.id">{{product}}</a>
-          <button v-bind:id="shopType.id" v-on:click="shopGoto($event)">进入店铺</button>
+          <button v-bind:id="shopType.id" v-on:click="shopGoto(shopType.id)">进入店铺</button>
         </div>
       </div>
     </div>
@@ -64,20 +64,18 @@ export default {
     this.getShop(); //调用商品列表请求函数
 
     //商品类别导航
-    this.ajax
-      .post("/xinda-api/product/style/list")
-      .then(data => {
-        var products = data.data.data;
-        var productType = [{ code: 0, name: "所有", class: "butblue" }];
-        for (var key in products) {
-          var newpro = products[key].itemList;
-          for (var a in newpro) {
-            productType.push(newpro[a]);
-          }
+    this.ajax.post("/xinda-api/product/style/list").then(data => {
+      var products = data.data.data;
+      var productType = [{ code: 0, name: "所有", class: "butblue" }];
+      for (var key in products) {
+        var newpro = products[key].itemList;
+        for (var a in newpro) {
+          productType.push(newpro[a]);
         }
-        productType.sort(this.objSort("code"));
-        this.productTypes = productType;
-      });
+      }
+      productType.sort(this.objSort("code"));
+      this.productTypes = productType;
+    });
     this.productTypesC(0);
   },
   data() {
@@ -93,11 +91,9 @@ export default {
       //商品分类单击事件
       this.butblue = index;
     },
-    shopGoto: function(e) {
+    shopGoto: function(id) {
       //商品页面跳转事件
-      var shopID = e.target.getAttribute("id"); //获取店铺ID
-      sessionStorage.setItem("shopID", shopID);
-      location.href = "#/shopList";
+      this.$router.push({ path: "/shopList", query: { shopID: id } });
     },
     getShop: function(TypeCode) {
       //商品列表请求函数

@@ -27,7 +27,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -35,11 +34,10 @@ export default {
       regionName: "",
       providerInfo: "",
       LogoUrl: ""
-      // nums: []
     };
   },
   created() {
-    var shopID = sessionStorage.getItem("shopID");
+    var shopID = this.$route.query.shopID;
     var that = this;
     this.ajax
       .post(

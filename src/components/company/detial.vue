@@ -32,6 +32,9 @@
 </template>
 
 <script>
+
+
+
 export default {
   data() {
     return {
@@ -41,13 +44,15 @@ export default {
     };
   },
   created() {
-    var shopID = sessionStorage.getItem("shoppingID");
+    // location.reload();
+    var shoppingID = this.$route.query.shoppingId;
+    console.log(shopID)
     var that = this;
     this.ajax
       .post(
         "/xinda-api/product/package/detail",
         this.qs.stringify({
-          sId: shopID
+          sId: shoppingID
         })
       )
       .then(function(data) {
@@ -56,6 +61,9 @@ export default {
         that.provider = shop.provider;
         that.shops = shop;
       });
+  },
+  methods:{
+    
   }
 };
 </script>
