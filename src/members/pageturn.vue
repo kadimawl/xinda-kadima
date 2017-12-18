@@ -26,8 +26,8 @@ export default {
         };
     },
     props:{
-        total:number,
-        pagesize:number,
+        total:Number,
+        pagesize: 'Number',
     },
     methods:{
         // 上一页
