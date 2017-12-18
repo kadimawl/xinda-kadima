@@ -11,14 +11,17 @@
       </div>
       <div class="select">
         <div>
-          <a href="javascript:void(0)">产品</a>
+          <a href="javascript:void(0)" class="color2a" :class="[!isTrue?'color2a':'act']" @click="active">产品</a>
           <span></span>
-          <a href="javascript:void(0)" class="act">服务商</a>
+          <a href="javascript:void(0)" class="color2a" :class="[isTrue?'color2a':'act']" @click="active">服务商</a>
         </div>
         <div>
-          <input type="text" placeholder="搜索您需要的服务或服务商">
+          <input type="text" placeholder="搜索您需要的服务或服务商" v-model="seleVal" @keyup="seleBlur" @focus="seleFocus">
           <button></button>
         </div>
+        <ul class="selebox" v-show="selebox">
+          <li v-for="item in getSele" :key="item.id" @click="seleJump(item.id)">{{item.serviceName||item.productTypes}}</li>
+        </ul>
         <div class="inpB">
           <p>热门服务：</p>
           <a href="javascript:void(0)">
@@ -49,12 +52,72 @@
 export default {
   data() {
     return {
-      seleShow: true
+      seleShow: true,
+      isTrue: true,
+      seleVal: "",
+      selebox: true,
+      seleList: [],
+      getSele: [],
+      seleId: []
     };
+  },
+  created() {
+    this.getInput = this.debounce(this.seleBlur, 1000);
   },
   methods: {
     over: function() {
-      this.$emit('display');
+      this.$emit("display");
+    },
+    active() {
+      this.isTrue = !this.isTrue;
+    },
+    seleBlur() {
+      this.selebox = true;
+      var seleUrl;
+      if (this.seleVal != "") {
+        if (this.isTrue) {
+          seleUrl = "/xinda-api/product/package/search-grid";
+        } else {
+          seleUrl = "/xinda-api/provider/search-grid";
+        }
+        this.ajax
+          .post(
+            seleUrl,
+            this.qs.stringify({
+              searchName: this.seleVal
+            })
+          )
+          .then(data => {
+            this.seleList = [];
+            this.getSele = [];
+            this.seleList = data.data.data;
+            if (this.seleList.length == 0) {
+              this.seleList = [
+                { serviceName: "抱歉，没有相关产品，请搜索其他产品，谢谢。" },
+                { products: "抱歉，没有相关服务商，请搜索其他产品，谢谢" }
+              ];
+            }
+            for (var key in this.seleList) {
+                this.getSele.push(this.seleList[key]); 
+                this.seleId.push(this.seleList[key].id);
+            }
+            console.log(this.getSele);
+            console.log(this.seleId);
+          });
+      }
+    },
+    seleFocus() {
+      this.seleVal = "";
+      this.selebox = false;
+    },
+    //点击跳转商品详情页
+    seleJump(id) {
+      console.log(id);
+      
+      if(id){
+        this.$router.push({path: '/detial',query:{id: id} });
+      this.selebox = false;
+      }
     }
   }
 };
@@ -88,7 +151,7 @@ export default {
       font-size: 14px;
       font-weight: 400;
       text-decoration: none;
-      color: #2693d4;
+      color: #2a2a2a;
     }
   }
 }
@@ -134,7 +197,7 @@ h1 {
       vertical-align: bottom;
     }
     .act {
-      color: #2a2a2a;
+      color: #2693d4;
     }
   }
   .inpB {
@@ -165,7 +228,7 @@ h1 {
 
 .navigation {
   width: 1200px;
-  height: 50px;
+  height: 48px;
   margin: 0 auto;
 }
 .defaults {
@@ -178,8 +241,24 @@ h1 {
   width: 100px;
   height: 45px;
   margin: 0 50px;
+  line-height: 45px;
 }
 
+.selebox {
+  width: 485px;
+  list-style: none;
+  background: #169bd5;
+  position: absolute;
+  z-index: 1000;
+  li {
+    height: 20px;
+    font-size: 15px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+  }
+}
 .colorChange {
   color: #169bd5;
   border-bottom: 3px solid #169bd5;

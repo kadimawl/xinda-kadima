@@ -2,19 +2,16 @@
 <div class="userEval">
     <userevalTop/>
     <router-view/>
-    <pageturn/>
 </div>
-  
 </template>
 
 <script>
 import userevalTop from './userevalTop'
-import pageturn from './pageturn'
 export default {
   data() {
     return {};
   },
-   components: { userevalTop,pageturn }
+   components: { userevalTop }
 };
 </script>
 

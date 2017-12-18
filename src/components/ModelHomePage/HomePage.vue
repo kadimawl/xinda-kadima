@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <sele @display='displayShow'></sele>
     <!-- 产品列表及轮播 -->
@@ -24,22 +23,22 @@
           <div class="Listnames">
             <div class="listI" v-for="(itemName,idx) in ItemLists" :key="itemName.name" @mouseover="mover(idx)" >
               <p class="ListNameI">
-                <a href="">{{itemName.name}}</a>
+                <a href="javascript:void(0);" :code="itemName.code" @click="toListI(itemName.code)">{{itemName.name}}</a>
               </p>
               <div class="listII" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
                 <p>
-                  <a href="">{{itemNameII.name}}</a>
+                  <a href="javascript:void(0);" :code="itemNameII.code" @click="toListII(itemNameII.code)">{{itemNameII.name}}</a>
                 </p>
               </div>
               <div class="listIII" v-show="idx==index">
                 <div class="listIII-s" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
                   <div class="ListNameII">
-                    <p>{{itemNameII.name}}></p>
+                    <p :code="itemNameII.code" @click="toListII(itemNameII.code)">{{itemNameII.name}}></p>
                   </div>
-                  <div class="ListNameIII">
+                  <div class="ListNameIII" :code="itemNameII.code" @click="toListII(itemNameII.code)">
                     <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
                       <p>
-                        <a href="">{{itemNameIII.name}}</a>
+                        <a href="javascript:void(0);">{{itemNameIII.name}}</a>
                       </p>
                     </div>
                   </div>
@@ -48,22 +47,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="Listright">
-          <div v-for="(itemName,idx) in ItemLists" :key="itemName.name" class="listIII" v-show="idx==index">
-            <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="listIII-s">
-              <div class="ListNameII">
-                <p>{{itemNameII.name}}></p>
-              </div>
-              <div class="ListNameIII">
-                <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
-                  <p>
-                    <a href="">{{itemNameIII.name}}</a>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
     <!-- 明星产品推荐 -->
@@ -125,7 +108,7 @@
           <h4>{{product.providerName}}</h4>
           <p class="service">{{product.serviceName}}</p>
           <p class="service-inf">{{product.serviceInfo}}</p>
-          <span class="price">￥{{product.marketPrice}}</span>
+          <span class="price">￥{{product.price}}</span>
           <span class="unit">{{product.unit}}</span>
           <button>查看详情</button>
         </div>
@@ -189,7 +172,7 @@
           <h4>{{Service.providerName}}</h4>
           <p class="service">{{Service.serviceName}}</p>
           <p class="service-inf">{{Service.serviceInfo}}</p>
-          <span class="price">￥{{Service.marketPrice}}</span>
+          <span class="price">￥{{Service.price}}</span>
           <span class="unit">{{Service.unit}}</span>
           <button>查看详情</button>
         </div>
@@ -211,20 +194,8 @@ export default {
   components: { sele },
   created() {
     var that = this;
-    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-      var rData = data.data.data;
-      that.ItemLists = rData;
-      // console.log(that.ItemLists);
-    });
-    this.ajax.post("/xinda-api/recommend/list").then(function(data) {
-      var tData = data.data.data.hq;
-      var gData = data.data.data.provider;
-      var lData = data.data.data.product;
-      // console.log(data.data.data);
-      that.products = tData;
-      that.providers = gData;
-      that.services = lData;
-    });
+    this.dataRequest1();
+    this.dataRequest2();
   },
   data() {
     return {
@@ -237,6 +208,26 @@ export default {
     };
   },
   methods: {
+    dataRequest1:function () {
+      var that = this;
+      this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      var rData = data.data.data;
+      that.ItemLists = rData;
+      console.log(that.ItemLists);
+    });
+    },
+    dataRequest2:function() {
+      var that = this;
+      this.ajax.post("/xinda-api/recommend/list").then(function(data) {
+      var tData = data.data.data.hq;
+      var gData = data.data.data.provider;
+      var lData = data.data.data.product;
+      // console.log(data.data.data);
+      that.products = tData;
+      that.providers = gData;
+      that.services = lData;
+    });
+    },
     displayShow: function() {
       this.SorH = true;
     },
@@ -245,9 +236,43 @@ export default {
     },
     mleave:function(){
       this.SorH = false;
-    }
+    },
+    toListI:function(code){
+    var that = this;
+    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      var rData = data.data.data;
+      if(code==1){
+          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
+      }else if(code==2){
+          that.$router.push({path:'/tabs/companyList',query:{code:code}});
+      }
+    });
+    },
+    toListII:function (code) {
+    var that = this;
+    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+      var rData = data.data.data;
+      console.log(code)
+      if(code==1){
+        console.log(code,"1")
+          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
+      }else if(code==2){
+          console.log(code,"2")
+          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
+      }else if(code==3){
+          console.log(code,"3")
+          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
+      }else if(code==4){
+          console.log(code,"4")
+          that.$router.push({path:'/tabs/companyList',query:{code:code}});
+      }else if(code==5){
+          console.log(code,"5")
+          that.$router.push({path:'/tabs/companyList',query:{code:code}});
+      }
+    });
+    },
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

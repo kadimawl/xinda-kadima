@@ -1,34 +1,26 @@
 <template>
   <div class="page">
-    <div class="home" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">首页/{{itemName.name}}</div>
+    <div class="home">首页/财税服务</div>
     <div class="box">
       <div class="left">
         <div class="innerT">
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-                <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
-                  <div class="lists">{{itemNameII.name}}</div>
-                </div>
+              <div v-for="(itemNameII,key,typeCode) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key,typeCode)" :class="[(currentIndex|0)===typeCode?'color2693d4':'color000']">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div class="typeList" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==1">
-              <div class="typeList" v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==2">
-                <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
-                  <div class="lists">{{itemNameIII.name}}</div>
-                </div>
-              </div>
+            <div v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name">
+              <div class="lists" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
             </div>
           </div>
           <div class="spaceRow Row">
             <div class="space">服务区域</div>
             <div class="spaceList">
-
               <distpicker @selected="selected"></distpicker>
             </div>
           </div>
@@ -43,7 +35,7 @@
               <div class="lables">商品</div>
               <div class="lables">价格</div>
             </div>
-            <div class="B-lists" v-for="(Product,key,index) in products" :key="Product.id">
+            <div class="B-lists" v-for="Product in products" :key="Product.id">
               <div class="listImg">
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
@@ -57,15 +49,22 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
-                    <button>立即购买</button>
-                    <button>加入购物车</button>
+                    <button @click="toPay(Product.id)">立即购买</button>
+                    <button @click="addCart(Product.id)">加入购物车</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="pageC" v-show="pageShow">
+          <div class="prev" @click="prev(typecode)">上一页</div>
+          <ul>
+            <li v-for="(currentPage,index) in pageObj" :class="[index==(pageChange|0)?'pageColor':'pageccc']" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
+          </ul>
+          <div class="next" @click="next(typecode)">下一页</div>
         </div>
       </div>
       <div class="right">
@@ -79,8 +78,7 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
+
   </div>
 </template>
 
@@ -90,19 +88,67 @@ export default {
   components: { distpicker },
   methods: {
     //三级联动选择code
-    selected: function(code) {    
+    selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode)
+      console.log(this.seleCode);
     },
-    changePage: function() {
+    types(key, typeCode) {
+      this.currentIndex = typeCode;
+      //类型菜单匹配分类菜单
+      this.subList = this.ItemLists[key].itemList;
+      this.typecode = this.ItemLists[key].code;
+      var typeCode = this.typecode;
+      this.reqData(typeCode); //按分类传递code参数切换列表
+    },
+    kinds(key, index) {
+      // console.log(this.subList[key].id);
+      this.listIndex = index;
+      var productId = this.subList[key].id;
+      this.getData(productId);
+    },
+    reqData: function(typecode) {
+      //按分类选择列表渲染
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
-            start: 5,
-            limit: 5,
-            productTypeCode: "1",
+            start: 0,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(function(data) {
+          var gData = data.data.data;
+          that.products = gData;
+          var totalCount = data.data.totalCount;
+          if (totalCount <= 3) {
+            that.pageShow = false;
+          } else {
+            that.pageShow = true;
+            var count = Math.ceil(totalCount / 3);
+            that.lastCount = count;
+            var pageObj = {};
+            for (var i = 0; i < count; i++) {
+              pageObj[i] = i + 1;
+            }
+            that.pageObj = pageObj;
+            that.pageChange = 0;
+          }
+        });
+    },
+    getData(productId) {
+      //按类型渲染列表
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 3,
+            productTypeCode: "0",
+            productId: productId,
             sort: 2
           })
         )
@@ -111,26 +157,117 @@ export default {
           that.products = gData;
           // console.log(that.products);
         });
+    },
+    toPay: function(id) {
+      //立即购买
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          console.log(data);
+        });
+      that.$router.push({ path: "/tabs/shoppingCart" });
+    },
+    addCart: function(id) {
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          //添加购物车
+          console.log(data);
+        });
+    },
+    changePage: function() {
+      this.reqData();
+    },
+    //翻页
+    pageIna(currentPage, index, typecode) {
+      this.pageChange = index;
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0 + 3 * (currentPage - 1),
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //上一页
+    prev(typecode) {
+      var that = this;
+      this.pageChange < 1 ? 0 : (this.pageChange -= 1);
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //下一页
+    next(typecode) {
+      var that = this;
+      if (this.pageChange < this.lastCount - 1) {
+        this.pageChange -= -1;
+      } else {
+        this.pageChange = this.lastCount - 1;
+      }
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
     }
   },
   created() {
+    // console.log(name);
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      that.ItemLists = rData;
+      for (const key in rData) {
+        if (rData[key].name == "财税服务") {
+          that.ItemLists = rData[key].itemList;
+          break;
+        }
+      }
+      that.types("09fb10e276744114a232ac04b7b72e5d"); //默认渲染审计报告
       // console.log(that.ItemLists);
     });
+
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
-          productTypeCode: "1",
+          limit: 3,
+          productTypeCode: "3",
           sort: 2
         })
       )
       .then(function(data) {
+        // console.log(data.data);
         var gData = data.data.data;
         that.products = gData;
         // console.log(that.products);
@@ -140,7 +277,17 @@ export default {
     return {
       ItemLists: [],
       products: [],
-      seleCode: ''
+      name: "",
+      subList: [],
+      typecode: "",
+      productId: "",
+      seleCode: "",
+      currentIndex: "",
+      listIndex: "",
+      pageShow: true,
+      pageObj: {},
+      lastCount: "",
+      pageChange: 0
     };
   }
 };
@@ -210,7 +357,7 @@ export default {
         }
         .B-lists {
           width: 926px;
-          height: 110px;
+          // height: 110px;
           margin: 0 auto;
           margin-bottom: 10px;
           border-bottom: 1px solid #ccc;
@@ -350,19 +497,13 @@ export default {
     line-height: 40px;
     text-align: center;
   }
-  .typeList {
-    width: 847px;
-    height: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    .lists {
-      height: 25px;
-      border-radius: 5px;
-      font-size: 14px;
-      line-height: 25px;
-      margin: 5px 10px;
-      padding: 2px 5px;
-    }
+  .lists {
+    height: 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 5px 10px;
+    padding: 2px 5px;
   }
   .lists:hover {
     background-color: #2693d4;
@@ -381,14 +522,58 @@ export default {
   }
 }
 
-
-.spaceList{
+.spaceList {
   padding: 5px 0 8px 12px;
   box-sizing: border-box;
-  .area{
+  .area {
     width: 86px;
     height: 20px;
   }
 }
 
+.pageC {
+  margin: 30px 0 200px;
+  padding: 0 350px;
+  display: flex;
+  div {
+    width: 66px;
+    height: 34px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    color: #ccc;
+    text-align: center;
+    line-height: 34px;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+  }
+}
+li {
+  width: 37px;
+  height: 34px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  color: #ccc;
+  text-align: center;
+  line-height: 34px;
+  margin: 0 6px;
+}
+.pageColor {
+  color: #2693d4;
+  border: 1px solid #2693d4;
+}
+.pageccc {
+  border: 1px solid #ccc;
+  color: #ccc;
+}
+.color2693d4 {
+  background-color: #2693d4;
+  color: #fff;
+}
+.color000 {
+  background: #eee;
+  color: #000;
+}
 </style>

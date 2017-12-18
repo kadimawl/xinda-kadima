@@ -1,11 +1,14 @@
 <template>
 <div class="userevalTop">
+    <!-- 跳转路由页 -->
+    <!-- top标签 -->
     <div class="myeval">
       <p>我的评价</p>
     </div>
+    <!-- 评价的跳转标签 -->
     <div class="evalStatus">
-        <router-link to="/member/userEval/evalNone" class="none common" active-class="active">未评价<span></span></router-link>
-        <router-link to="/member/userEval/evalAlready" class="already common" active-class="active">已评价<span></span></router-link>
+        <router-link to="/member/userEval/evalNone" class="common" active-class="active">未评价<span></span></router-link>
+        <router-link to="/member/userEval/evalAlready" class="common" active-class="active">已评价<span></span></router-link>
     </div>
     
 </div>
@@ -13,11 +16,10 @@
 </template>
 
 <script>
+// 该页面控制了已评价和未评价的跳转
 export default {
     data() {
         return {
-            span1:true,
-            span2:false
         };
     }
 };
@@ -35,6 +37,7 @@ export default {
     margin: 30px 0 0 20px;
     display: flex;
     flex-direction: column;
+    // 顶部标签
     .myeval{
         width: 90%;
         height: 30px;
@@ -49,6 +52,7 @@ export default {
             color: #2693d4;
         }
     }
+    // 评价标签
     .evalStatus{
         width: 900px;
         height: 44px;
@@ -69,6 +73,7 @@ export default {
             }
         }
     }
+    // 标签激活时的样式
     .active{
         background: #2693d4;
         color: #ffffff;
@@ -78,9 +83,5 @@ export default {
             border-right: 5px solid transparent;
         }
     }
-   
 }
-  
-  
- 
 </style>

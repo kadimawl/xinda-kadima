@@ -18,7 +18,7 @@
             <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p>
         </div>
         <div class="selected">
-            <v-distpicker id="select" province="省" city="市" @selected="selected"></v-distpicker>
+            <distpicker @selected="selected"></distpicker>
         </div>
         <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
             <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p>
@@ -29,7 +29,9 @@
 </template>
 
 <script>
+import distpicker from "@/components/distpicker";
 export default {
+  components: { distpicker },
   data() {
     return {
       show: true,
@@ -53,10 +55,7 @@ export default {
 
 <style lang="less">
 .lOut {
-  // max-width: 768px;
-  // width: 100%;
   height: 1334px;
-  // margin: 0 auto;
   padding: 13% 9%;
   box-sizing: border-box;
   input {

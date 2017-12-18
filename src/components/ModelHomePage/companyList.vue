@@ -1,28 +1,21 @@
 <template>
   <div class="page">
-    <div class="home" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==2">首页/{{itemName.name}}</div>
+    <div class="home">首页/公司工商</div>
     <div class="box">
       <div class="left">
         <div class="innerT">
           <div class="serverRow Row">
             <div class="server">服务分类</div>
             <div class="serverList">
-              <div class="innerServer" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==2">
-                <!-- <div style="font-size:20px">{{key}}{{index}}{{itemName.name}}</div> -->
-                <div v-for="itemNameII in itemName.itemList" :key="itemNameII.name" class="innerServer">
-                  <div class="lists">{{itemNameII.name}}</div>
-                </div>
+              <div v-for="(itemNameII,key,typeCode) in ItemLists" :key="itemNameII.name" class="innerServer">
+                <div class="lists" @click="types(key,typeCode)" :class="[(currentIndex|0)===typeCode?'color2693d4':'color000']">{{itemNameII.name}}</div>
               </div>
             </div>
           </div>
           <div class="typeRow Row">
             <div class="type">类型</div>
-            <div class="typeList" v-for="(itemName,key,index) in ItemLists" :key="itemName.name" v-if="index==2">
-              <div class="typeList" v-for="(itemNameII, key,index) in itemName.itemList" :key="itemNameII.name" v-if="index==0">
-                <div v-for="itemNameIII in itemNameII.itemList" :key="itemNameIII.name">
-                  <div class="lists">{{itemNameIII.name}}</div>
-                </div>
-              </div>
+            <div v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name">
+              <div class="lists" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
             </div>
           </div>
           <div class="spaceRow Row">
@@ -42,7 +35,7 @@
               <div class="lables">商品</div>
               <div class="lables">价格</div>
             </div>
-            <div class="B-lists" v-for="(Product,key,index) in products" :key="Product.id">
+            <div class="B-lists" v-for="Product in products" :key="Product.id">
               <div class="listImg">
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
@@ -56,7 +49,7 @@
                   </p>
                 </div>
                 <div class="infRight">
-                  <h2>￥{{Product.marketPrice}}</h2>
+                  <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
                     <button>立即购买</button>
                     <button>加入购物车</button>
@@ -78,8 +71,13 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <el-pagination background layout="prev, pager, next" :total="8" :page-size="5">
-    </el-pagination>
+    <div class="pageC" v-show="pageShow">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="100">
+      </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -88,20 +86,56 @@ import distpicker from "../distpicker";
 export default {
   components: { distpicker },
   methods: {
-    //三级联动选择code
-    selected: function(code) {    
+    selected: function(code) {
+      //省市区三级联动
       this.seleCode = code;
-      console.log(this.seleCode)
+      console.log(this.seleCode);
     },
-    changePage: function() {
+    types(key, typeCode) {
+      this.currentIndex = typeCode;
+      //类型菜单匹配分类菜单
+      this.subList = this.ItemLists[key].itemList;
+      this.typecode = this.ItemLists[key].code;
+      var typeCode = this.typecode;
+      this.reqData(typeCode); //按分类传递code参数切换列表
+    },
+    kinds(key, index) {
+      // console.log(this.subList[key].id);
+      this.listIndex = index;
+      var productId = this.subList[key].id;
+      this.getData(productId);
+    },
+    reqData: function(typecode) {
+      //按分类选择列表渲染
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
-            start: 5,
+            start: 0,
             limit: 5,
-            productTypeCode: "4",
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(function(data) {
+          var gData = data.data.data;
+          that.products = gData;
+          console.log(data.data.totalCount);
+          
+          // console.log(that.products);
+        });
+    },
+    getData(productId) { //按类型渲染列表
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 100,
+            productTypeCode: "0",
+            productId: productId,
             sort: 2
           })
         )
@@ -109,22 +143,42 @@ export default {
           var gData = data.data.data;
           that.products = gData;
           // console.log(that.products);
+           if(data.data.totalCount<=4){
+            that.pageShow = false;
+          }else{
+            that.pageShow = true;
+            console.log(typecode);
+          }
         });
+    },
+    changePage: function() {
+      var that = this;
+      this.reqData();
     }
   },
   created() {
+    // console.log(name);
+
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      that.ItemLists = rData;
+      for (const key in rData) {
+        if (rData[key].name == "公司工商") {
+          that.ItemLists = rData[key].itemList;
+          break;
+        }
+      }
+      that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染公司注册
+
       // console.log(that.ItemLists);
     });
+
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 5,
+          limit: 100,
           productTypeCode: "4",
           sort: 2
         })
@@ -138,7 +192,15 @@ export default {
   data() {
     return {
       ItemLists: [],
-      products: []
+      products: [],
+      name: "",
+      subList: [],
+      typecode: "",
+      productId: "",
+      seleCode: "",
+      currentIndex: "",
+      listIndex: "",
+      pageShow: true,
     };
   }
 };
@@ -309,7 +371,7 @@ export default {
 }
 
 .Row {
-  // height: 40px;
+  height: 40px;
   border-top: 1px solid #ccc;
   display: flex;
   .server {
@@ -342,25 +404,19 @@ export default {
   }
   .type {
     width: 98px;
-    // height: 40px;
+    height: 40px;
     border-right: 1px solid #ccc;
     font-size: 15px;
     line-height: 40px;
     text-align: center;
   }
-  .typeList {
-    width: 847px;
-    // height: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    .lists {
-      height: 25px;
-      border-radius: 5px;
-      font-size: 14px;
-      line-height: 25px;
-      margin: 5px 10px;
-      padding: 2px 5px;
-    }
+  .lists {
+    height: 25px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 25px;
+    margin: 5px 2px;
+    padding: 2px 5px;
   }
   .lists:hover {
     background-color: #2693d4;
@@ -379,12 +435,25 @@ export default {
   }
 }
 
-.spaceList{
+.spaceList {
   padding: 5px 0 8px 12px;
   box-sizing: border-box;
-  .area{
+  .area {
     width: 86px;
     height: 20px;
   }
+}
+
+.pageC {
+  margin: 30px 0 200px;
+  padding: 0 400px;
+}
+.color2693d4 {
+  background-color: #2693d4;
+  color: #fff;
+}
+.color000{
+  background: #eee;
+  color: #000;
 }
 </style>
