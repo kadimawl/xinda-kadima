@@ -62,7 +62,7 @@
         <div class="pageC" v-show="pageShow">
           <div class="prev" @click="prev(typecode)">上一页</div>
           <ul>
-            <li v-for="(currentPage,index) in pageObj" :class="{pageColor:index==currentPage}" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
+            <li v-for="(currentPage,index) in pageObj" :class="[index==(pageChange|0)?'pageColor':'pageccc']" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
           </ul>
           <div class="next" @click="next(typecode)">下一页</div>
         </div>
@@ -71,7 +71,7 @@
         <div class="platform"></div>
         <p class="">平台担保</p>
         <div class="quality"></div>
-        <p class="">优质服务</p>,
+        <p class="">优质服务</p>
         <div class="process"></div>
         <p class="">过程监督</p>
         <div class="added"></div>
@@ -158,19 +158,21 @@ export default {
           // console.log(that.products);
         });
     },
-    toPay: function(id) { //立即购买
+    toPay: function(id) {
+      //立即购买
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
           console.log(data);
         });
-      that.$router.push({ path: "/tabs/shoppingCart"});
+      that.$router.push({ path: "/tabs/shoppingCart" });
     },
     addCart: function(id) {
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) { //添加购物车
+        .then(function(data) {
+          //添加购物车
           console.log(data);
         });
     },
@@ -179,10 +181,7 @@ export default {
     },
     //翻页
     pageIna(currentPage, index, typecode) {
-      // console.log(currentPage);  //value
-      // console.log(index);        //key
       this.pageChange = index;
-      console.log("this.pageChange", this.pageChange);
       var that = this;
       this.ajax
         .post(
@@ -203,7 +202,6 @@ export default {
     prev(typecode) {
       var that = this;
       this.pageChange < 1 ? 0 : (this.pageChange -= 1);
-      console.log(this.pageChange);
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
@@ -222,17 +220,10 @@ export default {
     //下一页
     next(typecode) {
       var that = this;
-      console.log(this.pageChange);
-      // var pages =
-      //   this.pageChange < this.lastCount - 1
-      //     ? (this.pageChange -= -1)
-      //     : this.lastCount;
       if (this.pageChange < this.lastCount - 1) {
         this.pageChange -= -1;
-        console.log('上',this.pageChange);
       } else {
         this.pageChange = this.lastCount - 1;
-        console.log('xia',this.pageChange);
       }
       this.ajax
         .post(
@@ -247,9 +238,6 @@ export default {
         .then(data => {
           var gData = data.data.data;
           that.products = gData;
-          // if(this.pageChange==(this.lastCount-1)){
-          //   this.pageChange = 0;
-          // }
         });
     }
   },
@@ -299,7 +287,7 @@ export default {
       pageShow: true,
       pageObj: {},
       lastCount: "",
-      pageChange: 0,
+      pageChange: 0
     };
   }
 };
@@ -550,6 +538,7 @@ export default {
   div {
     width: 66px;
     height: 34px;
+    cursor: pointer;
     border: 1px solid #ccc;
     font-size: 13px;
     color: #ccc;
@@ -559,20 +548,25 @@ export default {
   ul {
     display: flex;
     list-style: none;
-    li {
-      width: 37px;
-      height: 34px;
-      border: 1px solid #ccc;
-      color: #ccc;
-      text-align: center;
-      line-height: 34px;
-      margin: 0 6px;
-    }
   }
+}
+li {
+  width: 37px;
+  height: 34px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  color: #ccc;
+  text-align: center;
+  line-height: 34px;
+  margin: 0 6px;
 }
 .pageColor {
   color: #2693d4;
   border: 1px solid #2693d4;
+}
+.pageccc {
+  border: 1px solid #ccc;
+  color: #ccc;
 }
 .color2693d4 {
   background-color: #2693d4;

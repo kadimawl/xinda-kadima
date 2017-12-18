@@ -268,12 +268,7 @@ export default new Router({
                 }, {
                     path: 'myOrder', //我的订单
                     component: myOrder
-
-
-
                 }]
         },
-
-
     ]
 })

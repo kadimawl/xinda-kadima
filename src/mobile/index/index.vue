@@ -22,7 +22,7 @@
         <a href="javascript:void(0)"><span class="head5"></span><p>公司社保</p></a>
         <a href="javascript:void(0)"><span class="head6"></span><p>知识产权</p></a>
         <a href="javascript:void(0)"><span class="headAll"></span><p>全部服务</p></a>
-        <a href="javascript:void(0)"><span class="headAll0"></span></a>
+        <a href="javascript:void(0)"><span></span></a>
     </div>
     <div class="body">
         <div class="bodyT">
@@ -106,57 +106,36 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 1rem;
+  span{
+    display: block;
+    width: 110px;
+    height: 110px
+  }
   p{
       font-size: 23px;
       text-align: center;
       color: #000000;
   }
   .head1 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/caishui.png");
   }
   .head2 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/kaigongsi.png");
   }
   .head3 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/gongsibiangeng.png");
   }
   .head4 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/gerenshebao.png");
   }
   .head5 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/gongsishebao.png");
   }
   .head6 {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/zhishichanquan.png");
   }
   .headAll {
-    display: block;
-    width: 110px;
-    height: 110px;
     background: url("../../assets/mobile/quanbufuwu.png");
-  }
-  .headAll0 {
-    display: block;
-    width: 110px;
-    height: 110px;
   }
 }
 .body{

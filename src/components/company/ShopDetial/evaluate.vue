@@ -5,7 +5,44 @@
           <a href="javascript:void(0)">商品评价</a>
           <span></span>
       </div>
-      <div class="serviceBody" v-html="evaluate">
+      <div class="serviceBody">
+        <div>
+          <div>
+            <div>
+              <h1>0%</h1>
+              <p>好评</p>
+            </div>
+            <div>
+              <div><p>好评（0%）</p><span></span></div>
+              <div><p>中评（0%）</p><span></span></div>
+              <div><p>差评（0%）</p><span></span></div>
+            </div>
+          </div>
+          <div>
+            <p>客户印象</p>
+            <p>暂无已添加的印象标签</p>
+          </div>
+        </div>
+        <div>
+          <div>
+            <input type="button" value="全部评价（0）">
+            <input type="button" value="好评（0）">
+            <input type="button" value="中评（0）">
+            <input type="button" value="差评（0）">
+          </div>
+          <div>
+            <div>
+              <p>评价</p>
+              <p>满意度</p>
+              <p>用户</p>
+            </div>
+            <div>
+              <input type="button" value="上一页">
+              <input type="button" value="1">
+              <input type="button" value="下一页">
+            </div>
+          </div>
+        </div>
       </div>
   </div>
 </template>
@@ -20,10 +57,35 @@ export default {
   created() {
     var that = this;
     var shopID = sessionStorage.getItem("shoppingID");
-    var shop = JSON.parse(sessionStorage.getItem(shopID));
-    !(function(shops) {
-      that.evaluate = shops.serviceList[0].serviceContent;
-    })(shop);
+    // var shop = JSON.parse(sessionStorage.getItem(shopID));
+    console.log(shopID);
+    // console.log(shop)
+    // !(function(shops) {
+    //   that.evaluate = shops.serviceList[0].serviceContent;
+    // })(shop);
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/judge/detail",
+        this.qs.stringify({
+          serviceId: shopID
+        })
+      )
+      .then(function(data) {
+        // console.log(data.data.data);
+      });
+    this.ajax
+      .post(
+        "http://115.182.107.203:8088/xinda/xinda-api/product/judge/grid",
+        this.qs.stringify({
+          start: 0,
+          limit: 10,
+          serviceId: shopID,
+          type: 1
+        })
+      )
+      .then(function(data) {
+        // console.log(data.data.data);
+      });
   }
 };
 </script>
