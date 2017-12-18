@@ -72,29 +72,23 @@ import {mapGetters} from 'vuex'
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
-        // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-        if(sessionStorage.getItem(this.getCode)==null){
-                this.ajax.post('/xinda-api/business-order/detail',
-                this.qs.stringify({
-                businessNo:this.getCode,
-            })).then(function(data){
-                if(data.data.status==1){
-                // var databusi=data.data.data.businessOrder;
-                // this.lists=data.data.data.serviceOrderList;
-                // this.code=databusi.businessNo;
-                // this.createT=new Date(databusi.createTime);
-                // this.price=databusi.totalPrice;
-                console.log(data);
-                sessionStorage.setItem(this.getCode,JSON.stringify(data));
-                }
-            })
-        }else{
-            var data=JSON.parse(sessionStorage.getItem(this.getCode));
-             // var databusi=data.data.data.businessOrder;
-                // this.lists=data.data.data.serviceOrderList;
-                // this.code=databusi.businessNo;
-                // this.createT=databusi.createTime;
-                // this.price=databusi.totalPrice;
+        if(this.getCode){
+            // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
+            if(sessionStorage.getItem(this.getCode)==null){
+                var that=this;
+                that.ajax.post('/xinda-api/business-order/detail',
+                that.qs.stringify({
+                businessNo:that.getCode,
+                })).then(function(data){
+                    if(data.data.status==1){
+                        console.log(data);
+                        that.datashow(data);
+                    }
+                })
+            }else{
+                var data=JSON.parse(sessionStorage.getItem(this.getCode));
+                this.datashow(data);
+            }
         }
     },
     computed:{
@@ -117,6 +111,15 @@ export default {
     },
     components:{waitpay},
     methods:{
+        // 处理订单数据
+        datashow(data){
+            var databusi=data.data.data.businessOrder;
+            this.lists=data.data.data.serviceOrderList;
+            this.code=databusi.businessNo;
+            this.createT=new Date(databusi.createTime);
+            this.price=databusi.totalPrice;
+            sessionStorage.setItem(this.getCode,JSON.stringify(data));
+        },
         // 订单明细点击事件，通过订单数据去创建隐藏框的内容，待完成
         liston:function(){
             this.xz=!this.xz;
@@ -132,8 +135,25 @@ export default {
                     this.errorts=true;
                     this.error='亲，该支付方式还未开通，请选择别的支付方式';
                 }else{
-                    this.paywait=true;
-                    this.type=this.radio;
+                    var that=this;
+                    that.ajax.post('/xinda-api/pay/detail',that.qs.stringify({
+                        businessNo:that.code
+                    }))
+                    .then(function(data){
+                        if(data.data.status==1){//请求成功
+                            that.paywait=true;
+                            that.type=that.radio;
+                            if(that.radio==1){//非网银支付
+                                window.open('http://localhost:8080/#/order/payBank');
+                            }
+                            if(that.radio==3){//支付宝支付
+                                window.open('http://localhost:8080/#/order/payZfb');
+                            }
+                        }else{
+                            that.errorts=true;
+                            that.error=data.data.msg;
+                        }
+                    })
                 }
             }else{
                 this.errorts=true;

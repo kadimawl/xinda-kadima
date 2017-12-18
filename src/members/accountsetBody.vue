@@ -117,7 +117,7 @@ export default {
         pageshow:function(data){
             if(data){
                 var datas=data.data.data;
-                this.headimg=datas.headImg;
+                this.headimg='http://115.182.107.203:8088/xinda/pic'+datas.headImg+'';
                 this.inputN=datas.name;
                 this.inputM=datas.email;
                 if(datas.gender=='1'||datas.gender=='2'){

@@ -55,7 +55,7 @@
     <!-- 错误提示框 -->
     <div class="errorbox" v-if="errorshow"><p :style="{color:acolor}">{{error}}</p></div>
     <!-- 翻页组件 -->
-    <pageturn></pageturn>
+    <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
 </div>
  
   
@@ -74,20 +74,20 @@ export default {
         // 未登录不拉取数据
         if(this.getName){
              // 防止重复拉取
-            if(sessionStorage.getItem('myorder'+this.getName+'')==null){//未拉取
+            if(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+'')==null){//未拉取
                 var that=this;
                 that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                     businessNo:1,
                     startTime:'2017-03-28',
                     endTime:'2017-03-28',
-                    start:0,
-                    limit:'2',
+                    start:that.pagenum,
+                    limit:that.pagesize,
                 })).then(function(data){
                     // console.log('data==',data);
                     that.pageshow(data);
                 })
             }else{//已拉取
-                var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''));
+                var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+''));
                 this.pageshow(data);
             }
         }
@@ -104,6 +104,9 @@ export default {
             errorshow:false,//控制错误框
             error:'',//错误提示
             acolor:'#ff4649',//错误提示的颜色
+            pagenum:0,//
+            pagesize:2,//
+            tatal:'',//总条目
         };
     },
     computed:{
@@ -112,9 +115,14 @@ export default {
     components:{pageturn},
     methods:{
         ...mapActions(['setCode']),
+        // 自定义事件
+        pagevary(msg){
+            this.pagenum=msg*2;
+        },
         // 处理ajax获取的数据显示在页面
         pageshow(data){
             if(data.data.data){
+                this.total=data.data.totalCount;
                 this.lists=data.data.data;
                 for(let i=0;i<this.lists.length;i++){
                     this.lists[i].createTime=new Date(data.data.data[i].createTime);
@@ -124,7 +132,7 @@ export default {
                         this.lists[i].status='已完成';
                     }
                 }
-                sessionStorage.setItem('myorder'+this.getName+'',JSON.stringify(data));
+                sessionStorage.setItem('myorder'+this.getName+''+this.pagenum+'',JSON.stringify(data));
             }
         },
         // 转换为时间戳   
@@ -134,10 +142,12 @@ export default {
         //页面点击
         myorderclick(){
             var that=this;
-            setTimeout(function(){
-                that.errorshow=false;
-                that.msg='false';
-            },4000)
+            if(this.errorshow==true||this.msg==true){
+                setTimeout(function(){
+                    that.errorshow=false;
+                    that.msg=false;
+                },4000)
+            }
         },
         // 订单号搜索
         searchs:function(){
@@ -146,7 +156,7 @@ export default {
             }else{
                 // 简单验证订单号
                 if(/^S1\d{18}$/.test(this.inputcode)==true){
-                    var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''));
+                    var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+''));
                     // 去获取的数据里搜索订单编号
                     for(let i=0;i<data.data.data.length;i++){
                         if(data.data.data[i].businessNo==this.inputcode){
