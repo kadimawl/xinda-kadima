@@ -56,18 +56,12 @@ export default {
   },
   created() {
     var that = this;
-    var shopID = sessionStorage.getItem("shoppingID");
-    // var shop = JSON.parse(sessionStorage.getItem(shopID));
-    console.log(shopID);
-    // console.log(shop)
-    // !(function(shops) {
-    //   that.evaluate = shops.serviceList[0].serviceContent;
-    // })(shop);
+    var shoppingID = this.$route.query.shoppingId;
     this.ajax
       .post(
         "http://115.182.107.203:8088/xinda/xinda-api/product/judge/detail",
         this.qs.stringify({
-          serviceId: shopID
+          serviceId: shoppingID
         })
       )
       .then(function(data) {
@@ -79,7 +73,7 @@ export default {
         this.qs.stringify({
           start: 0,
           limit: 10,
-          serviceId: shopID,
+          serviceId: shoppingID,
           type: 1
         })
       )
