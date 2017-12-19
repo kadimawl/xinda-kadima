@@ -1,24 +1,28 @@
 <template>
-    <div>
-        <div class="box">
-            <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-                <p class="errorMsg" v-show="!registered">该手机号未注册</p>
-                <p class="errorMsg" v-show="!correctness">请输入正确的手机号</p>
-            </div>
-            <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
-                <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
-                <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
-            </div>
-            <div class="v-box"><input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA"><img @click="reImg" :src="imgUrl" alt="">
-                <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
-            </div>
-            <button @click="iLogin">立即登录</button>
+  <div>
+    <div class="box">
+      <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
+        <p class="errorMsg" >该手机号未注册{{phoneMsg}}</p>
+        <p class="errorMsg" >请输入正确的手机号</p>
+      </div>
+      <div class="pwBox"><input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+        <p class="errorMsg" v-show="pwShow">请输入（8-20位）数字、大小写字母</p>
+        <p class="errorMsg" v-show="pwEShow">手机号或者密码输入错误</p>
+      </div>
+      <div class="v-box">
+        <div>
+          <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+          <img @click="reImg" :src="imgUrl" alt="">
         </div>
-        <div class="box-4d">
-            <div class="left">还没有信达账号</div>
-            <a href="/#/m/mobileRegister">立即注册</a>
-        </div>
+        <p class="errorMsg" v-show="imgShow">图片验证码为4位（数字或者大小写字母）</p>
+      </div>
+      <button @click="iLogin">立即登录</button>
     </div>
+    <div class="box-4d">
+      <div class="left">还没有信达账号</div>
+      <a href="/#/m/mobileRegister">立即注册</a>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -26,15 +30,16 @@ export default {
   data() {
     return {
       phoneInput: "",
-      registered: true,
-      correctness: true,
+      phoneMsg: '',
       pwInput: "",
-      pwShow: false,
-      pwEShow: false,
       imgVInput: "",
       imgUrl: "/xinda-api/ajaxAuthcode",
-      imgShow: false
     };
+  },
+  methods: {
+    phone() {
+
+    }
   }
 };
 </script>
@@ -42,7 +47,7 @@ export default {
 <style lang="less">
 .box {
   max-width: 768px;
-  height: 1333px;
+  max-height: 1280px;
   margin: 0 auto;
   padding: 0 13%;
   box-sizing: border-box;
@@ -54,29 +59,34 @@ input {
 .phoneBox {
   width: 100%;
   input {
-    width: 100%;
+    width: 80%;
   }
 }
 .pwBox {
   width: 100%;
   input {
-    width: 100%;
+    width: 80%;
   }
 }
 .v-box {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  div {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+  }
   input {
-    width: 50%;
+    width: 46%;
   }
   img {
-    width: 44%;
+    width: 46%;
     margin-top: 30px;
   }
 }
 button {
-  width: 100%;
+  width: 80%;
   height: 45px;
   margin-top: 213px;
   font-size: 27px;
@@ -112,7 +122,7 @@ button {
     text-decoration: none;
     font-size: 25px;
     color: #fff;
-    margin:  auto 0 auto 35%;
+    margin: auto 0 auto 35%;
   }
 }
 </style>
