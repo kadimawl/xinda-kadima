@@ -166,7 +166,13 @@ export default {
         .then(function(data) {
           console.log(data);
         });
-      that.$router.push({ path: "/tabs/shoppingCart" });
+      this.ajax.post("xinda-api/cart/submit").then(data => {
+        that.orderNo = data.data.data;
+        if(that.orderNo!=''){
+        console.log(this.orderNo);
+           that.$router.push({ path: "/Order/orderdetail",query:{orderNo: that.orderNo} });
+        }
+      });
     },
     addCart: function(id) {
       this.ajax
@@ -287,7 +293,8 @@ export default {
       pageShow: true,
       pageObj: {},
       lastCount: "",
-      pageChange: 0
+      pageChange: 0,
+      orderNo: ''
     };
   }
 };

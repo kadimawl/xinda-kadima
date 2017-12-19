@@ -36,6 +36,7 @@ a {
 }
 button {
   outline: 0;
+  border: none;
 }
 input {
   outline: 0;
