@@ -8,13 +8,13 @@
       <p>{{product.name}}</p>
       <div>
         <h5>市场价：<del>￥{{product.marketPrice*1.2}}</del></h5>
-        <h5>价&nbsp&nbsp格：<h4>￥{{product.marketPrice}}</h4>元</h5>
+        <h5>价&nbsp;&nbsp;格：<h4>￥{{product.marketPrice}}</h4>元</h5>
       </div>
-      <p>类&nbsp&nbsp型：<a href="javascript:void(0)">{{product.info}}</a></p>
-      <p>地&nbsp&nbsp区：{{shops.providerRegionText}}</p>
-      <p>购买数量：<input type="button" value="-"><input class="math" type="text" value="1"><input type="button" value="+"></p>
-      <button class="buyNow" @click="buyNow(id)">立即购买</button>
-      <button @click="buyAdd(id)">加入购物车</button>
+      <p>类&nbsp;&nbsp;型：<a href="javascript:void(0)">{{product.info}}</a></p>
+      <p>地&nbsp;&nbsp;区：{{shops.providerRegionText}}</p>
+      <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
+      <button class="buyNow" @click="buyNow(id,num)">立即购买</button>
+      <button @click="buyAdd(id,num)">加入购物车</button>
     </div>
     <div>
       <h3>顶级服务商</h3>
@@ -39,7 +39,8 @@ export default {
       shops: [],
       product: [],
       provider: [],
-      id: ""
+      id: "",
+      num: 1
     };
   },
   created() {
@@ -61,13 +62,36 @@ export default {
       });
   },
   methods: {
-    buyNow(id) {
-      console.log(id);
-      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+    buyNow(id, num) {
+      this.$router.push({
+        path: "/order",
+        query: { shoppingID: id, shopNum: num }
+      });
     },
     buyAdd(id) {
-      console.log(id);
-      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+      this.$router.push({
+        path: "/tabs/shoppingCart",
+        query: { shoppingID: id }
+      });
+    },
+    les() {
+      this.num -= 1;
+    },
+    add() {
+      this.num -= -1;
+    },
+    change() {
+      var nu = this.num;
+      if (nu) {
+        nu = parseInt(nu);
+      }
+      if (nu < 1) {
+        nu = 1;
+      }
+      if (nu > 10) {
+        nu = 10;
+      }
+      this.num = nu;
     }
   }
 };

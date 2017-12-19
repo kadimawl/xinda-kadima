@@ -72,11 +72,17 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   created() {
-    // var that = this;
+    var that = this;
     this.recData(); //拉取购物品项列表
     this.recomData(); //拉取推荐服务列表
+    this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      that.cartNum = data.data.data.cartNum;
+      that.setNum(that.cartNum);
+      sessionStorage.setItem(that.cartNum, that.cartNum);
+    });
   },
   data() {
     return {
@@ -84,10 +90,12 @@ export default {
       cartLists: [],
       num: "",
       tlPay: 0,
-      orderNo: ""
+      orderNo: "",
+      cartNum: ""
     };
   },
   methods: {
+    ...mapActions(["setNum"]),
     recData() {
       //列表数据获取
       var that = this;
@@ -155,7 +163,11 @@ export default {
         .then(function(data) {
           console.log("del", data.data);
           that.recData();
-          // console.log(data.data.data);
+          that.ajax.post("xinda-api/cart/cart-num").then(data => {
+            that.cartNum = data.data.data.cartNum;
+            that.setNum(that.cartNum);
+            sessionStorage.setItem(that.cartNum, that.cartNum);
+          });
         });
     },
     toPay(orderNo) {
@@ -163,7 +175,6 @@ export default {
         path: "/Order/orderdetail",
         query: { orderNo: orderNo }
       });
-      console.log("111");
     },
     suBmit() {
       //结算并清空购物车
@@ -174,6 +185,7 @@ export default {
         that.toPay(that.orderNo);
         // console.log(data);
       });
+
     },
     todetail(id) {//传参产品详情
       this.$router.push({

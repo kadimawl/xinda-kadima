@@ -43,18 +43,26 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 export default {
+  created() {
+    var that = this;
+    this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      var cartNum = data.data.data.cartNum;
+      that.setNum(cartNum);
+      sessionStorage.setItem(cartNum, cartNum);
+    });
+  },
   data() {
     return {
       ligined: false,
       lR: true,
-      name: ""
+      name: "",
     };
   },
   computed: {
     ...mapGetters(["getNum", "getName"]) //{getNum:function(){}}
   },
   methods: {
-    ...mapActions(["setTitle", "setName"]),
+    ...mapActions(["setTitle", "setName",'setNum']),
     login() {
       this.setTitle("欢迎登录");
     },
