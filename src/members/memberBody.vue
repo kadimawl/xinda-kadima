@@ -73,7 +73,7 @@ export default {
         this.errorshow=false;
         // 未登录不拉取数据
         if(this.getName){
-            if(this.datas[this.pagenum]){//未拉取
+            if(!this.datas[this.pagenum]){//未拉取
                 var that=this;
                 that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                     businessNo:1,
@@ -82,7 +82,7 @@ export default {
                     start:that.pagenum,
                     limit:that.pagesize,
                 })).then(function(data){
-                    // console.log('data==',data);
+                    console.log('data==',data);
                     that.pageshow(data);
                 })
             }else{//已拉取
@@ -123,7 +123,9 @@ export default {
             if(data.data.data){
                 this.total=data.data.totalCount;
                 for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
-                    var dataindex=i-this.pagethum;
+                    var dataindex=i-this.pagenum;
+                    console.log('i=',this.tatal[i])
+                    this.tatal[i]=data.data.data[dataindex];
                     this.datas[i].createTime=new Date(data.data.data[dataindex].createTime);
                 }
                 this.lists=this.datas.splice(this.pagenum,this.pagesize);

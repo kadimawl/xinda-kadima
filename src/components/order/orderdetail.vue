@@ -16,7 +16,7 @@
             <!-- 订单明细隐藏内容，需通过外界传数据再创建 -->
             <div v-if="mingxi" class="mingxi">
                 <div v-for="list in lists" :key="list.id" class="hidebox">
-                    <p>服务名称：{{list.providerId}}</p>
+                    <p>服务名称：{{list.serviceName}}</p>
                     <p>单价：<span>￥{{list.unitPrice}}</span>元</p>
                     <p>数量：<span>{{list.buyNum}}</span></p>
                     <p>服务总额：<span>{{list.totalPrice}}</span></p>
@@ -72,24 +72,25 @@ import {mapGetters} from 'vuex'
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
-        if(this.getCode){
+        console.log(this.$route.query.orderNo);
+        // if(this.getCode){
             // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-            if(sessionStorage.getItem(this.getCode)==null){
+            // if(sessionStorage.getItem(this.getCode)==null){
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/detail',
                 that.qs.stringify({
-                businessNo:that.getCode,
+                businessNo:this.$route.query.orderNo, 
                 })).then(function(data){
                     if(data.data.status==1){
                         console.log(data);
                         that.datashow(data);
                     }
                 })
-            }else{
-                var data=JSON.parse(sessionStorage.getItem(this.getCode));
-                this.datashow(data);
-            }
-        }
+            // }else{
+                // var data=JSON.parse(sessionStorage.getItem(this.getCode));
+                // this.datashow(data);
+            // }
+        // }
     },
     computed:{
         ...mapGetters(['getCode'])
@@ -98,7 +99,7 @@ export default {
         return {
             code:'',//产品编号
             createT:'',//创建时间
-            price:'800.00',//金额总计
+            price:'',//金额总计
             mingxi:false,//订单明细隐藏部分的控制条件
             radio:null,//单选框的值
             xz:false,//订单明细小三角旋转的控制条件

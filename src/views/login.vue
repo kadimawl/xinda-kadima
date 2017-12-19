@@ -147,13 +147,12 @@ export default {
               .then(data => {
                 let msg = data.data.msg;
                 let status = data.data.status;
-
                 if (status == 1) {
                   //成功登陆
                   sessionStorage.setItem("user", this.phoneInput);
                   this.$router.push({ path: "/HomePage" }); //页面跳转
                   this.ajax.post("/xinda-api/sso/login-info").then(data => {
-                    console.log(data);
+                    // console.log(data);
                     let name = data.data.data.name;
                     this.setName(this.phoneInput);
                   });

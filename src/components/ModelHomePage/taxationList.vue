@@ -84,6 +84,7 @@
 
 <script>
 import distpicker from "../distpicker";
+import plugins from '../../plugins';
 export default {
   components: { distpicker },
   methods: {
@@ -161,12 +162,7 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
-      this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) {
-          console.log(data);
-        });
-      that.$router.push({ path: "/tabs/shoppingCart" });
+      plugins(id,that)
     },
     addCart: function(id) {
       this.ajax
@@ -249,6 +245,8 @@ export default {
       for (const key in rData) {
         if (rData[key].name == "财税服务") {
           that.ItemLists = rData[key].itemList;
+
+          
           break;
         }
       }
@@ -287,7 +285,8 @@ export default {
       pageShow: true,
       pageObj: {},
       lastCount: "",
-      pageChange: 0
+      pageChange: 0,
+      orderNo: ""
     };
   }
 };

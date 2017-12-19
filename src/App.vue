@@ -36,9 +36,12 @@ a {
 }
 button {
   outline: 0;
+  border: none;
 }
 input {
+  outline: 0;
   padding: 5px;
+  box-sizing: border-box;
 }
 select {
   outline: 0;
