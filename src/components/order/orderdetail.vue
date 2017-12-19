@@ -16,7 +16,7 @@
             <!-- 订单明细隐藏内容，需通过外界传数据再创建 -->
             <div v-if="mingxi" class="mingxi">
                 <div v-for="list in lists" :key="list.id" class="hidebox">
-                    <p>服务名称：{{list.providerId}}</p>
+                    <p>服务名称：{{list.serviceName}}</p>
                     <p>单价：<span>￥{{list.unitPrice}}</span>元</p>
                     <p>数量：<span>{{list.buyNum}}</span></p>
                     <p>服务总额：<span>{{list.totalPrice}}</span></p>

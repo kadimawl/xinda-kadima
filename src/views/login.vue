@@ -147,7 +147,6 @@ export default {
               .then(data => {
                 let msg = data.data.msg;
                 let status = data.data.status;
-
                 if (status == 1) {
                   //成功登陆
                   sessionStorage.setItem("user", this.phoneInput);
