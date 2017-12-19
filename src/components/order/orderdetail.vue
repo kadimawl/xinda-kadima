@@ -79,7 +79,7 @@ export default {
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/detail',
                 that.qs.stringify({
-                businessNo:that.getCode,
+                businessNo:that.getCode, 
                 })).then(function(data){
                     if(data.data.status==1){
                         console.log(data);
@@ -90,7 +90,7 @@ export default {
                 var data=JSON.parse(sessionStorage.getItem(this.getCode));
                 this.datashow(data);
             }
-        }
+        // }
     },
     computed:{
         ...mapGetters(['getCode'])
@@ -99,7 +99,7 @@ export default {
         return {
             code:'',//产品编号
             createT:'',//创建时间
-            price:'800.00',//金额总计
+            price:'',//金额总计
             mingxi:false,//订单明细隐藏部分的控制条件
             radio:null,//单选框的值
             xz:false,//订单明细小三角旋转的控制条件

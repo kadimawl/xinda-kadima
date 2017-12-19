@@ -71,6 +71,7 @@ export default {
                 top: 38px;
                 left: -30px;
             }
+            color:#000;
         }
     }
     // 标签激活时的样式
