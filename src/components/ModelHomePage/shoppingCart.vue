@@ -32,8 +32,8 @@
               <td>{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>
-                <button @click="minus(Goods.serviceId)">-</button>
-                <input type="text" v-model="Goods.buyNum" @blur="numC">
+                <button @click="minus(Goods.serviceId,Goods.buyNum)">-</button>
+                <input type="text" v-model="Goods.buyNum">
                 <button @click="add(Goods.serviceId)">+</button>
               </td>
               <td class="sumPrice">￥{{Goods.totalPrice}}</td>
@@ -45,10 +45,10 @@
         </table>
         <div class="tomoney">
           <div class="total">金额总计：
-            <p class="totalPay">￥800.00</p>
+            <p class="totalPay">￥{{tlPay}}</p>
           </div>
           <button class="continue">继续购物</button>
-          <button class="balance">去结算</button>
+          <button class="balance" @cilck="suBmit">去结算</button>
         </div>
         <div class="hotservice">
           <p>热门服务</p>
@@ -76,6 +76,7 @@ export default {
   created() {
     var that = this;
     this.ajax.post("/xinda-api/recommend/list").then(function(data) {
+      //推荐服务列表
       var tData = data.data.data.hq;
       that.products = tData;
     });
@@ -85,26 +86,31 @@ export default {
     return {
       products: [],
       cartLists: [],
-      num: ""
+      num: "",
+      tlPay: 0,
+      orderNos:""
     };
   },
   methods: {
     recData() {
+      //列表数据获取
       var that = this;
       this.ajax.post("/xinda-api/cart/list").then(function(data) {
         var rData = data.data.data;
         that.cartLists = rData;
-        console.log(rData);
-        for (var key in rData) {
-          that.num = rData[key].buyNum;
-          break;
+        for (var i = 0; i < that.cartLists.length; i++) {
+          that.tlPay += that.cartLists[i].unitPrice * that.cartLists[i].buyNum;
         }
       });
     },
     add(id) {
+      //增加商品数量
+      var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
+<<<<<<< HEAD
+=======
           //添加购物车
           console.log(data);
         });
@@ -115,24 +121,57 @@ export default {
       this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
+>>>>>>> 6b47fac3df23453e4024d6907ed43a58b7c20ab5
           console.log(data);
-          // console.log(data.data.data);
+          that.recData();
         });
         this.recData();
     },
-    numC() {
-      //加
-      console.log(this.num);
+    minus(id, bnum) {
+      //减少商品数量
+      var that = this;
+      // console.log(this.num)
+      if (bnum - 1 >= 1) {
+        var that = this;
+        this.ajax
+          .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -1 }))
+          .then(function(data) {
+            that.recData();
+            console.log(data.data);
+            console.log("num", that.num);
+            // console.log(data.data.data);
+          });
+      } else {
+        this.dele(id);
+        that.recData();
+      }
     },
+    // numC() {
+    //   //加
+    //   console.log(this.num);
+    // },
     dele(id) {
+      var that = this;
       //删除
       this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(function(data) {
-          console.log(data);
+          console.log("del", data.data);
+          that.recData();
           // console.log(data.data.data);
         });
+<<<<<<< HEAD
+    },
+    suBmit() {
+      var that = this;
+      this.ajax.post("/xinda-api/cart/list").then(function(data) {
+        var rData = data.data.data;
+        that.orderNos = rData;
+        console.log(that.orderNos);
+      });
+=======
         this.recData();
+>>>>>>> 6b47fac3df23453e4024d6907ed43a58b7c20ab5
     }
   }
 };
