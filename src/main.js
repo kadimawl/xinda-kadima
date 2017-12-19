@@ -35,35 +35,35 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
-//模糊搜索
-/**
- * 持续调用只执行一次工具方法
- * @param fn {Function}   实际要执行的函数
- * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
- * @return {Function}     返回一个“去弹跳”了的函数
- */
-Vue.prototype.debounce = function debounce(fn, delay) {
+// //模糊搜索
+// /**
+//  * 持续调用只执行一次工具方法
+//  * @param fn {Function}   实际要执行的函数
+//  * @param delay {Number}  延迟时间，也就是阈值，单位是毫秒（ms）
+//  * @return {Function}     返回一个“去弹跳”了的函数
+//  */
+// Vue.prototype.debounce = function debounce(fn, delay) {
 
-  // 定时器，用来 setTimeout
-  var timer
+//   // 定时器，用来 setTimeout
+//   var timer
 
-  // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
-  return function () {
+//   // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+//   return function () {
 
-    // 保存函数调用时的上下文和参数，传递给 fn
-    var context = this
-    var args = arguments
+//     // 保存函数调用时的上下文和参数，传递给 fn
+//     var context = this
+//     var args = arguments
 
-    // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
-    clearTimeout(timer)
+//     // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+//     clearTimeout(timer)
 
-    // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
-    // 再过 delay 毫秒就执行 fn
-    timer = setTimeout(function () {//句柄
-      fn.apply(this, args)
-    }, delay)
-  }
-}
+//     // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+//     // 再过 delay 毫秒就执行 fn
+//     timer = setTimeout(function () {//句柄
+//       fn.apply(this, args)
+//     }, delay)
+//   }
+// }
 
 /* eslint-disable no-new */
 new Vue({

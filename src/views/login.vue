@@ -152,7 +152,7 @@ export default {
                   sessionStorage.setItem("user", this.phoneInput);
                   this.$router.push({ path: "/HomePage" }); //页面跳转
                   this.ajax.post("/xinda-api/sso/login-info").then(data => {
-                    console.log(data);
+                    // console.log(data);
                     let name = data.data.data.name;
                     this.setName(this.phoneInput);
                   });
