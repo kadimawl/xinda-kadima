@@ -110,6 +110,7 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
+      console.log(id)
       if (id) {
         this.$router.push({ path: "/detial", query: { shoppingId: id } });
         this.selebox = false;

@@ -13,7 +13,8 @@
       <p>类&nbsp&nbsp型：<a href="javascript:void(0)">{{product.info}}</a></p>
       <p>地&nbsp&nbsp区：{{shops.providerRegionText}}</p>
       <p>购买数量：<input type="button" value="-"><input class="math" type="text" value="1"><input type="button" value="+"></p>
-      <button class="buyNow">立即购买</button><button class="buyAdd">加入购物车</button>
+      <button class="buyNow" @click="buyNow(id)">立即购买</button>
+      <button @click="buyAdd(id)">加入购物车</button>
     </div>
     <div>
       <h3>顶级服务商</h3>
@@ -32,21 +33,17 @@
 </template>
 
 <script>
-
-
-
 export default {
   data() {
     return {
       shops: [],
       product: [],
-      provider: []
+      provider: [],
+      id: ""
     };
   },
   created() {
-    // location.reload();
     var shoppingID = this.$route.query.shoppingId;
-    console.log(shopID)
     var that = this;
     this.ajax
       .post(
@@ -60,10 +57,18 @@ export default {
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
+        that.id = shoppingID;
       });
   },
-  methods:{
-    
+  methods: {
+    buyNow(id) {
+      console.log(id);
+      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+    },
+    buyAdd(id) {
+      console.log(id);
+      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+    }
   }
 };
 </script>

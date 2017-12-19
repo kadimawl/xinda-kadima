@@ -19,26 +19,26 @@ export default {
   },
   created() {
     var that = this;
-    var shopID = sessionStorage.getItem("shoppingID");
-    var ifff = JSON.parse(sessionStorage.getItem(shopID));
+    var shoppingID = this.$route.query.shoppingId;
+    var ifff = JSON.parse(sessionStorage.getItem(shoppingID));
     if (ifff == null) {
       this.ajax
         .post(
           "/xinda-api/product/package/detail",
           this.qs.stringify({
-            sId: shopID
+            sId: shoppingID
           })
         )
         .then(function(data) {
           var shop = data.data.data;
-          sessionStorage.setItem(shopID, JSON.stringify(shop));
+          sessionStorage.setItem(shoppingID, JSON.stringify(shop));
           shops(shop);
         });
       var shops = function(shop) {
         that.servers = shop.serviceList[0].serviceContent;
       };
     } else {
-      var shopSer = JSON.parse(sessionStorage.getItem(shopID));
+      var shopSer = JSON.parse(sessionStorage.getItem(shoppingID));
       !(function(shops) {
         that.servers = shops.serviceList[0].serviceContent;
       })(shopSer);
