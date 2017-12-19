@@ -90,7 +90,7 @@ export default {
                 var data=JSON.parse(sessionStorage.getItem(this.getCode));
                 this.datashow(data);
             }
-        // }
+        }
     },
     computed:{
         ...mapGetters(['getCode'])
