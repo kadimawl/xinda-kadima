@@ -48,7 +48,7 @@
             <p class="totalPay">￥{{tlPay}}</p>
           </div>
           <button class="continue">继续购物</button>
-          <button class="balance" @cilck="suBmit">去结算</button>
+          <button class="balance" @click="suBmit">去结算</button>
         </div>
         <div class="hotservice">
           <p>热门服务</p>
@@ -88,7 +88,7 @@ export default {
       cartLists: [],
       num: "",
       tlPay: 0,
-      orderNos:""
+      orderNo: ""
     };
   },
   methods: {
@@ -132,10 +132,6 @@ export default {
         that.recData();
       }
     },
-    // numC() {
-    //   //加
-    //   console.log(this.num);
-    // },
     dele(id) {
       var that = this;
       //删除
@@ -147,12 +143,18 @@ export default {
           // console.log(data.data.data);
         });
     },
+    toPay(oderNo) {
+      this.$router.push({ path: "/Order/orderdetail", query: { oderNo: oderNo } });
+      console.log("111")
+    },
     suBmit() {
+      //结算
       var that = this;
-      this.ajax.post("/xinda-api/cart/list").then(function(data) {
+      this.ajax.post("/xinda-api/cart/submit").then(function(data) {
         var rData = data.data.data;
-        that.orderNos = rData;
-        console.log(that.orderNos);
+        that.orderNo = rData;
+        that.toPay(that.orderNo);
+        // console.log(data);
       });
     }
   }
