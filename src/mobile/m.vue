@@ -20,6 +20,7 @@ export default {
 }
 .routerBox{
     max-width: 768px;
+    max-height: 1280px;
     margin: 0 auto;
 }
 </style>

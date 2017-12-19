@@ -24,12 +24,8 @@
         </ul>
         <div class="inpB">
           <p>热门服务：</p>
-          <a href="javascript:void(0)">
-            <p>社保开户</p>
-          </a>
-          <a href="javascript:void(0)">
-            <p>公司注册</p>
-          </a>
+          <p @click="social">社保开户</p>
+          <p @click="cReg">公司注册</p>
         </div>
       </div>
       <div class="tel">
@@ -58,7 +54,8 @@ export default {
       selebox: true,
       seleList: [],
       getSele: [],
-      seleId: []
+      seleId: [],
+      socId: ''
     };
   },
   created() {
@@ -98,11 +95,9 @@ export default {
               ];
             }
             for (var key in this.seleList) {
-                this.getSele.push(this.seleList[key]); 
-                this.seleId.push(this.seleList[key].id);
+              this.getSele.push(this.seleList[key]);
+              this.seleId.push(this.seleList[key].id);
             }
-            console.log(this.getSele);
-            console.log(this.seleId);
           });
       }
     },
@@ -112,12 +107,35 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
-      console.log(id);
-      
-      if(id){
-        this.$router.push({path: '/detial',query:{id: id} });
-      this.selebox = false;
+      console.log(id)
+      if (id) {
+        this.$router.push({ path: "/detial", query: { shoppingId: id } });
+        this.selebox = false;
+        location.reload();
       }
+    },
+    social() {
+      this.ajax
+          .post(
+            "/xinda-api/product/package/search-grid",
+            this.qs.stringify({
+              searchName: '社保开户'
+            })
+          )
+          .then(data=>{
+            for(var key in data.data.data){
+              this.socId = data.data.data[key].id;
+              console.log(this.socId);
+            };
+          })
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: this.socId }
+      });
+      location.reload();
+    },
+    cReg() {
+      this.$router.push({ path: "/tabs/companyList" });
     }
   }
 };
@@ -205,6 +223,7 @@ h1 {
       display: inline;
       font-size: 11px;
       color: #c7c7c7;
+      cursor: pointer;
     }
   }
 }

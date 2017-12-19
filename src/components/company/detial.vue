@@ -13,7 +13,8 @@
       <p>类&nbsp&nbsp型：<a href="javascript:void(0)">{{product.info}}</a></p>
       <p>地&nbsp&nbsp区：{{shops.providerRegionText}}</p>
       <p>购买数量：<input type="button" value="-"><input class="math" type="text" value="1"><input type="button" value="+"></p>
-      <button class="buyNow">立即购买</button><button class="buyAdd">加入购物车</button>
+      <button class="buyNow" @click="buyNow(id)">立即购买</button>
+      <button @click="buyAdd(id)">加入购物车</button>
     </div>
     <div>
       <h3>顶级服务商</h3>
@@ -37,17 +38,18 @@ export default {
     return {
       shops: [],
       product: [],
-      provider: []
+      provider: [],
+      id: ""
     };
   },
   created() {
-    var shopID = sessionStorage.getItem("shoppingID");
+    var shoppingID = this.$route.query.shoppingId;
     var that = this;
     this.ajax
       .post(
         "/xinda-api/product/package/detail",
         this.qs.stringify({
-          sId: shopID
+          sId: shoppingID
         })
       )
       .then(function(data) {
@@ -55,7 +57,18 @@ export default {
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
+        that.id = shoppingID;
       });
+  },
+  methods: {
+    buyNow(id) {
+      console.log(id);
+      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+    },
+    buyAdd(id) {
+      console.log(id);
+      this.$router.push({ path: "/tabs/shoppingCart", query: { shoppingID: id } });
+    }
   }
 };
 </script>
@@ -118,17 +131,17 @@ p {
     }
     input {
       width: 30px;
-      height: 26px;
+      height: 32px;
       background: #f7f8fa;
       border: 1px solid #cccccc;
       font-size: 15px;
       margin: 20px 0;
     }
     .math {
-      height: 24px;
+      height: 20px;
       background: #ffffff;
       width: 50px;
-      line-height: 24px;
+      line-height: 20px;
     }
     button {
       width: 95px;

@@ -190,9 +190,10 @@ export default new Router({
                 //pc端支付
                 {
                     path: '/Order',
+                    redirect: 'Order/orderdetail',
                     component: Order,
                     children: [{
-                        path: '/',
+                        path: 'orderdetail',
                         component: orderdetail
                     }, {
                         path: 'success',

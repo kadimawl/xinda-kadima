@@ -14,7 +14,7 @@
           <p>销量:</p>
           <h2>￥{{list.marketPrice}}.00</h2>
           <del>原价：￥{{list.price}}.00</del>
-          <a href="#/detial" :id="list.id" @click="GoToShop(list.id)">查看详情>></a>
+          <a href="javascript:void(0)" :id="list.id" @click="GoToShop(list.id)">查看详情>></a>
         </div>
     </div>
     <div class="number">
@@ -29,7 +29,7 @@
 export default {
   created() {
     var that = this;
-    var shopID = sessionStorage.getItem("shopID");
+    var shopID = this.$route.query.shopID;
     this.ajax //请求店铺商品
       .post(
         "/xinda-api/product/package/grid",
@@ -54,7 +54,8 @@ export default {
   },
   methods: {
     GoToShop(id) {
-      sessionStorage.setItem("shoppingID", id);
+      this.$router.push({ path: "/detial", query: { shoppingId: id } });
+      this.$router.push({ path: "/detial/service", query: { shoppingId: id } });
     },
     list(lists) {
       var a = lists.length;

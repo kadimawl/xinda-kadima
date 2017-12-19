@@ -72,8 +72,8 @@ import {mapGetters} from 'vuex'
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
-        
-        // if(this.getCode){
+        console.log(this.$route.query.oderNo);
+        if(this.getCode){
             // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
             if(sessionStorage.getItem(this.getCode)==null){
                 var that=this;
