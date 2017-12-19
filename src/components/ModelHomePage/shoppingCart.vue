@@ -47,7 +47,7 @@
           <div class="total">金额总计：
             <p class="totalPay">￥{{tlPay}}</p>
           </div>
-          <button class="continue">继续购物</button>
+          <button class="continue" @click="toHomePage">继续购物</button>
           <button class="balance" @click="suBmit">去结算</button>
         </div>
         <div class="hotservice">
@@ -61,7 +61,7 @@
               <h2>￥{{product.price}}</h2>
               <del>原价：￥1200</del>
               <span>
-                <a href="">查看详情>>></a>
+                <a href="javascript:void(0);" @click="todetail(product.id)">查看详情>></a>
               </span>
             </div>
           </div>
@@ -74,13 +74,9 @@
 <script>
 export default {
   created() {
-    var that = this;
-    this.ajax.post("/xinda-api/recommend/list").then(function(data) {
-      //推荐服务列表
-      var tData = data.data.data.hq;
-      that.products = tData;
-    });
-    this.recData();
+    // var that = this;
+    this.recData(); //拉取购物品项列表
+    this.recomData(); //拉取推荐服务列表
   },
   data() {
     return {
@@ -102,8 +98,25 @@ export default {
         for (var i in that.cartLists) {
           tlPay += that.cartLists[i].totalPrice;
         }
-        that.tlPay = tlPay
+        that.tlPay = tlPay;
       });
+    },
+    recomData() {
+      //推荐服务列表
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 4
+          })
+        )
+        .then(function(data) {
+          var tData = data.data.data;
+          that.products = tData;
+          console.log(that.products);
+        });
     },
     add(id) {
       //增加商品数量
@@ -146,17 +159,31 @@ export default {
         });
     },
     toPay(orderNo) {
-      this.$router.push({ path: "/Order/orderdetail", query: { orderNo: orderNo } });
-      console.log("111")
+      this.$router.push({
+        path: "/Order/orderdetail",
+        query: { orderNo: orderNo }
+      });
+      console.log("111");
     },
     suBmit() {
-      //结算
+      //结算并清空购物车
       var that = this;
       this.ajax.post("/xinda-api/cart/submit").then(function(data) {
         var rData = data.data.data;
         that.orderNo = rData;
         that.toPay(that.orderNo);
         // console.log(data);
+      });
+    },
+    todetail(id) {//传参产品详情
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+    },
+    toHomePage() {//跳转首页
+      this.$router.push({
+        path: "/HomePage"
       });
     }
   }
