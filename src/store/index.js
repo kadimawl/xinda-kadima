@@ -10,6 +10,7 @@ export default new Vuex.Store({
         headX: '', //用户头像
         // pd: '', //用户密码加密过的
         evaldetail: {}, //用户未评价订单信息，传给去评价界面
+        wxnum: 0, //微信购物车商品数量
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
         },
         SET_evaldetail: (state, evaldetail) => {
             state.evaldetail = evaldetail;
+        },
+        SET_WXNUM: (state, wxnum) => {
+            state.wxnum = wxnum;
         },
         // SET_PD: (state, pd) => {
         //     state.pd = pd;
@@ -53,6 +57,9 @@ export default new Vuex.Store({
         setEvaldetail({ commit }, evaldetail) {
             commit('SET_evaldetail', evaldetail)
         },
+        setwxNum({ commit }, wxnum) {
+            commit('SET_WXNUM', wxnum)
+        },
         // setPd({ commit }, pd) {
         //     commit('SET_PD', pd)
         // },
@@ -71,6 +78,7 @@ export default new Vuex.Store({
         getheadX: state => state.headX, //用户头像
         // getPd: state => state.pd, //用户密码
         getEvaldetail: state => state.evaldetail, //用户评价传参
+        getwxNum: state => state.wxnum, //微信购物车数量
 
     }
 
