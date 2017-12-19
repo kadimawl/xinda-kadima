@@ -33,7 +33,7 @@
               <td>￥{{Goods.unitPrice}}</td>
               <td>
                 <button @click="minus(Goods.serviceId,Goods.buyNum)">-</button>
-                <input type="text" v-model="Goods.buyNum">
+                <input type="text" v-model="Goods.buyNum" @blur="numChange(Goods.serviceId,Goods.buyNum)" @focus="focus(Goods.serviceId,Goods.buyNum)">
                 <button @click="add(Goods.serviceId)">+</button>
               </td>
               <td class="sumPrice">￥{{Goods.totalPrice}}</td>
@@ -81,7 +81,6 @@ export default {
     this.ajax.post("xinda-api/cart/cart-num").then(data => {
       that.cartNum = data.data.data.cartNum;
       that.setNum(that.cartNum);
-      sessionStorage.setItem(that.cartNum, that.cartNum);
     });
   },
   data() {
@@ -96,6 +95,30 @@ export default {
   },
   methods: {
     ...mapActions(["setNum"]),
+    focus(id, old) {
+      console.log(old);
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
+        .then(data => {
+          console.log(data);
+          // this.recData();
+        });
+    },
+    numChange(id, numbers) {
+      var numC = Number(numbers);
+      if(numbers>=1){
+        this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({ id: id, num: numC })
+        )
+        .then(data => {
+          console.log(data);
+      this.recData();
+        });
+      }
+    },
     recData() {
       //列表数据获取
       var that = this;
@@ -185,15 +208,16 @@ export default {
         that.toPay(that.orderNo);
         // console.log(data);
       });
-
     },
-    todetail(id) {//传参产品详情
+    todetail(id) {
+      //传参产品详情
       this.$router.push({
         path: "/detial",
         query: { shoppingId: id }
       });
     },
-    toHomePage() {//跳转首页
+    toHomePage() {
+      //跳转首页
       this.$router.push({
         path: "/HomePage"
       });
