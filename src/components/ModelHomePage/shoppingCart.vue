@@ -98,9 +98,11 @@ export default {
       this.ajax.post("/xinda-api/cart/list").then(function(data) {
         var rData = data.data.data;
         that.cartLists = rData;
-        for (var i = 0; i < that.cartLists.length; i++) {
-          that.tlPay += that.cartLists[i].unitPrice * that.cartLists[i].buyNum;
+        var tlPay = 0;
+        for (var i in that.cartLists) {
+          tlPay += that.cartLists[i].totalPrice;
         }
+        that.tlPay = tlPay
       });
     },
     add(id) {
