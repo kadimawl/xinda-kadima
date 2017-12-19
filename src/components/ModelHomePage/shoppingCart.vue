@@ -112,7 +112,6 @@ export default {
           console.log(data);
           that.recData();
         });
-        this.recData();
     },
     minus(id, bnum) {
       //减少商品数量
