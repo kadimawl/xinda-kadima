@@ -29,7 +29,7 @@
             </tr>
             <tr class="itemLists">
               <td class="itemPic"><img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
-              <td>{{Goods.serviceName}}</td>
+              <td class="serviceName">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>
                 <button @click="minus(Goods.serviceId,Goods.buyNum)">-</button>
@@ -221,6 +221,10 @@ thead {
     color: #686868;
     display: flex;
     justify-content: space-around;
+    th {
+      width: 200px;
+      text-align: center;
+    }
   }
 }
 .store {
@@ -234,7 +238,6 @@ thead {
   .itemLists {
     font-size: 14px;
     background-color: #f7f7f7;
-    line-height: 55px;
     width: 1200px;
     color: #686868;
     display: flex;
@@ -245,14 +248,25 @@ thead {
       margin-right: 1000px;
       line-height: 40px;
     }
+    td {
+      width: 200px;
+      line-height: 52px;
+      text-align: center;
+    }
     .itemPic {
-      width: 50px;
-      height: 50px;
-      border: 1px solid #eee;
+      line-height: 0;
       img {
         width: 50px;
         height: 50px;
+        margin: auto auto;
+        border: 1px solid #eee;
       }
+    }
+    .serviceName {
+      padding-top: 16px;
+      box-sizing: border-box;
+      font-size: 14px;
+      line-height: 16px;
     }
     button {
       width: 20px;
