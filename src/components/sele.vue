@@ -24,7 +24,7 @@
         </ul>
         <div class="inpB">
           <p>热门服务：</p>
-          <p @click="social(ca26d44d7af4411c88caeb22b5bdc036)">社保开户</p>
+          <p @click="social">社保开户</p>
           <p @click="cReg">公司注册</p>
         </div>
       </div>
@@ -54,7 +54,8 @@ export default {
       selebox: true,
       seleList: [],
       getSele: [],
-      seleId: []
+      seleId: [],
+      socId: ''
     };
   },
   created() {
@@ -112,10 +113,23 @@ export default {
         location.reload();
       }
     },
-    social(ca26d44d7af4411c88caeb22b5bdc036) {
+    social() {
+      this.ajax
+          .post(
+            "/xinda-api/product/package/search-grid",
+            this.qs.stringify({
+              searchName: '社保开户'
+            })
+          )
+          .then(data=>{
+            for(var key in data.data.data){
+              this.socId = data.data.data[key].id;
+              console.log(this.socId);
+            };
+          })
       this.$router.push({
         path: "/detial",
-        query: { shoppingId: ca26d44d7af4411c88caeb22b5bdc036 }
+        query: { shoppingId: this.socId }
       });
       location.reload();
     },

@@ -46,7 +46,6 @@ export default {
   created() {
     // location.reload();
     var shoppingID = this.$route.query.shoppingId;
-    console.log(shopID)
     var that = this;
     this.ajax
       .post(
