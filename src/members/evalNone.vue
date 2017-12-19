@@ -1,42 +1,86 @@
 <template>
-<div class="evalNone">
-    <div class="Nleft">
-    <div class="gslogo"><img :src="tupian" alt=""></div>
-    <div class="shangpin">
-        <p class="name">{{gsname}}</p>
-        <p class="information"><span class="spanf">服务单号：{{code}}</span><span>购买时间：{{buytime}}</span></p>
-        <p class="cont">购买内容：{{cont}}</p>
+<div class="">
+    <!-- 未评价的项目 -->
+    <div class="evalNone" v-for="(usereval,index) in evals" :key="usereval.index">
+        <div class="Nleft">
+            <!-- 用户logo -->
+            <div class="gslogo"><img :src="usereval.providerImg" alt=""></div>
+            <div class="shangpin">
+                <p class="name">{{usereval.providerName}}</p>
+                <p class="information"><span class="spanf">服务单号：{{usereval.serviceNo}}</span><span>购买时间：{{usereval.buyTime}}</span></p>
+                <p class="cont">购买内容：{{usereval.serviceInfo}}</p>
+            </div>
+        </div>
+        <div class="Nright">
+            <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval" @click="gotoEval(index)">去评价</router-link>
+        </div>
     </div>
-    </div>
-    <div class="Nright">
-        <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval">去评价</router-link>
-    </div>
+    <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
 </div>
   
 </template>
 
 <script>
-
+// 思路如下，ajax拉取数据，把数据处理，存入datas这个数组，evals得到截取值。根据页数拉取，分位置存入datas。
+import pageturn from './pageturn'
+import {mapActions,mapGetters} from 'vuex' 
 export default {
     created(){
-        this.ajax.post('/xinda-api/service/judge/grid',{
-            start:0,
-            limit:6,
-            status:2	
-        }).then(function(a){
-            console.log(a);
-        })
+        if(this.getName){//是否登录
+            if(!this.datas[this.pagenum]){
+                var that=this;
+                that.ajax.post('/xinda-api/service/judge/grid',{
+                    start:that.pagenum,
+                    limit:that.pagesize,
+                    status:2	
+                }).then(function(data){
+                    console.log(data);
+                    that.datashow(data);
+                })
+            }else{
+                this.evals=this.datas.splice(this.pagenum,this.pagesize);
+            }
+        }
+    },
+    computed:{
+        ...mapGetters(['getName']),
     },
     data() {
         return {
-            tupian:'',
-            gsname:'信达北京服务中心',
-            code:'B1B23',
-            buytime:'2016-1-12',
-            cont:'test'
-            };
-        }
-    };
+            evals:[],
+            pagenum:0,//
+            pagesize:2,//
+            tatal:'',//总条目
+            datas:[],//所有data.data.data数据放入datas
+        };
+    },
+    components:{pageturn},
+    methods:{
+        ...mapActions(['setEvaldetail']),
+        // 自定义事件
+        pagevary(msg){
+            this.pagenum=msg*this.pagesize;
+        },
+        // 拉取数据处理
+        datashow(data){
+            if(data.data.data){
+                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
+                    var dataindex=i-this.pagethum;
+                    this.datas[i]=data.data.data[dataindex];
+                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data[dataindex].providerImg+'';
+                    this.datas[i].buyTime=new Date(data.data.data[dataindex].buyTime);
+                }
+                this.total=data.data.totalCount;
+                this.evals=this.datas.splice(this.pagenum,this.pagesize);
+            }
+        },
+        // 去评价点击,传参
+        gotoEval(index){
+            this.setEvaldetail({codes:this.datas[index].serviceNo,conts:this.datas[index].serviceInfo,btimes:this.datas[index].buyTime});
+        },
+    }
+    
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -45,6 +89,7 @@ export default {
     margin: 0;
     padding: 0;
 }
+// 未评价盒子
 .evalNone{
     width: 900px;
     height: 154px;
@@ -52,17 +97,20 @@ export default {
     margin-left: 20px;
     display: flex;
     justify-content: space-between;
+    // 左边
     .Nleft{
         height: 154px;
         width: 700px;
         display: flex;
         align-items: center;
+        // 公司logo
         .gslogo{
             width: 100px;
             height: 100px;
             margin: 0 15px;
             border: 1px solid #e9e9e9;
         }
+        // 商品信息
         .shangpin{
             line-height: 35px;
             .information{
@@ -74,9 +122,9 @@ export default {
                     margin-right: 30px;
                 }
             }
-          
         }
     }
+    // 右边按钮
     .Nright{
         width: 170px;
         height: 154px;

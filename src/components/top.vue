@@ -17,7 +17,7 @@
       <div class="box-left" v-show="getName">
         <a href="/#/member" class="username">{{getName}}</a>
         <p class="w-come">欢迎来到信达！</p>
-        <a href="#" class="exit" @click="exit">【退出】</a>
+        <a href="javascript:void(0)" class="exit" @click="exit">【退出】</a>
       </div>
       <div class="box-right">
         <div class="shop-cart">
@@ -32,7 +32,7 @@
           <a href="#/member/memberBody">我的订单</a>
         </div>
         <div class="entrance">
-          <a href="#">服务商入口</a>
+          <a href="#/shopIndex">服务商入口</a>
         </div>
       </div>
     </div>

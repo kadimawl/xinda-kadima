@@ -109,9 +109,23 @@ export default {
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
+<<<<<<< HEAD
+=======
+          //添加购物车
+          console.log(data);
+        });
+        this.recData();
+    },
+    minus(id) {
+      //减
+      this.ajax
+        .post("/xinda-api/cart/del", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+>>>>>>> 6b47fac3df23453e4024d6907ed43a58b7c20ab5
           console.log(data);
           that.recData();
         });
+        this.recData();
     },
     minus(id, bnum) {
       //减少商品数量
@@ -146,6 +160,7 @@ export default {
           that.recData();
           // console.log(data.data.data);
         });
+<<<<<<< HEAD
     },
     suBmit() {
       var that = this;
@@ -154,6 +169,9 @@ export default {
         that.orderNos = rData;
         console.log(that.orderNos);
       });
+=======
+        this.recData();
+>>>>>>> 6b47fac3df23453e4024d6907ed43a58b7c20ab5
     }
   }
 };

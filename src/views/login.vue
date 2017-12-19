@@ -1,5 +1,5 @@
 <template>
-  <div class="lOut">
+  <div class="lOut" @keyup.13="enterUp($event)">
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
@@ -19,7 +19,7 @@
         <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>
       
-      <button @click="iLogin">立即登录</button>
+      <button @click="iLogin" >立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
@@ -40,6 +40,11 @@ const eyes = [
   require("../assets/visible/visible.png")
 ];
 export default {
+  created(){
+    document.onkeyup = function(){
+      
+    }
+  },
   data() {
     return {
       pwType: "password",
@@ -170,6 +175,11 @@ export default {
         }
       } else {
         this.phoneMsg = "请输入手机号";
+      }
+    },
+    enterUp (ev) {
+      if(ev.keyCode == 13){
+        console.log('enterUp');
       }
     }
   }

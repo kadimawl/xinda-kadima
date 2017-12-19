@@ -32,6 +32,9 @@
 </template>
 
 <script>
+
+
+
 export default {
   data() {
     return {
@@ -41,13 +44,14 @@ export default {
     };
   },
   created() {
-    var shopID = sessionStorage.getItem("shoppingID");
+    // location.reload();
+    var shoppingID = this.$route.query.shoppingId;
     var that = this;
     this.ajax
       .post(
         "/xinda-api/product/package/detail",
         this.qs.stringify({
-          sId: shopID
+          sId: shoppingID
         })
       )
       .then(function(data) {
@@ -56,6 +60,9 @@ export default {
         that.provider = shop.provider;
         that.shops = shop;
       });
+  },
+  methods:{
+    
   }
 };
 </script>
@@ -118,17 +125,17 @@ p {
     }
     input {
       width: 30px;
-      height: 26px;
+      height: 32px;
       background: #f7f8fa;
       border: 1px solid #cccccc;
       font-size: 15px;
       margin: 20px 0;
     }
     .math {
-      height: 24px;
+      height: 20px;
       background: #ffffff;
       width: 50px;
-      line-height: 24px;
+      line-height: 20px;
     }
     button {
       width: 95px;
