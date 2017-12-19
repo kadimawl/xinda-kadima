@@ -108,6 +108,7 @@ export default {
           //添加购物车
           console.log(data);
         });
+        this.recData();
     },
     minus(id) {
       //减
@@ -117,6 +118,7 @@ export default {
           console.log(data);
           // console.log(data.data.data);
         });
+        this.recData();
     },
     numC() {
       //加
@@ -130,6 +132,7 @@ export default {
           console.log(data);
           // console.log(data.data.data);
         });
+        this.recData();
     }
   }
 };
