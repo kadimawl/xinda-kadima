@@ -143,8 +143,8 @@ export default {
           // console.log(data.data.data);
         });
     },
-    toPay(oderNo) {
-      this.$router.push({ path: "/Order/orderdetail", query: { oderNo: oderNo } });
+    toPay(orderNo) {
+      this.$router.push({ path: "/Order/orderdetail", query: { orderNo: orderNo } });
       console.log("111")
     },
     suBmit() {

@@ -23,4 +23,5 @@ export default {
     max-height: 1280px;
     margin: 0 auto;
 }
+
 </style>

@@ -38,7 +38,9 @@ button {
   outline: 0;
 }
 input {
+  outline: 0;
   padding: 5px;
+  box-sizing: border-box;
 }
 select {
   outline: 0;
