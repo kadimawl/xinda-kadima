@@ -84,6 +84,7 @@
 
 <script>
 import distpicker from "../distpicker";
+import plugins from '../../plugins';
 export default {
   components: { distpicker },
   methods: {
@@ -161,18 +162,7 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
-      this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) {
-          console.log(data);
-        });
-      this.ajax.post("xinda-api/cart/submit").then(data => {
-        that.orderNo = data.data.data;
-        if(that.orderNo!=''){
-        console.log(this.orderNo);
-           that.$router.push({ path: "/Order/orderdetail",query:{orderNo: that.orderNo} });
-        }
-      });
+      plugins(id,that)
     },
     addCart: function(id) {
       this.ajax
@@ -294,7 +284,7 @@ export default {
       pageObj: {},
       lastCount: "",
       pageChange: 0,
-      orderNo: ''
+      orderNo: ""
     };
   }
 };

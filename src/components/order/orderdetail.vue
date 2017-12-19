@@ -73,24 +73,24 @@ import waitpay from './waitpay'//等待支付
 export default {
     created(){
         console.log(this.$route.query.orderNo);
-        if(this.getCode){
+        // if(this.getCode){
             // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-            if(sessionStorage.getItem(this.getCode)==null){
+            // if(sessionStorage.getItem(this.getCode)==null){
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/detail',
                 that.qs.stringify({
-                businessNo:that.getCode, 
+                businessNo:this.$route.query.orderNo, 
                 })).then(function(data){
                     if(data.data.status==1){
                         console.log(data);
                         that.datashow(data);
                     }
                 })
-            }else{
-                var data=JSON.parse(sessionStorage.getItem(this.getCode));
-                this.datashow(data);
-            }
-        }
+            // }else{
+                // var data=JSON.parse(sessionStorage.getItem(this.getCode));
+                // this.datashow(data);
+            // }
+        // }
     },
     computed:{
         ...mapGetters(['getCode'])
