@@ -93,12 +93,11 @@ export default {
       console.log(this.seleCode);
     },
     types(key, typeCode) {
-      
+      this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
-      this.currentIndex = typeCode;
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key, index) {

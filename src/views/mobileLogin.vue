@@ -78,10 +78,10 @@ input {
     justify-content: space-between;
   }
   input {
-    width: 46%;
+    width: 60%;
   }
   img {
-    width: 46%;
+    width: 38%;
     margin-top: 30px;
   }
 }
