@@ -40,7 +40,7 @@
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
               <div class="listInf">
-                <div class="infLeft">
+                <div class="infLeft" @click="todetail(Product.id)">
                   <b>{{Product.serviceName}}</b>
                   <p>{{Product.serviceInfo}}</p>
                   <p>
@@ -85,7 +85,7 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
-import {mapActions} from 'vuex'
+import { mapActions } from "vuex";
 export default {
   components: { distpicker },
   methods: {
@@ -161,10 +161,21 @@ export default {
           // console.log(that.products);
         });
     },
+    todetail(id) {
+      //传参产品详情
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+      this.$router.push({
+        path: "/detial/service",
+        query: { shoppingId: id }
+      });
+    },
     toPay: function(id) {
       //立即购买
       var that = this;
-      plugins(id, that);
+      plugins(id, that); //立即购买公共方法
     },
     addCart: function(id) {
       var that = this;
@@ -176,8 +187,8 @@ export default {
         });
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         that.cartNum = data.data.data.cartNum;
-        that.setNum(that.cartNum) ;
-        sessionStorage.setItem(that.cartNum , that.cartNum)
+        that.setNum(that.cartNum);
+        sessionStorage.setItem(that.cartNum, that.cartNum);
       });
     },
     changePage: function() {
@@ -294,7 +305,7 @@ export default {
       lastCount: "",
       pageChange: 0,
       orderNo: "",
-      cartNum: ''
+      cartNum: ""
     };
   }
 };

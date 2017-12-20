@@ -40,7 +40,7 @@
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
               <div class="listInf">
-                <div class="infLeft">
+                <div class="infLeft" @click="todetail(Product.id)">
                   <b>{{Product.serviceName}}</b>
                   <p>{{Product.serviceInfo}}</p>
                   <p>
@@ -51,13 +51,20 @@
                 <div class="infRight">
                   <h2>￥{{Product.price}}</h2>
                   <div class="buttons">
-                    <button>立即购买</button>
-                    <button>加入购物车</button>
+                    <button @click="toPay(Product.id)">立即购买</button>
+                    <button @click="addCart(Product.id)">加入购物车</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="pageC" v-show="pageShow">
+          <div class="prev" @click="prev(typecode)">上一页</div>
+          <ul>
+            <li v-for="(currentPage,index) in pageObj" :class="[index==(pageChange|0)?'pageColor':'pageccc']" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
+          </ul>
+          <div class="next" @click="next(typecode)">下一页</div>
         </div>
       </div>
       <div class="right">
@@ -71,23 +78,20 @@
         <p class="">增值服务</p>
       </div>
     </div>
-    <div class="pageC" v-show="pageShow">
-      <el-pagination
-        background
-        layout="prev, pager, next"
-        :total="100">
-      </el-pagination>
-    </div>
+
   </div>
 </template>
 
 <script>
 import distpicker from "../distpicker";
+import plugins from "../../plugins";
+import { mapActions } from "vuex";
 export default {
   components: { distpicker },
   methods: {
+    ...mapActions(["setNum"]),
+    //三级联动选择code
     selected: function(code) {
-      //省市区三级联动
       this.seleCode = code;
       console.log(this.seleCode);
     },
@@ -113,7 +117,7 @@ export default {
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 5,
+            limit: 3,
             productTypeCode: typecode,
             sort: 2
           })
@@ -121,19 +125,31 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          console.log(data.data.totalCount);
-          
-          // console.log(that.products);
+          var totalCount = data.data.totalCount;
+          if (totalCount <= 3) {
+            that.pageShow = false;
+          } else {
+            that.pageShow = true;
+            var count = Math.ceil(totalCount / 3);
+            that.lastCount = count;
+            var pageObj = {};
+            for (var i = 0; i < count; i++) {
+              pageObj[i] = i + 1;
+            }
+            that.pageObj = pageObj;
+            that.pageChange = 0;
+          }
         });
     },
-    getData(productId) { //按类型渲染列表
+    getData(productId) {
+      //按类型渲染列表
       var that = this;
       this.ajax
         .post(
           "/xinda-api/product/package/grid",
           this.qs.stringify({
             start: 0,
-            limit: 100,
+            limit: 3,
             productTypeCode: "0",
             productId: productId,
             sort: 2
@@ -143,33 +159,116 @@ export default {
           var gData = data.data.data;
           that.products = gData;
           // console.log(that.products);
-           if(data.data.totalCount<=4){
-            that.pageShow = false;
-          }else{
-            that.pageShow = true;
-            console.log(typecode);
-          }
         });
     },
-    changePage: function() {
+    todetail(id) {
+      //传参产品详情
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+      this.$router.push({
+        path: "/detial/service",
+        query: { shoppingId: id }
+      });
+    },
+    toPay: function(id) {
+      //立即购买
       var that = this;
+      plugins(id, that); //立即购买公共方法
+    },
+    addCart: function(id) {
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          //添加购物车
+          // console.log(data);
+        });
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        that.cartNum = data.data.data.cartNum;
+        that.setNum(that.cartNum);
+        sessionStorage.setItem(that.cartNum, that.cartNum);
+      });
+    },
+    changePage: function() {
       this.reqData();
+    },
+    //翻页
+    pageIna(currentPage, index, typecode) {
+      this.pageChange = index;
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0 + 3 * (currentPage - 1),
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //上一页
+    prev(typecode) {
+      var that = this;
+      this.pageChange < 1 ? 0 : (this.pageChange -= 1);
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
+    },
+    //下一页
+    next(typecode) {
+      var that = this;
+      if (this.pageChange < this.lastCount - 1) {
+        this.pageChange -= -1;
+      } else {
+        this.pageChange = this.lastCount - 1;
+      }
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: this.pageChange * 3,
+            limit: 3,
+            productTypeCode: typecode,
+            sort: 2
+          })
+        )
+        .then(data => {
+          var gData = data.data.data;
+          that.products = gData;
+        });
     }
   },
   created() {
     // console.log(name);
-
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
       for (const key in rData) {
         if (rData[key].name == "公司工商") {
           that.ItemLists = rData[key].itemList;
+
           break;
         }
       }
-      that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染公司注册
-
+      that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染审计报告
       // console.log(that.ItemLists);
     });
 
@@ -178,12 +277,13 @@ export default {
         "/xinda-api/product/package/grid",
         this.qs.stringify({
           start: 0,
-          limit: 100,
-          productTypeCode: "4",
+          limit: 3,
+          productTypeCode: "3",
           sort: 2
         })
       )
       .then(function(data) {
+        // console.log(data.data);
         var gData = data.data.data;
         that.products = gData;
         // console.log(that.products);
@@ -201,6 +301,11 @@ export default {
       currentIndex: "",
       listIndex: "",
       pageShow: true,
+      pageObj: {},
+      lastCount: "",
+      pageChange: 0,
+      orderNo: "",
+      cartNum: ""
     };
   }
 };
@@ -270,7 +375,7 @@ export default {
         }
         .B-lists {
           width: 926px;
-          height: 110px;
+          // height: 110px;
           margin: 0 auto;
           margin-bottom: 10px;
           border-bottom: 1px solid #ccc;
@@ -446,13 +551,46 @@ export default {
 
 .pageC {
   margin: 30px 0 200px;
-  padding: 0 400px;
+  padding: 0 350px;
+  display: flex;
+  div {
+    width: 66px;
+    height: 34px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    font-size: 13px;
+    color: #ccc;
+    text-align: center;
+    line-height: 34px;
+  }
+  ul {
+    display: flex;
+    list-style: none;
+  }
+}
+li {
+  width: 37px;
+  height: 34px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  color: #ccc;
+  text-align: center;
+  line-height: 34px;
+  margin: 0 6px;
+}
+.pageColor {
+  color: #2693d4;
+  border: 1px solid #2693d4;
+}
+.pageccc {
+  border: 1px solid #ccc;
+  color: #ccc;
 }
 .color2693d4 {
   background-color: #2693d4;
   color: #fff;
 }
-.color000{
+.color000 {
   background: #eee;
   color: #000;
 }
