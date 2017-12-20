@@ -71,7 +71,6 @@
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
-<<<<<<< HEAD
         // console.log(this.$route.query.orderNo);
         if(this.$route.query.orderNo){
             var that=this;
@@ -85,27 +84,6 @@ export default {
                 }
             })
         }
-=======
-        console.log(this.$route.query.orderNo);
-        // if(this.getCode){
-            // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-            // if(sessionStorage.getItem(this.getCode)==null){
-                var that=this;
-                that.ajax.post('/xinda-api/business-order/detail',
-                that.qs.stringify({
-                businessNo:this.$route.query.orderNo, 
-                })).then(function(data){
-                    if(data.data.status==1){
-                        console.log(data);
-                        that.datashow(data);
-                    }
-                })
-            // }else{
-                // var data=JSON.parse(sessionStorage.getItem(this.getCode));
-                // this.datashow(data);
-            // }
-        // }
->>>>>>> 78f7d117775b00be8d229531c10aeafe86115550
     },
     computed:{},
     data() {
