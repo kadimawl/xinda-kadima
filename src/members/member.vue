@@ -33,10 +33,9 @@ export default {
 }
 // 定下最大的盒子宽高
 .member{
-    width: 1200px;
+    width: 1220px;
     margin: 0 auto;
     padding: 10px 20px;
-    height: 740px;
     .membertop{
         margin-bottom: 20px;
     }
