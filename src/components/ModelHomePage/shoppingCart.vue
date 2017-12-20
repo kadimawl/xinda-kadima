@@ -28,7 +28,9 @@
               <p class="storeName">店铺：{{Goods.providerName}}</p>
             </tr>
             <tr class="itemLists">
-              <td class="itemPic"><img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
+              <td class="itemPic">
+                <!-- <el-checkbox v-model="checked" class="check"></el-checkbox> -->
+                <img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
               <td class="serviceName">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>
@@ -38,7 +40,7 @@
               </td>
               <td class="sumPrice">￥{{Goods.totalPrice}}</td>
               <td class="delete">
-                <div @click="dele(Goods.serviceId)">删除</div>
+                <el-button @click="dele(Goods.serviceId)" class="delBut">删除</el-button>
               </td>
             </tr>
           </tbody>
@@ -90,7 +92,8 @@ export default {
       num: "",
       tlPay: 0,
       orderNo: "",
-      cartNum: ""
+      cartNum: "",
+      checked: ''
     };
   },
   methods: {
@@ -102,21 +105,17 @@ export default {
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
         .then(data => {
           console.log(data);
-          // this.recData();
         });
     },
     numChange(id, numbers) {
       var numC = Number(numbers);
-      if(numbers>=1){
+      if (numbers >= 1) {
         this.ajax
-        .post(
-          "/xinda-api/cart/add",
-          this.qs.stringify({ id: id, num: numC })
-        )
-        .then(data => {
-          console.log(data);
-      this.recData();
-        });
+          .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: numC }))
+          .then(data => {
+            console.log(data);
+            this.recData();
+          });
       }
     },
     recData() {
@@ -146,7 +145,7 @@ export default {
         .then(function(data) {
           var tData = data.data.data;
           that.products = tData;
-          console.log(that.products);
+          // console.log(that.products);
         });
     },
     add(id) {
@@ -155,7 +154,7 @@ export default {
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
-          console.log(data);
+          // console.log(data);
           that.recData();
         });
     },
@@ -181,16 +180,29 @@ export default {
     dele(id) {
       var that = this;
       //删除
-      this.ajax
+          this.$confirm('确认删除该商品？, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(function(data) {
-          console.log("del", data.data);
           that.recData();
           that.ajax.post("xinda-api/cart/cart-num").then(data => {
             that.cartNum = data.data.data.cartNum;
             that.setNum(that.cartNum);
-            sessionStorage.setItem(that.cartNum, that.cartNum);
           });
+        });
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
         });
     },
     toPay(orderNo) {
@@ -204,6 +216,7 @@ export default {
       var that = this;
       this.ajax.post("/xinda-api/cart/submit").then(function(data) {
         var rData = data.data.data;
+        console.log(data)
         that.orderNo = rData;
         that.toPay(that.orderNo);
         // console.log(data);
@@ -298,11 +311,18 @@ thead {
     }
     .itemPic {
       line-height: 0;
+      display: flex;
+      padding: 0 50px;
+      box-sizing: border-box;
+      justify-content: space-between;
       img {
         width: 50px;
         height: 50px;
-        margin: auto auto;
+        margin: auto 0;
         border: 1px solid #eee;
+      }
+      .check{
+        margin: auto 0;
       }
     }
     .serviceName {
@@ -326,6 +346,9 @@ thead {
     }
     .delete {
       cursor: pointer;
+      .delBut{
+        background: #f7f7f7;
+      }
     }
   }
 }
