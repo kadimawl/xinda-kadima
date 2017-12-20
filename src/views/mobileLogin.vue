@@ -4,18 +4,18 @@
       <div class="errorMSG" v-show="msg"><img src="../assets/mobile/error.jpg" alt=""><p>{{msg}}</p></div>
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-        <p class="errorMsg">{{phoneMsg}}</p>
+        <!-- <p class="errorMsg">{{phoneMsg}}</p> -->
       </div>
       <div class="pwBox">
         <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
-        <p class="errorMsg">{{pwMsg}}</p>
+        <!-- <p class="errorMsg">{{pwMsg}}</p> -->
       </div>
       <div class="v-box">
-        <div>
+        <!-- <div> -->
           <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
           <img @click="reImg" :src="imgUrl" alt="">
-        </div>
-        <p class="errorMsg">{{imgVMsg}}</p>
+        <!-- </div> -->
+        <!-- <p class="errorMsg">{{imgVMsg}}</p> -->
       </div>
       <button @click="iLogin">立即登录</button>
     </div>
@@ -148,54 +148,19 @@ export default {
 
 <style lang="less">
 .box {
-  max-width: 768px;
-  max-height: 1280px;
+  // max-width: 768px;
+  // max-height: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 13%;
+  // padding: 0 13%;
   box-sizing: border-box;
 }
 input {
-  height: 40px;
+  width: 547px;
+  height: 75px;
+  margin: 0 auto;
 }
-.errorMSG{
-  width: 80%;
-  height: 40px;
-  border: 1px solid #f0402e;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-around;
-  img{
-    width: 20px;
-    height: 20px;
-  }
-  p{
-    width: 86%;
-    height: 20px;
-    color: #f0402e;
-    font-size: 14px;
-    line-break: 20px;
-    text-align: center;
-  }
-}
-.phoneBox {
-  width: 100%;
-  display: flex;
-  margin-top: 50px;
-  input {
-    width: 80%;
-  }
-}
-.pwBox {
-  width: 100%;
-  margin-top: 35px;
-  display: flex;
-  justify-content: space-between;
-  input {
-    width: 80%;
-  }
-}
+
 .v-box {
   width: 100%;
   display: flex;
@@ -214,8 +179,9 @@ input {
   }
 }
 button {
-  width: 80%;
-  height: 45px;
+  display: block;
+  width: 550px;
+  height: 75px;
   margin-top: 213px;
   font-size: 27px;
   font-weight: 400;
@@ -223,8 +189,9 @@ button {
   outline: 0;
   background: #2693d4;
   text-align: center;
-  line-height: 45px;
+  line-height: 75px;
   border: none;
+  margin: 0 auto;
 }
 
 .box-4d {
