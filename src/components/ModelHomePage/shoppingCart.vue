@@ -28,17 +28,19 @@
               <p class="storeName">店铺：{{Goods.providerName}}</p>
             </tr>
             <tr class="itemLists">
-              <td class="itemPic"><img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
-              <td>{{Goods.serviceName}}</td>
+              <td class="itemPic">
+                <!-- <el-checkbox v-model="checked" class="check"></el-checkbox> -->
+                <img :src="'http://115.182.107.203:8088/xinda/pic'+Goods.providerImg" alt=""></td>
+              <td class="serviceName">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>
                 <button @click="minus(Goods.serviceId,Goods.buyNum)">-</button>
-                <input type="text" v-model="Goods.buyNum">
+                <input type="text" v-model="Goods.buyNum" @blur="numChange(Goods.serviceId,Goods.buyNum)" @focus="focus(Goods.serviceId,Goods.buyNum)">
                 <button @click="add(Goods.serviceId)">+</button>
               </td>
               <td class="sumPrice">￥{{Goods.totalPrice}}</td>
               <td class="delete">
-                <div @click="dele(Goods.serviceId)">删除</div>
+                <el-button @click="dele(Goods.serviceId)" class="delBut">删除</el-button>
               </td>
             </tr>
           </tbody>
@@ -47,7 +49,7 @@
           <div class="total">金额总计：
             <p class="totalPay">￥{{tlPay}}</p>
           </div>
-          <button class="continue">继续购物</button>
+          <button class="continue" @click="toHomePage">继续购物</button>
           <button class="balance" @click="suBmit">去结算</button>
         </div>
         <div class="hotservice">
@@ -61,7 +63,7 @@
               <h2>￥{{product.price}}</h2>
               <del>原价：￥1200</del>
               <span>
-                <a href="">查看详情>>></a>
+                <a href="javascript:void(0);" @click="todetail(product.id)">查看详情>></a>
               </span>
             </div>
           </div>
@@ -72,15 +74,16 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   created() {
     var that = this;
-    this.ajax.post("/xinda-api/recommend/list").then(function(data) {
-      //推荐服务列表
-      var tData = data.data.data.hq;
-      that.products = tData;
+    this.recData(); //拉取购物品项列表
+    this.recomData(); //拉取推荐服务列表
+    this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      that.cartNum = data.data.data.cartNum;
+      that.setNum(that.cartNum);
     });
-    this.recData();
   },
   data() {
     return {
@@ -88,20 +91,62 @@ export default {
       cartLists: [],
       num: "",
       tlPay: 0,
-      orderNo: ""
+      orderNo: "",
+      cartNum: "",
+      checked: ''
     };
   },
   methods: {
+    ...mapActions(["setNum"]),
+    focus(id, old) {
+      console.log(old);
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
+        .then(data => {
+          console.log(data);
+        });
+    },
+    numChange(id, numbers) {
+      var numC = Number(numbers);
+      if (numbers >= 1) {
+        this.ajax
+          .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: numC }))
+          .then(data => {
+            console.log(data);
+            this.recData();
+          });
+      }
+    },
     recData() {
       //列表数据获取
       var that = this;
       this.ajax.post("/xinda-api/cart/list").then(function(data) {
         var rData = data.data.data;
         that.cartLists = rData;
-        for (var i = 0; i < that.cartLists.length; i++) {
-          that.tlPay += that.cartLists[i].unitPrice * that.cartLists[i].buyNum;
+        var tlPay = 0;
+        for (var i in that.cartLists) {
+          tlPay += that.cartLists[i].totalPrice;
         }
+        that.tlPay = tlPay;
       });
+    },
+    recomData() {
+      //推荐服务列表
+      var that = this;
+      this.ajax
+        .post(
+          "/xinda-api/product/package/grid",
+          this.qs.stringify({
+            start: 0,
+            limit: 4
+          })
+        )
+        .then(function(data) {
+          var tData = data.data.data;
+          that.products = tData;
+          // console.log(that.products);
+        });
     },
     add(id) {
       //增加商品数量
@@ -109,7 +154,7 @@ export default {
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
-          console.log(data);
+          // console.log(data);
           that.recData();
         });
     },
@@ -135,26 +180,59 @@ export default {
     dele(id) {
       var that = this;
       //删除
-      this.ajax
+          this.$confirm('确认删除该商品？, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(function(data) {
-          console.log("del", data.data);
           that.recData();
-          // console.log(data.data.data);
+          that.ajax.post("xinda-api/cart/cart-num").then(data => {
+            that.cartNum = data.data.data.cartNum;
+            that.setNum(that.cartNum);
+          });
+        });
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });          
         });
     },
     toPay(orderNo) {
-      this.$router.push({ path: "/Order/orderdetail", query: { orderNo: orderNo } });
-      console.log("111")
+      this.$router.push({
+        path: "/Order/orderdetail",
+        query: { orderNo: orderNo }
+      });
     },
     suBmit() {
-      //结算
+      //结算并清空购物车
       var that = this;
       this.ajax.post("/xinda-api/cart/submit").then(function(data) {
         var rData = data.data.data;
+        console.log(data)
         that.orderNo = rData;
         that.toPay(that.orderNo);
         // console.log(data);
+      });
+    },
+    todetail(id) {
+      //传参产品详情
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+    },
+    toHomePage() {
+      //跳转首页
+      this.$router.push({
+        path: "/HomePage"
       });
     }
   }
@@ -199,6 +277,10 @@ thead {
     color: #686868;
     display: flex;
     justify-content: space-around;
+    th {
+      width: 200px;
+      text-align: center;
+    }
   }
 }
 .store {
@@ -212,7 +294,6 @@ thead {
   .itemLists {
     font-size: 14px;
     background-color: #f7f7f7;
-    line-height: 55px;
     width: 1200px;
     color: #686868;
     display: flex;
@@ -223,14 +304,32 @@ thead {
       margin-right: 1000px;
       line-height: 40px;
     }
+    td {
+      width: 200px;
+      line-height: 52px;
+      text-align: center;
+    }
     .itemPic {
-      width: 50px;
-      height: 50px;
-      border: 1px solid #eee;
+      line-height: 0;
+      display: flex;
+      padding: 0 50px;
+      box-sizing: border-box;
+      justify-content: space-between;
       img {
         width: 50px;
         height: 50px;
+        margin: auto 0;
+        border: 1px solid #eee;
       }
+      .check{
+        margin: auto 0;
+      }
+    }
+    .serviceName {
+      padding-top: 16px;
+      box-sizing: border-box;
+      font-size: 14px;
+      line-height: 16px;
     }
     button {
       width: 20px;
@@ -247,6 +346,9 @@ thead {
     }
     .delete {
       cursor: pointer;
+      .delBut{
+        background: #f7f7f7;
+      }
     }
   }
 }

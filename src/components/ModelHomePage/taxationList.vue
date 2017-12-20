@@ -84,9 +84,12 @@
 
 <script>
 import distpicker from "../distpicker";
+import plugins from "../../plugins";
+import {mapActions} from 'vuex'
 export default {
   components: { distpicker },
   methods: {
+    ...mapActions(["setNum"]),
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
@@ -161,20 +164,21 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
-      this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) {
-          console.log(data);
-        });
-      that.$router.push({ path: "/tabs/shoppingCart" });
+      plugins(id, that);
     },
     addCart: function(id) {
+      var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
           //添加购物车
-          console.log(data);
+          // console.log(data);
         });
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        that.cartNum = data.data.data.cartNum;
+        that.setNum(that.cartNum) ;
+        sessionStorage.setItem(that.cartNum , that.cartNum)
+      });
     },
     changePage: function() {
       this.reqData();
@@ -249,6 +253,7 @@ export default {
       for (const key in rData) {
         if (rData[key].name == "财税服务") {
           that.ItemLists = rData[key].itemList;
+
           break;
         }
       }
@@ -287,7 +292,9 @@ export default {
       pageShow: true,
       pageObj: {},
       lastCount: "",
-      pageChange: 0
+      pageChange: 0,
+      orderNo: "",
+      cartNum: ''
     };
   }
 };

@@ -64,31 +64,31 @@ export default {
   padding: 0.3rem 1rem;
   .city {
     position: absolute;
-    top: 20px;
+    top: 0.4rem;
     .listO {
       display: inline-block;
-      border-top: 14px solid #000000;
-      border-left: 14px solid transparent;
-      border-right: 14px solid transparent;
-      border-bottom: 14px solid transparent;
+      border-top: 0.8rem solid #000000;
+      border-left: 0.8rem solid transparent;
+      border-right: 0.8rem solid transparent;
+      border-bottom: 0.8rem solid transparent;
       position: absolute;
       left: 0;
-      top: 8px;
+      top: 0.1rem;
     }
     .listI {
       display: inline-block;
-      border-top: 12px solid #ffffff;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
-      border-bottom: 12px solid transparent;
+      border-top: 0.7rem solid #ffffff;
+      border-left: 0.7rem solid transparent;
+      border-right: 0.7rem solid transparent;
+      border-bottom: 0.7rem solid transparent;
       position: absolute;
-      left: 2px;
-      top: 8px;
+      left: 0.025rem;
+      top: 0.04rem;
     }
     p {
       display: inline;
       margin-left: 1.9rem;
-      font-size: 23px;
+      font-size: 2rem;
     }
   }
 }
@@ -96,7 +96,7 @@ export default {
   display: flex;
   justify-content: center;
   h1 {
-    line-height: 56px;
+    line-height: 1rem;
   }
 }
 .lunbo {
@@ -108,8 +108,8 @@ export default {
   padding: 1rem;
   span{
     display: block;
-    width: 110px;
-    height: 110px
+    width: 1rem;
+    height: 1rem;
   }
   p{
       font-size: 23px;
