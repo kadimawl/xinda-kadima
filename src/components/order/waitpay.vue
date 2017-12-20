@@ -37,7 +37,6 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
 export default {
     // 父组件向子组件传参
     props:{
@@ -52,7 +51,6 @@ export default {
     computed: {
     },
     methods: {
-        ...mapActions(['setCode']),
         // 关闭微信扫码框
         weixinstop: function() {
             this.$emit('ts');
@@ -77,11 +75,9 @@ export default {
         },
         //支付成功,要与返回的数据进行验证
         payR: function() {
-            loaction.href='http://localhost:8080/#/order/success';
-            this.setCode('');
+            location.href='http://localhost:8080/#/order/success';
             // if(){//验证成功
             //     this.$emit('close');
-            //     this.setCode('');
             //     loaction.href='http://localhost:8080/#/order/success';
             // }else{//验证失败
             //     this.$emit('close');
@@ -90,10 +86,9 @@ export default {
         },
         // 支付失败
         payno: function() {
-            loaction.href='http://localhost:8080/#/order/failure';
+            location.href='http://localhost:8080/#/order/failure';
         //     if(){//验证成功
         //     this.$emit('close');
-        // this.setCode('');
         //             location.href='http://localhost:8080/#/order/success';
         //     }else{//验证失败
         //    this.$emit('close');

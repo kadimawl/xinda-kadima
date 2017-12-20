@@ -7,12 +7,12 @@
       <h3>{{product.info}}</h3>
       <p>{{product.name}}</p>
       <div>
-        <h5>市场价：<del>￥{{product.marketPrice*1.2}}</del></h5>
-        <h5>价&nbsp;&nbsp;格：<h4>￥{{product.marketPrice}}</h4>元</h5>
+        <h5>市场价：<del>￥{{product.marketPrice}}</del></h5>
+        <h5>价&nbsp;&nbsp;格：<h4>￥{{product.status}}</h4>元</h5>
       </div>
       <p>类&nbsp;&nbsp;型：<a href="javascript:void(0)">{{product.info}}</a></p>
       <p>地&nbsp;&nbsp;区：{{shops.providerRegionText}}</p>
-      <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
+      <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" @blur="blurInp()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
       <button class="buyNow" @click="buyNow(id,num)">立即购买</button>
       <button @click="buyAdd(id,num)">加入购物车</button>
     </div>
@@ -33,6 +33,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import plugins from "../../plugins";
 export default {
   data() {
     return {
@@ -62,20 +64,31 @@ export default {
       });
   },
   methods: {
+    ...mapActions(["setNum"]),
     buyNow(id, num) {
-      this.$router.push({
-        path: "/order",
-        query: { shoppingID: id, shopNum: num }
-      });
+      var that = this;
+      // this.$router.push({
+      //   path: "/order",
+      //   query: { shoppingID: id, shopNum: num }
+      // });
+      plugins(id,that)
     },
-    buyAdd(id) {
-      this.$router.push({
-        path: "/tabs/shoppingCart",
-        query: { shoppingID: id }
-      });
+    buyAdd(id, num) {
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
+        .then(function() {
+          that.ajax.post("xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        });
     },
     les() {
       this.num -= 1;
+      if (this.num == 0) {
+        this.num = 1;
+      }
     },
     add() {
       this.num -= -1;
@@ -84,14 +97,18 @@ export default {
       var nu = this.num;
       if (nu) {
         nu = parseInt(nu);
+      } else {
+        return;
       }
       if (nu < 1) {
         nu = 1;
       }
-      if (nu > 10) {
-        nu = 10;
-      }
       this.num = nu;
+    },
+    blurInp() {
+      if (!this.num) {
+        this.num = 1;
+      }
     }
   }
 };
@@ -162,7 +179,6 @@ p {
       margin: 20px 0;
     }
     .math {
-      height: 20px;
       background: #ffffff;
       width: 50px;
       line-height: 20px;

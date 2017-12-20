@@ -59,7 +59,7 @@ Vue.prototype.debounce = function debounce(fn, delay) {
 
     // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
     // 再过 delay 毫秒就执行 fn
-    timer = setTimeout(function () {//句柄
+    timer = setTimeout(function () { //句柄
       fn.apply(this, args)
     }, delay)
   }
@@ -87,9 +87,19 @@ function browserRedirect() {
   var bIsAndroid = sUserAgent.match(/android/i) == "android";
   var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
   var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-  document.writeln("您的浏览设备为：");
   if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-    document.writeln("phone");
+    !(function (doc, win) {  //js控制自适应
+      var docEle = doc.documentElement,
+        evt = "onorientationchange" in window ? "orientationchange" : "resize",
+        fn = function () {
+          var width = docEle.clientWidth;
+          width && (docEle.style.fontSize = 100 * (width / 768) + "px");
+        };
+
+      win.addEventListener(evt, fn, false);
+      doc.addEventListener("DOMContentLoaded", fn, false);
+
+    }(document, window));
   } else {
     document.writeln("pc");
   }

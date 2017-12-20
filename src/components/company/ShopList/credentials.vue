@@ -12,8 +12,8 @@
           <img src="../../../assets/shop/blue.png" alt="">
           <p>{{list.serviceInfo}}</p>
           <p>销量:</p>
-          <h2>￥{{list.marketPrice}}.00</h2>
-          <del>原价：￥{{list.price}}.00</del>
+          <h2>￥{{list.price}}.00</h2>
+          <del>原价：￥{{list.marketPrice}}.00</del>
           <a href="javascript:void(0)" :id="list.id" @click="GoToShop(list.id)">查看详情>></a>
         </div>
     </div>
@@ -69,7 +69,7 @@ export default {
         this.nums[i] = i + 1;
       }
       for (var key in lists) {
-        lists[key].price = Math.floor(lists[key].marketPrice * (0.2 + 1));
+        // lists[key].price = Math.floor(lists[key].marketPrice * (0.2 + 1));
         if (lists[key].serviceName.length > 13) {
           lists[key].serviceName = lists[key].serviceName.substr(0, 13);
           lists[key].serviceName += "...";
