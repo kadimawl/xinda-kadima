@@ -21,7 +21,7 @@
             <div class="ImgIV"></div>
           </div>
           <div class="Listnames">
-            <div class="listI" v-for="(itemName,idx) in ItemLists" :key="itemName.name" @mouseover="mover(idx)" >
+            <div class="listI" v-for="(itemName,idx) in ItemLists" :key="itemName.name" @mouseover="mover(idx)">
               <p class="ListNameI">
                 <a href="javascript:void(0);" :code="itemName.code" @click="toListI(itemName.code)">{{itemName.name}}</a>
               </p>
@@ -30,6 +30,7 @@
                   <a href="javascript:void(0);" :code="itemNameII.code" @click="toListII(itemNameII.code)">{{itemNameII.name}}</a>
                 </p>
               </div>
+              <!-- 三级菜单条目显示判断“v-show="idx==index"” -->
               <div class="listIII" v-show="idx==index">
                 <div class="listIII-s" v-for="itemNameII in itemName.itemList" :key="itemNameII.name">
                   <div class="ListNameII">
@@ -110,7 +111,7 @@
           <p class="service-inf">{{product.serviceInfo}}</p>
           <span class="price">￥{{product.price}}</span>
           <span class="unit">{{product.unit}}</span>
-          <button>查看详情</button>
+          <button @click="toDetail(product.id)">查看详情</button>
         </div>
       </div>
     </div>
@@ -136,11 +137,11 @@
     <!-- 推荐服务 -->
     <div class="recommend">
       <div class="topFrame">
-        <h3>推荐服务商</h3>
-        <span>推荐服务</span>
+        <h3 @click="shorhi2">推荐服务商</h3>
+        <span @click="shorhi">推荐服务</span>
       </div>
-      <div class="providers">
-        <div class="provider" v-for="Providers in providers" :key="Providers.id">
+      <div class="providers" v-show="!SorH">
+        <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
@@ -151,9 +152,9 @@
             <div class="service-inf">{{Providers.products}}</div>
             <div class="service-inf">{{Providers.products}}</div>
           </div>
-
+          <!-- 推荐服务商 -->
         </div>
-        <div class="provider" v-for="Providers in providers" :key="Providers.id">
+        <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
@@ -166,7 +167,7 @@
           </div>
         </div>
       </div>
-      <div class="com-inf" style="display:none;">
+      <div class="com-inf" v-show="SorH">
         <div class="services" v-for="Service in services" :key="Service.id">
           <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Service.providerImg" alt=""></div>
           <h4>{{Service.providerName}}</h4>
@@ -174,7 +175,7 @@
           <p class="service-inf">{{Service.serviceInfo}}</p>
           <span class="price">￥{{Service.price}}</span>
           <span class="unit">{{Service.unit}}</span>
-          <button>查看详情</button>
+          <button @click="toDetail(Service.id)">查看详情</button>
         </div>
       </div>
     </div>
@@ -189,7 +190,7 @@
 </template>
 
 <script>
-import sele from "@/components/sele";
+import sele from "@/components/sele"; //头部部分引用
 export default {
   components: { sele },
   created() {
@@ -208,71 +209,122 @@ export default {
     };
   },
   methods: {
-    dataRequest1:function () {
+    dataRequest1: function() {
+      //三级菜单
       var that = this;
       this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-      var rData = data.data.data;
-      that.ItemLists = rData;
-      console.log(that.ItemLists);
-    });
+        var rData = data.data.data;
+        that.ItemLists = rData;
+        // console.log(that.ItemLists);
+      });
     },
-    dataRequest2:function() {
+    dataRequest2: function() {
+      //各类产品服务
       var that = this;
       this.ajax.post("/xinda-api/recommend/list").then(function(data) {
-      var tData = data.data.data.hq;
-      var gData = data.data.data.provider;
-      var lData = data.data.data.product;
-      // console.log(data.data.data);
-      that.products = tData;
-      that.providers = gData;
-      that.services = lData;
-    });
+        var tData = data.data.data.hq; //
+        var gData = data.data.data.provider;
+        var lData = data.data.data.product;
+        console.log(data.data.data.provider);
+        that.products = tData;
+        that.providers = gData;
+        that.services = lData;
+      });
     },
     displayShow: function() {
+      //全部产品菜单显示
       this.SorH = true;
     },
     mover: function(idx) {
+      //鼠标上浮时获取选中对象index值，并使二三级菜单显示与之index值匹配的条目
       this.index = idx;
     },
-    mleave:function(){
+    mleave: function() {
+      //离开菜单区域菜单隐藏
       this.SorH = false;
     },
-    toListI:function(code){
-    var that = this;
-    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-      var rData = data.data.data;
-      if(code==1){
-          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
-      }else if(code==2){
-          that.$router.push({path:'/tabs/companyList',query:{code:code}});
-      }
-    });
+    toListI: function(code) {
+      //一级菜单跳转
+      var that = this;
+      this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+        var rData = data.data.data;
+        if (code == 1) {
+          that.$router.push({
+            path: "/tabs/taxationList",
+            query: { code: code }
+          });
+        } else if (code == 2) {
+          that.$router.push({
+            path: "/tabs/companyList",
+            query: { code: code }
+          });
+        }
+      });
     },
-    toListII:function (code) {
-    var that = this;
-    this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-      var rData = data.data.data;
-      console.log(code)
-      if(code==1){
-        console.log(code,"1")
-          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
-      }else if(code==2){
-          console.log(code,"2")
-          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
-      }else if(code==3){
-          console.log(code,"3")
-          that.$router.push({path:'/tabs/taxationList',query:{code:code}});
-      }else if(code==4){
-          console.log(code,"4")
-          that.$router.push({path:'/tabs/companyList',query:{code:code}});
-      }else if(code==5){
-          console.log(code,"5")
-          that.$router.push({path:'/tabs/companyList',query:{code:code}});
-      }
-    });
+    toListII: function(code) {
+      //二三级菜单跳转
+      var that = this;
+      this.ajax.post("/xinda-api/product/style/list").then(function(data) {
+        var rData = data.data.data;
+        console.log(code);
+        if (code == 1) {
+          console.log(code, "1");
+          that.$router.push({
+            path: "/tabs/taxationList",
+            query: { code: code }
+          });
+        } else if (code == 2) {
+          console.log(code, "2");
+          that.$router.push({
+            path: "/tabs/taxationList",
+            query: { code: code }
+          });
+        } else if (code == 3) {
+          console.log(code, "3");
+          that.$router.push({
+            path: "/tabs/taxationList",
+            query: { code: code }
+          });
+        } else if (code == 4) {
+          console.log(code, "4");
+          that.$router.push({
+            path: "/tabs/companyList",
+            query: { code: code }
+          });
+        } else if (code == 5) {
+          console.log(code, "5");
+          that.$router.push({
+            path: "/tabs/companyList",
+            query: { code: code }
+          });
+        }
+      });
     },
+    shorhi() {
+      console.log("切换");
+      this.SorH = true;
+    },
+    shorhi2() {
+      console.log("切换");
+      this.SorH = false;
+    },
+    toDetail(id) {
+      //跳转产品详情
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+    },
+    toStore(id) {
+      console.log("111");
+      // 跳转店铺详情
+      this.$router.push({
+        path: "/shopList",
+        query: { id: id }
+      });
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -296,19 +348,19 @@ export default {
   }
   .el-carousel__item:nth-child(3) {
     background: url(../../assets/HomePageimages/lun1.jpg);
-    background-size:100% 100%;;
+    background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(4) {
     background: url(../../assets/HomePageimages/lun2.jpg);
-    background-size:100% 100%;
+    background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(5) {
     background: url(../../assets/HomePageimages/lun3.jpg);
-    background-size:100% 100%;
+    background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(6) {
     background: url(../../assets/HomePageimages/lun4.jpg);
-    background-size:100% 100%;
+    background-size: 100% 100%;
   }
 }
 .ItemList {
@@ -659,7 +711,7 @@ export default {
     height: 400px;
     display: flex;
     justify-content: space-around;
-    margin-top: 30px;
+    margin-top: 50px;
     .provider {
       width: 270px;
       height: 400px;

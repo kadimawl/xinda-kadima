@@ -119,10 +119,10 @@ export default new Router({
                                 component: evaluate
                             }],
                         }, {
-                            path: '/shopIndex', //店铺首页
+                            path: '/shopIndex', //店铺列表
                             component: shopIndex
                         }, {
-                            path: '/shopList', //店铺列表
+                            path: '/shopList', //店铺详情
                             component: shopList,
                             children: [{
                                 path: '/',
