@@ -48,7 +48,6 @@ export default {
     this.ajax.post("xinda-api/cart/cart-num").then(data => {
       var cartNum = data.data.data.cartNum;
       that.setNum(cartNum);
-      sessionStorage.setItem(cartNum, cartNum);
     });
   },
   data() {
