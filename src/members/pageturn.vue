@@ -14,7 +14,7 @@
 export default {
     created(){
         for(let i=0;i<this.maxpage;i++){
-            nums[i]=i+1;
+            this.nums[i]=i+1;
         }
     },
     data() {
@@ -63,6 +63,7 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 40px;
+    margin-bottom: 20px;
     div{
         margin-left: 10px;
     }

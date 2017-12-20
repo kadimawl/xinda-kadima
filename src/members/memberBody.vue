@@ -26,28 +26,28 @@
     </div>
     <!-- 订单展示 -->
     <div class="listshow">
-        <div class="innerbox" v-for="list in lists" :key="list.businessNo">
+        <div class="innerbox" v-for="list in lists.ordercode" :key="list.id">
             <div class="codetime"><p>订单号：{{list.businessNo}}</p><p>下单时间：{{list.createTime}}</p></div>
-            <div class="all">
+            <div class="all" v-for="serv in list.servitem" :key="serv.businessNo">
                 <div>
                     <div>
                         <!-- 公司logo图片 接口数据无logo图片链接-->
-                        <div><img :src="list.smallImg" alt=""></div>
-                        <p>{{list.providerName}}</p>
+                        <div><img :src="serv.smallImg" alt=""></div>
+                        <p>{{serv.providerName}}</p>
                     </div>
                     <!-- 单价 -->
-                    <p>￥{{list.unitPrice}}</p>
+                    <p>￥{{serv.unitPrice}}</p>
                     <!-- 数量 -->
-                    <p>{{list.buyNum}}</p>
+                    <p>{{serv.buyNum}}</p>
                 </div>
                 <!-- 总价 -->
-                <p>￥{{list.totalPrice}}</p>
+                <p>￥{{serv.totalPrice}}</p>
                 <!-- 订单状态 -->
                 <p>{{list.status}}</p>
                 <!-- 操作按钮 -->
                 <div>
-                    <button @click="payfor(list.businessNo)">付款</button>
-                    <p @click="remove(list.businessNo)">删除订单</p>
+                    <button @click="payfor(list.businessNo,list.status)">付款</button>
+                    <p @click="remove(list.id)">删除订单</p>
                 </div>
             </div>
         </div>
@@ -55,7 +55,7 @@
     <!-- 错误提示框 -->
     <div class="errorbox" v-if="errorshow"><p :style="{color:acolor}">{{error}}</p></div>
     <!-- 翻页组件 -->
-    <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
+    <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
 </div>
  
   
@@ -64,6 +64,7 @@
 <script>
 //功能就差一个翻页功能
 // 引入模块
+var moment = require('moment');
 import {mapActions,mapGetters} from 'vuex' 
 import pageturn from './pageturn'
 export default {
@@ -73,21 +74,26 @@ export default {
         this.errorshow=false;
         // 未登录不拉取数据
         if(this.getName){
-            if(!this.datas[this.pagenum]){//未拉取
-                var that=this;
-                that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
-                    businessNo:1,
-                    startTime:'2017-03-28',
-                    endTime:'2017-03-28',
-                    start:that.pagenum,
-                    limit:that.pagesize,
-                })).then(function(data){
-                    console.log('data==',data);
-                    that.pageshow(data);
-                })
-            }else{//已拉取
-                this.lists=this.datas.splice(this.pagenum,this.pagesize);
-            }
+            var that=this;
+            that.ajax.post('/xinda-api/business-order/grid',that.qs.stringify({
+                start:this.pagenum,
+                limit:this.pagesize,
+            })).then(function(data){
+                console.log('businessdata==',data);
+                that.businessshow(data);
+            })
+            setTimeout(function(){
+                console.log(that.ordercode.length)
+                for(var i=0;i<that.ordercode.length;i++){
+                    that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
+                        businessNo:that.ordercode[i],
+                    })).then(function(data){
+                        console.log('servicedata==',data);
+                        that.serviceshow(data);
+                    })
+                }
+            },1000)
+            
         }
     },
     data() {
@@ -97,15 +103,15 @@ export default {
             inputcode:'',//订单编号输入
             msg:false,//控制提示框
             sermsg:'',//提示内容
-            lists:[],//循环数组
+            lists:{},//循环数组
             searchR:'s',//将搜索的索引赋给本变量
             errorshow:false,//控制错误框
             error:'',//错误提示
             acolor:'#ff4649',//错误提示的颜色
             pagenum:0,//
             pagesize:2,//
-            tatal:'',//总条目
-            datas:[],//所有data.data.data数据放入datas
+            total:'',//总条目
+            ordercode:[],//
         };
     },
     computed:{
@@ -118,24 +124,49 @@ export default {
         pagevary(msg){
             this.pagenum=msg*2;
         },
-        // 处理ajax获取的数据显示在页面
-        pageshow(data){
+        // // 处理ajax获取的business数据显示在页面
+        businessshow(data){
             if(data.data.data){
-                this.total=data.data.totalCount;
-                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
-                    var dataindex=i-this.pagenum;
-                    console.log('i=',this.tatal[i])
-                    this.tatal[i]=data.data.data[dataindex];
-                    this.datas[i].createTime=new Date(data.data.data[dataindex].createTime);
-                }
-                this.lists=this.datas.splice(this.pagenum,this.pagesize);
-                for(let i=0;i<this.lists.length;i++){
-                    if(this.lists[i].status==1){//关于订单状态的code纯属猜测
-                        this.lists[i].status='等待买家付款';
-                    }else if(this.lists[i].status==2){
-                        this.lists[i].status='已完成';
+                this.total=data.data.totalCount+'';
+                var data=data.data.data;
+                var datas={};
+                
+                for(var key in data){
+                    if(data[key].status==1){//关于订单状态
+                        data[key].status='等待买家付款';
+                    }else if(data[key].status==4){
+                        data[key].status='已完成';
+                    }
+                    var businessNo=data[key].businessNo;
+                    if(!datas[businessNo]){
+                        datas[businessNo]=data[key];
+                        datas[businessNo].createTime=moment(data[key].createTime).format('YYYY-MM-DD hh:mm:ss');
                     }
                 }
+                var orderNo=[];
+                for(var key in datas){
+                    orderNo.push(businessNo);
+                }
+                console.log(datas.orderNo);
+                this.ordercode=orderNo;
+                this.lists=datas;
+                console.log('this.lists==',this.lists)
+            }
+        },
+        //处理ajax获取的service数据
+        serviceshow(data){
+            if(data.data.data){
+                var data=data.data.data;
+                console.log(data)
+                for(var key in this.lists){
+                    this.lists[key].servitem=[];
+                    for(var i=0;i<data.length;i++){
+                        if(data[i].businessNo==key){
+                            this.lists[key].servitem.push(data[i])
+                        }
+                    }
+                }
+                console.log(this.lists);                
             }
         },
         // 转换为时间戳   
@@ -159,7 +190,6 @@ export default {
             }else{
                 // 简单验证订单号
                 if(/^S1\d{18}$/.test(this.inputcode)==true){
-                    var data=JSON.parse(sessionStorage.getItem('myorder'+this.getName+''+this.pagenum+''));
                     // 去获取的数据里搜索订单编号
                     for(let i=0;i<data.data.data.length;i++){
                         if(data.data.data[i].businessNo==this.inputcode){
@@ -202,36 +232,36 @@ export default {
                             }
                         }else{//有一个是空
                             var newtorder=data.data.data[this.searchR].createTime;
-                            if(this.value1==''&&this.value2!=''){
-                                var newtend=this.revertT(this.value2);
-                                if(newtorder<=newtend){
-                                    this.lists=data.data.data[this.searchR];
-                                    this.sermsg='找到了';
-                                    this.msg='true';
-                                    return;
-                                }else{
-                                    this.lists=[];
-                                    this.sermsg='没有找到该订单号';
-                                    this.msg='true';
-                                    return;
-                                }
-                                return;
-                            }
-                            if(this.value1!=''&&this.value2==''){
-                                var newtstart=this.revertT(this.value1);
-                                if(newtorder>=newtstart){
-                                    this.lists=data.data.data[this.searchR];
-                                    this.sermsg='找到了';
-                                    this.msg='true';
-                                    return;
-                                }else{
-                                    this.lists=[];
-                                    this.sermsg='没有找到该订单号';
-                                    this.msg='true';
-                                    return;
-                                }
-                                return;
-                            }
+                            // if(this.value1==''&&this.value2!=''){
+                            //     var newtend=this.revertT(this.value2);
+                            //     if(newtorder<=newtend){
+                            //         this.lists=data.data.data[this.searchR];
+                            //         this.sermsg='找到了';
+                            //         this.msg='true';
+                            //         return;
+                            //     }else{
+                            //         this.lists=[];
+                            //         this.sermsg='没有找到该订单号';
+                            //         this.msg='true';
+                            //         return;
+                            //     }
+                            //     return;
+                            // }
+                            // if(this.value1!=''&&this.value2==''){
+                            //     var newtstart=this.revertT(this.value1);
+                            //     if(newtorder>=newtstart){
+                            //         this.lists=data.data.data[this.searchR];
+                            //         this.sermsg='找到了';
+                            //         this.msg='true';
+                            //         return;
+                            //     }else{
+                            //         this.lists=[];
+                            //         this.sermsg='没有找到该订单号';
+                            //         this.msg='true';
+                            //         return;
+                            //     }
+                            //     return;
+                            // }
                         }
                     }
                 }else{
@@ -242,9 +272,11 @@ export default {
             }
         },
         // 付款
-        payfor:function(num){
-            this.setCode(num)
-            location.href='http://localhost:8080/#/order';
+        payfor:function(num,status){
+            // console.log(num,status);
+            if(status=='等待买家付款'){
+                this.$router.push({path:'/Order/orderdetail',query:{orderNo:num}});
+            }
         },
         // 删除订单
         remove:function(code){
@@ -254,32 +286,17 @@ export default {
             that.qs.stringify(({
                 id:code
             }))).then(function(data){
-                // console.log(data);
+                console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
                     that.errorshow=true;//提示
                     that.error='删除成功';
                     that.acolor='#55a4dc';
-                    that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
-                        businessNo:1,
-                        startTime:'2017-03-28',
-                        endTime:'2017-03-28',
-                        start:0,
-                        limit:'2',
-                    })).then(function(data){
-                        if(data.data.status==1){
-                             // console.log('data==',data);
-                            that.pageshow(data);
-                        }else{
-                            that.errorshow=true;//提示
-                            that.error='更新失败';
-                            that.acolor='#ff4745';
-                        }
-                    })
+                    document.loaction.reload();
                 }else{
                     that.errorshow=true;//提示
-                    this.error=data.data.msg;
-                    this.acolor='#ff4745';
+                    that.error=data.data.msg;
+                    that.acolor='#ff4745';
                 }
             })
         }
@@ -297,7 +314,6 @@ export default {
 // 最大的盒子
 .myorder{
     width: 970px;
-    height: 660px;
     margin-left: 30px;
     margin-top: 30px;
     display: block;
@@ -443,7 +459,7 @@ export default {
                     border: 1px solid #f7f7f7;
                     align-items: center;
                     >div{
-                        width: 360px;
+                        width: 334px;
                         height: 100px;
                         display: flex;
                         align-items: center;
@@ -461,8 +477,12 @@ export default {
                             line-height: 30px;
                         }
                     }
-                    >p{
+                    >p{ 
+                        width: 110px;
                         text-align: center;
+                        height: 100px;
+                        line-height: 100px;
+                        font-size: 18px;
                     }
                 }
                 // 状态和总价
@@ -491,20 +511,22 @@ export default {
                         margin-top: 20px;
                         margin-bottom: 10px;
                         font-size: 18px;
+                        cursor: pointer;
                     }
                     p{
                         color: #ff4649;
                         font-size: 18px;
+                        cursor: pointer;
                     }
                 }
             }
         }
     }
     .errorbox{
-        width: 200px;
+        width: 300px;
         height: 100px;
-        position: fixed;
-        left: 800px;
+        position: absolute;
+        left: 1250px;
         top:300px;
         text-align: center;
         line-height: 100px;

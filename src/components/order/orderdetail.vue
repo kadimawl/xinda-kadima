@@ -68,33 +68,24 @@
 
 <script>
 //   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
-import {mapGetters} from 'vuex'
 import waitpay from './waitpay'//等待支付
 export default {
     created(){
-        console.log(this.$route.query.orderNo);
-        if(this.getCode){
-            // 防止重复拉取数据，第一次拉取会存缓存，如果缓存有数据不拉取
-            if(sessionStorage.getItem(this.getCode)==null){
-                var that=this;
-                that.ajax.post('/xinda-api/business-order/detail',
-                that.qs.stringify({
-                businessNo:that.getCode, 
-                })).then(function(data){
-                    if(data.data.status==1){
-                        console.log(data);
-                        that.datashow(data);
-                    }
-                })
-            }else{
-                var data=JSON.parse(sessionStorage.getItem(this.getCode));
-                this.datashow(data);
-            }
+        // console.log(this.$route.query.orderNo);
+        if(this.$route.query.orderNo){
+            var that=this;
+            that.ajax.post('/xinda-api/business-order/detail',
+            that.qs.stringify({
+                businessNo:that.$route.query.orderNo, 
+            })).then(function(data){
+                if(data.data.status==1){
+                    console.log('data==',data);
+                    that.datashow(data);
+                }
+            })
         }
     },
-    computed:{
-        ...mapGetters(['getCode'])
-    },
+    computed:{},
     data() {
         return {
             code:'',//产品编号
@@ -117,9 +108,8 @@ export default {
             var databusi=data.data.data.businessOrder;
             this.lists=data.data.data.serviceOrderList;
             this.code=databusi.businessNo;
-            this.createT=new Date(databusi.createTime);
+            this.createT=new Date(databusi.createTime).toLocaleDateString();
             this.price=databusi.totalPrice;
-            sessionStorage.setItem(this.getCode,JSON.stringify(data));
         },
         // 订单明细点击事件，通过订单数据去创建隐藏框的内容，待完成
         liston:function(){
@@ -244,7 +234,7 @@ export default {
                         border-right: 8px solid transparent;
                         position: relative;
                         top: -14px;
-                        left: 130px;
+                        left: 110px;
                     }
                 }
             }
@@ -269,6 +259,7 @@ export default {
                     }
                 }
                 p:nth-child(1){
+                    width: 280px;
                     margin-left: 40px;
                 }
                 p:nth-child(4){
@@ -355,6 +346,7 @@ export default {
         margin-right: 30px;
         .total{
             font-size: 20px;
+            margin-right:10px;
             span{
                 color: #169bd5;
             }
@@ -378,6 +370,7 @@ export default {
         top: 500px;
         left: 800px;
         box-shadow: 2px 2px 2px #8d8d8d;
+        z-index: 10;
         >div{
             width: 450px;
             height: 60px;
@@ -385,6 +378,7 @@ export default {
             justify-content: space-between;
             background: #f8f8f8;
             line-height: 60px;
+            z-index: 10;
             >p{
                 height: 60px;
                 line-height: 60px;
@@ -407,6 +401,7 @@ export default {
             font-size: 20px; 
             line-height: 100px;
             text-align: center;
+            z-index: 10;
         }
     }
 }
