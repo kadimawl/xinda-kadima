@@ -2,11 +2,11 @@
   <div class="mobile">
     <div class="portrait"></div>
     <div class="buttonSum">
-      <a href="/#/m/mobileRegister">注册</a>
-      <a href="/#/m/mobileLogin">登录</a>
+      <a href="/#/m/users/mobileRegister">注册</a>
+      <a href="/#/m/users/mobileLogin">登录</a>
     </div>
     <div class="order e9">
-      <a href="/#/m/myOrder">
+      <a href="/#/m/users/myOrder">
         <span class="bg"></span>
         <span class="msg">我的订单</span>
         <span class="arrow"></span>
@@ -14,7 +14,7 @@
 
     </div>
     <div class="design e9">
-      <a href="/#/m/accountSetting">
+      <a href="/#/m/users/accountSetting">
         <span class="bg"></span>
         <span class="msg">账户设置</span>
         <span class="arrow"></span>
@@ -81,7 +81,7 @@ export default {};
     width: 45px;
     height: 40px;
     margin: 17px 0 0;
-    background-image: url(../assets/mobile/mobileS.png);
+    background-image: url(../../assets/mobile/mobileS.png);
   }
   .msg {
     font-size: 28px;
@@ -91,7 +91,7 @@ export default {};
     display: block;
     width: 15px;
     height: 30px;
-    background: url(../assets/mobile/mobileS.png) -280px -55px;
+    background: url(../../assets/mobile/mobileS.png) -280px -55px;
     margin-top: 24px;
   }
 }

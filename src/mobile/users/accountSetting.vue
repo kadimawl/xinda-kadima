@@ -66,7 +66,7 @@ export default {};
     width: 30px;
     height: 30px;
     background-color: #fff;
-    background: url(../assets/mobile/mobileS.png) -12px -8px;
+    background: url(../../assets/mobile/mobileS.png) -12px -8px;
     margin: auto 0 auto 20px;
   }
   p{

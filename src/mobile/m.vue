@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import mobileBottom from "@/components/mobileBottom";
+import mobileBottom from "./mobileBottom";
 export default {
   components: { mobileBottom }
 };
