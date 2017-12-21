@@ -219,7 +219,7 @@ export default {
         console.log(data)
         that.orderNo = rData;
         that.toPay(that.orderNo);
-        // console.log(data);
+        console.log(that.orderNo);
       });
     },
     todetail(id) {
