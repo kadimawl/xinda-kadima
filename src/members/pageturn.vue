@@ -1,9 +1,9 @@
 <template>
 <div class="turn">
     <div class="prepage pageturn" @click="prepage">上一页</div>
-    <div class="diamond" :class="{'checked':index==pagenum}" v-for="(page,index) in nums" :key="page.id" @click="pagechange(index)">{{page}}</div>
+    <div class="diamond"  v-for="(page,index) in nums" :key="index" @click="pagechange(index)" :class="{'checked':index==pagenum}">{{page}}</div>
     <!-- <div class="diamond" v-if="maxshow">...</div>
-    <div class="diamond" v-if="maxshow">{{maxpage}}</div> -->
+    <div class="diamond" v-if="maxshow">{{maxpage}}</div> --> 
     <div class="nextpage pageturn" @click="nextpage">下一页</div>
 </div>
   
@@ -13,36 +13,43 @@
 // import select from 
 export default {
     created(){
-        for(let i=0;i<this.maxpage;i++){
-            this.nums[i]=i+1;
-        }
     },
     data() {
         return {
-            pagenum:1,//
+            pagenum:0,//
             nums:[],//
-            maxpage:Math.ceil(this.total/this.pagesize),//
-            // maxshow:false,//
         };
     },
     props:{//['total','pagesize']
         total:String,
         pagesize:Number,
     },
+    watch:{//检测变化
+        total(newVal,oldVal){
+            var pages = Math.ceil(newVal/this.pagesize);
+            for(let i=0;i<pages;i++){//无法实时检测数组的赋值，而数组的push可以检测到
+                this.nums.push(i+1);
+            }
+            // console.log(123,oldVal,newVal,pages,this.nums);
+        }
+    },
     methods:{
         // 上一页
         prepage(){
-            this.pagenum=this.pagenum==1?1:this.pagenum-1;
+            this.pagenum=this.pagenum==0?0:this.pagenum-1;
+            // console.log('this.pagenum==',this.pagenum)
             this.$emit('pagevary',this.pagenum);
         },
         // 页数改变
         pagechange(index){
             this.pagenum=index;
+            // console.log('this.pagenum==',this.pagenum)
             this.$emit('pagevary',this.pagenum);
         },
         // 下一页
         nextpage(){
-            this.pagenum=this.pagenum==this.nums.length?this.pagenum:this.pagenum+1;
+            this.pagenum=this.pagenum==this.nums.length-1?this.pagenum:this.pagenum+1;
+            // console.log('this.pagenum==',this.pagenum)
             this.$emit('pagevary',this.pagenum);
         },
     }
@@ -73,13 +80,13 @@ export default {
         border: 1px solid #cccccc;
         color: #cccccc;
         line-height: 40px;
+        cursor: pointer;
     }
     .diamond{
         width: 40px;
         height: 40px;
-        color:#2792d6;
-        border: 1px solid #2693d4;
         line-height: 40px;
+        cursor: pointer;
     }  
     .checked{
         color: #2693d4;
