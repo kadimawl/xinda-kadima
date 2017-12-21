@@ -24,7 +24,7 @@
 <script>
 import pageturn from './pageturn'
 import {mapActions,mapGetters} from 'vuex' 
-
+var moment = require('moment');
 export default {
     // 注：不确定已评价的status是多少，暂且默认为1
     created(){
@@ -32,21 +32,14 @@ export default {
             if(this.datas[this.pagenum]){
                 this.alevals=this.datas.splice(this.pagenum,this.pagesize);
             }else{
-                var that=this;
-                that.ajax.post('/xinda-api/service/judge/grid',{
-                    start:that.pagenum,
-                    limit:that.pagesize,
-                    status:1	
-                }).then(function(data){
-                    console.log(data);
-                    that.datashow(data);
-                })
+                this.getData(this.pagenum,this.pagesize);
             }
         }
     },
     computed:{
         ...mapGetters(['getName']),
     },
+    
     data() {
         return {
             alevals:[],
@@ -57,22 +50,43 @@ export default {
         };
     },
     components:{pageturn},
+    // 监听pagenum是否改变
+    watch:{
+        pagenum(newpage,oldpage){
+            this.getData(newpage,this.pagesize);
+        },
+    },
     methods:{
         // 自定义事件
         pagevary(msg){
-            this.pagenum=msg*2;
+            this.pagenum=msg*this.pagesize;
+        },
+        // 获取数据
+        getData(start,limit){
+            var that=this;
+            that.ajax.post('/xinda-api/service/judge/grid',{
+                start:start,
+                limit:limit,
+                status:1	
+            }).then(function(data){
+                if(data.data.data.length){
+                    that.datashow(data);
+                }
+                console.log(data);
+            })
         },
         // 拉取数据处理
         datashow(data){
             if(data.data.data){
+                var data=data.data.data;
                 for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
                     var dataindex=i-this.pagethum;
-                    this.datas[i]=data.data.data[dataindex];
-                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data[dataindex].providerImg+'';
-                    this.datas[i].buyTime=new Date(data.data.data[dataindex].buyTime);
+                    this.datas[i]=data[dataindex];
+                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data[dataindex].providerImg+'';
+                    this.datas[i].buyTime=moment(data[dataindex].buyTime).format('YYYY-MM-DD hh:mm:ss');
                 }
                 this.total=data.data.totalCount;
-                this.alevals=this.datas.splice(this.pagenum,this.pagesize);
+                this.evals=this.datas.splice(this.pagenum,this.pagesize);
             }
         },
     }

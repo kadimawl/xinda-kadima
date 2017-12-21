@@ -85,10 +85,30 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
-import { mapActions } from "vuex";
+import { mapActions,mapGetters } from "vuex";
 export default {
   components: { distpicker },
+  computed: {
+    ...mapGetters(['getName'])
+  },
   methods: {
+    ...mapActions(["setNum"]),
+    //确认是否登录
+   isLogged() {
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              path: "/outter/login"
+            });
+          })
+          .catch(() => {});
+      }
+    },
     ...mapActions(["setNum"]),
     //三级联动选择code
     selected: function(code) {
@@ -173,11 +193,13 @@ export default {
       });
     },
     toPay: function(id) {
+      this.isLogged();
       //立即购买
       var that = this;
       plugins(id, that); //立即购买公共方法
     },
     addCart: function(id) {
+      this.isLogged();
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
@@ -288,6 +310,12 @@ export default {
         that.products = gData;
         // console.log(that.products);
       });
+      if (this.getName) {
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
+    }
   },
   data() {
     return {

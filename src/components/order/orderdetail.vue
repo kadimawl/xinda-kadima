@@ -163,7 +163,8 @@ export default {
         // 关闭错误提示框
         errorstop:function(){
             this.errorts=false;
-        }
+        },
+        
     }
 };
 </script>
@@ -360,6 +361,7 @@ export default {
             font-size: 20px;
             margin-top: 15px;
             margin-bottom: 100px;
+            cursor: pointer;
         }
     }
     // 错误提示盒子的样式

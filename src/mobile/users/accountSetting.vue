@@ -10,14 +10,14 @@
                 <div></div>
             </div>
             <div class="name">
-                <p>姓&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp名：</p><input type="text"></div>
+                <p>姓名：</p><input type="text"></div>
             <div class="gender">
-                <p>性&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp别：</p><input type="radio">
+                <p>性别：</p><input type="radio">
                 <p>男</p><input type="radio">
                 <p>女</p>
             </div>
             <div class="email">
-                <p>邮&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp箱：</p><input type="text">
+                <p>邮箱：</p><input type="text">
             </div>
             <div class="address">
                 <p>所在地区：</p>

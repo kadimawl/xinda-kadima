@@ -27,39 +27,48 @@
       <p class="orderHandle">订单操作</p>
     </div>
     <!-- 订单展示 -->
-    <div class="listshow" >
-      <div class="innerbox" v-for="list in orderList" :key="list.id">
-        <div class="codetime">
-          <p>订单号：{{list.businessNo}}</p>
-          <p>下单时间：{{list.createTime}}</p>
-        </div>
-        <div class="all">
-          <div>
-            <div>
-              <!-- 公司logo图片 接口数据无logo图片链接-->
-              <div><img :src="list.smallImg" alt=""></div>
-              <p>{{list.providerName}}</p>
+    <div class="listshow">
+        <div class="innerbox" v-for="list in lists" :key="list.id">
+            <div class="codetime"><p>订单号：{{list.businessNo}}</p><p>下单时间：{{list.createTime}}</p></div>
+            <div class="codebody">
+                <div>
+                    <div class="all" v-for="serv in list.servitem" :key="serv.id">
+                        <div>
+                            <!-- 公司logo图片 接口数据无logo图片链接-->
+                            <div><img :src="serv.smallImg" alt="公司logo"></div>
+                            <p>{{serv.serviceName}}</p>
+                        </div>
+                        <!-- 单价 -->
+                        <p>￥{{serv.unitPrice}}</p>
+                        <!-- 数量 -->
+                        <p>{{serv.buyNum}}</p>
+                        <!-- 总价 -->
+                        <div class="pcommon">
+                            <p>￥{{serv.totalPrice}}</p>
+                        </div>
+                        <!-- 订单状态 -->
+                        <div class="pcommon">
+                            <p>{{serv.status}}</p>
+                        </div>
+                    </div> 
+                </div>
+                <!-- 操作按钮 -->
+                <div>
+                    <button @click="payfor(list.businessNo,list.status)">付款</button>
+                    <p @click="remove(list.id)">删除订单</p>
+                </div>
+                
             </div>
-            <!-- 单价 -->
-            <p>￥{{list.unitPrice}}</p>
-            <!-- 数量 -->
-            <p>{{list.buyNum}}</p>
-          </div>
-          <!-- 总价 -->
-          <p>￥{{list.totalPrice}}</p>
-          <!-- 订单状态 -->
-          <p>{{list.status}}</p>
-          <!-- 操作按钮 -->
-          <div>
-            <button @click="payfor(list.businessNo,list.status)">付款</button>
-            <p @click="remove(list.id)">删除订单</p>
-          </div>
-        </div>
-      </div>
+        </div>    
     </div>
     <!-- 错误提示框 -->
-    <div class="errorbox" v-if="errorshow">
-      <p :style="{color:acolor}">{{error}}</p>
+    <div class="errorbox" v-if="errorshow"><p :style="{color:acolor}">{{error}}</p></div>
+    <!-- 删除订单提示框 -->
+    <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
+        <div class="removebox">
+            <div><p>确认删除这个宝贝吗</p><span @click="cancel">&#10005</span></div>
+            <div><button @click="confirm" class="confirm">确定</button><button @click="cancel" class="cancel">取消</button></div>
+        </div>
     </div>
     <!-- 翻页组件 -->
     <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
@@ -74,59 +83,42 @@ var moment = require("moment");
 import { mapActions, mapGetters } from "vuex";
 import pageturn from "./pageturn";
 export default {
-  // 拉取数据
-  created() {
-    this.msg = "false";
-    this.errorshow = false;
-    this.render();
-  },
-  data() {
-    return {
-      orderList: [],
-      businessList: [],
-      value1: "", //时间输入框开始
-      value2: "", //时间输入框结束
-      inputcode: "", //订单编号输入
-      msg: false, //控制提示框
-      sermsg: "", //提示内容
-      lists: {}, //循环数组
-      searchR: "s", //将搜索的索引赋给本变量
-      errorshow: false, //控制错误框
-      error: "", //错误提示
-      acolor: "#ff4649", //错误提示的颜色
-      pagenum: 0, //
-      pagesize: 2, //
-      total: "", //总条目
-      ordercode: [] //
-    };
-  },
-  computed: {
-    ...mapGetters(["getName"])
-  },
-  components: { pageturn },
-  methods: {
-    ...mapActions(["setCode"]),
-    // 自定义事件
-    render() {  //拉去数据
-      var that = this;
-      that.ajax
-        .post("/xinda-api/business-order/grid", that.qs.stringify({}))
-        .then(function(data) {
-          for (var key in data.data) {
-            that.businessList = [];
-            that.businessList = data.data.data;
-          }
-        });
-      that.ajax
-        .post("/xinda-api/service-order/grid", that.qs.stringify({}))
-        .then(function(data) {
-          // console.log("servicedata==", data.data.data);
-          that.orderList = [];
-          that.orderList = data.data.data;
-        });
+    // 拉取数据
+    created(){
+        this.msg='false';
+        this.errorshow=false;
+        console.log(window.innerWidth)
+        console.log(window.innerWidth)
+        // 未登录不拉取数据
+        if(this.getName){
+            this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
+        }
     },
-    pagevary(msg) {
-      this.pagenum = msg * 2;
+    watch:{
+        pagenum(newpage,oldpage){
+            this.getData(newpage,this.pagesize,this.value1,this.value2,this.inputcode);
+        }
+    },
+    data() {
+        return {
+            value1:'',//时间输入框开始
+            value2:'',//时间输入框结束
+            inputcode:'',//订单编号输入
+            msg:false,//控制提示框
+            sermsg:'',//提示内容
+            lists:[],//循环数组
+            searchR:'s',//将搜索的索引赋给本变量
+            errorshow:false,//控制错误框
+            error:'',//错误提示
+            acolor:'#ff4649',//错误提示的颜色
+            pagenum:0,//
+            pagesize:2,//
+            total:'',//总条目
+            conRemove:true,//确认删除
+            orderid:'',//订单id
+            heights:window.innerWidth+'px',//
+            widths:window.innerWidth+'px',//
+        };
     },
     // // 处理ajax获取的business数据显示在页面
     businessshow(data) {
@@ -160,169 +152,141 @@ export default {
         // console.log('this.lists==',this.lists)
       }
     },
-    //处理ajax获取的service数据
-    serviceshow(data) {
-      if (data.data.data) {
-        var data = data.data.data;
-        // console.log(data)
-        for (var key in this.lists) {
-          this.lists[key].servitem = [];
-          for (var i = 0; i < data.length; i++) {
-            if (data[i].businessNo == key) {
-              this.lists[key].servitem.push(data[i]);
-            }
-          }
-        }
-        // console.log(this.lists);
-      }
-    },
-    // 转换为时间戳
-    revertT(times) {
-      return Date.parse(new Date(times)) / 1000;
-    },
-    //页面点击
-    myorderclick() {
-      var that = this;
-      if (this.errorshow == true || this.msg == true) {
-        setTimeout(function() {
-          that.errorshow = false;
-          that.msg = false;
-        }, 4000);
-      }
-    },
-    // 订单号搜索
-    searchs: function() {
-      if (this.inputcode == "") {
-        return;
-      } else {
-        // 简单验证订单号
-        if (/^S1\d{18}$/.test(this.inputcode) == true) {
-          // 去获取的数据里搜索订单编号
-          for (let i = 0; i < data.data.data.length; i++) {
-            if (data.data.data[i].businessNo == this.inputcode) {
-              this.searchR = i;
-            }
-          }
-          if (this.searchR == "f") {
-            // 处理未找到的情况
-            this.lists = [];
-            this.sermsg = "没有找到该订单号";
-            this.msg = "true";
-            return;
-          } else {
-            //找到
-            // 根据时间来搜索
-            if (this.value1 == "" && this.value2 == "") {
-              //无时间
-              this.lists = data.data.data[this.searchR];
-              this.sermsg = "找到了";
-              this.msg = "true";
-              return;
-            } else if (this.value1 != "" && this.value2 != "") {
-              //都有时间
-              var newtstart = this.revertT(this.value1);
-              var newtend = this.revertT(this.value2);
-              // 左右时间框大小颠倒会报错
-              if (newtstart >= newtend) {
-                this.sermsg = "时间输入有误";
-                this.msg = "true";
-                return;
-              } else {
-                var newtorder = data.data.data[this.searchR].createTime;
-                if (newtstart <= newtorder && newt3 <= newtend) {
-                  // 找到订单的时间在 两输入框之间
-                  this.lists = data.data.data[this.searchR];
-                  this.sermsg = "找到了";
-                  this.msg = "true";
-                  return;
-                } else {
-                  // 找到订单的时间不在 两输入框之间
-                  this.lists = [];
-                  this.sermsg = "没有找到该订单号";
-                  this.msg = "true";
-                  return;
+    components:{pageturn},
+    methods:{
+        ...mapActions(['setCode']),
+        // 调用数据公共方法
+        getData(start,limit,time1,time2,code){
+            var that=this;
+            that.ajax.post('/xinda-api/business-order/grid',that.qs.stringify({
+                start:start,
+                limit:limit,
+                startTime:time1,
+                endTime:time2,
+                businessNo:code,
+            })).then(function(data){
+                // console.log('origin==',data);
+                if(data.data.data.length){
+                    that.businessshow(data);
+                    // console.log('origin1==',data);
+                }else{
+                    that.msg=true;
+                    that.sermsg='无结果';
+                    that.list=[];
                 }
-              }
-            } else {
-              //有一个是空
-              var newtorder = data.data.data[this.searchR].createTime;
-              // if(this.value1==''&&this.value2!=''){
-              //     var newtend=this.revertT(this.value2);
-              //     if(newtorder<=newtend){
-              //         this.lists=data.data.data[this.searchR];
-              //         this.sermsg='找到了';
-              //         this.msg='true';
-              //         return;
-              //     }else{
-              //         this.lists=[];
-              //         this.sermsg='没有找到该订单号';
-              //         this.msg='true';
-              //         return;
-              //     }
-              //     return;
-              // }
-              // if(this.value1!=''&&this.value2==''){
-              //     var newtstart=this.revertT(this.value1);
-              //     if(newtorder>=newtstart){
-              //         this.lists=data.data.data[this.searchR];
-              //         this.sermsg='找到了';
-              //         this.msg='true';
-              //         return;
-              //     }else{
-              //         this.lists=[];
-              //         this.sermsg='没有找到该订单号';
-              //         this.msg='true';
-              //         return;
-              //     }
-              //     return;
-              // }
+            })
+        },
+        // 自定义事件
+        pagevary(msg){
+            this.pagenum=msg*this.pagesize;
+            // console.log('msg==',this.pagenum);
+        },
+        // // 处理ajax获取的business数据显示在页面
+        businessshow(data){
+            if(data.data.data){
+                //获取订单总数，传给翻页组件
+                this.total=data.data.totalCount+'';
+                // console.log('this.total==',this.total);
+                var data=data.data.data;
+                for(let i=0;i<data.length;i++){
+                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
+                    data[i].servitem=[];
+                    var orderN=data[i].businessNo;
+                    var that=this;
+                    that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
+                        businessNo:orderN,
+                    })).then(function(servdata){
+                        // console.log('servicedata==',servdata);
+                        var servdata=servdata.data.data;
+                        for(var key in servdata){
+                            //关于订单状态
+                            if( servdata[key].status==1){
+                                 servdata[key].status='等待买家付款';
+                            }else if( servdata[key].status==4){
+                                 servdata[key].status='已完成';
+                            }   
+                            data[i].servitem.push(servdata[key]);
+                        }
+                    })
+                }
+                this.lists=data;
+                // console.log('data==',data);
             }
-          }
-        } else {
-          this.sermsg = "请输入正确的订单号";
-          this.msg = "true";
-          return;
+        },
+        
+        // 转换为时间戳   
+        revertT(times){
+            return  Date.parse(new Date(times))/1000;
+        },
+        //页面点击
+        myorderclick(){
+            var that=this;
+            if(this.errorshow==true||this.msg==true){
+                setTimeout(function(){
+                    that.errorshow=false;
+                    that.msg=false;
+                },4000)
+            }
+        },
+        // 订单号搜索
+        searchs:function(){
+            if(this.inputcode==''&&this.value1==''&&this.value2==''){
+                return;
+            }else if(this.inputcode!=''){
+                // 简单验证订单号
+                if(/^S1\d{18}$/.test(this.inputcode)){
+                    this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
+                }else{
+                    this.sermsg='请输入正确的订单号';
+                    this.inputcode='';
+                    this.msg='true';
+                }
+            }else{
+                this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
+            }
+        },
+        // 付款
+        payfor:function(num,status){
+            // console.log(num,status);
+            if(status==1){
+                this.$router.push({path:'/Order/orderdetail',query:{orderNo:num}});
+            }
+        },
+        // 删除订单
+        remove:function(code){
+            this.conRemove=true;
+            this.orderid=code;
+            
+        },
+        // 隐藏删除订单提示框
+        cancel(){
+            this.conRemove=false;
+        },
+        // 确定删除
+        confirm(){
+            // 向后台发送删除请求
+            var that=this;
+            this.conRemove=false;
+            that.ajax.post('/xinda-api/business-order/del',
+            that.qs.stringify(({
+                id:that.orderid,
+            }))).then(function(data){
+                console.log(data);
+                // 成功后重新获取数据，重新存缓存
+                if(data.data.status==1){
+                    that.errorshow=true;//提示
+                    that.error='删除成功';
+                    that.acolor='#55a4dc';
+                    location.reload();
+                }else{
+                    that.errorshow=true;//提示
+                    that.error=data.data.msg;
+                    that.acolor='#ff4745';
+                }
+            })
+            this.orderid='';
         }
-      }
-    },
-    // 付款
-    payfor: function(num, status) {
-      // console.log(num,status);
-      if (status == "等待买家付款") {
-        this.$router.push({
-          path: "/Order/orderdetail",
-          query: { orderNo: num }
-        });
-      }
-    },
-    // 删除订单
-    remove: function(code) {
-      console.log(code);
-      // 向后台发送删除请求
-      var that = this;
-      that.ajax
-        .post(
-          "/xinda-api/business-order/del",
-          that.qs.stringify({
-            id: code
-          })
-        )
-        .then(function(data) {
-          console.log(data.data);
-          // 成功后重新获取数据，重新存缓存
-          // if (data.data.status == 1) {
-          //   that.errorshow = true; //提示
-          //   that.error = "删除成功";
-          //   that.acolor = "#55a4dc";
-          //   document.loaction.reload();
-          // } else {
-          //   that.errorshow = true; //提示
-          //   that.error = data.data.msg;
-          //   that.acolor = "#ff4745";
-          // }
-        });
     }
-  }
 };
 </script>
 
@@ -516,21 +480,123 @@ export default {
           border: 1px solid #f7f7f7;
           font-size: 18px;
         }
-        // 操作按钮
-        > div:nth-child(4) {
-          width: 120px;
-          height: 100px;
-          text-align: center;
-          border: 1px solid #f7f7f7;
-          button {
-            width: 60px;
-            height: 30px;
-            border: 1px solid #2693d4;
-            border-radius: 5px;
-            background: #fff;
-            color: #2693d4;
-            margin-top: 20px;
+    }
+    // 订单展示列表，主体部分
+    .listshow{
+        width: 940px;
+        height: auto;
+        // 获取订单盒子
+        .innerbox{
+            width: 100%;
+            min-height: 140px;
             margin-bottom: 10px;
+            // 订单编号与时间
+            .codetime{
+                width: 100%;
+                height: 40px;
+                display: flex;
+                background: #f7f7f7;
+                p{
+                    line-height: 30px;
+                    margin-left: 20px;
+                }
+            }
+            // 订单主体
+            .codebody{
+                width: 100%;
+                min-height: 100px;
+                display: flex;
+                align-items: center;
+                >div:nth-child(1){
+                    width: 812px;
+                    .all{
+                        width: 100%;
+                        height: 100px;
+                        display: flex;
+                        >div:nth-child(1){
+                            width: 370px;
+                            height: 100px;
+                            display: flex;
+                            border: 2px solid #f7f7f7;
+                            align-items: center;
+                            // 装logo的盒子
+                            >div{
+                                width: 70px;
+                                height: 70px;
+                                margin-left: 15px;
+                                margin-right: 15px;
+                                line-height: 70px;
+                            }
+                            // 公司名称的样式
+                            >p{
+                                width: 100px;
+                                height: 70px;
+                                line-height: 70px;
+                            }
+                        }
+                        >p{ 
+                            width: 110px;
+                            text-align: center;
+                            height: 100px;
+                            line-height: 100px;
+                            font-size: 18px;
+                            border: 2px solid #f7f7f7;
+                        }
+                         // 状态和总价
+                        .pcommon{
+                            width: 140px;
+                            height: 100px;
+                            text-align: center;
+                            border: 2px solid #f7f7f7;
+                            p{
+                                margin-top: 30px;
+                                height: 40px;
+                                color: #2393d3;
+                                font-size: 18px;
+                                line-height: 40px;
+                            }
+                        }
+                    }
+                }
+                // 操作按钮
+                >div:nth-child(2){
+                    width: 120px;
+                    height: 100%;
+                    text-align: center;
+                    border: 1px solid #f7f7f7;
+                    button{
+                        width: 60px;
+                        height: 40%;
+                        border: 1px solid #2693d4;
+                        border-radius: 5px;
+                        background: #fff;
+                        color: #2693d4;
+                        margin-top: 30%;
+                        margin-bottom: 10px;
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                    p{
+                        color: #ff4649;
+                        font-size: 18px;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    // 错误提示框
+    .errorbox{
+        width: 300px;
+        height: 100px;
+        position: absolute;
+        left: 1250px;
+        top:300px;
+        text-align: center;
+        line-height: 100px;
+        background: #f7f7f7;
+        z-index:10;
+        p{
             font-size: 18px;
             cursor: pointer;
           }
@@ -556,6 +622,58 @@ export default {
     p {
       font-size: 18px;
     }
-  }
+    // 删除订单提示框
+    .remove{
+        position: absolute;
+        left: 0;
+        top:0;
+        opacity: 0.7;
+        z-index: 5;
+        background: #000;
+        .removebox{
+            width: 300px;
+            height: 120px;
+            background:#ffffff;
+            margin: 350px auto;
+            box-shadow: 3px 3px 2px #8d8d8d;
+            z-index: 12;
+            >div:first-child{
+                width:100%;
+                height: 40px;
+                display: flex;
+                justify-content: space-between;
+                background: #e9e9e9;
+                p{
+                    line-height: 40px;
+                    margin-left: 10px;
+                }
+                span{
+                    margin-right: 10px;
+                    margin-top: 2px;
+                    font-size: 20px;
+                }
+            }
+            >div:last-child{
+                width: 100%;
+                height: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                button{
+                    width: 65px;
+                    height: 36px;
+                    border-radius: 10px;
+                }
+                .confirm{
+                    background: #2693d4;
+                    margin-right: 10px;
+                }
+                .cancel{
+                    background: #e9e9e9;
+                }
+            }
+        }
+    }
+
 }
 </style>
