@@ -2,18 +2,10 @@
     <div class="routerBox">
         <!-- 这是wx端一级路由，所有wx端都挂这下面 -->
         <router-view/>
-<<<<<<< HEAD
-=======
-        <!-- <mobileBottom/> -->
->>>>>>> e2f0871d6871922966e893ad1d43eeb863a6b3d5
     </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-export default {
-=======
-  // window.location.href = "#/";
   (function(doc, win) {
     var docEl = doc.documentElement,
       resizeEvt =
@@ -34,8 +26,6 @@ export default {
   })(document, window);
 
 export default {
-  // components: { mobileBottom }
->>>>>>> e2f0871d6871922966e893ad1d43eeb863a6b3d5
   
 };
 </script>
