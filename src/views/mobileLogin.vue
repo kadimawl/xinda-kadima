@@ -21,7 +21,7 @@
     </div>
     <div class="box-4d">
       <div class="left">还没有信达账号</div>
-      <a href="/#/m/mobileRegister">立即注册</a>
+      <a href="/#/m/users/mobileRegister">立即注册</a>
     </div>
   </div>
 </template>

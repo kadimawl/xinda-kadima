@@ -69,9 +69,9 @@ export default {
             // 登录拉取数据
             // console.log('登录');
             if (sessionStorage.getItem("account" + this.getName + "")) {
-                console.log("user");
+                // console.log("user");
                 var data = JSON.parse(sessionStorage.getItem("account" + this.getName + ""));
-                console.log(data);
+                // console.log(data);
                 this.pageshow(data);
             } else {
                 // console.log('post');
@@ -79,7 +79,7 @@ export default {
                 that.ajax.post("/xinda-api/member/info").then(function(data) {
                 if (data.data.status == 1) {
                     // console.log('succ')
-                    console.log(data);
+                    // console.log(data);
                     that.pageshow(data);
                 } else {
                     that.errorshow = true;

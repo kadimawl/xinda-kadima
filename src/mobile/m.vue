@@ -2,14 +2,31 @@
     <div class="routerBox">
         <!-- 这是wx端一级路由，所有wx端都挂这下面 -->
         <router-view/>
-        <mobileBottom/>
     </div>
 </template>
 
 <script>
-import mobileBottom from "@/components/mobileBottom";
+  (function(doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt =
+        "orientationchange" in window ? "orientationchange" : "resize",
+      recalc = function() {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+        if (clientWidth >= 750) {
+          docEl.style.fontSize = "100px";
+        } else {
+          docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+        }
+      };
+
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener("DOMContentLoaded", recalc, false);
+  })(document, window);
+
 export default {
-  components: { mobileBottom }
+  
 };
 </script>
 
@@ -18,36 +35,10 @@ export default {
   margin: 0;
   padding: 0;
 }
+.routerBox{
+  max-width: 768px;
+  max-width: 1280px;
+  margin: auto;
+}
 
-/*移动端适配*/
-@media screen and (max-width: 359px) and (min-width: 320px) {
-  html,
-  body {
-    font-size: 13px !important;
-  }
-}
-@media screen and (max-width: 374px) and (min-width: 360px) {
-  html,
-  body {
-    font-size: 15px !important;
-  }
-}
-@media screen and (max-width: 413px) and (min-width: 375px) {
-  html,
-  body {
-    font-size: 16px !important;
-  }
-}
-@media screen and (max-width: 639px) and (min-width: 414px) {
-  html,
-  body {
-    font-size: 18px !important;
-  }
-}
-@media screen and (min-width: 640px) and (max-width: 1200px) {
-  html,
-  body {
-    font-size: 27px !important;
-  }
-}
 </style>

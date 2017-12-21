@@ -47,7 +47,7 @@ export default {};
     width: 9.5%;
     height: 40px;
     margin: 17px 7.3% 0 17px;
-    background: url(../assets/mobile/mobileS.png)  80% 80%;
+    background: url(../../assets/mobile/mobileS.png)  80% 80%;
   }
   .msg {
     font-size: 26px;
@@ -58,7 +58,7 @@ export default {};
     display: block;
     width: 15px;
     height: 30px;
-    background: url(../assets/mobile/mobileS.png) -280px -55px;
+    background: url(../../assets/mobile/mobileS.png) -280px -55px;
     margin-left: 40%;
     margin-top: 24px;
   }
