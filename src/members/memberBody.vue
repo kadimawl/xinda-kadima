@@ -286,10 +286,7 @@ export default {
             })
             this.orderid='';
         }
-
-
     }
-  }
 };
 </script>
 
@@ -483,7 +480,6 @@ export default {
           border: 1px solid #f7f7f7;
           font-size: 18px;
         }
-<<<<<<< HEAD
     }
     // 订单展示列表，主体部分
     .listshow{
@@ -601,23 +597,6 @@ export default {
         background: #f7f7f7;
         z-index:10;
         p{
-=======
-        // 操作按钮
-        > div:nth-child(4) {
-          width: 120px;
-          height: 100px;
-          text-align: center;
-          border: 1px solid #f7f7f7;
-          button {
-            width: 60px;
-            height: 30px;
-            border: 1px solid #2693d4;
-            border-radius: 5px;
-            background: #fff;
-            color: #2693d4;
-            margin-top: 20px;
-            margin-bottom: 10px;
->>>>>>> 5c412a9eea3a9e28a6860a241283bfbe92afbff3
             font-size: 18px;
             cursor: pointer;
           }
@@ -643,7 +622,6 @@ export default {
     p {
       font-size: 18px;
     }
-<<<<<<< HEAD
     // 删除订单提示框
     .remove{
         position: absolute;
@@ -697,8 +675,5 @@ export default {
         }
     }
 
-=======
-  }
->>>>>>> 5c412a9eea3a9e28a6860a241283bfbe92afbff3
 }
 </style>
