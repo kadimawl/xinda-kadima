@@ -1,39 +1,44 @@
 <template>
-<div class="body">
-  <p class="topP">首页/{{product.info}}</p>
-  <div class="shopBuy">
-    <img src="../../assets/shop/u1182.png" alt="">
-    <div>
-      <h3>{{product.info}}</h3>
-      <p>{{product.name}}</p>
+  <div class="body">
+    <p class="topP">首页/{{product.info}}</p>
+    <div class="shopBuy">
+      <img src="../../assets/shop/u1182.png" alt="">
       <div>
-        <h5>市场价：<del>￥{{product.marketPrice}}</del></h5>
-        <h5>价&nbsp;&nbsp;格：<h4>￥{{product.status}}</h4>元</h5>
+        <h3>{{product.info}}</h3>
+        <p>{{product.name}}</p>
+        <div>
+          <h5>市场价：
+            <del>￥{{product.marketPrice}}</del>
+          </h5>
+          <h5>价&nbsp;&nbsp;格：
+            <h4>￥{{product.status}}</h4>元</h5>
+        </div>
+        <p>类&nbsp;&nbsp;型：
+          <a href="javascript:void(0)">{{product.info}}</a>
+        </p>
+        <p>地&nbsp;&nbsp;区：{{shops.providerRegionText}}</p>
+        <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" @blur="blurInp()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
+        <button class="buyNow" @click="buyNow(id,num)">立即购买</button>
+        <button @click="buyAdd(id,num)">加入购物车</button>
       </div>
-      <p>类&nbsp;&nbsp;型：<a href="javascript:void(0)">{{product.info}}</a></p>
-      <p>地&nbsp;&nbsp;区：{{shops.providerRegionText}}</p>
-      <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" @blur="blurInp()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
-      <button class="buyNow" @click="buyNow(id,num)">立即购买</button>
-      <button @click="buyAdd(id,num)">加入购物车</button>
+      <div>
+        <h3>顶级服务商</h3>
+        <p>{{provider.name}}</p>
+        <button>马上咨询</button>
+        <div>
+          <a href="#/shopIndex">查看服务商</a>
+        </div>
+      </div>
     </div>
+    <img class="ad" src="../../assets/shop/u1225.png" alt="">
     <div>
-      <h3>顶级服务商</h3>
-      <p>{{provider.name}}</p>
-      <button>马上咨询</button>
-      <div>
-        <a href="javascript:void(0)">查看服务商</a>
-      </div>
+      <router-view/>
     </div>
   </div>
-  <img class="ad" src="../../assets/shop/u1225.png" alt="">
-  <div>
-    <router-view/>
-  </div>
-</div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import plugins from "../../plugins";
 export default {
   data() {
@@ -63,18 +68,35 @@ export default {
         that.id = shoppingID;
       });
   },
+  computed: {
+    ...mapGetters(["getName"])
+  },
   methods: {
     ...mapActions(["setNum"]),
+    //确认是否登录
+    isLogged() {
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              path: "/outter/login"
+            });
+          })
+          .catch(() => {});
+      }
+    },
     buyNow(id, num) {
       var that = this;
-      // this.$router.push({
-      //   path: "/order",
-      //   query: { shoppingID: id, shopNum: num }
-      // });
-      plugins(id,that)
+      this.isLogged();
+      plugins(id, that);
     },
     buyAdd(id, num) {
       var that = this;
+      this.isLogged();
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
         .then(function() {

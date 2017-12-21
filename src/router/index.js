@@ -273,6 +273,7 @@ export default new Router({
         {
           path: 'users', //我的二级路由
           component: users,
+          redirect: 'users/mobile',
           children: [
               {
             path: 'mobile', //我的（未注册）

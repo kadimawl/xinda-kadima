@@ -137,8 +137,8 @@
     <!-- 推荐服务 -->
     <div class="recommend">
       <div class="topFrame">
-        <h3 @click="shorhi2">推荐服务商</h3>
-        <span @click="shorhi">推荐服务</span>
+        <span @click="shorhi2" :class="[!SorH?'active':'default000']">推荐服务商</span>
+        <span @click="shorhi"  :class="[SorH?'active':'default000']">推荐服务</span>
       </div>
       <div class="providers" v-show="!SorH">
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
@@ -225,7 +225,7 @@ export default {
         var tData = data.data.data.hq; //
         var gData = data.data.data.provider;
         var lData = data.data.data.product;
-        console.log(data.data.data.provider);
+        // console.log(data.data.data.provider);
         that.products = tData;
         that.providers = gData;
         that.services = lData;
@@ -266,33 +266,33 @@ export default {
       var that = this;
       this.ajax.post("/xinda-api/product/style/list").then(function(data) {
         var rData = data.data.data;
-        console.log(code);
+        // console.log(code);
         if (code == 1) {
-          console.log(code, "1");
+          // console.log(code, "1");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 2) {
-          console.log(code, "2");
+          // console.log(code, "2");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 3) {
-          console.log(code, "3");
+          // console.log(code, "3");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 4) {
-          console.log(code, "4");
+          // console.log(code, "4");
           that.$router.push({
             path: "/tabs/companyList",
             query: { code: code }
           });
         } else if (code == 5) {
-          console.log(code, "5");
+          // console.log(code, "5");
           that.$router.push({
             path: "/tabs/companyList",
             query: { code: code }
@@ -301,11 +301,11 @@ export default {
       });
     },
     shorhi() {
-      console.log("切换");
+      // console.log("切换");
       this.SorH = true;
     },
     shorhi2() {
-      console.log("切换");
+      // console.log("切换");
       this.SorH = false;
     },
     toDetail(id) {
@@ -316,7 +316,7 @@ export default {
       });
     },
     toStore(id) {
-      console.log("111");
+      // console.log("111");
       // 跳转店铺详情
       this.$router.push({
         path: "/shopList",
@@ -702,7 +702,7 @@ export default {
     span {
       display: inline-block;
       font-size: 18px;
-      margin-left: 50px;
+      margin: 0 25px 0 10px;
       cursor: pointer;
     }
   }
@@ -872,5 +872,12 @@ export default {
     margin-top: 35px;
     background: url(../../assets/HomePageimages/i10_03.png);
   }
+}
+
+.default000{
+  color: #000;
+}
+.active{
+  color: #2693d4
 }
 </style>

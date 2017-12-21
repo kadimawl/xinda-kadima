@@ -85,15 +85,33 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
-import { mapActions } from "vuex";
+import { mapActions ,mapGetters} from "vuex";
 export default {
   components: { distpicker },
+  computed: {
+    ...mapGetters(['getName'])
+  },
   methods: {
     ...mapActions(["setNum"]),
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
       console.log(this.seleCode);
+    },
+    isLogged() {
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              path: "/outter/login"
+            });
+          })
+          .catch(() => {});
+      }
     },
     types(key, typeCode) {
       this.currentIndex = typeCode;
@@ -104,7 +122,6 @@ export default {
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key, index) {
-      // console.log(this.subList[key].id);
       this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);
@@ -158,7 +175,6 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          // console.log(that.products);
         });
     },
     todetail(id) {
@@ -175,15 +191,16 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
+      this.isLogged()
       plugins(id, that); //立即购买公共方法
     },
     addCart: function(id) {
+      this.isLogged()
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
           //添加购物车
-          // console.log(data);
         });
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         that.cartNum = data.data.data.cartNum;
@@ -257,7 +274,6 @@ export default {
     }
   },
   created() {
-    // console.log(name);
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
@@ -269,7 +285,6 @@ export default {
         }
       }
       that.types("09fb10e276744114a232ac04b7b72e5d"); //默认渲染审计报告
-      // console.log(that.ItemLists);
     });
 
     this.ajax
@@ -283,11 +298,15 @@ export default {
         })
       )
       .then(function(data) {
-        // console.log(data.data);
         var gData = data.data.data;
         that.products = gData;
-        // console.log(that.products);
       });
+      if (this.getName) {
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
+    }
   },
   data() {
     return {
