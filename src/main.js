@@ -76,3 +76,36 @@ new Vue({
   }
 })
 
+<<<<<<< HEAD
+=======
+//判断移动端还是pc端
+// function browserRedirect() {
+//   var sUserAgent = navigator.userAgent.toLowerCase();
+//   var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+//   var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+//   var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+//   var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+//   var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+//   var bIsAndroid = sUserAgent.match(/android/i) == "android";
+//   var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+//   var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+//   if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+//     !(function (doc, win) {  //js控制自适应
+//       var docEle = doc.documentElement,
+//         evt = "onorientationchange" in window ? "orientationchange" : "resize",
+//         fn = function () {
+//           var width = docEle.clientWidth;
+//           width && (docEle.style.fontSize = 100 * (width / 768) + "px");
+//         };
+
+//       win.addEventListener(evt, fn, false);
+//       doc.addEventListener("DOMContentLoaded", fn, false);
+
+//     }(document, window));
+//   } else {
+//     document.writeln("pc");
+//   }
+// }
+
+// browserRedirect();
+>>>>>>> e2f0871d6871922966e893ad1d43eeb863a6b3d5

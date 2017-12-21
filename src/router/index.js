@@ -67,6 +67,7 @@ import mProduct from '@/mobile/index/product' //WX端产品
 import shop from '@/mobile/shop/shop' //WX端店铺框架页
 import wxshopHome from '@/mobile/shop/wxshopHome' //店铺首页
 import wxshopList from '@/mobile/shop/wxshopList' //店铺列表，也是店铺的默认跳转页
+import shopDetail from '@/mobile/shop/shopDetail' //商品详情
 
 import carts from '@/mobile/carts/carts' //WX端购物车框架页
 import wxshopcarHave from '@/mobile/carts/wxshopcarHave' //非空购物车
@@ -264,7 +265,11 @@ export default new Router({
         },
         {
           path: 'shop', //店铺二级路由
-          component: shop
+          component: shop,
+          children:[{
+            path:'shopDetail',//商品详情
+            component:shopDetail
+          }]
         }, {
           path: 'carts', //购物车二级路由
           component: carts
