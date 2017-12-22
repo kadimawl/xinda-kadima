@@ -1,18 +1,19 @@
 <template>
   <div>
-    <div class="head">登录</div>
+    <mt-header title="登录">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back">back</mt-button>
+      </router-link>
+      <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    
     <div class="box">
 
-      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-      <!-- <p class="errorMsg">{{phoneMsg}}</p> -->
-      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
-      <!-- <p class="errorMsg">{{pwMsg}}</p> -->
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
+      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw">
       <div class="v-box">
-        <!-- <div> -->
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
-        <!-- </div> -->
-        <!-- <p class="errorMsg">{{imgVMsg}}</p> -->
       </div>
       <button class="btn" @click="iLogin">立即登录</button>
     </div>
@@ -33,12 +34,9 @@ export default {
     return {
       msg: "",
       phoneInput: "", //手机号
-      phoneMsg: "",
       pwInput: "", //密码
       pwType: "password",
-      pwMsg: "",
       imgVInput: "", //验证码
-      imgVMsg: "",
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
   },
@@ -47,23 +45,25 @@ export default {
       let pResult = pReg.test(this.phoneInput);
       if (this.phoneInput != "") {
         if (!pResult) {
-          this.phoneMsg = "请输入正确的手机号";
+          MessageBox({
+            title: "Notice",
+            message: "请输入正确的手机号",
+            showCancelButton: true
+          });
         }
       }
-    },
-    pFocus() {
-      this.phoneMsg = "";
     },
     //密码输入验证
     pw() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (!pwResult && this.pwInput !== "") {
-        this.pwMsg = "请输入8-20位数字、大小写字母";
+        MessageBox({
+          title: "Notice",
+          message: "请输入20位数字、大小写字母",
+          showCancelButton: true
+        });
       }
-    },
-    pwFocus() {
-      this.pwMsg = "";
     },
     //密码可视
     // visible() {
@@ -83,7 +83,11 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgVMsg = "图片验证码为4位（数字或者大小写字母）";
+        MessageBox({
+          title: "Notice",
+          message: "图片验证码为4位（数字或者大小写字母）",
+          showCancelButton: true
+        });
       }
     },
     imgVA() {
@@ -94,6 +98,7 @@ export default {
       }
     },
     iLogin() {
+      var that = this;
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
@@ -115,30 +120,57 @@ export default {
                 console.log(msg);
                 if (status == 1) {
                   //成功登陆
-                  // sessionStorage.setItem("user", this.phoneInput);
-                  this.$router.push({ path: "/m" }); //页面跳转
-                  this.ajax.post("/xinda-api/sso/login-info").then(data => {
-                    let name = data.data.data.name;
-                    // this.setName(this.phoneInput);
+                  MessageBox.confirm("登录成功").then(function() {
+                    // sessionStorage.setItem("user", this.phoneInput);
+                    that.$router.push({ path: "/m" }); //页面跳转
+                    that.ajax.post("/xinda-api/sso/login-info").then(data => {
+                      let name = data.data.data.name;
+                      // this.setName(this.phoneInput);
+                    });
                   });
                 } else if (status == -1) {
                   if (msg == "图片验证码错误！") {
-                    this.imgVMsg = "图片验证码错误！";
+                    MessageBox({
+                      title: "Notice",
+                      message: "图片验证码错误！",
+                      showCancelButton: true
+                    });
                   } else if (msg == "账号或密码不正确！") {
-                    this.phoneMsg = "账号或密码不正确！";
+                    MessageBox({
+                      title: "Notice",
+                      message: "账号或密码不正确！",
+                      showCancelButton: true
+                    });
                   } else if (msg == "账号不存在") {
-                    this.phoneMsg = "该手机号未注册";
+                    MessageBox({
+                      title: "Notice",
+                      message: "该手机号未注册",
+                      showCancelButton: true
+                    });
                   }
                 }
               });
           } else {
+            MessageBox({
+              title: "Notice",
+              message: "请输入验证码",
+              showCancelButton: true
+            });
             this.imgVMsg = "请输入验证码";
           }
         } else {
-          this.pwMsg = "请输入密码";
+          MessageBox({
+            title: "Notice",
+            message: "请输入密码",
+            showCancelButton: true
+          });
         }
       } else {
-        this.phoneMsg = "请输入手机号";
+        MessageBox({
+          title: "Notice",
+          message: "请输入手机号",
+          showCancelButton: true
+        });
       }
     }
   }
@@ -202,7 +234,7 @@ input {
   width: 100%;
   height: 0.78rem;
   background: #4d4d4d;
-  margin: 3.34rem auto 0;
+  margin: 5.34rem auto 0;
   display: flex;
   .left {
     width: 2.75rem;
@@ -225,14 +257,25 @@ input {
     margin: auto 0 auto 2.6rem;
   }
 }
-// .errorMsg {
-//   width: 16%;
-//   height: 40px;
-//   font-size: 13px;
-//   color: #f33;
-//   line-height: 15px;
-//   display: inline-block;
-//   margin-left: 3px;
-// }
+
+.mint-header {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e5e5e5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
+}
 </style>
 

@@ -1,29 +1,39 @@
 <template>
-  <div class="lOut"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
-    <!-- <p class="errorMsg" v-show="!pshow">请输入正确手机号</p> -->
-    <!-- <p class="errorMsg" v-show="!rshow">该手机号已注册</p> -->
-    <div class="v-box">
-      <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
-      <img @click="reImg" :src="imgUrl" alt="">
-      <!-- <p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p> -->
+  <div>
+    <mt-header title="忘记密码">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back">back</mt-button>
+      </router-link>
+      <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <div class="lOut">
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
+      <!-- <p class="errorMsg" v-show="!pshow">请输入正确手机号</p> -->
+      <!-- <p class="errorMsg" v-show="!rshow">该手机号已注册</p> -->
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+        <img @click="reImg" :src="imgUrl" alt="">
+        <!-- <p class="errorMsg" v-show="!imgShow">图片验证码为四位（数字或者字母）</p> -->
+      </div>
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
+        <button class="clickGet" @click="clickGet">
+          <span v-show="show">点击获取</span>
+          <span class="countdown" v-show="!show">重新发送{{count}}</span>
+        </button>
+        <!-- <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p> -->
+      </div>
+
+      <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
+      <!-- <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p> -->
+
+      <input type="text" placeholder="  请再次确认密码" @blur="pwShowAgain" @focus="pwFocusAgain" v-model="validationInput">
+      <!-- <p class="errorMsg" v-show="pwMSG">两次密码输入不一致</p> -->
+      <button class="i-register" @click="submit">立即注册</button>
+
     </div>
-    <div class="v-box">
-      <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
-      <button class="clickGet" @click="clickGet">
-        <span v-show="show">点击获取</span>
-        <span class="countdown" v-show="!show">重新发送{{count}}</span>
-      </button>
-      <!-- <p class="errorMsg" v-show="!pVShow">验证码为六位数字</p> -->
-    </div>
-
-    <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
-    <!-- <p class="errorMsg exception" v-show="pwShow">密码为：8-20位数字，大小写字母</p> -->
-
-    <input type="text" placeholder="  请再次确认密码" @blur="pwShowAgain" @focus="pwFocusAgain" v-model="validationInput">
-    <!-- <p class="errorMsg" v-show="pwMSG">两次密码输入不一致</p> -->
-    <button class="i-register" @click="submit">立即注册</button>
-
   </div>
+
 </template>
 
 <script>
@@ -95,7 +105,7 @@ input {
   padding: 0.22rem;
   outline: 0;
   box-sizing: border-box;
-  margin-top: .32rem;
+  margin-top: 0.32rem;
 }
 
 button {
@@ -113,6 +123,27 @@ button {
 }
 .i-register {
   margin-top: 1.45rem;
+}
+
+
+.mint-header {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e5e5e5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: .28rem;
+    height: 40px;
+    line-height: 1;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
 }
 </style>
 

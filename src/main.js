@@ -7,8 +7,10 @@ import store from './store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import qs from 'qs'
-import { Header } from 'mint-ui';
+import { Header,MessageBox  } from 'mint-ui';
 Vue.component(Header.name, Header);
 
 var objSort = function (name) {

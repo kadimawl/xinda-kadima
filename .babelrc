@@ -3,8 +3,10 @@
     ["env", {
       "modules": false
     }],
+    ["es2015", { "modules": false }],
     "stage-2"
   ],
   "plugins": [
-    "transform-runtime"]
+    "transform-runtime"],
+    "comments": false
 }

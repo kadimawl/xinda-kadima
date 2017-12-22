@@ -1,5 +1,13 @@
 <template>
-  <div class="lOut">
+  <div>
+    <mt-header title="注册">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back">back</mt-button>
+      </router-link>
+      <mt-button icon="more" slot="right"></mt-button>
+    </mt-header>
+    <div class="lOut">
+    
     <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
     <!-- <p class="errorMsg">{{phoneMsg}}</p> -->
     <div class="v-box">
@@ -23,6 +31,8 @@
     <button class="i-register" @click="submit">立即注册</button>
 
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -265,7 +275,7 @@ input {
 
 .selected {
   width: 100%;
-  height: .76rem;
+  height: 0.76rem;
   div {
     display: flex;
     justify-content: space-between;
@@ -274,9 +284,9 @@ input {
       height: 0.75rem !important;
       outline: 0;
       color: #b4b4b4;
-      font-size: .28rem !important;
-      option{
-        font-size: .25rem;
+      font-size: 0.28rem !important;
+      option {
+        font-size: 0.25rem;
       }
     }
   }
@@ -301,6 +311,26 @@ button {
   font-weight: 400;
   line-height: 0.75rem;
   text-align: center;
+}
+
+.mint-header {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e5e5e5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: .28rem;
+    height: 40px;
+    line-height: 1;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
 }
 </style>
 
