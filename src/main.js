@@ -8,6 +8,8 @@ import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import qs from 'qs'
+import { Header } from 'mint-ui';
+Vue.component(Header.name, Header);
 
 var objSort = function (name) {
   return function (o, p) {
@@ -30,7 +32,6 @@ var objSort = function (name) {
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
-// Vue.prototype.transfer = new Vue();//非父子组件通信
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;

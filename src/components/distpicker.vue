@@ -52,13 +52,12 @@ export default {
   height: 30px;
   width: 90px;
   font-size: 0.7rem;
-  // margin-bottom: 26px;
-  option {
+}
+option {
     height: 30px;
     width: 90px;
     font-size: 0.5rem;
     margin-bottom: 26px;
   }
-}
 </style>
 

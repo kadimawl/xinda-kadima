@@ -1,6 +1,5 @@
 <template>
   <div class="cart">
-    carts
       <router-view></router-view>
   </div>
 </template>

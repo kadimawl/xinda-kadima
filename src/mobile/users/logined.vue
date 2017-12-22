@@ -21,17 +21,15 @@ export default {};
 
 <style lang="less">
 .mobile {
-  max-width: 768px;
   width: 100%;
-  height: 1334px;
   background: #f8f8f8;
   margin: 0 auto;
-  padding: 21% 9% 28.5%;
+  padding: 2.79rem 0.71rem 3.77rem 0.69rem;
   box-sizing: border-box;
 }
 .portrait {
-  width: 165px;
-  height: 165px;
+  width: 1.65rem;
+  height: 1.65rem;
   border-radius: 50%;
   background: #fff;
   margin: 0 auto;
@@ -39,33 +37,33 @@ export default {};
 
 .e9 {
   width: 100%;
-  height: 75px;
+  height: 0.75rem;
   background-color: #e9e9e9;
   display: flex;
   .bg {
     display: inline-block;
-    width: 9.5%;
-    height: 40px;
-    margin: 17px 7.3% 0 17px;
-    background: url(../../assets/mobile/mobileS.png)  80% 80%;
+    width: .39rem;
+    height: .39rem;
+    margin: .17rem .46rem 0 .17rem;
+    background: url(../../assets/mobile/mobileS.png)  50% 50%;
   }
   .msg {
-    font-size: 26px;
+    font-size: 0.26rem;
     color: #9c9c9c;
-    line-height: 75px;
+    line-height: 0.75rem;
   }
   .arrow {
-    display: block;
-    width: 15px;
-    height: 30px;
-    background: url(../../assets/mobile/mobileS.png) -280px -55px;
-    margin-left: 40%;
-    margin-top: 24px;
+    // display: block;
+    // width: 15px;
+    // height: 30px;
+    // background: url(../../assets/mobile/mobileS.png) -280px -55px;
+    // margin-left: 40%;
+    // margin-top: 24px;
   }
 }
 .order {
-  margin-bottom: 35px;
-  margin-top: 152px;
+  margin-bottom: 0.35rem;
+  margin-top: 1.52rem;
   .bg {
     background-position: -165px 0;
   }
@@ -78,19 +76,19 @@ export default {};
 
 .exit {
   display: block;
-    text-decoration: none;
-    text-align: center;
-    line-height: 57px;
-    width: 100%;
-    height: 75px;
-    border: 1px solid #2693d4;
-    border-radius: 4px;
-    background: #2693d4;
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 75px;
-    color: #fff;
-    font-family: "宋体";
-    margin-top: 100px;
+  text-decoration: none;
+  text-align: center;
+  line-height: .75rem;
+  width: 100%;
+  height: .75rem;
+  border: .01rem solid #2693d4;
+  border-radius: .04rem;
+  background: #2693d4;
+  font-size: .28rem;
+  font-weight: 600;
+  line-height: .75rem;
+  color: #fff;
+  font-family: "宋体";
+  margin-top: 1rem;
 }
 </style>

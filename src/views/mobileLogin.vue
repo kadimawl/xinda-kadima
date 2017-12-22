@@ -1,23 +1,20 @@
 <template>
   <div>
+    <div class="head">登录</div>
     <div class="box">
-      <div class="errorMSG" v-show="msg"><img src="../assets/mobile/error.jpg" alt=""><p>{{msg}}</p></div>
-      <div class="phoneBox">
-        <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-        <!-- <p class="errorMsg">{{phoneMsg}}</p> -->
-      </div>
-      <div class="pwBox">
-        <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
-        <!-- <p class="errorMsg">{{pwMsg}}</p> -->
-      </div>
+
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
+      <!-- <p class="errorMsg">{{phoneMsg}}</p> -->
+      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
+      <!-- <p class="errorMsg">{{pwMsg}}</p> -->
       <div class="v-box">
         <!-- <div> -->
-          <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
-          <img @click="reImg" :src="imgUrl" alt="">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+        <img @click="reImg" :src="imgUrl" alt="">
         <!-- </div> -->
         <!-- <p class="errorMsg">{{imgVMsg}}</p> -->
       </div>
-      <button @click="iLogin">立即登录</button>
+      <button class="btn" @click="iLogin">立即登录</button>
     </div>
     <div class="box-4d">
       <div class="left">还没有信达账号</div>
@@ -27,19 +24,21 @@
 </template>
 
 <script>
+import { MessageBox } from "mint-ui";
+
 let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-var md5 = require('md5');
+var md5 = require("md5");
 export default {
   data() {
     return {
-      msg: '',
+      msg: "",
       phoneInput: "", //手机号
       phoneMsg: "",
       pwInput: "", //密码
       pwType: "password",
       pwMsg: "",
       imgVInput: "", //验证码
-      imgVMsg: '',
+      imgVMsg: "",
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
   },
@@ -148,86 +147,92 @@ export default {
 
 <style lang="less">
 .box {
-  // max-width: 768px;
-  // max-height: 1280px;
   width: 100%;
   margin: 0 auto;
-  // padding: 0 13%;
+  padding: 0 1rem;
   box-sizing: border-box;
 }
-input {
-  width: 547px;
-  height: 75px;
-  margin: 0 auto;
-}
-
-.v-box {
+.head {
   width: 100%;
+  height: 0.77rem;
+  background: #e5e5e5;
+  margin-bottom: 0.39rem;
+  font-size: 0.28rem;
+  text-align: center;
+  line-height: 0.77rem;
+}
+input {
+  display: block;
+  width: 5.47rem;
+  height: 0.75rem;
+  margin: 0.32rem auto 0;
+}
+.v-box {
+  width: 5.47rem;
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
-  div {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-  }
+  margin-top: 0.3rem;
+  margin-bottom: 2.13rem;
   input {
-    width: 60%;
+    width: 2.72rem;
+    margin: 0;
   }
   img {
-    width: 35%;
+    width: 2.4rem;
+    height: 0.5rem;
+    margin: auto 0;
   }
 }
-button {
+.btn {
   display: block;
-  width: 550px;
-  height: 75px;
-  margin-top: 213px;
-  font-size: 27px;
+  width: 5.5rem;
+  height: 0.75rem;
+  font-size: 0.27rem;
   font-weight: 400;
   color: #fff;
   outline: 0;
   background: #2693d4;
   text-align: center;
-  line-height: 75px;
+  line-height: 0.75rem;
   border: none;
   margin: 0 auto;
 }
 
 .box-4d {
-  height: 48px;
+  width: 100%;
+  height: 0.78rem;
   background: #4d4d4d;
-  max-width: 768px;
-  margin: 334px auto 0;
+  margin: 3.34rem auto 0;
   display: flex;
   .left {
-    width: 36%;
-    font-size: 25px;
+    width: 2.75rem;
+    height: 0.78rem;
+    font-size: 0.28rem;
     color: #f8f8f8;
     text-align: right;
-    line-height: 48px;
+    line-height: 0.78rem;
   }
   a {
     display: inline-block;
-    width: 24%;
-    height: 35px;
+    width: 1.48rem;
+    height: 0.49rem;
     background: #2693d4;
     text-align: center;
-    line-height: 35px;
+    line-height: 0.49rem;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 0.25rem;
     color: #fff;
-    margin: auto 0 auto 35%;
+    margin: auto 0 auto 2.6rem;
   }
 }
-.errorMsg {
-  width: 16%;
-  height: 40px;
-  font-size: 13px;
-  color: #f33;
-  line-height: 15px;
-  display: inline-block;
-  margin-left: 3px;
-}
+// .errorMsg {
+//   width: 16%;
+//   height: 40px;
+//   font-size: 13px;
+//   color: #f33;
+//   line-height: 15px;
+//   display: inline-block;
+//   margin-left: 3px;
+// }
 </style>
 
