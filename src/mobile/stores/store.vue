@@ -1,13 +1,13 @@
 <template>
-    <div class="routerBox">
-        
+    <div class="store">
+        <!-- 店铺二级路由，下有两个独立模块 -->
+        <router-view/>
     </div>
 </template>
 
 <script>
-import mobileBottom from '../mobileBottom'
 export default {
-    components: {mobileBottom}
+    components: {},
 }
 </script>
 
@@ -16,13 +16,9 @@ export default {
     margin: 0;
     padding: 0;
 }
-.routerBox{
-    min-width: 320px;
-    max-width: 768px;
-    margin: 0 auto;
-    min-height: 568px;
-    max-height: 1280px;
+.store{
+    max-width: 750px;
+    height: 1334px;
     width: 100%;
-    height: 100%;
 }
 </style>

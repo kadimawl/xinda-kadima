@@ -19,9 +19,10 @@ export default {
   padding: 0;
 }
 .routerBox{
-  max-width: 768px;
+  width: 100%;
   max-width: 1280px;
-  margin: auto;
+  margin: 0 auto;
+  height: 1334px;
 }
 
 </style>
