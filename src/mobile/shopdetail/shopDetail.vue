@@ -1,5 +1,6 @@
 <template>
     <div class="shop">
+        试试事实上
     </div>
 </template>
 
@@ -8,7 +9,5 @@ export default {};
 </script>
 
 <style lang="less" scoped>
-.shop {
- 
-}
+
 </style>

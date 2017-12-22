@@ -64,8 +64,20 @@ import mIndexList from '@/mobile/index/indexList' //WX端列表
 import mProduct from '@/mobile/index/product' //WX端产品
 
 
+<<
+<< << < HEAD
 import shop from '@/mobile/shop/shop' //WX端商品框架页
 import shopDetail from '@/mobile/shop/shopDetail' //商品详情
+===
+=== =
+import shop from '@/mobile/shop/shop' //WX端店铺框架页
+import wxshopHome from '@/mobile/shop/wxshopHome' //店铺首页
+import wxshopList from '@/mobile/shop/wxshopList' //店铺列表，也是店铺的默认跳转页
+
+
+import shopDetail from '@/mobile/shopDetail/shopDetail' //商品详情
+>>>
+>>> > 7 befebf00d6ff42820d2bb95eb5757ffff0f9566
 
 import carts from '@/mobile/carts/carts' //WX端购物车框架页
 import wxshopcarHave from '@/mobile/carts/wxshopcarHave' //非空购物车
