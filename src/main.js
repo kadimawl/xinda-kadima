@@ -10,8 +10,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import qs from 'qs'
-import { Header,MessageBox  } from 'mint-ui';
+import { Header,MessageBox,Button  } from 'mint-ui';
 Vue.component(Header.name, Header);
+Vue.component(Button.name, Button)
 
 var objSort = function (name) {
   return function (o, p) {

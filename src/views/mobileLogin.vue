@@ -2,9 +2,8 @@
   <div>
     <mt-header title="登录">
       <router-link to="/m/users/mobile" slot="left">
-        <mt-button icon="back">back</mt-button>
+        <mt-button icon="back"></mt-button>
       </router-link>
-      <mt-button icon="more" slot="right"></mt-button>
     </mt-header>
     
     <div class="box">
