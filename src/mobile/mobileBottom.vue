@@ -1,91 +1,93 @@
 <template>
     <div class="mBottom">
         <ul>
-            <li :class="[istrue?'active':'']">
-                <a href="javascript:void(0)">
-                    <div class="bg bgIndex"></div>
-                    <p>首页</p>
-                </a>
-
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <div class="bg bgShop"></div>
-                    <p>店铺</p>
-                </a>
-
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <div class="bg bgCart"></div>
-                    <p>购物车</p>
-                </a>
-
-            </li>
-            <li>
-                <a href="javascript:void(0)">
-                    <div class="bg bgMine"></div>
-                    <p>我的</p>
-                </a>
-
-            </li>
+            <router-link class="original" active-class="activeB" to="/m/shop" @click="index">
+                <img src="../assets/mobile/btmhomeG.png" alt="" v-show="!indexImg">
+                <img src="../assets/mobile/btmhomeB.png" alt="" v-show="indexImg">
+                <p>首页</p>
+            </router-link>
+            <router-link class="original" active-class="activeB"  to="/m" @click="shop">
+                <img src="../assets/mobile/btmlistG.png" alt="" v-show="!shopImg">
+                <img src="../assets/mobile/btmlistB.png" alt="" v-show="shopImg">
+                <p >店铺</p>
+            </router-link>
+            <router-link class="original" active-class="activeB"  to="/m" @click="cart">
+                <img src="../assets/mobile/btmcart.png" alt="" v-show="!cartImg">
+                <img src="../assets/mobile/blueCart.png" alt="" v-show="cartImg">
+                <p >购物车</p>
+            </router-link>
+            <router-link class="original" active-class="activeB"  to="/m/mobile" @click="mine">
+                <img src="../assets/mobile/btmmine.png" alt="" v-show="!mineImg">
+                <img src="../assets/mobile/blueMine.png" alt="" v-show="mineImg">
+                <p>我的</p>
+            </router-link>
         </ul>
     </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      indexImg: false,
+      shopImg: '',
+      cartImg: '',
+      mineImg: ''
+    };
+  },
+  methods: {
+      index(){
+          this.indexImg = true;
+      },
+      shop(){
+          this.shopImg = true;
+      },
+      cart(){
+          this.cartImg = true;
+      },
+      mine(){
+          this.mineImg = true;
+      },
+  }
+};
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
+* {
+  margin: 0;
+  padding: 0;
+}
 .mBottom {
-  height: 88px;
+  height: 0.88rem;
   width: 100%;
-  border-top: 2px solid #f9f9f9;
+  border-top: 0.02rem solid #f9f9f9;
 }
 ul {
   width: 100%;
   display: flex;
   list-style: none;
-  li {
-    width: 25%;
-    height: 88px;
-    cursor: pointer;
-    a {
-      text-decoration: none;
-      color: #b0b0b2;
-    }
-    div {
-      width: 35px;
-      height: 35px;
-      margin: 7px auto 12px;
-      background: url(../assets/mobile/mobileS.png);
-    }
-    .bgIndex {
-      background-position: -12px -316px;
-    }
-    .bgShop {
-      background-position: -72px -316px;
-    }
-    .bgCart {
-      background-position: -127px -316px;
-    }
-    .bgMine {
-      background-position: -205px -316px;
-    }
-    p {
-      width: 100%;
-      font-size: 23px;
-      text-align: center;
-    }
+}
+.original{
+  width: 25%;
+  height: 0.88rem;
+  color: #b0b0b2;
+  cursor: pointer;
+  img {
+    display: block;
+    width: 0.36rem;
+    height: 0.36rem;
+    margin: 0.1rem auto 0.12rem;
+  }
+  p {
+    width: 100%;
+    height: 0.23rem;
+    font-size: 0.23rem;
+    text-align: center;
+    line-height: 0.23rem;
   }
 }
 
-.active{
-    color: #2693d4;
-    div{
-        background: url(../assets/mobile/mobileS.png);
-        background-position: 12px -377px;
-    }
-}
+// .activeB{
+//     color: #2693d4;
+// }
 </style>

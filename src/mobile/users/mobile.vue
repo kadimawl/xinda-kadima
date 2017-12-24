@@ -7,17 +7,17 @@
     </div>
     <div class="order e9">
       <a href="/#/m/users/myOrder">
-        <span class="bg"></span>
+      <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
         <span class="msg">我的订单</span>
-        <span class="arrow"></span>
+        <img class="arrow" src="../../assets/mobile/arrow.png">
       </a>
 
     </div>
     <div class="design e9">
       <a href="/#/m/users/accountSetting">
-        <span class="bg"></span>
+        <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
         <span class="msg">账户设置</span>
-        <span class="arrow"></span>
+        <img class="arrow" src="../../assets/mobile/arrow.png">
       </a>
 
     </div>
@@ -34,7 +34,7 @@ export default {};
   height: 100%;
   background: #f8f8f8;
   margin: 0 auto;
-  padding: 2.80rem .71rem 0 .66rem;
+  padding: 2.8rem 0.71rem 0 0.66rem;
   box-sizing: border-box;
 }
 .portrait {
@@ -45,19 +45,19 @@ export default {};
   margin: 0 auto;
 }
 .buttonSum {
-  margin: .26rem auto 1.63rem;
-  width: 3.50rem;
+  margin: 0.26rem auto 1.63rem;
+  width: 3.5rem;
   display: flex;
   justify-content: space-between;
   a {
     text-decoration: none;
     text-align: center;
-    line-height: .59rem;
+    line-height: 0.59rem;
     width: 1.53rem;
-    height: .59rem;
+    height: 0.59rem;
     border-radius: 4px;
     background: #2693d4;
-    font-size: .28rem;
+    font-size: 0.28rem;
     font-weight: 600;
     color: #fff;
     font-family: "宋体";
@@ -65,9 +65,9 @@ export default {};
 }
 .e9 {
   width: 100%;
-  height: .75rem;
+  height: 0.75rem;
   background-color: #e9e9e9;
-  padding-right: .40rem;
+  padding-right: 0.4rem;
   box-sizing: border-box;
   margin-bottom: 4.58rem;
   a {
@@ -75,36 +75,25 @@ export default {};
     justify-content: space-around;
     color: #9c9c9c;
   }
-  .bg {
+  .bgOrder {
     display: inline-block;
-    width: .45rem;
-    height: .40rem;
-    margin: .17rem 0 0;
-    background: url(../../assets/mobile/mobileS.png) no-repeat;
+    width: 0.41rem;
+    height: 0.4rem;
+    margin: 0.17rem 0 0;
+    img {
+      width: 0.41rem;
+      height: 0.4rem;
+    }
   }
   .msg {
-    font-size: .28rem;
-    line-height: .75rem;
+    font-size: 0.28rem;
+    line-height: 0.75rem;
   }
   .arrow {
     display: block;
-    width: .15rem;
-    height: .30rem;
-    background: url(../../assets/mobile/mobileS.png) -280px -55px;
-    margin-top: .24rem;
-  }
-}
-.order {
-  margin-bottom: .35rem;
-  .bg {
-    background-position: -165px 0;
-    background-size: 100% 100%;
-  }
-}
-.design {
-  .bg {
-    background-position: -236px 0;
-    background-size: 10% 100%;
+    width: 0.15rem;
+    height: 0.3rem;
+    margin-top: 0.24rem;
   }
 }
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div class="box">
-    <div class="aTop">
-      <span></span>
-      <p>账户设置</p>
-    </div>
+    <mt-header title="账户设置">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
     <div class="topTitle">账户设置
       <span></span>
     </div>
@@ -13,84 +14,146 @@
         <div></div>
       </div>
       <div class="name">
-        <p>姓名：</p><input type="text"></div>
+        <p>姓名：</p><input type="text" v-model="name"></div>
       <div class="gender">
-        <p>性别：</p><input type="radio">
-        <p>男</p><input type="radio">
+        <p>性别：</p><input type="radio" :checked='[isChecked?true:false]'>
+        <p>男</p><input type="radio" :checked='[!isChecked?true:false]'>
         <p>女</p>
       </div>
       <div class="email">
-        <p>邮箱：</p><input type="text">
+        <p>邮箱：</p><input type="text" v-model="email">
       </div>
       <div class="address">
         <p>所在地区：</p>
         <div class="selected">
-          <distpicker @selected="selected"></distpicker>
+          <distpicker class="mySelect" @selected="selected"></distpicker>
         </div>
       </div>
-      <button>保存</button>
+      <button @click="preservation">保存</button>
     </div>
     <div class="topTitle">修改密码
       <span></span>
     </div>
     <div class="modification">
       <div class="old">
-        <p>旧密码：</p><input type="text">
+        <p>旧密码：</p><input type="text" v-model="oldPw" @blur="oldI">
       </div>
       <div class="new">
-        <p>新密码：</p><input type="text">
+        <p>新密码：</p><input type="text" v-model="newPw" @blur="newI">
       </div>
       <div class="again">
-        <p>再次输入新密码：</p><input type="text">
+        <p>再次输入新密码：</p><input type="text" v-model="againPw" @blur="againI">
       </div>
-      <button>保存</button>
+      <button @click="changePw">保存</button>
     </div>
   </div>
 </template>
 
 <script>
 import distpicker from "@/components/distpicker";
+let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
+import { MessageBox } from "mint-ui";
+var md5 = require("md5");
 export default {
   components: { distpicker },
   data() {
     return {
-      seleCode: ""
+      name: "",
+      email: "",
+      isChecked: true,
+      seleCode: "",
+      oldPw: "",
+      pw: "",
+      newPw: "",
+      againPw: "",
+      info: []
     };
+  },
+  created() {
+    var that = this;
+    //默认渲染
+    this.ajax.post("/xinda-api/member/info").then(data => {
+      this.info = data.data.data;
+      that.email = this.info.email;
+      that.name = this.info.name;
+      that.pw = this.info.password;
+      // that.showarea(this.info.regionId);
+    });
   },
   methods: {
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
+    },
+    //修改信息
+    preservation() {
+      this.ajax
+        .post(
+          "/xinda-api/member/update-info",
+          this.qs.stringify({
+            name: this.name,
+            gender: 1,
+            email: this.email,
+            regionId: this.seleCode
+          })
+        )
+        .then(data => {
+          console.log(data.data);
+          if (data.data.status == 1) {
+            MessageBox.alert("修改成功", "提示");
+          }
+        });
+    },
+    oldI() {
+      var that = this;
+      if (this.oldPw != "" && !pwReg.test(this.oldPw)) {
+        MessageBox.alert("密码为：（6-20数字，大小写字母）").then(action => {
+          that.oldPw = "";
+        });
+      }
+    },
+    newI() {
+      var that = this;
+      if (this.newPw != "" && !pwReg.test(this.newPw)) {
+        MessageBox.alert("密码为：（6-20数字，大小写字母）").then(action => {
+          that.newPw = "";
+        });
+      }
+    },
+    againI() {
+      var that = this;
+      if (this.againPw != "" && !pwReg.test(this.againPw)) {
+        MessageBox.alert("密码为：（6-20数字，大小写字母）").then(action => {
+          that.againPw = "";
+        });
+      }
+    },
+    //修改密码
+    changePw() {
+      this.ajax
+        .post(
+          "/xinda-api/sso/change-pwd",
+          this.qs.stringify({
+            oldPwd: md5(this.oldPw),
+            newPwd: md5(this.againPw)
+          })
+        )
+        .then(data => {
+          if (data.data.status == 1) {
+            MessageBox.alert("修改成功", "提示");
+          } else if (data.data.status == -1) {
+            MessageBox.alert("旧密码错误", "提示");
+          }
+        });
     }
   }
 };
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .box {
   margin: 0 auto;
 }
-.aTop {
-  width: 100%;
-  height: 0.77rem;
-  text-align: center;
-  background: #e5e5e5;
-  font-size: 0.28rem;
-  color: #000;
-  line-height: 0.77rem;
-  display: flex;
-  // span {
-  //   display: inline-block;
-  //   width: 30px;
-  //   height: 30px;
-  //   background-color: #fff;
-  //   background: url(../../assets/mobile/mobileS.png) -12px -8px;
-  //   margin: auto 0 auto 20px;
-  // }
-  p {
-    margin: 0 0 0 37%;
-  }
-}
+
 .topTitle {
   width: 100%;
   height: 0.79rem;
@@ -129,7 +192,7 @@ export default {
       height: 0.96rem;
       border-radius: 50%;
       background: red;
-      margin-left: .25rem
+      margin-left: 0.25rem;
     }
   }
   .name {
@@ -188,20 +251,19 @@ export default {
 .selected {
   width: 4.41rem;
   height: 0.43rem;
-  div {
-    display: flex;
-    justify-content: space-between;
-    .province,
-    .city,
-    .area {
-      width: 1.32rem !important;
-      height: 0.42rem !important;
-      outline: 0;
-      color: #b4b4b4;
-      font-size: 0.2rem !important;
-      option {
-        font-size: 0.18rem !important;
-      }
+}
+.mySelect {
+  display: flex;
+  justify-content: space-between;
+  select {
+    width: 1.32rem !important;
+    height: 0.42rem !important;
+    outline: 0;
+    color: #000;
+    font-size: 0.2rem !important;
+    option {
+      font-size: 0.18rem !important;
+      color: #000;
     }
   }
 }
@@ -250,5 +312,25 @@ export default {
     line-height: 0.47rem;
     margin: 0 0 0.26rem 20.4%;
   }
+}
+
+.mint-header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
+  height: 40px;
+  line-height: 1;
+  padding: 0 0.01rem;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
 }
 </style>
