@@ -1,50 +1,50 @@
 <template>
-  <div class="lOut">
-    <div class="phoneBox"><input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="focus">
-      <p class="errorMsg">{{phoneMsg}}</p>
-    </div>
-    <div class="v-box">
-      <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
-      <img @click="reImg" :src="imgUrl" alt="">
-      <p class="errorMsg">{{imgMsg}}</p>
-    </div>
-    <div class="v-box">
-      <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur" @focus="pVFocus">
-      <button class="clickGet" @click="clickGet">
-        <span v-show="show">点击获取</span>
-        <span class="countdown" v-show="!show">重新发送{{count}}</span>
-      </button>
-      <p class="errorMsg" >{{pVMsg}}</p>
-    </div>
-    <div class="selected">
-      <distpicker @selected="selected"></distpicker>
-    </div>
-    <div class="pwBox"><input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur" @focus="pwFocus">
-      <p class="errorMsg exception" >{{pwMsg}}</p>
-    </div>
-    <button class="i-register" @click="submit">立即注册</button>
+  <div>
+    <mt-header title="注册">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
+    <div class="lOut">
 
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB">
+        <img @click="reImg" :src="imgUrl" alt="">
+      </div>
+      <div class="v-box">
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="phoneV" @blur="pvBlur">
+        <button class="clickGet" @click="clickGet">
+          <span v-show="show">点击获取</span>
+          <span class="countdown" v-show="!show">重新发送{{count}}</span>
+        </button>
+      </div>
+      <div class="selected">
+        <distpicker @selected="selected"></distpicker>
+      </div>
+      <input type="text" placeholder="  请输入密码" class="pw" v-model="pwInput" @blur="pwBlur">
+      <button class="i-register" @click="submit">立即注册</button>
+
+    </div>
   </div>
+
 </template>
 
 <script>
 import distpicker from "@/components/distpicker";
+import { MessageBox } from "mint-ui";
 export default {
   components: { distpicker },
   data() {
     return {
-      phoneInput: "",//手机号
-      phoneMsg: '',
+      phoneInput: "", //手机号
       show: true,
       count: "",
       timer: null,
-      imgMsg: '',
       imgUrl: "/xinda-api/ajaxAuthcode",
       imgVInput: "",
-      phoneV: "",//手机验证码
-      pVMsg: '', 
+      phoneV: "", //手机验证码
       pwInput: "", //密码
-      pwMsg: '',
       seleCode: ""
     };
   },
@@ -64,7 +64,11 @@ export default {
       if (!this.phoneInput == "") {
         this.phoneMsg = "";
         if (!result) {
-          this.phoneMsg = "请输入正确的手机号";
+          MessageBox({
+            title: "提示",
+            message: "请输入正确的手机号",
+            showCancelButton: true
+          });
         } else {
           //验证手机号是否已经注册
           this.ajax
@@ -78,7 +82,11 @@ export default {
             )
             .then(data => {
               if (data.data.status == -2) {
-                this.phoneMsg = "该手机号已注册";
+                MessageBox({
+                  title: "提示",
+                  message: "该手机号已注册",
+                  showCancelButton: true
+                });
               }
             });
         }
@@ -93,7 +101,11 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgMsg = "图片验证码为四位（数字或者字母）";
+        MessageBox({
+          title: "提示",
+          message: "图片验证码为四位（数字或者字母）",
+          showCancelButton: true
+        });
       }
     },
     imgVA() {
@@ -132,7 +144,11 @@ export default {
           )
           .then(data => {
             if (data.data.status == -1) {
-              this.imgMsg = "图片验证码错误";
+              MessageBox({
+                title: "提示",
+                message: "图片验证码错误",
+                showCancelButton: true
+              });
             }
           });
       }
@@ -142,9 +158,17 @@ export default {
     pvBlur() {
       let pVReg = /^\d{6}$/;
       if (!pVReg.test(this.phoneV) && this.phoneV !== "") {
-        this.pVMsg = "短信验证码为六位数字";
+        MessageBox({
+          title: "提示",
+          message: "短信验证码为六位数字",
+          showCancelButton: true
+        });
       } else if (this.phoneV != 111111) {
-        this.pVMsg = "短信验证码错误";
+        MessageBox({
+          title: "提示",
+          message: "短信验证码错误",
+          showCancelButton: true
+        });
       }
     },
     pVFocus() {
@@ -157,10 +181,15 @@ export default {
     },
     //密码输入验证
     pwBlur() {
+      let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (this.pwInput !== "") {
         if (!pwResult) {
-          this.pwMsg = "密码为：8-20位数字，大小写字母";
+          MessageBox({
+            title: "提示",
+            message: "密码为：8-20位数字，大小写字母",
+            showCancelButton: true
+          });
         }
       }
     },
@@ -201,23 +230,43 @@ export default {
                     if (data.data.status == 1) {
                       this.$router.push({ path: "/outter/login" });
                     } else {
-                      this.phoneMsg = "请重新注册，谢谢。";
+                      MessageBox({
+                        title: "提示",
+                        message: "请重新注册，谢谢。",
+                        showCancelButton: true
+                      });
                     }
                   });
               } else {
-                this.pwMsg = "请输入密码";
+                MessageBox({
+                  title: "提示",
+                  message: "请输入密码",
+                  showCancelButton: true
+                });
               }
             } else {
               this.addShow = true;
             }
           } else {
-            this.pVMsg = "请输入短信验证码";
+            MessageBox({
+              title: "提示",
+              message: "请输入短信验证码",
+              showCancelButton: true
+            });
           }
         } else {
-          this.imgMsg = "请输入图片验证码";
+          MessageBox({
+            title: "提示",
+            message: "请输入图片验证码",
+            showCancelButton: true
+          });
         }
       } else {
-        this.phoneMsg = "请输入手机号";
+        MessageBox({
+          title: "提示",
+          message: "请输入手机号。",
+          showCancelButton: true
+        });
       }
     }
   }
@@ -226,83 +275,103 @@ export default {
 
 <style lang="less">
 .lOut {
-  padding: 13% 9%;
+  padding: 0.71rem 1rem 4.62rem 1.01rem;
   box-sizing: border-box;
-  input {
-    height: 40px;
-    border: none;
-    border: 1px solid #cbcbcb;
-    border-radius: 3px;
-    outline: 0;
-  }
-  .v-box {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-    img {
-      width: 33%;
-      height: 33px;
-    }
-    input {
-      width: 55%;
-    }
-  }
-  .clickGet {
-    width: 33%;
-    height: 39px;
-    color: #fff;
-    background: #2693d4;
-    font-size: 12px;
-    border: none;
-    border: 1px solid #2693d4;
-    border-radius: 3px;
-    outline: none;
-    margin-left: 9px;
-  }
-  .v-img {
-    width: 85px;
-    height: 35px;
-    border: 1px solid;
-  }
 }
-.selected {
-  width: 80%;
+input {
+  width: 5.47rem;
+  height: 0.75rem;
+  border: none;
+  border: 0.01rem solid #cbcbcb;
+  border-radius: 0.03rem;
+  outline: 0;
+  margin-bottom: 0.32rem;
+}
+.v-box {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-}
-select {
-  width: 30%;
-  outline: 0;
-}
-.pwBox {
-  margin: 32px 0 145px;
-  width: 100;
+  margin-bottom: 0.32rem;
   input {
-    width: 80%;
+    width: 2.72rem;
+    margin: 0;
+  }
+  img {
+    width: 2.4rem;
+    height: 0.5rem;
+    margin: auto 0;
+  }
+  .clickGet {
+    width: 2.4rem;
+    height: 0.75rem;
+    color: #fff;
+    background: #2693d4;
+    font-size: 0.28rem;
+    border: none;
+    border-radius: 0.03rem;
+    outline: none;
+    line-height: 0.75rem;
+  }
+}
+
+.selected {
+  width: 100%;
+  height: 0.76rem;
+  div {
+    display: flex;
+    justify-content: space-between;
+    select {
+      width: 1.67rem !important;
+      height: 0.75rem !important;
+      outline: 0;
+      color: #b4b4b4;
+      font-size: 0.28rem !important;
+      option {
+        font-size: 0.25rem;
+      }
+    }
+  }
+}
+
+.pwBox {
+  margin: 0.32rem 0 1.45rem;
+  width: 100%;
+  input {
+    width: 100%;
   }
 }
 button {
-  width: 80%;
-  height: 45px;
+  width: 100%;
+  height: 0.75rem;
   border: none;
-  border: 1px solid #2693d4;
-  border-radius: 1px;
+  border: 0.01rem solid #2693d4;
+  border-radius: 0.01rem;
   background: #2693d4;
-  font-size: 26px;
+  font-size: 0.26rem;
   color: #fff;
   font-weight: 400;
-  line-height: 45px;
+  line-height: 0.75rem;
   text-align: center;
 }
 
-.errorMsg {
-  width: 16%;
+.mint-header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
   height: 40px;
-  font-size: 13px;
-  color: #f33;
-  line-height: 15px;
-  display: inline-block;
-  margin-left: 3px;
+  line-height: 1;
+  padding: 0 10px;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
 }
 </style>
 

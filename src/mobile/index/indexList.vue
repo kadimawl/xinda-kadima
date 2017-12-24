@@ -71,12 +71,12 @@ export default {
 .body {
   display: flex;
   .left {
-    width: 9.5rem;
+    width: 2.2rem;
     p {
       display: block;
-      font-size: 1.1rem;
-      text-indent: 0.8rem;
-      line-height: 4rem;
+      font-size: 0.27rem;
+      text-indent: 0.35rem;
+      line-height: 0.94rem;
       color: #262626;
       font-weight: 550;
     }
@@ -87,9 +87,9 @@ export default {
   .right {
     width: 100%;
     background: #f3f4f6;
-    padding-left: 1rem;
+    padding-left: 0.2rem;
     & > div {
-      margin-bottom: 1rem;
+      // margin-bottom: 1rem;
       display: none;
     }
     .Ddis {
@@ -97,25 +97,24 @@ export default {
     }
     a {
       display: block;
-      font-size: 1.1rem;
-      text-indent: 0.5rem;
-      line-height: 3rem;
+      font-size: 0.28rem;
+      text-indent: 0.06rem;
+      line-height: 0.77rem;
       color: #676664;
       border-bottom: 1px solid #cbcbcd;
     }
     p {
       display: block;
-      font-size: 0.8rem;
-      text-indent: 0.5rem;
-      line-height: 3rem;
+      font-size: 0.22rem;
+      text-indent: 0.05rem;
+      line-height: 0.75rem;
       color: #676664;
       border-bottom: 1px solid #cbcbcd;
-      margin-left: 2rem;
-      padding-right: 3rem;
+      margin-left: 0.7rem;
       position: relative;
       span {
-        margin-right: 1rem;
-        font-size: 1.5rem;
+        margin-right: 0.3rem;
+        font-size: 0.3rem;
         position: absolute;
         right: 0;
         top: 0;

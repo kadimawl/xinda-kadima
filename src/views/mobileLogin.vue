@@ -1,45 +1,41 @@
 <template>
   <div>
+    <mt-header title="登录">
+      <router-link to="/m/users/mobile" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
+    
     <div class="box">
-      <div class="errorMSG" v-show="msg"><img src="../assets/mobile/error.jpg" alt=""><p>{{msg}}</p></div>
-      <div class="phoneBox">
-        <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
-        <p class="errorMsg">{{phoneMsg}}</p>
-      </div>
-      <div class="pwBox">
-        <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw" @focus="pwFocus">
-        <p class="errorMsg">{{pwMsg}}</p>
-      </div>
+
+      <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
+      <input type="text" placeholder="  请输入密码" v-model="pwInput" @blur="pw">
       <div class="v-box">
-        <div>
-          <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
-          <img @click="reImg" :src="imgUrl" alt="">
-        </div>
-        <p class="errorMsg">{{imgVMsg}}</p>
+        <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
+        <img @click="reImg" :src="imgUrl" alt="">
       </div>
-      <button @click="iLogin">立即登录</button>
+      <button class="btn" @click="iLogin">立即登录</button>
     </div>
     <div class="box-4d">
       <div class="left">还没有信达账号</div>
-      <a href="/#/m/mobileRegister">立即注册</a>
+      <a href="/#/m/users/mobileRegister">立即注册</a>
     </div>
   </div>
 </template>
 
 <script>
+import { MessageBox } from "mint-ui";
+
 let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-var md5 = require('md5');
+var md5 = require("md5");
 export default {
   data() {
     return {
-      msg: '',
+      msg: "",
       phoneInput: "", //手机号
-      phoneMsg: "",
       pwInput: "", //密码
       pwType: "password",
-      pwMsg: "",
       imgVInput: "", //验证码
-      imgVMsg: '',
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
   },
@@ -48,23 +44,25 @@ export default {
       let pResult = pReg.test(this.phoneInput);
       if (this.phoneInput != "") {
         if (!pResult) {
-          this.phoneMsg = "请输入正确的手机号";
+          MessageBox({
+            title: "Notice",
+            message: "请输入正确的手机号",
+            showCancelButton: true
+          });
         }
       }
-    },
-    pFocus() {
-      this.phoneMsg = "";
     },
     //密码输入验证
     pw() {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (!pwResult && this.pwInput !== "") {
-        this.pwMsg = "请输入8-20位数字、大小写字母";
+        MessageBox({
+          title: "Notice",
+          message: "请输入20位数字、大小写字母",
+          showCancelButton: true
+        });
       }
-    },
-    pwFocus() {
-      this.pwMsg = "";
     },
     //密码可视
     // visible() {
@@ -84,7 +82,11 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        this.imgVMsg = "图片验证码为4位（数字或者大小写字母）";
+        MessageBox({
+          title: "Notice",
+          message: "图片验证码为4位（数字或者大小写字母）",
+          showCancelButton: true
+        });
       }
     },
     imgVA() {
@@ -95,6 +97,7 @@ export default {
       }
     },
     iLogin() {
+      var that = this;
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
@@ -116,30 +119,57 @@ export default {
                 console.log(msg);
                 if (status == 1) {
                   //成功登陆
-                  // sessionStorage.setItem("user", this.phoneInput);
-                  this.$router.push({ path: "/m" }); //页面跳转
-                  this.ajax.post("/xinda-api/sso/login-info").then(data => {
-                    let name = data.data.data.name;
-                    // this.setName(this.phoneInput);
+                  MessageBox.confirm("登录成功").then(function() {
+                    // sessionStorage.setItem("user", this.phoneInput);
+                    that.$router.push({ path: "/m" }); //页面跳转
+                    that.ajax.post("/xinda-api/sso/login-info").then(data => {
+                      let name = data.data.data.name;
+                      // this.setName(this.phoneInput);
+                    });
                   });
                 } else if (status == -1) {
                   if (msg == "图片验证码错误！") {
-                    this.imgVMsg = "图片验证码错误！";
+                    MessageBox({
+                      title: "Notice",
+                      message: "图片验证码错误！",
+                      showCancelButton: true
+                    });
                   } else if (msg == "账号或密码不正确！") {
-                    this.phoneMsg = "账号或密码不正确！";
+                    MessageBox({
+                      title: "Notice",
+                      message: "账号或密码不正确！",
+                      showCancelButton: true
+                    });
                   } else if (msg == "账号不存在") {
-                    this.phoneMsg = "该手机号未注册";
+                    MessageBox({
+                      title: "Notice",
+                      message: "该手机号未注册",
+                      showCancelButton: true
+                    });
                   }
                 }
               });
           } else {
+            MessageBox({
+              title: "Notice",
+              message: "请输入验证码",
+              showCancelButton: true
+            });
             this.imgVMsg = "请输入验证码";
           }
         } else {
-          this.pwMsg = "请输入密码";
+          MessageBox({
+            title: "Notice",
+            message: "请输入密码",
+            showCancelButton: true
+          });
         }
       } else {
-        this.phoneMsg = "请输入手机号";
+        MessageBox({
+          title: "Notice",
+          message: "请输入手机号",
+          showCancelButton: true
+        });
       }
     }
   }
@@ -148,119 +178,103 @@ export default {
 
 <style lang="less">
 .box {
-  max-width: 768px;
-  max-height: 1280px;
+  width: 100%;
   margin: 0 auto;
-  padding: 0 13%;
+  padding: 0 1rem;
   box-sizing: border-box;
+}
+.head {
+  width: 100%;
+  height: 0.77rem;
+  background: #e5e5e5;
+  margin-bottom: 0.39rem;
+  font-size: 0.28rem;
+  text-align: center;
+  line-height: 0.77rem;
 }
 input {
-  height: 40px;
-}
-.errorMSG{
-  width: 80%;
-  height: 40px;
-  border: 1px solid #f0402e;
-  padding: 10px;
-  box-sizing: border-box;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-around;
-  img{
-    width: 20px;
-    height: 20px;
-  }
-  p{
-    width: 86%;
-    height: 20px;
-    color: #f0402e;
-    font-size: 14px;
-    line-break: 20px;
-    text-align: center;
-  }
-}
-.phoneBox {
-  width: 100%;
-  display: flex;
-  margin-top: 50px;
-  input {
-    width: 80%;
-  }
-}
-.pwBox {
-  width: 100%;
-  margin-top: 35px;
-  display: flex;
-  justify-content: space-between;
-  input {
-    width: 80%;
-  }
+  display: block;
+  width: 5.47rem;
+  height: 0.75rem;
+  margin: 0.32rem auto 0;
 }
 .v-box {
-  width: 100%;
+  width: 5.47rem;
   display: flex;
   justify-content: space-between;
-  margin-top: 50px;
-  div {
-    width: 80%;
-    display: flex;
-    justify-content: space-between;
-  }
+  margin-top: 0.3rem;
+  margin-bottom: 2.13rem;
   input {
-    width: 60%;
+    width: 2.72rem;
+    margin: 0;
   }
   img {
-    width: 35%;
+    width: 2.4rem;
+    height: 0.5rem;
+    margin: auto 0;
   }
 }
-button {
-  width: 80%;
-  height: 45px;
-  margin-top: 213px;
-  font-size: 27px;
+.btn {
+  display: block;
+  width: 5.5rem;
+  height: 0.75rem;
+  font-size: 0.27rem;
   font-weight: 400;
   color: #fff;
   outline: 0;
   background: #2693d4;
   text-align: center;
-  line-height: 45px;
+  line-height: 0.75rem;
   border: none;
+  margin: 0 auto;
 }
 
 .box-4d {
-  height: 48px;
+  width: 100%;
+  height: 0.78rem;
   background: #4d4d4d;
-  max-width: 768px;
-  margin: 334px auto 0;
+  margin: 5.34rem auto 0;
   display: flex;
   .left {
-    width: 36%;
-    font-size: 25px;
+    width: 2.75rem;
+    height: 0.78rem;
+    font-size: 0.28rem;
     color: #f8f8f8;
     text-align: right;
-    line-height: 48px;
+    line-height: 0.78rem;
   }
   a {
     display: inline-block;
-    width: 24%;
-    height: 35px;
+    width: 1.48rem;
+    height: 0.49rem;
     background: #2693d4;
     text-align: center;
-    line-height: 35px;
+    line-height: 0.49rem;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 0.25rem;
     color: #fff;
-    margin: auto 0 auto 35%;
+    margin: auto 0 auto 2.6rem;
   }
 }
-.errorMsg {
-  width: 16%;
-  height: 40px;
-  font-size: 13px;
-  color: #f33;
-  line-height: 15px;
-  display: inline-block;
-  margin-left: 3px;
+
+.mint-header {
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: #e5e5e5;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    font-size: 14px;
+    height: 40px;
+    line-height: 1;
+    padding: 0 10px;
+    position: relative;
+    text-align: center;
+    white-space: nowrap;
 }
 </style>
 

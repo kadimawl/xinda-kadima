@@ -1,7 +1,7 @@
 <template>
     <div class="mBottom">
         <ul>
-            <li>
+            <li :class="[istrue?'active':'']">
                 <a href="javascript:void(0)">
                     <div class="bg bgIndex"></div>
                     <p>首页</p>
@@ -79,5 +79,13 @@ ul {
       text-align: center;
     }
   }
+}
+
+.active{
+    color: #2693d4;
+    div{
+        background: url(../assets/mobile/mobileS.png);
+        background-position: 12px -377px;
+    }
 }
 </style>

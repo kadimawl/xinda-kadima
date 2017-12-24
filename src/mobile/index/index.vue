@@ -83,35 +83,32 @@ export default {
 <style scoped lang="less">
 .top {
   position: relative;
-  padding: 0.3rem 1rem;
+  padding: 0.1rem 0.2rem;
   .city {
     position: absolute;
-    top: 0.4rem;
+    display: flex;
+    top: 0.25rem;
     .listO {
-      display: inline-block;
-      border-top: 0.6rem solid #000000;
-      border-left: 0.6rem solid transparent;
-      border-right: 0.6rem solid transparent;
-      border-bottom: 0.6rem solid transparent;
+      border-top: 0.12rem solid #000000;
+      border-left: 0.12rem solid transparent;
+      border-right: 0.12rem solid transparent;
+      border-bottom: 0.12rem solid transparent;
       position: absolute;
       left: 0;
-      top: 1.2rem;
+      top: 0.1rem;
     }
     .listI {
-      display: inline-block;
-      border-top: 0.5rem solid #ffffff;
-      border-left: 0.5rem solid transparent;
-      border-right: 0.5rem solid transparent;
-      border-bottom: 0.5rem solid transparent;
+      border-top: 0.1rem solid #ffffff;
+      border-left: 0.1rem solid transparent;
+      border-right: 0.1rem solid transparent;
+      border-bottom: 0.1rem solid transparent;
       position: absolute;
-      left: 0.1rem;
-      top: 1.2rem;
+      left: 0.015rem;
+      top: 0.1rem;
     }
     p {
-      display: inline;
-      margin-left: 1.3rem;
-      font-size: 1rem;
-      line-height: 3rem;
+      margin-left: 0.3rem;
+      font-size: 0.23rem;
     }
   }
 }
@@ -119,14 +116,13 @@ export default {
   display: flex;
   justify-content: center;
   img {
-    width: 2rem;
-    height: 2rem;
-    padding: 0.5rem 0.3rem;
+    width: 0.55rem;
+    height: 0.55rem;
   }
   h3 {
-    line-height: 3rem;
-    font-size: 1.3rem;
-    padding-right: 1rem;
+    line-height: 0.55rem;
+    font-size: 0.28rem;
+    padding: 0 0.15rem;
   }
 }
 .lunbo {
@@ -135,14 +131,16 @@ export default {
 .head {
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 0 0.3rem;
   span {
     display: block;
-    width: 4rem;
-    height: 4rem;
+    width: 1.1rem;
+    height: 1.1rem;
   }
   p {
-    font-size: 1rem;
+    font-size: 0.23rem;
+    line-height: 0.45rem;
+    margin-bottom: 0.15rem;
     text-align: center;
     color: #000000;
   }
@@ -181,28 +179,28 @@ export default {
     border-bottom: 2px solid #2693d4;
     position: relative;
     p {
-      font-size: 1.2rem;
-      padding: 2rem 1rem 0.5rem;
+      font-size: 0.28rem;
+      padding: 0.32rem 0.23rem 0.11rem;
     }
     span {
       position: absolute;
-      border-top: 0.2rem solid transparent;
-      border-left: 0.2rem solid transparent;
-      border-right: 0.2rem solid transparent;
-      border-bottom: 0.2rem solid #2693d4;
-      top: 3.66rem;
-      left: 3.2rem;
+      border-top: 0.04rem solid transparent;
+      border-left: 0.04rem solid transparent;
+      border-right: 0.04rem solid transparent;
+      border-bottom: 0.04rem solid #2693d4;
+      top: 0.73rem;
+      left: 0.76rem;
     }
   }
   .bodyI {
-    padding: 2rem 1rem 0;
+    padding: 0.45rem 0.17rem 0;
     & > img {
       width: 100%;
     }
     div {
       display: flex;
       justify-content: space-between;
-      padding-bottom: 0.6rem;
+      padding-bottom: 0.17rem;
       img {
         width: 48%;
         height: 48%;
@@ -212,9 +210,10 @@ export default {
 }
 .qiye {
   display: flex;
-  padding: 1.2rem 0.8rem;
+  padding: 0.27rem 0.17rem;
   .qiyeI {
-    width: 10rem;
+    width: 1.68rem;
+    height: 1.68rem;
     border: 1px solid #e3e3e3;
     display: flex;
     align-items: center;
@@ -223,28 +222,28 @@ export default {
     }
   }
   .qiyeS {
-    width: 30rem;
-    margin-left: 1rem;
+    width: 4.85rem;
+    margin-left: 0.25rem;
     h3 {
-      font-size: 1.1rem;
+      font-size: 0.28rem;
       font-weight: 400;
-      margin: 0.3rem 0;
+      margin: 0 0 0.1rem 0;
     }
     & > p {
-      font-size: 1rem;
-      line-height: 1.5rem;
+      font-size: 0.23rem;
+      line-height: 0.4rem;
     }
     span {
       display: block;
-      font-size: 1.1rem;
+      font-size: 0.26rem;
       color: #ff1514;
       font-weight: bold;
-      margin: 0.3rem 0 0;
-      p{
-        font-size: 0.5rem;
+      margin: 0.1rem 0 0;
+      p {
+        font-size: 0.15rem;
         color: #676767;
         display: inline;
-        margin-left: 0.2rem;
+        margin-left: 0.15rem;
       }
     }
   }
@@ -252,8 +251,8 @@ export default {
 
 .bottom {
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.22rem;
   color: #aeaeae;
-  padding: 18px 0 35px;
+  padding: 0.18rem 0 0.35rem;
 }
 </style>

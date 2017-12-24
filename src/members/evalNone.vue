@@ -4,7 +4,7 @@
     <div class="evalNone" v-for="(usereval,index) in evals" :key="usereval.index">
         <div class="Nleft">
             <!-- 用户logo -->
-            <div class="gslogo"><img :src="usereval.providerImg" alt=""></div>
+            <div class="gslogo"><img :src="usereval.providerImg" alt="商品logo"></div>
             <div class="shangpin">
                 <p class="name">{{usereval.providerName}}</p>
                 <p class="information"><span class="spanf">服务单号：{{usereval.serviceNo}}</span><span>购买时间：{{usereval.buyTime}}</span></p>
@@ -24,19 +24,12 @@
 // 思路如下，ajax拉取数据，把数据处理，存入datas这个数组，evals得到截取值。根据页数拉取，分位置存入datas。
 import pageturn from './pageturn'
 import {mapActions,mapGetters} from 'vuex' 
+var moment = require('moment');
 export default {
     created(){
         if(this.getName){//是否登录
             if(!this.datas[this.pagenum]){
-                var that=this;
-                that.ajax.post('/xinda-api/service/judge/grid',{
-                    start:that.pagenum,
-                    limit:that.pagesize,
-                    status:2	
-                }).then(function(data){
-                    console.log(data);
-                    that.datashow(data);
-                })
+                this.getData(this.pagenum,this.pagesize);
             }else{
                 this.evals=this.datas.splice(this.pagenum,this.pagesize);
             }
@@ -55,20 +48,41 @@ export default {
         };
     },
     components:{pageturn},
+    // 监听pagenum是否改变
+    watch:{
+        pagenum(newpage,oldpage){
+            this.getData(newpage,this.pagesize);
+        },
+    },
     methods:{
         ...mapActions(['setEvaldetail']),
         // 自定义事件
         pagevary(msg){
             this.pagenum=msg*this.pagesize;
         },
+        // 获取数据
+        getData(start,limit){
+            var that=this;
+            that.ajax.post('/xinda-api/service/judge/grid',{
+                start:start,
+                limit:limit,
+                status:2	
+            }).then(function(data){
+                if(data.data.data.length){
+                    that.datashow(data);
+                }
+                console.log(data);
+            })
+        },
         // 拉取数据处理
         datashow(data){
             if(data.data.data){
+                var data=data.data.data;
                 for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
                     var dataindex=i-this.pagethum;
-                    this.datas[i]=data.data.data[dataindex];
-                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data.data.data[dataindex].providerImg+'';
-                    this.datas[i].buyTime=new Date(data.data.data[dataindex].buyTime);
+                    this.datas[i]=data[dataindex];
+                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data[dataindex].providerImg+'';
+                    this.datas[i].buyTime=moment(data[dataindex].buyTime).format('YYYY-MM-DD hh:mm:ss');
                 }
                 this.total=data.data.totalCount;
                 this.evals=this.datas.splice(this.pagenum,this.pagesize);

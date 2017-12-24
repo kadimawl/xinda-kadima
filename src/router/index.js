@@ -46,23 +46,38 @@ import payBank from '@/components/order/payBank' //银行支付
 
 //WX端
 import m from '@/mobile/m' //WX端一级路由
-import mobile from '@/components/mobile' //WX端我的框架页
+
+import users from '@/mobile/users/users' //WX端我的框架页
+import mobile from '@/mobile/users/mobile' //WX端我的未注册页
 import mobileRegister from '@/views/mobileRegister' //WX端我的注册页
-import logined from '@/views/logined' //WX端我的已登录页
+import logined from '@/mobile/users/logined' //WX端我的已登录页
 import mobileLogin from '@/views/mobileLogin' //WX端我的登录页
 import mobileForgetPw from '@/views/mobileForgetPw' //WX端我的忘记密码页
-import accountSetting from '@/views/accountSetting' //WX端我的忘记密码页
-import myOrder from '@/mobile/cart/myOrder' //WX端我的我的订单页
+import accountSetting from '@/mobile/users/accountSetting' //WX端我的账户设置页
+import myOrder from '@/mobile/users/myOrder' //WX端我的我的订单页
+
+
 
 import mIndexLY from '@/mobile/mIndex' //WX端主页路由
 import mIndex from '@/mobile/index/index' //WX端主页
 import mIndexList from '@/mobile/index/indexList' //WX端列表
 import mProduct from '@/mobile/index/product' //WX端产品
 
-import wxshopcarHave from '@/mobile/cart/wxshopcarHave' //非空购物车
-import wxshopcarNull from '@/mobile/cart/wxshopcarNull' //空购物车
-import wxshopHome from '@/mobile/shop/wxshopHome' //店铺首页
-import wxshopList from '@/mobile/shop/wxshopList' //店铺列表，也是店铺的默认跳转页
+
+
+import shop from '@/mobile/shop/shop' //WX端商品框架页
+import shopDetail from '@/mobile/shop/shopDetail' //商品详情
+
+
+import carts from '@/mobile/carts/carts' //WX端购物车框架页
+import wxshopcarHave from '@/mobile/carts/wxshopcarHave' //非空购物车
+import shopcarNull from '@/mobile/carts/shopcarNull' //空购物车
+
+import store from '@/mobile/stores/store' //wx端店铺框架页
+import wxshopHome from '@/mobile/stores/wxshopHome' //店铺首页
+import wxshopList from '@/mobile/stores/wxshopList' //店铺列表，也是店铺的默认跳转页
+
+
 
 Vue.use(Router)
 export default new Router({
@@ -233,56 +248,93 @@ export default new Router({
 
 
 
-        //WX端临时路由
+        //WX端临时路由--按原型挂四个二级路由
         {
-            path: '/m', //是不应该先判断登录状态 登录了默认页为首页，未登录默认页为登录注册页
+            path: '/m',
             component: m,
             children: [{
-                path: '/', //首页路由
-                component: mIndexLY,
-                redirect: 'mIndex',
-                children: [{
-                    path: 'mIndex', //首页
-                    component: mIndex
-                }, {
-                    path: 'mProduct', //产品分类
-                    component: mProduct
-                }]
-            },
-            {
-                path: 'mobile', //我的（二级路由===未注册）
-                component: mobile
-            }, {
-                path: 'mobileRegister', //我的（注册页）
-                component: mobileRegister
-            }, {
-                path: 'mobileLogin', //我的（登录页）
-                component: mobileLogin
-            }, {
-                path: 'logined', //我的（已登录）
-                component: logined
-            }, {
-                path: 'mobileForgetPw', //我的（忘记密码）
-                component: mobileForgetPw
-            }, {
-                path: 'accountSetting', //账户设置
-                component: accountSetting,
-            }, {
-                path: 'myOrder', //我的订单
-                component: myOrder
-            }, {
-                path: 'wxshopcarNull', //空购物车
-                component: wxshopcarNull,
-            }, {
-                path: 'wxshopcarHave', //非空购物车
-                component: wxshopcarHave,
-            }, {
-                path: 'wxshopHome', //店铺首页
-                component: wxshopHome,
-            }, {
-                path: 'wxshopList', //店铺列表
-                component: wxshopList,
-            }
+                    path: '/', //首页二级路由
+                    component: mIndexLY,
+                    redirect: 'mIndex',
+                    children: [{
+                        path: 'mIndex', //首页
+                        component: mIndex
+                    }, {
+                        path: 'mIndexList', //店铺列表
+                        component: mIndexList
+                    }, {
+                        path: 'mProduct', //产品分类
+                        component: mProduct
+                    }]
+                },
+                {
+                    path: 'shop', //商品二级路由
+                    component: shop,
+                    children: [{
+                        path: 'shopDetail', //商品详情
+                        component: shopDetail
+                    }]
+                },
+                {
+                    path: 'store', //店铺二级路由
+                    component: store,
+                    redirect: 'store/List',
+                    children: [{
+                        path: 'List', //店铺列表
+                        component: wxshopList,
+                    }, {
+                        path: 'Home', //店铺首页
+                        component: wxshopHome,
+                    }]
+                },
+
+                {
+                    path: 'carts', //购物车二级路由
+                    component: carts,
+                    children: [{
+                        path: 'Null', //空购物车
+                        component: shopcarNull,
+                    }, {
+                        path: 'Have', //非空购物车
+                        component: wxshopcarHave,
+                    }, ]
+                },
+
+                {
+                    path: 'users', //我的二级路由
+                    component: users,
+                    redirect: 'users/mobile',
+                    children: [{
+                        path: 'mobile', //我的（未注册）
+                        component: mobile
+                    }, {
+                        path: 'mobileRegister', //我的（注册页）
+                        component: mobileRegister
+                    }, {
+                        path: 'mobileLogin', //我的（登录页）
+                        component: mobileLogin
+                    }, {
+                        path: 'logined', //我的（已登录）
+                        component: logined
+                    }, {
+                        path: 'mobileForgetPw', //我的（忘记密码）
+                        component: mobileForgetPw
+                    }, {
+                        path: 'accountSetting', //账户设置
+                        component: accountSetting,
+                    }, {
+                        path: 'myOrder', //我的订单
+                        component: myOrder
+                    }]
+                }
+
+
+
+
+
+
+
+
             ]
         }, {
             path: '/mIndexList', //店铺列表

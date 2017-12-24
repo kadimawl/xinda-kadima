@@ -7,7 +7,12 @@ import store from './store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import qs from 'qs'
+import { Header,MessageBox,Button  } from 'mint-ui';
+Vue.component(Header.name, Header);
+Vue.component(Button.name, Button)
 
 var objSort = function (name) {
   return function (o, p) {
@@ -30,7 +35,6 @@ var objSort = function (name) {
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
-// Vue.prototype.transfer = new Vue();//非父子组件通信
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
@@ -59,7 +63,7 @@ Vue.prototype.debounce = function debounce(fn, delay) {
 
     // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
     // 再过 delay 毫秒就执行 fn
-    timer = setTimeout(function () {//句柄
+    timer = setTimeout(function () { //句柄
       fn.apply(this, args)
     }, delay)
   }
@@ -76,23 +80,3 @@ new Vue({
   }
 })
 
-//判断移动端还是pc端
-function browserRedirect() {
-  var sUserAgent = navigator.userAgent.toLowerCase();
-  var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
-  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-  var bIsMidp = sUserAgent.match(/midp/i) == "midp";
-  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-  var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
-  var bIsAndroid = sUserAgent.match(/android/i) == "android";
-  var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
-  var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-  document.writeln("您的浏览设备为：");
-  if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-    document.writeln("phone");
-  } else {
-    document.writeln("pc");
-  }
-}
-
-browserRedirect();

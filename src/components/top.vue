@@ -21,11 +21,13 @@
       </div>
       <div class="box-right">
         <div class="shop-cart">
-          <a class="cartLink" href="/#/tabs/shoppingCart">
-            <span class="bgCart"></span>
+          <!-- <a class="cartLink" href="/#/tabs/shoppingCart"> -->
+          <span class="bgCart"></span>
+          <el-button type="text" class="cartBut" @click="cartBut">
             <p>购物车
-              <span>{{getNum}}</span>件</p>
-          </a>
+              <span>{{getNum}}</span> 件</p>
+          </el-button>
+          <!-- </a> -->
         </div>
         <div class="myOrder " v-show="getName">
           <span class="bgOrder"></span>
@@ -42,27 +44,29 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import isLogged from "../isLogged";
 export default {
   created() {
     var that = this;
-    this.ajax.post("xinda-api/cart/cart-num").then(data => {
-      var cartNum = data.data.data.cartNum;
-      that.setNum(cartNum);
-      sessionStorage.setItem(cartNum, cartNum);
-    });
+    if (this.getName) {
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
+    }
   },
   data() {
     return {
       ligined: false,
       lR: true,
-      name: "",
+      name: ""
     };
   },
   computed: {
     ...mapGetters(["getNum", "getName"]) //{getNum:function(){}}
   },
   methods: {
-    ...mapActions(["setTitle", "setName",'setNum']),
+    ...mapActions(["setTitle", "setName", "setNum"]),
     login() {
       this.setTitle("欢迎登录");
     },
@@ -70,12 +74,20 @@ export default {
       this.setTitle("欢迎注册");
     },
     exit() {
-      // this.ajax.post("/xinda-api/sso/logout").then(data => {
-        // if (data.data.status == 1) {
-          sessionStorage.clear();
-        // }
-      // });
+      sessionStorage.clear();
       location.reload();
+    },
+    cartBut() {
+      if (this.getName) {
+        this.$router.push({ path: "/tabs/shoppingCart" });
+      } else {
+        this.$alert("请先进行登录", "标题名称", {
+          confirmButtonText: "确定",
+          callback: action => {
+            this.$router.push({ path: "/outter/login" });
+          }
+        });
+      }
     }
   }
 };
@@ -130,6 +142,9 @@ export default {
       display: flex;
       span {
         color: @69c;
+      }
+      .cartBut {
+        color: #000;
       }
     }
     .entrance {
