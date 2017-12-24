@@ -41,7 +41,22 @@ export default {
     },
     areaChange(){
         this.$emit('selected',this.area);
-    }
+    },
+    // 三级联动显示
+    showarea(code) {
+      var that = this;
+      var codearr = code.split("");
+      codearr.splice(4, 2, "0", "0");
+      var codecity = codearr.join("");
+      codearr.splice(2, 2, "0", "0");
+      var codepro = codearr.join("");
+      this.province = codepro;
+      that.proChange();
+      this.city = codecity;
+      that.cityChange();
+      this.area = code;
+      that.areaChange();
+    },
   }
 };
 </script>

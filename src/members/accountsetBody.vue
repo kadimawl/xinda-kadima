@@ -64,22 +64,14 @@ import dist from "../districts/districts";
 
 export default {
     created() {
-        // console.log('account');
         if (this.getName) {
-            // 登录拉取数据
-            // console.log('登录');
             if (sessionStorage.getItem("account" + this.getName + "")) {
-                // console.log("user");
                 var data = JSON.parse(sessionStorage.getItem("account" + this.getName + ""));
-                // console.log(data);
                 this.pageshow(data);
             } else {
-                // console.log('post');
                 var that = this;
                 that.ajax.post("/xinda-api/member/info").then(function(data) {
                 if (data.data.status == 1) {
-                    // console.log('succ')
-                    // console.log(data);
                     that.pageshow(data);
                 } else {
                     that.errorshow = true;

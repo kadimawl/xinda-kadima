@@ -1,11 +1,14 @@
 <template>
   <div class="">
       <router-view/>
+      <mobileBottom/>
   </div>
 </template>
 
 <script>
+import mobileBottom from './mobileBottom';
 export default {
+  components: {mobileBottom}
 }
 </script>
 

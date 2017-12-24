@@ -14,6 +14,7 @@
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
       </div>
+      <router-link class="forget" to="/m/users/mobileForgetPw">忘记密码？</router-link>
       <button class="btn" @click="iLogin">立即登录</button>
     </div>
     <div class="box-4d">
@@ -203,7 +204,7 @@ input {
   display: flex;
   justify-content: space-between;
   margin-top: 0.3rem;
-  margin-bottom: 2.13rem;
+  margin-bottom: .32rem;
   input {
     width: 2.72rem;
     margin: 0;
@@ -226,9 +227,16 @@ input {
   text-align: center;
   line-height: 0.75rem;
   border: none;
-  margin: 0 auto;
+  margin: 1.60rem auto 0;
 }
 
+.forget{
+  display: block;
+  width: 100%;
+  text-align: right;
+  font-size: .14rem;
+  color: #2693d4;
+}
 .box-4d {
   width: 100%;
   height: 0.78rem;
@@ -258,23 +266,26 @@ input {
 }
 
 .mint-header {
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    align-items: center;
-    background-color: #e5e5e5;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    color: #000;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    font-size: 14px;
-    height: 40px;
-    line-height: 1;
-    padding: 0 10px;
-    position: relative;
-    text-align: center;
-    white-space: nowrap;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
+  height: 40px;
+  line-height: 1;
+  padding: 0 .01rem;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  button{
+    width: .40rem;
+  }
 }
 </style>
 

@@ -21,7 +21,6 @@ export default {
 .routerBox{
   width: 100%;
   margin: 0 auto;
-  height: 1334px;
 }
 
 </style>
