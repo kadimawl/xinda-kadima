@@ -18,10 +18,5 @@ export default {
   margin: 0;
   padding: 0;
 }
-.routerBox{
-  width: 100%;
-  margin: 0 auto;
-  height: 1334px;
-}
 
 </style>
