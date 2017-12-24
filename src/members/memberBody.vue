@@ -42,18 +42,21 @@
                         <p>￥{{serv.unitPrice}}</p>
                         <!-- 数量 -->
                         <p>{{serv.buyNum}}</p>
-                        <!-- 总价 -->
-                        <div class="pcommon">
-                            <p>￥{{serv.totalPrice}}</p>
-                        </div>
-                        <!-- 订单状态 -->
-                        <div class="pcommon">
-                            <p>{{serv.status}}</p>
-                        </div>
                     </div> 
                 </div>
+                <!-- 总价 -->
+                <div class="pcommon">
+                    <p>￥{{list.totalPrice}}</p>
+                </div>
+                <!-- 订单状态 -->
+                <div class="pcommon">
+                    <p>{{list.status}}</p>
+                </div>
                 <!-- 操作按钮 -->
-                <div>
+                <div v-if="list.status=='已完成'" class="finish">
+                    <p>交易完成</p>
+                </div>
+                <div v-if="list.status=='等待买家付款'" class="waitpay">
                     <button @click="payfor(list.businessNo,list.status)">付款</button>
                     <p @click="remove(list.id)">删除订单</p>
                 </div>
@@ -85,10 +88,9 @@ import pageturn from "./pageturn";
 export default {
     // 拉取数据
     created(){
+        console.log('run in created');
         this.msg='false';
         this.errorshow=false;
-        console.log(window.innerWidth)
-        console.log(window.innerWidth)
         // 未登录不拉取数据
         if(this.getName){
             this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
@@ -97,7 +99,7 @@ export default {
     watch:{
         pagenum(newpage,oldpage){
             this.getData(newpage,this.pagesize,this.value1,this.value2,this.inputcode);
-        }
+        },
     },
     data() {
         return {
@@ -114,43 +116,14 @@ export default {
             pagenum:0,//
             pagesize:2,//
             total:'',//总条目
-            conRemove:true,//确认删除
+            conRemove:false,//确认删除
             orderid:'',//订单id
             heights:window.innerWidth+'px',//
             widths:window.innerWidth+'px',//
         };
     },
-    // // 处理ajax获取的business数据显示在页面
-    businessshow(data) {
-      if (data.data.data) {
-        this.total = data.data.totalCount + "";
-        var data = data.data.data;
-        var datas = {};
-
-        for (var key in data) {
-          if (data[key].status == 1) {
-            //关于订单状态
-            data[key].status = "等待买家付款";
-          } else if (data[key].status == 4) {
-            data[key].status = "已完成";
-          }
-          var businessNo = data[key].businessNo;
-          if (!datas[businessNo]) {
-            datas[businessNo] = data[key];
-            datas[businessNo].createTime = moment(data[key].createTime).format(
-              "YYYY-MM-DD hh:mm:ss"
-            );
-          }
-        }
-        var orderNo = [];
-        for (var key in datas) {
-          orderNo.push(businessNo);
-        }
-        // console.log(datas.orderNo);
-        this.ordercode = orderNo;
-        this.lists = datas;
-        // console.log('this.lists==',this.lists)
-      }
+    computed:{
+        ...mapGetters(['getName']),
     },
     components:{pageturn},
     methods:{
@@ -165,8 +138,8 @@ export default {
                 endTime:time2,
                 businessNo:code,
             })).then(function(data){
-                // console.log('origin==',data);
-                if(data.data.data.length){
+                console.log('origin==',data);
+                if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
                     // console.log('origin1==',data);
                 }else{
@@ -183,7 +156,7 @@ export default {
         },
         // // 处理ajax获取的business数据显示在页面
         businessshow(data){
-            if(data.data.data){
+            if(data.data.data.length){
                 //获取订单总数，传给翻页组件
                 this.total=data.data.totalCount+'';
                 // console.log('this.total==',this.total);
@@ -191,20 +164,20 @@ export default {
                 for(let i=0;i<data.length;i++){
                     data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
                     data[i].servitem=[];
+                    //关于订单状态
+                    if(data[i].status==1){
+                        data[i].status='等待买家付款';
+                    }else if(data[i].status==4){
+                        data[i].status='已完成';
+                    }   
                     var orderN=data[i].businessNo;
                     var that=this;
                     that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:orderN,
                     })).then(function(servdata){
-                        // console.log('servicedata==',servdata);
+                        console.log('servicedata==',servdata);
                         var servdata=servdata.data.data;
                         for(var key in servdata){
-                            //关于订单状态
-                            if( servdata[key].status==1){
-                                 servdata[key].status='等待买家付款';
-                            }else if( servdata[key].status==4){
-                                 servdata[key].status='已完成';
-                            }   
                             data[i].servitem.push(servdata[key]);
                         }
                     })
@@ -293,192 +266,122 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 * {
-  margin: 0;
-  padding: 0;
+    margin: 0;
+    padding: 0;
 }
 // 最大的盒子
 .myorder {
-  width: 970px;
-  margin-left: 30px;
-  margin-top: 30px;
-  display: block;
-  flex-direction: column;
-  // 顶部标签
-  .topname {
-    width: 90%;
-    height: 32px;
-    border-bottom: 2px solid #e9e9e9;
-    text-align: center;
-    margin-bottom: 16px;
-    p {
-      width: 115px;
-      color: #73b2de;
-      height: 32px;
-      z-index: 5;
-      line-height: 32px;
-      font-size: 16px;
-      border-bottom: 2px solid #2693d4;
+    width: 970px;
+    margin-left: 30px;
+    margin-top: 30px;
+    display: block;
+    flex-direction: column;
+    // 顶部标签
+    .topname {
+        width: 90%;
+        height: 32px;
+        border-bottom: 2px solid #e9e9e9;
+        text-align: center;
+        margin-bottom: 16px;
+        p {
+        width: 115px;
+        color: #73b2de;
+        height: 32px;
+        z-index: 5;
+        line-height: 32px;
+        font-size: 16px;
+        border-bottom: 2px solid #2693d4;
+        }
     }
-  }
-  // 订单搜索部分
-  .search {
-    height: 40px;
-    line-height: 40px;
-    display: flex;
-    margin-top: 25px;
-    span {
-      display: block;
-      margin-left: 40px;
-      color: #e42b12;
+    // 订单搜索部分
+    .search {
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        margin-top: 25px;
+        span {
+            display: block;
+            margin-left: 40px;
+            color: #e42b12;
+        }
+        p {
+            width: 80px;
+            color: #888888;
+            margin-right: 20px;
+        }
+        input {
+            width: 265px;
+            height: 24px;
+            border: 1px solid #b0b0b0;
+        }
+        .el-input {
+            width: 220px;
+        }
+        button {
+            width: 72px;
+            height: 26px;
+            border: 1px solid #2693d4;
+            border-radius: 4px;
+            margin-left: 50px;
+            margin-top: 6px;
+            background: #ffffff;
+            color: #66a9dd;
+            box-shadow: 0 0 1px 1px #66a9dd;
+        }
     }
-    p {
-      width: 80px;
-      color: #888888;
-      margin-right: 20px;
-    }
-    input {
-      width: 265px;
-      height: 24px;
-      border: 1px solid #b0b0b0;
-    }
-    .el-input {
-      width: 220px;
-    }
-    button {
-      width: 72px;
-      height: 26px;
-      border: 1px solid #2693d4;
-      border-radius: 4px;
-      margin-left: 50px;
-      margin-top: 6px;
-      background: #ffffff;
-      color: #66a9dd;
-      box-shadow: 0 0 1px 1px #66a9dd;
-    }
-  }
-  // 创建时间
-  .time {
-    height: 40px;
-    display: flex;
-    margin: 30px 0 30px 0;
-    line-height: 40px;
-    p {
-      color: #888888;
-      margin-right: 20px;
-    }
-    .datepick1 {
-      margin-right: 20px;
-    }
-    .datepick2 {
-      margin-left: 20px;
-    }
-  }
-  // 列表
-  .list {
-    display: flex;
-    width: 932px;
-    height: 32px;
-    background: #f7f7f7;
-    margin-bottom: 10px;
-    p {
-      height: 32px;
-      line-height: 32px;
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .name {
-      width: 320px;
-      padding-left: 40px;
-    }
-    .unitprice {
-      width: 110px;
-      text-align: center;
-    }
-    .amount {
-      width: 110px;
-      text-align: center;
-    }
-    .sum {
-      width: 142px;
-      text-align: center;
-    }
-    .orderStatus {
-      width: 142px;
-      text-align: center;
-    }
-    .orderHandle {
-      width: 120px;
-      text-align: center;
-    }
-  }
-  // 订单展示列表，主体部分
-  .listshow {
-    width: 940px;
-    height: auto;
-    // 获取订单盒子
-    .innerbox {
-      width: 100%;
-      height: 140px;
-      margin-bottom: 10px;
-      // 订单编号与时间
-      .codetime {
-        width: 100%;
+    // 创建时间
+    .time {
         height: 40px;
         display: flex;
-        background: #f7f7f7;
+        margin: 30px 0 30px 0;
+        line-height: 40px;
         p {
-          line-height: 30px;
-          margin-left: 20px;
+            color: #888888;
+            margin-right: 20px;
         }
-      }
-      // 订单主体
-      .all {
-        width: 940px;
-        height: 100px;
+        .datepick1 {
+            margin-right: 20px;
+        }
+        .datepick2 {
+            margin-left: 20px;
+        }
+    }
+    // 列表
+    .list {
         display: flex;
-        // 名称、单价和数量
-        > div:nth-child(1) {
-          width: 580px;
-          height: 100px;
-          display: flex;
-          border: 1px solid #f7f7f7;
-          align-items: center;
-          > div {
-            width: 334px;
-            height: 100px;
-            display: flex;
-            align-items: center;
-            // 装logo的盒子
-            > div {
-              width: 70px;
-              height: 70px;
-              margin-left: 15px;
-              margin-right: 15px;
-            }
-            // 公司名称的样式
-            > p {
-              width: 100px;
-              height: 70px;
-              line-height: 30px;
-            }
-          }
-          > p {
+        width: 932px;
+        height: 32px;
+        background: #f7f7f7;
+        margin-bottom: 10px;
+        p {
+            height: 32px;
+            line-height: 32px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .name {
+            width: 320px;
+            padding-left: 40px;
+        }
+        .unitprice {
             width: 110px;
             text-align: center;
-            height: 100px;
-            line-height: 100px;
-            font-size: 18px;
-          }
         }
-        // 状态和总价
-        > p {
-          width: 140px;
-          height: 100xp;
-          line-height: 100px;
-          text-align: center;
-          color: #2393d3;
-          border: 1px solid #f7f7f7;
-          font-size: 18px;
+        .amount {
+            width: 110px;
+            text-align: center;
+        }
+        .sum {
+            width: 142px;
+            text-align: center;
+        }
+        .orderStatus {
+            width: 142px;
+            text-align: center;
+        }
+        .orderHandle {
+            width: 120px;
+            text-align: center;
         }
     }
     // 订单展示列表，主体部分
@@ -507,14 +410,14 @@ export default {
                 min-height: 100px;
                 display: flex;
                 align-items: center;
-                >div:nth-child(1){
-                    width: 812px;
+                >div:first-child{
+                    width: 590px;
                     .all{
                         width: 100%;
                         height: 100px;
                         display: flex;
                         >div:nth-child(1){
-                            width: 370px;
+                            width: 323px;
                             height: 100px;
                             display: flex;
                             border: 2px solid #f7f7f7;
@@ -527,11 +430,10 @@ export default {
                                 margin-right: 15px;
                                 line-height: 70px;
                             }
-                            // 公司名称的样式
+                            // 服务内容
                             >p{
-                                width: 100px;
-                                height: 70px;
-                                line-height: 70px;
+                                width: 120px;
+                                line-height: 30px;
                             }
                         }
                         >p{ 
@@ -542,24 +444,24 @@ export default {
                             font-size: 18px;
                             border: 2px solid #f7f7f7;
                         }
-                         // 状态和总价
-                        .pcommon{
-                            width: 140px;
-                            height: 100px;
-                            text-align: center;
-                            border: 2px solid #f7f7f7;
-                            p{
-                                margin-top: 30px;
-                                height: 40px;
-                                color: #2393d3;
-                                font-size: 18px;
-                                line-height: 40px;
-                            }
-                        }
+                    }
+                }
+                // 状态和总价
+                .pcommon{
+                    width: 140px;
+                    height: 100px;
+                    text-align: center;
+                    border: 2px solid #f7f7f7;
+                    p{
+                        margin-top: 30px;
+                        height: 40px;
+                        color: #2393d3;
+                        font-size: 18px;
+                        line-height: 40px;
                     }
                 }
                 // 操作按钮
-                >div:nth-child(2){
+                .waitpay{
                     width: 120px;
                     height: 100%;
                     text-align: center;
@@ -582,45 +484,32 @@ export default {
                         cursor: pointer;
                     }
                 }
+                .finish{
+                    width: 120px;
+                    height: 100%;
+                    text-align: center;
+                    border: 1px solid #f7f7f7;
+                    p{
+                        font-size: 18px;
+                    }
+                }
             }
         }
     }
     // 错误提示框
-    .errorbox{
+    .errorbox {
         width: 300px;
         height: 100px;
         position: absolute;
         left: 1250px;
-        top:300px;
+        top: 300px;
         text-align: center;
         line-height: 100px;
         background: #f7f7f7;
-        z-index:10;
-        p{
-            font-size: 18px;
-            cursor: pointer;
-          }
-          p {
-            color: #ff4649;
-            font-size: 18px;
-            cursor: pointer;
-          }
+        z-index: 4;
+        p {
+        font-size: 18px;
         }
-      }
-    }
-  }
-  .errorbox {
-    width: 300px;
-    height: 100px;
-    position: absolute;
-    left: 1250px;
-    top: 300px;
-    text-align: center;
-    line-height: 100px;
-    background: #f7f7f7;
-    z-index: 10;
-    p {
-      font-size: 18px;
     }
     // 删除订单提示框
     .remove{
@@ -674,6 +563,5 @@ export default {
             }
         }
     }
-
 }
 </style>

@@ -7,7 +7,12 @@ import store from './store'
 import axios from 'axios'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
 import qs from 'qs'
+import { Header,MessageBox,Button  } from 'mint-ui';
+Vue.component(Header.name, Header);
+Vue.component(Button.name, Button)
 
 var objSort = function (name) {
   return function (o, p) {
@@ -30,7 +35,6 @@ var objSort = function (name) {
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
-// Vue.prototype.transfer = new Vue();//非父子组件通信
 Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
