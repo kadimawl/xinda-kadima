@@ -54,7 +54,6 @@ export default {
       console.log(this.seleCode);
     },
     login() {
-      // this.$router.push({ path: "/outter/login" });
       this.setTitle("欢迎登录");
     },
     //手机号输入
@@ -64,11 +63,7 @@ export default {
       if (!this.phoneInput == "") {
         this.phoneMsg = "";
         if (!result) {
-          MessageBox({
-            title: "提示",
-            message: "请输入正确的手机号",
-            showCancelButton: true
-          });
+          MessageBox.alert("请输入正确的手机号", "提示");
         } else {
           //验证手机号是否已经注册
           this.ajax
@@ -82,11 +77,7 @@ export default {
             )
             .then(data => {
               if (data.data.status == -2) {
-                MessageBox({
-                  title: "提示",
-                  message: "该手机号已注册",
-                  showCancelButton: true
-                });
+                MessageBox.alert("该手机号已注册", "提示");
               }
             });
         }
@@ -106,6 +97,7 @@ export default {
           message: "图片验证码为四位（数字或者字母）",
           showCancelButton: true
         });
+        MessageBox.alert("图片验证码为四位（数字或者字母）", "提示");
       }
     },
     imgVA() {
@@ -144,11 +136,7 @@ export default {
           )
           .then(data => {
             if (data.data.status == -1) {
-              MessageBox({
-                title: "提示",
-                message: "图片验证码错误",
-                showCancelButton: true
-              });
+              MessageBox.alert("图片验证码错误", "提示");
             }
           });
       }
@@ -158,17 +146,9 @@ export default {
     pvBlur() {
       let pVReg = /^\d{6}$/;
       if (!pVReg.test(this.phoneV) && this.phoneV !== "") {
-        MessageBox({
-          title: "提示",
-          message: "短信验证码为六位数字",
-          showCancelButton: true
-        });
+        MessageBox.alert("短信验证码为六位数字", "提示");
       } else if (this.phoneV != 111111) {
-        MessageBox({
-          title: "提示",
-          message: "短信验证码错误",
-          showCancelButton: true
-        });
+        MessageBox.alert("短信验证码错误", "提示");
       }
     },
     pVFocus() {
@@ -185,11 +165,7 @@ export default {
       let pwResult = pwReg.test(this.pwInput);
       if (this.pwInput !== "") {
         if (!pwResult) {
-          MessageBox({
-            title: "提示",
-            message: "密码为：8-20位数字，大小写字母",
-            showCancelButton: true
-          });
+          MessageBox.alert("密码为：8-20位数字，大小写字母", "提示");
         }
       }
     },
@@ -210,6 +186,7 @@ export default {
       var user = this.phoneInput;
       var pw = this.pwInput;
       var md5 = require("md5");
+      var that =this;
       if (user != "") {
         if (this.imgVInput != "") {
           if (this.phoneV != "") {
@@ -228,45 +205,27 @@ export default {
                   )
                   .then(data => {
                     if (data.data.status == 1) {
-                      this.$router.push({ path: "/outter/login" });
-                    } else {
-                      MessageBox({
-                        title: "提示",
-                        message: "请重新注册，谢谢。",
-                        showCancelButton: true
+                      MessageBox.alert("您已注册成功").then(action => {
+                        that.$router.push({ path: "/outter/login" });
                       });
+                    } else {
+                      MessageBox.alert("请重新注册，谢谢。", "提示");
                     }
                   });
               } else {
-                MessageBox({
-                  title: "提示",
-                  message: "请输入密码",
-                  showCancelButton: true
-                });
+                MessageBox.alert("请输入密码", "提示");
               }
             } else {
               this.addShow = true;
             }
           } else {
-            MessageBox({
-              title: "提示",
-              message: "请输入短信验证码",
-              showCancelButton: true
-            });
+            MessageBox.alert("请输入短信验证码", "提示");
           }
         } else {
-          MessageBox({
-            title: "提示",
-            message: "请输入图片验证码",
-            showCancelButton: true
-          });
+          MessageBox.alert("请输入图片验证码", "提示");
         }
       } else {
-        MessageBox({
-          title: "提示",
-          message: "请输入手机号。",
-          showCancelButton: true
-        });
+        MessageBox.alert("请输入手机号。", "提示");
       }
     }
   }
@@ -368,10 +327,13 @@ button {
   font-size: 0.28rem;
   height: 40px;
   line-height: 1;
-  padding: 0 10px;
+  padding: 0 0.01rem;
   position: relative;
   text-align: center;
   white-space: nowrap;
+  button {
+    width: 0.4rem;
+  }
 }
 </style>
 

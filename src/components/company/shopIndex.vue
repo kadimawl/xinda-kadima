@@ -95,7 +95,7 @@ export default {
       //商品页面跳转事件
       this.$router.push({ path: "/shopList", query: { shopID: id } });
     },
-    getShop: function(TypeCode) {
+    getShop: function() {
       //商品列表请求函数
       var that = this;
       this.ajax
@@ -105,7 +105,7 @@ export default {
           productTypeCode: 10,
           regionId: 110102,
           sort: 1,
-          productTypeCode: TypeCode
+          // productTypeCode: TypeCode
         })
         .then(data => {
           var shops = data.data.data;

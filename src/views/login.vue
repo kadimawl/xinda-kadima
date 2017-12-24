@@ -132,6 +132,7 @@ export default {
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
+      console.log(md5(this.pwInput))
       if (userName != "") {
         if (pw != "") {
           if (this.imgVInput != "") {
