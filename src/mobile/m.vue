@@ -20,34 +20,34 @@ export default {
 }
 
 /*移动端适配*/
-@media screen and (max-width: 359px) and (min-width: 320px) {
-  html,
-  body {
-    font-size: 13px !important;
-  }
-}
-@media screen and (max-width: 374px) and (min-width: 360px) {
-  html,
-  body {
-    font-size: 15px !important;
-  }
-}
-@media screen and (max-width: 413px) and (min-width: 375px) {
-  html,
-  body {
-    font-size: 16px !important;
-  }
-}
-@media screen and (max-width: 639px) and (min-width: 414px) {
-  html,
-  body {
-    font-size: 18px !important;
-  }
-}
-@media screen and (min-width: 640px) and (max-width: 1200px) {
-  html,
-  body {
-    font-size: 27px !important;
-  }
-}
+// @media screen and (max-width: 359px) and (min-width: 320px) {
+//   html,
+//   body {
+//     font-size: 13px !important;
+//   }
+// }
+// @media screen and (max-width: 374px) and (min-width: 360px) {
+//   html,
+//   body {
+//     font-size: 15px !important;
+//   }
+// }
+// @media screen and (max-width: 413px) and (min-width: 375px) {
+//   html,
+//   body {
+//     font-size: 16px !important;
+//   }
+// }
+// @media screen and (max-width: 639px) and (min-width: 414px) {
+//   html,
+//   body {
+//     font-size: 18px !important;
+//   }
+// }
+// @media screen and (min-width: 640px) and (max-width: 1200px) {
+//   html,
+//   body {
+//     font-size: 27px !important;
+//   }
+// }
 </style>
