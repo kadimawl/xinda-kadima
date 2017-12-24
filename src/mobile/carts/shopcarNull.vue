@@ -27,10 +27,13 @@ export default {
 
  <style lang="less" scoped>
  .top {
-    //顶部
+     height: .77rem;
     font-size: .24rem;
-    padding: .05rem 0 0 .10rem;
-    color: #aaaca8;
+    line-height: .77rem;
+    padding: .05rem 0 0 .23rem;
+    box-sizing: border-box;
+    color: #4c4c4c;
+    background: #e5e5e5;
     span {
       color: #fe7581;
     }
