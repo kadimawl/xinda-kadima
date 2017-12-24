@@ -8,10 +8,10 @@
         </div>
         <div class="logo">
             <img src="../../assets/index/icon.png" alt="">
-            <h1>信达</h1>
+            <h3>信达</h3>
         </div>
     </div>
-    <img src="../../assets/mobile/dalou.jpg" class="lunbo">
+    <img src="../../assets/mobile/index/dalou.jpg" class="lunbo">
     <div class="head">
         <a href="javascript:void(0)"><span class="head1"></span><p>财税服务</p></a>
         <a href="javascript:void(0)"><span class="head2"></span><p>开公司</p></a>
@@ -28,21 +28,32 @@
         <div class="bodyT">
             <p>知识产权</p><span></span>
         </div>
-        <div>
-            <img src="" alt="">
-            <img src="" alt="">
-            <img src="" alt="">
+        <div class="bodyI">
+            <div>
+              <img src="../../assets/mobile/index/shangbiao.png" alt="">
+              <img src="../../assets/mobile/index/banquan.png" alt="">
+            </div>
+            <img src="../../assets/mobile/index/zhuzuo.png" alt="">
         </div>
         <div class="bodyT">
             <p>初创企业</p><span></span>
         </div>
         <div>
-            
+            <div v-for="data in datas" :key="data.id" class="qiye">
+              <div class="qiyeI">
+                <img :src="'http://115.182.107.203:8088/xinda/pic'+data.providerImg" alt="">
+              </div>
+              <div class="qiyeS">
+                <h3>{{data.serviceName}}</h3>
+                <p>{{data.serviceInfo}}</p>
+                <span>￥{{data.marketPrice}}<p>{{data.unit}}</p></span>
+              </div>
+            </div>
         </div>
     </div>
     <div class="logo">
         <img src="../../assets/index/icon.png" alt="">
-        <h1>信达</h1>
+        <h3>信达</h3>
     </div>
     <p class="bottom">一站式企业交易中心</p>
 </div>
@@ -52,7 +63,18 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      datas: []
+    };
+  },
+  created() {
+    var that = this;
+    this.ajax
+      .post("http://115.182.107.203:8088/xinda/xinda-api/recommend/list")
+      .then(function(data) {
+        console.log(data.data.data);
+        that.datas = data.data.data.hq;
+      });
   }
 };
 </script>
@@ -61,42 +83,46 @@ export default {
 <style scoped lang="less">
 .top {
   position: relative;
-  padding: 0.3rem 1rem;
+  padding: 0.1rem 0.2rem;
   .city {
     position: absolute;
-    top: 0.4rem;
+    display: flex;
+    top: 0.25rem;
     .listO {
-      display: inline-block;
-      border-top: 0.8rem solid #000000;
-      border-left: 0.8rem solid transparent;
-      border-right: 0.8rem solid transparent;
-      border-bottom: 0.8rem solid transparent;
+      border-top: 0.12rem solid #000000;
+      border-left: 0.12rem solid transparent;
+      border-right: 0.12rem solid transparent;
+      border-bottom: 0.12rem solid transparent;
       position: absolute;
       left: 0;
       top: 0.1rem;
     }
     .listI {
-      display: inline-block;
-      border-top: 0.7rem solid #ffffff;
-      border-left: 0.7rem solid transparent;
-      border-right: 0.7rem solid transparent;
-      border-bottom: 0.7rem solid transparent;
+      border-top: 0.1rem solid #ffffff;
+      border-left: 0.1rem solid transparent;
+      border-right: 0.1rem solid transparent;
+      border-bottom: 0.1rem solid transparent;
       position: absolute;
-      left: 0.025rem;
-      top: 0.04rem;
+      left: 0.015rem;
+      top: 0.1rem;
     }
     p {
-      display: inline;
-      margin-left: 1.9rem;
-      font-size: 2rem;
+      margin-left: 0.3rem;
+      font-size: 0.23rem;
     }
   }
 }
 .logo {
   display: flex;
   justify-content: center;
-  h1 {
-    line-height: 1rem;
+  img {
+    width: 0.55rem;
+    height: 0.55rem;
+  }
+  h3 {
+    line-height: 0.55rem;
+    font-size: 0.28rem;
+    padding: 0 0.15rem;
   }
 }
 .lunbo {
@@ -105,64 +131,128 @@ export default {
 .head {
   display: flex;
   justify-content: space-between;
-  padding: 1rem;
-  span{
+  padding: 0 0.3rem;
+  span {
     display: block;
-    width: 1rem;
-    height: 1rem;
+    width: 1.1rem;
+    height: 1.1rem;
   }
-  p{
-      font-size: 23px;
-      text-align: center;
-      color: #000000;
+  p {
+    font-size: 0.23rem;
+    line-height: 0.45rem;
+    margin-bottom: 0.15rem;
+    text-align: center;
+    color: #000000;
   }
+  // #img.source-image {width: 100%;position: absolute;top: 0;left: 0;}
   .head1 {
-    background: url("../../assets/mobile/caishui.png");
+    background: url("../../assets/mobile/index/caishui.png");
+    background-size: 100% 100%;
   }
   .head2 {
-    background: url("../../assets/mobile/kaigongsi.png");
+    background: url("../../assets/mobile/index/kaigongsi.png");
+    background-size: 100% 100%;
   }
   .head3 {
-    background: url("../../assets/mobile/gongsibiangeng.png");
+    background: url("../../assets/mobile/index/gongsibiangeng.png");
+    background-size: 100% 100%;
   }
   .head4 {
-    background: url("../../assets/mobile/gerenshebao.png");
+    background: url("../../assets/mobile/index/gerenshebao.png");
+    background-size: 100% 100%;
   }
   .head5 {
-    background: url("../../assets/mobile/gongsishebao.png");
+    background: url("../../assets/mobile/index/gongsishebao.png");
+    background-size: 100% 100%;
   }
   .head6 {
-    background: url("../../assets/mobile/zhishichanquan.png");
+    background: url("../../assets/mobile/index/zhishichanquan.png");
+    background-size: 100% 100%;
   }
   .headAll {
-    background: url("../../assets/mobile/quanbufuwu.png");
+    background: url("../../assets//mobile/index/quanbufuwu.png");
+    background-size: 100% 100%;
   }
 }
-.body{
-    .bodyT{
-        border-bottom: 2px solid #2693d4;
-        position: relative;
-        p{
-            font-size: 29px;
-            padding: 2rem 1rem 0.5rem;
-        }
-        span{
-            position: absolute;
-            border-top: 3px solid transparent;
-            border-left: 3px solid transparent;
-            border-right: 3px solid transparent;
-            border-bottom: 3px solid #2693d4;
-            top: 73px;
-            left: 71px;
-        }
+.body {
+  .bodyT {
+    border-bottom: 2px solid #2693d4;
+    position: relative;
+    p {
+      font-size: 0.28rem;
+      padding: 0.32rem 0.23rem 0.11rem;
     }
+    span {
+      position: absolute;
+      border-top: 0.04rem solid transparent;
+      border-left: 0.04rem solid transparent;
+      border-right: 0.04rem solid transparent;
+      border-bottom: 0.04rem solid #2693d4;
+      top: 0.73rem;
+      left: 0.76rem;
+    }
+  }
+  .bodyI {
+    padding: 0.45rem 0.17rem 0;
+    & > img {
+      width: 100%;
+    }
+    div {
+      display: flex;
+      justify-content: space-between;
+      padding-bottom: 0.17rem;
+      img {
+        width: 48%;
+        height: 48%;
+      }
+    }
+  }
+}
+.qiye {
+  display: flex;
+  padding: 0.27rem 0.17rem;
+  .qiyeI {
+    width: 1.68rem;
+    height: 1.68rem;
+    border: 1px solid #e3e3e3;
+    display: flex;
+    align-items: center;
+    img {
+      width: 100%;
+    }
+  }
+  .qiyeS {
+    width: 4.85rem;
+    margin-left: 0.25rem;
+    h3 {
+      font-size: 0.28rem;
+      font-weight: 400;
+      margin: 0 0 0.1rem 0;
+    }
+    & > p {
+      font-size: 0.23rem;
+      line-height: 0.4rem;
+    }
+    span {
+      display: block;
+      font-size: 0.26rem;
+      color: #ff1514;
+      font-weight: bold;
+      margin: 0.1rem 0 0;
+      p {
+        font-size: 0.15rem;
+        color: #676767;
+        display: inline;
+        margin-left: 0.15rem;
+      }
+    }
+  }
 }
 
-
-.bottom{
-    text-align: center;
-    font-size: 22px;
-    color: #aeaeae;
-    padding: 18px 0 35px;
+.bottom {
+  text-align: center;
+  font-size: 0.22rem;
+  color: #aeaeae;
+  padding: 0.18rem 0 0.35rem;
 }
 </style>
