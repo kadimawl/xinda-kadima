@@ -38,6 +38,16 @@
       <p class="scale">小计：</p>
       <span>￥{{total}}</span>
     </div>
+
+    <div class="cartBtn">
+        <div class="combined">
+            <p>合计 :</p>
+            <p class="totals">￥
+                <span>{{total}}</span>
+            </p>
+        </div>
+        <button @click="settlement">去结算</button>
+    </div>
   </div>
 
 </template>
@@ -125,6 +135,15 @@ export default {
       } else {
         MessageBox.alert("商品最低不能低于1件", "提示");
       }
+    },
+    //结算
+    settlement() {
+      this.ajax.post("xinda-api/cart/submit").then(data => {
+        if (data.data.status == 1) {
+          this.$router.push({ path: "/m/carts/Null" });
+          this.render();
+        }
+      });
     },
     //输入框改变数量
     numChange() {
@@ -248,10 +267,11 @@ export default {
     }
   }
   p {
-    margin-top: 0.05rem;
-    height: 0.16rem;
+    display: inline-block;
+    height: 0.21rem;
     margin-left: 0.15rem;
     font-size: 0.16rem;
+    line-height: .21rem;
     color: #242424;
   }
 }
@@ -279,5 +299,43 @@ export default {
   span {
     color: #fe2423;
   }
+}
+
+.cartBtn{
+  width: 100%;
+  height: 1.1rem;
+  display: flex;
+  margin-top: 0.3rem;
+  margin-bottom: .10rem;
+  position: fixed;
+  bottom: .60rem;
+  .combined {
+    width: 4.94rem;
+    background: #e5e5e5;
+    padding-left: 0.10rem;
+    box-sizing: border-box;
+    display: flex;
+    margin: 0;
+    p {
+      font-size: 0.28rem;
+      letter-spacing: 0.02rem;
+      line-height: 1.1rem;
+      margin-left: .20rem;
+      color: #4c4c4c;
+    }
+    .totals {
+      color: #fe0000;
+    }
+  }
+}
+button {
+  width: 2.56rem;
+  background: #fb2d2d;
+  font-size: 0.28rem;
+  color: #fff;
+  text-align: center;
+  line-height: 1.1rem;
+  border: none;
+  outline: 0;
 }
 </style>

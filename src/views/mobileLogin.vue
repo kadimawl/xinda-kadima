@@ -184,15 +184,6 @@ export default {
   padding: 0 1rem;
   box-sizing: border-box;
 }
-.head {
-  width: 100%;
-  height: 0.77rem;
-  background: #e5e5e5;
-  margin-bottom: 0.39rem;
-  font-size: 0.28rem;
-  text-align: center;
-  line-height: 0.77rem;
-}
 input {
   display: block;
   width: 5.47rem;

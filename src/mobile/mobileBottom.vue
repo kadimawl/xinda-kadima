@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li>
-        <router-link class="mine" active-class="mineChange" to="/m/users/logined">
+        <router-link class="mine" active-class="mineChange" :to="routes">
           <div class="bg mine"></div>
           <p>我的</p>
         </router-link>
@@ -31,14 +31,21 @@
 </template>
 
 <script>
+const mineRoute =  ["/m/users/mobileLogin","/m/users/logined"];
 export default {
   data() {
     return {
-      isTrue: true,
-      // [isTrue?"/m/users/mobileLogin":"/m/users/logined"]
+      routes: mineRoute[0]
     };
   },
-  methods: {}
+  created() {
+    this.ajax.post('xinda-api/sso/login-info').then(data=>{
+      console.log(data.data)
+    })
+  },
+  methods: {
+
+  }
 };
 </script>
 
@@ -83,56 +90,56 @@ li {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmhomeG.png);
-  background-size: contain;
+    background-size: contain;
   }
 }
 .indexChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/btmhomeB.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 .shop {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmlistG.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 .shopChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/btmlistB.png);
-  background-size: contain;
+    background-size: contain;
   }
 }
 .cart {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmcart.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 .cartChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/blueCart.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 .mine {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmmine.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 .mineChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/blueMine.png) no-repeat;
-  background-size: contain;
+    background-size: contain;
   }
 }
 </style>
