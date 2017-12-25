@@ -9,7 +9,11 @@
   // window.location.href = "#/";
 
 export default {
-  
+  data(){
+    return{
+
+    };
+  }
 };
 </script>
 

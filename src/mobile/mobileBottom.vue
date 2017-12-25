@@ -1,26 +1,35 @@
 <template>
     <div class="mBottom">
         <ul>
-            <router-link class="original" active-class="activeB" to="/m/shop" @click="index">
-                <img src="../assets/mobile/btmhomeG.png" alt="" v-show="!indexImg">
-                <img src="../assets/mobile/btmhomeB.png" alt="" v-show="indexImg">
-                <p>首页</p>
-            </router-link>
-            <router-link class="original" active-class="activeB"  to="/m" @click="shop">
-                <img src="../assets/mobile/btmlistG.png" alt="" v-show="!shopImg">
-                <img src="../assets/mobile/btmlistB.png" alt="" v-show="shopImg">
-                <p >店铺</p>
-            </router-link>
-            <router-link class="original" active-class="activeB"  to="/m" @click="cart">
-                <img src="../assets/mobile/btmcart.png" alt="" v-show="!cartImg">
-                <img src="../assets/mobile/blueCart.png" alt="" v-show="cartImg">
-                <p >购物车</p>
-            </router-link>
-            <router-link class="original" active-class="activeB"  to="/m/mobile" @click="mine">
-                <img src="../assets/mobile/btmmine.png" alt="" v-show="!mineImg">
-                <img src="../assets/mobile/blueMine.png" alt="" v-show="mineImg">
-                <p>我的</p>
-            </router-link>
+            <li @click="index">
+                <router-link class="original" active-class="activeB" to="/m">
+                    <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
+                    <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
+                    <p>首页</p>
+                </router-link>
+            </li>
+            <li @click="shop">
+                <router-link class="original" active-class="activeB" to="/m/shop/shopDetail">
+                    <img src="../assets/mobile/btmlistG.png" alt="" v-show="shopImg">
+                    <img src="../assets/mobile/btmlistB.png" alt="" v-show="!shopImg">
+                    <p>店铺</p>
+                </router-link>
+            </li>
+            <li @click="cart">
+                <router-link class="original" active-class="activeB" to="/m/carts/Have">
+                    <img src="../assets/mobile/btmcart.png" alt="" v-show="cartImg">
+                    <img src="../assets/mobile/blueCart.png" alt="" v-show="!cartImg">
+                    <p>购物车</p>
+                </router-link>
+            </li>
+            <li @click="mine">
+                <router-link class="original" active-class="activeB" to="/m/users/mobile">
+                    <img src="../assets/mobile/btmmine.png" alt="" v-show="mineImg">
+                    <img src="../assets/mobile/blueMine.png" alt="" v-show="!mineImg">
+                    <p>我的</p>
+                </router-link>
+            </li>
+
         </ul>
     </div>
 </template>
@@ -29,25 +38,26 @@
 export default {
   data() {
     return {
-      indexImg: false,
-      shopImg: '',
-      cartImg: '',
-      mineImg: ''
+      indexImg: true,
+      shopImg: true,
+      cartImg: true,
+      mineImg: true
     };
   },
   methods: {
-      index(){
-          this.indexImg = true;
-      },
-      shop(){
-          this.shopImg = true;
-      },
-      cart(){
-          this.cartImg = true;
-      },
-      mine(){
-          this.mineImg = true;
-      },
+    index() {
+      console.log("index");
+      this.indexImg = false;
+    },
+    shop() {
+      this.shopImg = false;
+    },
+    cart() {
+      this.cartImg = false;
+    },
+    mine() {
+      this.mineImg = false;
+    }
   }
 };
 </script>
@@ -67,7 +77,10 @@ ul {
   display: flex;
   list-style: none;
 }
-.original{
+li {
+  width: 25%;
+}
+.original {
   width: 25%;
   height: 0.88rem;
   color: #b0b0b2;
@@ -87,7 +100,7 @@ ul {
   }
 }
 
-// .activeB{
-//     color: #2693d4;
-// }
+.activeB {
+  color: #2693d4;
+}
 </style>
