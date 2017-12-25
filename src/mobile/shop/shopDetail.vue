@@ -116,7 +116,7 @@ export default {
         })
       )
       .then(function(data) {
-          console.log(data)
+        console.log(data);
         var rData = data.data.data;
         that.Products = rData;
         that.products.push(rData.product);
@@ -176,7 +176,8 @@ export default {
       // this.isLogged();
       mplugins(id, that); //立即购买公共方法
     },
-    addCart: function(id) {//添加购物车
+    addCart: function(id) {
+      //添加购物车
       // this.isLogged();
       var that = this;
       this.ajax
@@ -184,9 +185,9 @@ export default {
         .then(function(data) {
           that.success = true;
         });
-        setInterval(()=>{
-          that.success = false;
-        },1000);
+      setInterval(() => {
+        that.success = false;
+      }, 1000);
     }
   },
   data() {
@@ -206,10 +207,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
-body {
-  background-color: #000;
-}
 .shopD {
+  margin-top: 0.6rem;
   width: 100%;
 }
 .deTails {
