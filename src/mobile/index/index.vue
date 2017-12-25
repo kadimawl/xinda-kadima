@@ -39,13 +39,15 @@
             <p>初创企业</p><span></span>
         </div>
         <div>
-            <div v-for="data in datas" :key="data.id" class="qiye">
+            <div v-for="data in datas" :key="data.id" class="qiye" @click="gotoShop(data.id)">
               <div class="qiyeI">
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+data.providerImg" alt="">
               </div>
               <div class="qiyeS">
-                <h3>{{data.serviceName}}</h3>
-                <p>{{data.serviceInfo}}</p>
+                <div>
+                  <h3>{{data.serviceName}}</h3>
+                  <p>{{data.serviceInfo}}</p>
+                </div>
                 <span>￥{{data.marketPrice}}<p>{{data.unit}}</p></span>
               </div>
             </div>
@@ -62,9 +64,9 @@
 </template>
 
 <script>
-import mobileBottom from '../mobileBottom';
+import mobileBottom from "../mobileBottom";
 export default {
-  components: {mobileBottom},
+  components: { mobileBottom },
   data() {
     return {
       datas: []
@@ -83,6 +85,13 @@ export default {
       this.$router.push({
         path: "/m/mProduct",
         query: { productTypeCode: code }
+      });
+    },
+    gotoShop(id) {
+      console.log(id);
+      this.$router.push({
+        path: "/m/shop/shopDetail",
+        query: { sId: id }
       });
     }
   }
@@ -141,7 +150,7 @@ export default {
 .head {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.3rem;
+  padding: 0 0.3rem 0.3rem;
   span {
     display: block;
     width: 1.1rem;
@@ -154,7 +163,6 @@ export default {
     text-align: center;
     color: #000000;
   }
-  // #img.source-image {width: 100%;position: absolute;top: 0;left: 0;}
   .head1 {
     background: url("../../assets/mobile/index/caishui.png");
     background-size: 100% 100%;
@@ -234,14 +242,18 @@ export default {
   .qiyeS {
     width: 4.85rem;
     margin-left: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     h3 {
       font-size: 0.28rem;
       font-weight: 400;
       margin: 0 0 0.1rem 0;
     }
-    & > p {
+    div p {
       font-size: 0.23rem;
       line-height: 0.4rem;
+      text-align: left;
     }
     span {
       display: block;

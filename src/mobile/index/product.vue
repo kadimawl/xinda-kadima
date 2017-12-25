@@ -1,7 +1,7 @@
 <template>
 <div>
-  <div class="top"><button>默认排序</button><button>价格</button></div>
-  <div class="body" v-for="Product in products" :key="Product.id">
+  <div class="top"><button v-bind:class="{'active':top==1}" @click="act(1)">默认排序</button><button v-bind:class="{'active':top==2}" @click="act(2)">价格</button></div>
+  <div class="body" v-for="Product in products" :key="Product.id" @click="gotoShop(Product.id)">
     <div class="logo">
       <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
     </div>
@@ -24,13 +24,13 @@ export default {
   data() {
     return {
       shopTypes: [],
-      products: []
+      products: [],
+      top: 1
     };
   },
   created() {
     //商品列表请求函数
     var that = this;
-
     this.ajax
       .post(
         "/xinda-api/product/package/grid",
@@ -43,7 +43,20 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
+        console.log(gData);
       });
+  },
+  methods: {
+    gotoShop(id) {
+      console.log(id);
+      this.$router.push({
+        path: "/m/shop/shopDetail",
+        query: { sId: id }
+      });
+    },
+    act(t) {
+      this.top = t;
+    }
   }
 };
 </script>
@@ -63,9 +76,11 @@ export default {
     border-radius: 0 0.05rem 0.05rem 0;
   }
   button:nth-child(1) {
+    border-radius: 0.05rem 0 0 0.05rem;
+  }
+  .active {
     background: #2793d4;
     color: #ffffff;
-    border-radius: 0.05rem 0 0 0.05rem;
   }
 }
 

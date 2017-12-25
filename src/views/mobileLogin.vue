@@ -1,7 +1,7 @@
 <template>
   <div>
     <mt-header title="登录">
-      <router-link to="/m/users/mobile" slot="left">
+      <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
@@ -283,9 +283,6 @@ input {
   position: relative;
   text-align: center;
   white-space: nowrap;
-  button{
-    width: .40rem;
-  }
 }
 </style>
 

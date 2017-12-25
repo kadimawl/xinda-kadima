@@ -90,7 +90,8 @@ export default new Router({
                     path: '/HomePage',
                     alias: '/',
                     component: HomePage,
-                }, {
+                },
+                {
                     path: 'tabs',
                     component: tabs,
                     children: [{
@@ -193,9 +194,6 @@ export default new Router({
                     ]
                 },
 
-
-
-
                 //pc端支付
                 {
                     path: '/Order',
@@ -220,7 +218,6 @@ export default new Router({
                 },
             ]
         },
-
         //pc端注册登录，忘记密码(这是外挂一级路由，不要动！！！)
         {
             path: '/outter',
@@ -238,9 +235,6 @@ export default new Router({
                 component: forgetpw
             }]
         },
-
-
-
 
         //WX端临时路由--按原型挂四个二级路由
         {
@@ -282,7 +276,18 @@ export default new Router({
                         component: wxshopHome,
                     }]
                 },
-
+                {
+                    path: 'store', //店铺二级路由
+                    component: store,
+                    redirect: 'store/List',
+                    children: [{
+                        path: 'List', //店铺列表
+                        component: wxshopList,
+                    }, {
+                        path: 'Home', //店铺首页
+                        component: wxshopHome,
+                    }]
+                },
                 {
                     path: 'carts', //购物车二级路由
                     component: carts,
@@ -294,7 +299,6 @@ export default new Router({
                         component: shopcarHave,
                     }, ]
                 },
-
                 {
                     path: 'users', //我的二级路由
                     component: users,
@@ -322,16 +326,9 @@ export default new Router({
                         component: myOrder
                     }]
                 }
-
-
-
-
-
-
-
-
             ]
-        }, {
+        },
+        {
             path: '/mIndexList', //店铺列表
             component: mIndexList
         }

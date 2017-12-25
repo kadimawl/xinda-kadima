@@ -1,7 +1,7 @@
 <template>
   <div>
     <mt-header title="忘记密码">
-      <router-link to="/m/users/mobile" slot="left">
+      <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>

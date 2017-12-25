@@ -55,6 +55,7 @@ div {
   height: 1.1rem;
   display: flex;
   margin-top: 0.3rem;
+  margin-bottom: .10rem;
   .combined {
     width: 4.94rem;
     background: #e5e5e5;
