@@ -16,7 +16,6 @@
 
 </template>
 <script>
-import { mapGetters } from "vuex";
 import dist from "../districts/districts";
 export default {
   data() {
@@ -30,11 +29,14 @@ export default {
     };
   },
   created() {
-    var that = this;
-    this.showarea(this.getRegionId);
+  },
+  watch:{
+    regionId(newval,oldval){
+      console.log(newval);
+      this.showarea(newval);
+    }
   },
   computed: {
-    ...mapGetters(['getRegionId'])
   },
   props: {
     regionId: String
@@ -56,18 +58,17 @@ export default {
     // 三级联动显示
     showarea(code) {
       console.log(code);
-      var that = this;
       var codearr = code.split("");
       codearr.splice(4, 2, "0", "0");
       var codecity = codearr.join("");
       codearr.splice(2, 2, "0", "0");
       var codepro = codearr.join("");
       this.province = codepro;
-      that.proChange();
+      this.proChange();
       this.city = codecity;
-      that.cityChange();
+      this.cityChange();
       this.area = code;
-      that.areaChange();
+      this.areaChange();
     }
   }
 };
