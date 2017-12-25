@@ -64,13 +64,13 @@
         </div>
       </div>
     </div>
-    <div class="buttons">
+    <div class="buttons" v-for="pvdpdt in pvdpdts" :key="pvdpdt.code">
       <div class="call" @click="popupCall">
         <div class="call-pic"></div>
         <p>联系商家</p>
       </div>
-      <div class="addCart">加入购物车</div>
-      <div class="buyNow">立即购买</div>
+      <div class="addCart" @click="addCart(pvdpdt.id)">加入购物车</div>
+      <div class="buyNow" @click="toPay(pvdpdt.id)">立即购买</div>
     </div>
     <div class="popup-call" v-show="popHide">
       <div class="head">
@@ -98,10 +98,12 @@
       <p class="notice">正在为您接通电话</p>
       <p class="notice">请您注意接听来电</p>
     </div>
+    <div class="cartNotice" v-show="success">加入成功</div>
   </div>
 </template>
 
 <script>
+import mplugins from "../../mplugins";
 export default {
   created() {
     var id = this.$route.query.sId;
@@ -127,6 +129,22 @@ export default {
       });
   },
   methods: {
+    isLogged() {
+      //判断是否登录
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              path: "/m/users/mobileLogin"
+            });
+          })
+          .catch(() => {});
+      }
+    },
     popupCall() {
       //联系商家弹窗
       // console.log(this)
@@ -145,11 +163,30 @@ export default {
       //免费接通弹窗关闭
       this.callingHide = false;
     },
-    toStore(id) { //跳转店铺详情
+    toStore(id) {
+      //跳转店铺详情
       this.$router.push({
         path: "/store/Home",
         query: { storeId: id }
       });
+    },
+    toPay: function(id) {
+      //立即购买
+      var that = this;
+      // this.isLogged();
+      mplugins(id, that); //立即购买公共方法
+    },
+    addCart: function(id) {//添加购物车
+      // this.isLogged();
+      var that = this;
+      this.ajax
+        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+        .then(function(data) {
+          that.success = true;
+        });
+        setInterval(()=>{
+          that.success = false;
+        },1000);
     }
   },
   data() {
@@ -161,7 +198,8 @@ export default {
       proBus: [],
       serInf: "",
       popHide: false,
-      callingHide: false
+      callingHide: false,
+      success: false
     };
   }
 };
@@ -545,5 +583,18 @@ body {
     color: #2693d4;
     text-align: center;
   }
+}
+.cartNotice {
+  width: 30%;
+  height: 2rem;
+  font-size: 0.3rem;
+  color: #fff;
+  line-height: 2rem;
+  text-align: center;
+  border: 0.01rem solid #ccc;
+  background-color: rgba(82, 87, 88, 0.7);
+  position: fixed;
+  top: 45%;
+  left: 35%;
 }
 </style>
