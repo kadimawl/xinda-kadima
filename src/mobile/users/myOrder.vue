@@ -2,7 +2,7 @@
     <div class="box" @click="myclick">
         <!-- 头部 -->
         <mt-header  title="我的订单" class="aTop">
-            <router-link to="/" slot="left">
+            <router-link to="/m" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>

@@ -2,8 +2,8 @@
   <div class="mBottom">
     <ul>
       <li>
-        <router-link class="indexChange" active-class="index" to="/m/mIndex">
-          <div class="bg indexChange"></div>
+        <router-link class="index" active-class="indexChange" to="/m/mIndex">
+          <div class="bg index"></div>
           <p>首页</p>
         </router-link>
       </li>
@@ -20,7 +20,7 @@
         </router-link>
       </li>
       <li>
-        <router-link class="mine" active-class="mineChange" to="/m/users/mobile">
+        <router-link class="mine" active-class="mineChange" to="/m/users/logined">
           <div class="bg mine"></div>
           <p>我的</p>
         </router-link>
@@ -33,12 +33,9 @@
 <script>
 export default {
   data() {
-    return {
-    };
+    return {};
   },
-  methods: {
-    
-  }
+  methods: {}
 };
 </script>
 
@@ -64,13 +61,13 @@ li {
   width: 25%;
   height: 0.88rem;
   cursor: pointer;
-}
-p {
-  width: 100%;
-  height: 0.23rem;
-  font-size: 0.23rem;
-  text-align: center;
-  line-height: 0.23rem;
+  p {
+    width: 100%;
+    height: 0.23rem;
+    font-size: 0.23rem;
+    text-align: center;
+    line-height: 0.23rem;
+  }
 }
 .bg {
   display: block;
@@ -81,15 +78,15 @@ p {
   background-repeat: no-repeat;
 }
 .index {
-  color: #2693d4;
-  .bg {
-    background: url(../assets/mobile/btmhomeB.png) no-repeat;
-  }
-}
-.indexChange {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmhomeG.png);
+  }
+}
+.indexChange {
+  color: #2693d4;
+  .bg {
+    background: url(../assets/mobile/btmhomeB.png) no-repeat;
   }
 }
 .shop {
