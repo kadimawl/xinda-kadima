@@ -104,12 +104,13 @@
 <script>
 export default {
   created() {
+    var sId = this.$route.query.sId;
     var that = this;
     this.ajax
       .post(
         "/xinda-api/product/package/detail",
         this.qs.stringify({
-          sId: "0cb85ec6b63b41fc8aa07133b6144ea3"
+          sId: sId
         })
       )
       .then(function(data) {

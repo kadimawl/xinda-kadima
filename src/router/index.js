@@ -11,7 +11,6 @@ import forgetpw from '@/views/forgetpw' //忘记密码
 import HomePage from '@/components/ModelHomePage/HomePage' //首页模块
 import taxationList from '@/components/ModelHomePage/taxationList' //财税服务模块
 import companyList from '@/components/ModelHomePage/companyList' //公司工商模块
-import goodsDetails from '@/components/ModelHomePage/goodsDetails' //商品详情模块
 import shoppingCart from '@/components/ModelHomePage/shoppingCart' //购物车模块
 import toJoinIn from '@/components/ModelHomePage/toJoinIn' //加入我们模块
 
@@ -107,11 +106,6 @@ export default new Router({
                     path: 'companyList', //公司工商
                     name: 'companyList',
                     component: companyList
-                },
-                {
-                    path: 'goodsDetails', //商品详情
-                    name: 'goodsDetails',
-                    component: goodsDetails
                 },
                 {
                     path: 'shoppingCart', //购物车
