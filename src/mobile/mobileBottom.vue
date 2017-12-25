@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const mineRoute =  ["/m/users/mobileLogin","/m/users/logined"];
+const mineRoute =  ["/m/users/logined","/m/users/mobileLogin"];
 export default {
   data() {
     return {
@@ -40,7 +40,9 @@ export default {
   },
   created() {
     this.ajax.post('xinda-api/sso/login-info').then(data=>{
-      console.log(data.data)
+      if(data.data.status == 0){
+        this.routes = mineRoute[1]
+      }
     })
   },
   methods: {

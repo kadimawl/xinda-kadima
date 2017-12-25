@@ -7,7 +7,6 @@
 
 <script>
 if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-  // window.location.href = "#/";
   (function(doc, win) {
     var docEl = doc.documentElement,
       resizeEvt =
@@ -15,11 +14,7 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
       recalc = function() {
         var clientWidth = docEl.clientWidth;
         if (!clientWidth) return;
-        // if (clientWidth >= 750) {
-        //   docEl.style.fontSize = "100px";
-        // } else {
         docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-        // }
       };
 
     if (!doc.addEventListener) return;
