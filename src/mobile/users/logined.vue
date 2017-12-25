@@ -1,6 +1,6 @@
 <template>
   <div class="mobile">
-    <div class="portrait"></div>
+    <div class="portrait"><img src="../../assets/mobile/h.jpg" alt=""></div>
     <div class="name">{{name}}</div>
     <div class="order e9">
       <a href="/#/m/users/myOrder">
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { MessageBox } from 'mint-ui';
+import { MessageBox } from "mint-ui";
 export default {
   created() {
     var that = this;
@@ -40,12 +40,12 @@ export default {
   },
   methods: {
     exit() {
-      var that= this;
+      var that = this;
       this.ajax.post("xinda-api/sso/ logout").then(data => {
         if (data.data.status == 1) {
           MessageBox.confirm("您已成功退出登录?").then(action => {
-            that.name = '未登录';
-            this.$router.push({path: '/m'})
+            that.name = "未登录";
+            this.$router.push({ path: "/m" });
           });
         }
       });
@@ -68,6 +68,11 @@ export default {
   border-radius: 50%;
   background: #fff;
   margin: 0 auto 1.02rem;
+  img {
+    width: 1.65rem;
+    height: 1.65rem;
+    border-radius: 50%;
+  }
 }
 .name {
   width: 100%;
@@ -76,7 +81,7 @@ export default {
   font-weight: 700;
   text-align: CENTER;
   line-height: 0.28rem;
-  margin-bottom: .22rem;
+  margin-bottom: 0.22rem;
 }
 .e9 {
   width: 100%;
