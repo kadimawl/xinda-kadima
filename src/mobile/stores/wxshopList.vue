@@ -13,7 +13,7 @@
             <div><img :src="shop.providerImg" alt="店铺logo"></div>
             <div>
                 <p>{{shop.providerName}}</p>
-                <div><span></span><p>{{shop.regionName}}</p></div>
+                <div><span><img src="../../assets/mobile/addIcon.jpg" alt=""></span><p>{{shop.regionName}}</p></div>
                 <div>
                     <p>累计客户数量：<span>{{shop.orderNum}}</span></p>
                     <p>好评率：<span>{{shop.goodJudge}}</span></p>
@@ -26,7 +26,7 @@
 <script>
 export default {
     created(){
-        this.getData(this.productTypeCode,this.region,this.sort);
+        this.getData(this.limit,this.productTypeCode,this.region,this.sort);
     },
     data(){
         return{
@@ -35,15 +35,17 @@ export default {
             region:'',//
             productTypeCode:'',//
             top:1,//
+            limit:'',//
         };
     },
     components: {},
     methods:{
-        getData(productTypeCode,region,sort){
+        // 获取数据
+        getData(limit,productTypeCode,region,sort){
             var that=this;
             that.ajax.post('/xinda-api/provider/grid',that.qs.stringify({
                 start:0,
-                limit:4,
+                limit:limit,
                 productTypeCode:productTypeCode,
                 regionId:region,
                 sort:sort,
@@ -77,7 +79,7 @@ export default {
             if(this.top!=1){
                 this.top=1;
                 this.sort=1;
-                this.getData(this.productTypeCode,this.region,this.sort);
+                this.getData(this.limit,this.productTypeCode,this.region,this.sort);
             }
         },
         // 好评率排序
@@ -85,7 +87,7 @@ export default {
             if(this.top!=2){
                 this.top=2;
                 this.sort=2;
-                this.getData(this.productTypeCode,this.region,this.sort);
+                this.getData(this.limit,this.productTypeCode,this.region,this.sort);
             }
         },
         // 销量排序
@@ -93,7 +95,7 @@ export default {
             if(this.top!=3){
                 this.top=3;
                 this.sort=3;
-                this.getData(this.productTypeCode,this.region,this.sort);
+                this.getData(this.limit,this.productTypeCode,this.region,this.sort);
             }
         },
     },
@@ -146,7 +148,7 @@ export default {
         width: 100%;
         height: 1.7rem;
         font-size: 0.2rem;
-        padding-bottom: 0.22rem;
+        padding: 0.22rem 0;
         border-bottom: 0.01rem solid #cfcfcf;
         display: flex;
         align-items: center;
@@ -180,16 +182,19 @@ export default {
                     width: 0.3rem;
                     height: 0.4rem;
                     margin-right: 0.2rem;
-                    background: url('../../assets/mobile/mobileS.png')  no-repeat;
-                    background-position: -69px -91px;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
                 }
                 >p{
                     font-size: 0.24rem;
                 }
             }
+            // 好评率
             >div:last-child{
                 display: flex;
-                margin-top: 0.48rem;
+                margin-top: 0.3rem;
                 p{
                     font-size: 0.24rem;
                     span{
