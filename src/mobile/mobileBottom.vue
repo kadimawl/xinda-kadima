@@ -1,37 +1,37 @@
 <template>
-    <div class="mBottom">
-        <ul>
-            <li @click="index">
-                <router-link class="original" active-class="activeB" to="/m/mIndex">
-                    <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
-                    <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
-                    <p>首页</p>
-                </router-link>
-            </li>
-            <li @click="shop">
-                <router-link class="original" active-class="activeB" to="/m/shop/shopDetail">
-                    <img src="../assets/mobile/btmlistG.png" alt="" v-show="shopImg">
-                    <img src="../assets/mobile/btmlistB.png" alt="" v-show="!shopImg">
-                    <p>店铺</p>
-                </router-link>
-            </li>
-            <li @click="cart">
-                <router-link class="original" active-class="activeB" to="/m/carts/Have">
-                    <img src="../assets/mobile/btmcart.png" alt="" v-show="cartImg">
-                    <img src="../assets/mobile/blueCart.png" alt="" v-show="!cartImg">
-                    <p>购物车</p>
-                </router-link>
-            </li>
-            <li @click="mine">
-                <router-link class="original" active-class="activeB" to="/m/users/mobile">
-                    <img src="../assets/mobile/btmmine.png" alt="" v-show="mineImg">
-                    <img src="../assets/mobile/blueMine.png" alt="" v-show="!mineImg">
-                    <p>我的</p>
-                </router-link>
-            </li>
+  <div class="mBottom">
+    <ul>
+      <li @click="index">
+        <router-link class="original" active-class="activeB" to="/m/mIndex">
+        <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
+        <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
+        <p>首页</p>
+        </router-link>
+      </li>
+      <li @click="shop">
+        <router-link class="original" active-class="activeB" to="/m/shop/shopDetail">
+        <img src="../assets/mobile/btmlistG.png" alt="" v-show="shopImg">
+        <img src="../assets/mobile/btmlistB.png" alt="" v-show="!shopImg">
+        <p>店铺</p>
+        </router-link>
+      </li>
+      <li @click="cart">
+        <router-link class="original" active-class="activeB" to="/m/carts/Have">
+        <img src="../assets/mobile/btmcart.png" alt="" v-show="cartImg">
+        <img src="../assets/mobile/blueCart.png" alt="" v-show="!cartImg">
+        <p>购物车</p>
+        </router-link>
+      </li>
+      <li @click="mine">
+        <router-link class="original" active-class="activeB" to="/m/users/mobile">
+        <img src="../assets/mobile/btmmine.png" alt="" v-show="mineImg">
+        <img src="../assets/mobile/blueMine.png" alt="" v-show="!mineImg">
+        <p>我的</p>
+        </router-link>
+      </li>
 
-        </ul>
-    </div>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -94,13 +94,13 @@ li {
     height: 0.36rem;
     margin: 0.1rem auto 0.12rem;
   }
-  p {
-    width: 100%;
-    height: 0.23rem;
-    font-size: 0.23rem;
-    text-align: center;
-    line-height: 0.23rem;
-  }
+}
+p {
+  width: 100%;
+  height: 0.23rem;
+  font-size: 0.23rem;
+  text-align: center;
+  line-height: 0.23rem;
 }
 
 .activeB {
