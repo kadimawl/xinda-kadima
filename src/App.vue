@@ -7,7 +7,6 @@
 
 <script>
 if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-  // window.location.href = "#/";
   (function(doc, win) {
     var docEl = doc.documentElement,
       resizeEvt =
@@ -15,11 +14,7 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
       recalc = function() {
         var clientWidth = docEl.clientWidth;
         if (!clientWidth) return;
-        // if (clientWidth >= 750) {
-        //   docEl.style.fontSize = "100px";
-        // } else {
         docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-        // }
       };
 
     if (!doc.addEventListener) return;
@@ -30,16 +25,10 @@ if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
 export default {
   name: "app",
   created() {
-    // if(false){
-    //   this.$router.push('/weChat');
-    // }else{
-    //   this.$router.push('/');
-    // }
     //判断移动端还是pc端
-
-    if (this.$route.path == "/inner/homepage") {
+    if (this.$route.path == "/HomePage") {
       if (this.browserRedirect()) {
-        this.$router.push("/weChat");
+        this.$router.push("/m");
         (function(doc, win) {
           var docEl = doc.documentElement,
             resizeEvt =
@@ -59,13 +48,8 @@ export default {
           doc.addEventListener("DOMContentLoaded", recalc, false);
         })(document, window);
       } else {
-        this.$router.push("/");
+        this.$router.push("/HomePage");
       }
-    }
-    if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-      // window.location.href = "#/";
-    } else {
-      // window.location.href = "#/m.sinda";
     }
   },
   methods: {
