@@ -29,7 +29,7 @@
               </p>
               <p v-for="region in regions" :key="region">区域：{{region}}</p>
               <p v-for="proBu in proBus" :key="proBu.id">累计服务客户数量：{{proBu.serviceNum}}</p>
-              <div>进入店铺</div>
+              <div @click="toStore(provider.id)">进入店铺</div>
             </div>
           </div>
           <div class="inf-icon">
@@ -139,11 +139,16 @@ export default {
       //免费接通弹窗
       this.popHide = false;
       this.callingHide = true;
-      
     },
     callingClose() {
       //免费接通弹窗关闭
       this.callingHide = false;
+    },
+    toStore(id) { //跳转店铺详情
+      this.$router.push({
+        path: "/store/Home",
+        query: { storeId: id }
+      });
     }
   },
   data() {

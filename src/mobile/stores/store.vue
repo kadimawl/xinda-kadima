@@ -2,10 +2,12 @@
     <div class="store">
         <!-- 店铺二级路由，下有两个独立模块 -->
         <router-view/>
+        <!-- <mobileBottom/> -->
     </div>
 </template>
 
 <script>
+// import mobileBottom from '@/mobile/mobileBottom'
 export default {
     components: {},
 }
@@ -17,8 +19,7 @@ export default {
     padding: 0;
 }
 .store{
-    max-width: 750px;
-    height: 1334px;
     width: 100%;
+    margin: 0 auto;
 }
 </style>
