@@ -1,65 +1,136 @@
 <template>
-    <div>
-        <div class="top">购物车内共有
-            <span>{{getwxNum}}</span>件商品
-        </div>
-        <div class="cartList" v-for="list in this.cartList" :key="list.buyNum">
-            <div class="comID">{{list.providerName}}</div>
-            <div class="box">
-                <div class="imgBox"><img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg" alt=""></div>
-                <div class="cartMsg">
-                    <p class="name">{{list.serviceName}}</p>
-                    <div class="price">
-                        <p>￥{{list.unitPrice}}</p>
-                        <span>元</span>
-                    </div>
-                    <div class="total">
-                        <p>购买数量 :</p>
-                        <div>-</div>
-                        <input type="text" v-model="list.buyNum">
-                        <div>+</div>
-                    </div>
-                    <div class="address">
-                        <div><img src="../../assets/mobile/addIcon.jpg" alt=""></div>
-                        <p>北京市</p><p>朝阳区</p>
-                    </div>
-                </div>
-                <div class="del" @click="del">删除订单</div>
-            </div>
-        </div>
-
+  <div>
+    <div class="top">购物车内共有
+      <span>{{getNum}}</span>件商品
     </div>
+    <div class="cartList" v-for="list in this.cartList" :key="list.id">
+      <div class="comID">{{list.providerName}}</div>
+      <div class="box">
+        <div class="imgBox">
+          <img :src="'http://115.182.107.203:8088/xinda/pic'+list.providerImg" alt="">
+        </div>
+        <div class="cartMsg">
+          <p class="name">{{list.serviceName}}</p>
+          <div class="price">
+            <p>￥{{list.unitPrice}}</p>
+            <span>元</span>
+          </div>
+          <div class="total">
+            <p>购买数量 :</p>
+            <div @click="subtraction(list.serviceId,list.buyNum)">-</div>
+            <input type="text" v-model="list.buyNum" @focus="numChange">
+            <div @click="add(list.serviceId)">+</div>
+          </div>
+          <div class="address">
+            <div><img src="../../assets/mobile/addIcon.jpg" alt=""></div>
+            <p>北京市</p>
+            <p>朝阳区</p>
+          </div>
+        </div>
+        <div class="del" @click="del(list.serviceId)">删除订单</div>
+      </div>
+    </div>
+    <div class="all">
+      <div></div>
+      <p>共</p>
+      <span>{{getNum}}</span>
+      <p>件商品</p>
+      <p class="scale">小计：</p>
+      <span>￥{{total}}</span>
+    </div>
+  </div>
 
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import { MessageBox } from "mint-ui";
 export default {
   data() {
     return {
       cartList: [],
       total: "",
-      list: []
+      list: [],
+      total: 0
     };
   },
   components: {},
   computed: {
-    ...mapGetters(["getwxNum"])
+    ...mapGetters(["getNum"])
   },
   created() {
-      var that =this;
-    this.ajax.post("/xinda-api/cart/list").then(data => {
-      this.cartList = data.data.data;
-    //   for(var key in that.cartList){
-    //       that.list += that.cartList[key].id
-    //   }
-    //   console.log(this.list)
-    });
+    this.render();
   },
   methods: {
-    //   del(id) {
-    //       this.ajax.post('/xinda-api/cart/del',this.qs.stringify({id: id})).then(data=>{console.log(data.data)})
-    //   }
+    ...mapActions(["setNum",'setwxNum']),
+    //默认渲染
+    render() {
+      var that = this;
+      this.ajax.post("/xinda-api/cart/list").then(data => {
+        this.cartList = data.data.data;
+        var total = 0;
+        for (var i in that.cartList) {
+          total -= -that.cartList[i].totalPrice;
+        }
+        that.total = total;
+        that.setNum(data.data.data.length);
+        that.setwxNum(that.total);
+      });
+    },
+    //删除
+    del(id) {
+      console.log(id);
+      this.ajax
+        .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
+        .then(data => {
+          if (data.data.status == 1) {
+            MessageBox.alert("该商品已删除", "提示");
+            this.render();
+          }
+        });
+    },
+    //加
+    add(id) {
+      this.ajax
+        .post(
+          "/xinda-api/cart/add",
+          this.qs.stringify({
+            id: id,
+            num: 1
+          })
+        )
+        .then(data => {
+          if (data.data.status == 1) {
+            this.render();
+          }
+        });
+    },
+    //减
+    subtraction(id, num) {
+      if (num - 1 >= 1) {
+        this.ajax
+          .post(
+            "/xinda-api/cart/add",
+            this.qs.stringify({
+              id: id,
+              num: -1
+            })
+          )
+          .then(data => {
+            if (data.data.status == 1) {
+              this.render();
+            }
+          });
+      }else{
+        MessageBox.alert('商品最低不能低于1件', '提示');
+      }
+    },
+    //输入框改变数量
+    numChange() {
+      // MessageBox.prompt("请输入数量").then(({ value, action }) => {
+      //   console.log(value);
+      // });
+    }
   }
 };
 </script>
@@ -186,5 +257,25 @@ export default {
   font-size: 0.23rem;
   line-height: 0.23rem;
   color: #fe0000;
+}
+
+.all {
+  margin-top: 0.17rem;
+  height: 0.22rem;
+  font-size: 0.22rem;
+  display: flex;
+  div {
+    width: 51.467%;
+  }
+  p {
+    color: #4b4b4b;
+  }
+  .scale {
+    display: inline-block;
+    margin-left: 0.24rem;
+  }
+  span {
+    color: #fe2423;
+  }
 }
 </style>

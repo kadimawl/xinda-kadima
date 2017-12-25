@@ -11,7 +11,7 @@
     <div class="account">
       <div class="hIMG">
         <P>当前头像：</P>
-        <div></div>
+        <div><img src="../../assets/mobile/h.jpg" alt=""></div>
       </div>
       <div class="name">
         <p>姓名：</p><input type="text" v-model="name"></div>
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import {  mapActions } from "vuex";
 import distpicker from "@/components/distpicker";
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 import { MessageBox } from "mint-ui";
@@ -66,7 +67,8 @@ export default {
       pw: "",
       newPw: "",
       againPw: "",
-      info: []
+      info: [],
+      regionId: ''
     };
   },
   created() {
@@ -77,10 +79,12 @@ export default {
       that.email = this.info.email;
       that.name = this.info.name;
       that.pw = this.info.password;
-      // that.showarea(this.info.regionId);
+      that.setRegionId(this.info.regionId);
+      console.log(this.info.regionId)
     });
   },
   methods: {
+     ...mapActions(['setRegionId']),
     selected: function(code) {
       this.seleCode = code;
     },
@@ -193,6 +197,11 @@ export default {
       border-radius: 50%;
       background: red;
       margin-left: 0.25rem;
+    }
+    img{
+      border-radius: 50%;
+      width: 0.96rem;
+      height: 0.96rem;
     }
   }
   .name {

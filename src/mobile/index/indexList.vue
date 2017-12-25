@@ -6,14 +6,13 @@
     </div>
     <div class="right">
         <div v-for="(dataI,index) in datas" :key="dataI.id" v-bind:class="{Ddis:index==Ddis}">
-            <div v-for="dataII in dataI.itemList" :key="dataII.id">
-                <a href="javascript:viod(0)">{{dataII.name}}</a>
+            <div v-for="dataII in dataI.itemList" :key="dataII.id" @click="gotoPro(dataII.code)">
+                <a href="javascript:void(0)">{{dataII.name}}</a>
                 <p v-for="dataIII in dataII.itemList" :key="dataIII.id">{{dataIII.name}}<span>></span></p>
             </div>
         </div>
     </div>
 </div>
-  
 </template>
 
 <script>
@@ -58,9 +57,11 @@ export default {
   },
   methods: {
     leftC(eve) {
-      console.log(eve);
       this.Ccli = eve;
       this.Ddis = eve;
+    },
+    gotoPro(code){
+      this.$router.push({ path: "/m/mProduct", query: { productTypeCode: code } });
     }
   }
 };
@@ -89,7 +90,6 @@ export default {
     background: #f3f4f6;
     padding-left: 0.2rem;
     & > div {
-      // margin-bottom: 1rem;
       display: none;
     }
     .Ddis {

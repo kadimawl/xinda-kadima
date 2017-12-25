@@ -2,7 +2,7 @@
     <div class="mBottom">
         <ul>
             <li @click="index">
-                <router-link class="original" active-class="activeB" to="/m">
+                <router-link class="original" active-class="activeB" to="/m/mIndex">
                     <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
                     <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
                     <p>首页</p>
@@ -38,7 +38,7 @@
 export default {
   data() {
     return {
-      indexImg: true,
+      indexImg: false,
       shopImg: true,
       cartImg: true,
       mineImg: true
@@ -68,6 +68,9 @@ export default {
   padding: 0;
 }
 .mBottom {
+  background: #ffffff;
+  position: fixed;
+  bottom: 0;
   height: 0.88rem;
   width: 100%;
   border-top: 0.02rem solid #f9f9f9;
