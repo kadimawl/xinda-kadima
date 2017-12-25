@@ -1,6 +1,6 @@
 <template>
   <div class="mobile">
-    <div class="portrait"></div>
+    <div class="portrait"><img src="../../assets/mobile/btmmine.png" alt=""></div>
     <div class="buttonSum">
       <a href="/#/m/users/mobileRegister">注册</a>
       <a href="/#/m/users/mobileLogin">登录</a>
@@ -43,6 +43,11 @@ export default {};
   border-radius: 50%;
   background: #fff;
   margin: 0 auto;
+  img{
+    width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 50%;
+  }
 }
 .buttonSum {
   margin: 0.26rem auto 1.63rem;

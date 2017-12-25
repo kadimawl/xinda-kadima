@@ -62,7 +62,7 @@ export default {
     this.render();
   },
   methods: {
-    ...mapActions(["setNum",'setwxNum']),
+    ...mapActions(["setNum", "setwxNum"]),
     //默认渲染
     render() {
       var that = this;
@@ -84,8 +84,9 @@ export default {
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(data => {
           if (data.data.status == 1) {
-            MessageBox.alert("该商品已删除", "提示");
-            this.render();
+            MessageBox.confirm("确定删除该商品?").then(action => {
+              this.render();
+            });
           }
         });
     },
@@ -121,8 +122,8 @@ export default {
               this.render();
             }
           });
-      }else{
-        MessageBox.alert('商品最低不能低于1件', '提示');
+      } else {
+        MessageBox.alert("商品最低不能低于1件", "提示");
       }
     },
     //输入框改变数量

@@ -1,18 +1,28 @@
 <template>
-<div class="body">
-    <!-- <h3>这是产品分类</h3> -->
-    <div class="left">
+  <div>
+    <mt-header title="产品分类">
+      <router-link to="/m/mIndex" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header>
+    <div class="body">
+
+      <!-- <h3>这是产品分类</h3> -->
+      <div class="left">
         <p v-for="(data,index) in datas" :key="data.id" @click="leftC(index)" v-bind:class="{Ccli:index==Ccli}">{{data.name}}</p>
-    </div>
-    <div class="right">
+      </div>
+      <div class="right">
         <div v-for="(dataI,index) in datas" :key="dataI.id" v-bind:class="{Ddis:index==Ddis}">
-            <div v-for="dataII in dataI.itemList" :key="dataII.id" @click="gotoPro(dataII.code)">
-                <a href="javascript:void(0)">{{dataII.name}}</a>
-                <p v-for="dataIII in dataII.itemList" :key="dataIII.id">{{dataIII.name}}<span>></span></p>
-            </div>
+          <div v-for="dataII in dataI.itemList" :key="dataII.id" @click="gotoPro(dataII.code)">
+            <a href="javascript:void(0)">{{dataII.name}}</a>
+            <p v-for="dataIII in dataII.itemList" :key="dataIII.id">{{dataIII.name}}
+              <span>></span>
+            </p>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </template>
 
 <script>
@@ -60,8 +70,11 @@ export default {
       this.Ccli = eve;
       this.Ddis = eve;
     },
-    gotoPro(code){
-      this.$router.push({ path: "/m/mProduct", query: { productTypeCode: code } });
+    gotoPro(code) {
+      this.$router.push({
+        path: "/m/mProduct",
+        query: { productTypeCode: code }
+      });
     }
   }
 };
@@ -120,6 +133,28 @@ export default {
         top: 0;
       }
     }
+  }
+}
+.mint-header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
+  height: 40px;
+  line-height: 1;
+  padding: 0 .01rem;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
+  button{
+    width: .40rem;
   }
 }
 </style>
