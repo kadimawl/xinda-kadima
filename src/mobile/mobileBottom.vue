@@ -38,7 +38,7 @@
 export default {
   data() {
     return {
-      indexImg: true,
+      indexImg: false,
       shopImg: true,
       cartImg: true,
       mineImg: true
@@ -68,6 +68,9 @@ export default {
   padding: 0;
 }
 .mBottom {
+  background: #ffffff;
+  position: fixed;
+  bottom: 0;
   height: 0.88rem;
   width: 100%;
   border-top: 0.02rem solid #f9f9f9;

@@ -213,8 +213,31 @@ export default {
       //三级菜单
       var that = this;
       this.ajax.post("/xinda-api/product/style/list").then(function(data) {
-        var rData = data.data.data;
-        that.ItemLists = rData;
+        var datas = data.data.data;
+
+        for (var i in datas) {//对象排序
+          sort(datas[i].itemList);
+          for (var j in datas) {
+            if (i != j && datas[i].code < datas[j].code) {
+              var sor = datas[i];
+              datas[i] = datas[j];
+              datas[j] = sor;
+            }
+          }
+        }
+        function sort(bat) {
+          for (var ii in bat) {
+            for (var jj in bat) {
+              if (ii != jj && bat[ii].code < bat[jj].code) {
+                var ros = bat[ii];
+                bat[ii] = bat[jj];
+                bat[jj] = ros;
+              }
+            }
+          }
+        }
+
+        that.ItemLists = datas;
         // console.log(that.ItemLists);
       });
     },
@@ -874,10 +897,10 @@ export default {
   }
 }
 
-.default000{
+.default000 {
   color: #000;
 }
-.active{
-  color: #2693d4
+.active {
+  color: #2693d4;
 }
 </style>
