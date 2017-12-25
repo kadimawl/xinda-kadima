@@ -138,7 +138,7 @@
     <div class="recommend">
       <div class="topFrame">
         <span @click="shorhi2" :class="[!SorH?'active':'default000']">推荐服务商</span>
-        <span @click="shorhi"  :class="[SorH?'active':'default000']">推荐服务</span>
+        <span @click="shorhi" :class="[SorH?'active':'default000']">推荐服务</span>
       </div>
       <div class="providers" v-show="!SorH">
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
@@ -215,7 +215,8 @@ export default {
       this.ajax.post("/xinda-api/product/style/list").then(function(data) {
         var datas = data.data.data;
 
-        for (var i in datas) {//对象排序
+        for (var i in datas) {
+          //对象排序
           sort(datas[i].itemList);
           for (var j in datas) {
             if (i != j && datas[i].code < datas[j].code) {
@@ -236,7 +237,6 @@ export default {
             }
           }
         }
-
         that.ItemLists = datas;
         // console.log(that.ItemLists);
       });
