@@ -1,8 +1,5 @@
 <template>
     <div>
-        <p class="top">购物车内共有
-            <span>{{getwxNum}}</span>件商品
-        </p>
         <div class="empty">
              <div class="cartNull"><img src="../../assets/mobile/nullCart.jpg" alt=""></div>
              <p class="tishi">购物车空空如也，去首页逛逛吧！</p>
@@ -14,6 +11,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { MessageBox } from 'mint-ui';
 export default {
   data() {
     return {};
@@ -26,18 +24,7 @@ export default {
 </script>
 
  <style lang="less" scoped>
- .top {
-     height: .77rem;
-    font-size: .24rem;
-    line-height: .77rem;
-    padding: .05rem 0 0 .23rem;
-    box-sizing: border-box;
-    color: #4c4c4c;
-    background: #e5e5e5;
-    span {
-      color: #fe7581;
-    }
-  }
+
 .empty {
   width: 100%;
   height: 100%;

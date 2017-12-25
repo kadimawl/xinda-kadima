@@ -11,6 +11,7 @@ export default new Vuex.Store({
         // pd: '', //用户密码加密过的
         evaldetail: {}, //用户未评价订单信息，传给去评价界面
         wxnum: 0, //微信购物车商品数量
+        regionId: ''
     },
     mutations: { //突变集合
         SET_NUM: (state, num) => {
@@ -34,9 +35,9 @@ export default new Vuex.Store({
         SET_WXNUM: (state, wxnum) => {
             state.wxnum = wxnum;
         },
-        // SET_PD: (state, pd) => {
-        //     state.pd = pd;
-        // },
+        SET_regionId: (state, regionId) => {
+            state.regionId = regionId;
+        },
     },
     actions: { //操作集合
         setNum({ commit }, num) {
@@ -60,9 +61,9 @@ export default new Vuex.Store({
         setwxNum({ commit }, wxnum) {
             commit('SET_WXNUM', wxnum)
         },
-        // setPd({ commit }, pd) {
-        //     commit('SET_PD', pd)
-        // },
+        setRegionId({ commit }, regionId) {
+            commit('SET_regionId', regionId)
+        },
     },
     getters: { //显示集合
         getNum: state => state.num,
@@ -79,7 +80,7 @@ export default new Vuex.Store({
         // getPd: state => state.pd, //用户密码
         getEvaldetail: state => state.evaldetail, //用户评价传参
         getwxNum: state => state.wxnum, //微信购物车数量
-
+        getRegionId: state => state.regionId,
     }
 
 })

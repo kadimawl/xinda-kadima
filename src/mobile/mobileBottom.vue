@@ -2,7 +2,7 @@
     <div class="mBottom">
         <ul>
             <li @click="index">
-                <router-link class="original" active-class="activeB" to="/m">
+                <router-link class="original" active-class="activeB" to="/m/mIndex">
                     <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
                     <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
                     <p>首页</p>

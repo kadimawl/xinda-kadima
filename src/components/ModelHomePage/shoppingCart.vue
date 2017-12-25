@@ -168,9 +168,6 @@ export default {
           .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -1 }))
           .then(function(data) {
             that.recData();
-            console.log(data.data);
-            console.log("num", that.num);
-            // console.log(data.data.data);
           });
       } else {
         this.dele(id);
