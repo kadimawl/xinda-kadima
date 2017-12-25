@@ -1,16 +1,21 @@
 <template>
 <div>
-    <div class="top"><button>默认排序</button><button>销量</button></div>
-    <div class="body" v-for="shopType in shopTypes" :key="shopType.id">
-        <div class="logo">
-            <img :src="'http://115.182.107.203:8088/xinda/pic'+shopType.providerImg" alt="" class="logoImg">
-        </div>
-        <div class="shopText">
-            <h3>{{shopType.providerName}}</h3>
-            <p>{{shopType.regionName}}</p>
-            <p>累计服务客户次数：<a href="javascript:viod(0)">{{shopType.orderNum}}</a>好评率：<a href="javascript:viod(0)">100%</a></p>
-        </div>
+  <div class="top"><button>默认排序</button><button>价格</button></div>
+  <div class="body" v-for="Product in products" :key="Product.id">
+    <div class="logo">
+      <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
     </div>
+    <div class="listInf">
+      <div>
+        <h3>{{Product.serviceName}}</h3>
+        <p>{{Product.serviceInfo}}</p>
+      </div>
+      <div class="span">
+        <span>{{Product.regionName}}</span>
+        <span><a href="javascript:void(0)">￥{{Product.price}}</a>{{Product.unit}}</span>
+      </div>
+    </div>
+  </div>
 </div>
 </template>
 
@@ -18,23 +23,26 @@
 export default {
   data() {
     return {
-      shopTypes: []
+      shopTypes: [],
+      products: []
     };
   },
   created() {
     //商品列表请求函数
     var that = this;
+
     this.ajax
-      .post("/xinda-api/provider/grid", {
-        start: 0,
-        limit: 6,
-        productTypeCode: 10,
-        regionId: 110102,
-        sort: 1
-      })
-      .then(data => {
-        var shops = data.data.data;
-        that.shopTypes = shops;
+      .post(
+        "/xinda-api/product/package/grid",
+        this.qs.stringify({
+          start: 0,
+          productTypeCode: this.$route.query.productTypeCode,
+          sort: 2
+        })
+      )
+      .then(function(data) {
+        var gData = data.data.data;
+        that.products = gData;
       });
   }
 };
@@ -60,6 +68,7 @@ export default {
     border-radius: 0.05rem 0 0 0.05rem;
   }
 }
+
 .body {
   display: flex;
   justify-content: center;
@@ -75,23 +84,36 @@ export default {
   margin-right: 0.25rem;
   img {
     width: 100%;
+    height: 100%;
   }
 }
-.shopText {
+.listInf {
   width: 65%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   h3 {
     font-size: 0.27rem;
     font-weight: 500;
+    margin-top: 0.1rem;
+    font-weight: 100;
   }
   p {
     font-size: 0.23rem;
+    line-height: 0.45rem;
+    font-weight: 100;
+  }
+  .span {
+    display: flex;
+    justify-content: space-between;
+  }
+  span {
+    font-size: 0.17rem;
     a {
+      font-size: 0.26rem;
+      font-weight: bold;
       color: red;
     }
-  }
-  p:nth-child(2) {
-    text-indent: 0.25rem;
-    margin: 0.25rem 0 0.5rem 0;
   }
 }
 </style>

@@ -13,15 +13,15 @@
     </div>
     <img src="../../assets/mobile/index/dalou.jpg" class="lunbo">
     <div class="head">
-        <a href="javascript:void(0)"><span class="head1"></span><p>财税服务</p></a>
-        <a href="javascript:void(0)"><span class="head2"></span><p>开公司</p></a>
-        <a href="javascript:void(0)"><span class="head3"></span><p>公司变更</p></a>
-        <a href="javascript:void(0)"><span class="head4"></span><p>个人社保</p></a>
+        <router-link :to="{ path: '/m/mIndexList'}"><span class="head1"></span><p>财税服务</p></router-link>
+        <a href="javascript:void(0)" @click="gotoPro(4)"><span class="head2"></span><p>开公司</p></a>
+        <a href="javascript:void(0)" @click="gotoPro(5)"><span class="head3"></span><p>公司变更</p></a>
+        <a href="javascript:void(0)" @click="gotoPro(7)"><span class="head4"></span><p>个人社保</p></a>
     </div>
     <div class="head">
-        <a href="javascript:void(0)"><span class="head5"></span><p>公司社保</p></a>
-        <a href="javascript:void(0)"><span class="head6"></span><p>知识产权</p></a>
-        <a href="javascript:void(0)"><span class="headAll"></span><p>全部服务</p></a>
+        <a href="javascript:void(0)" @click="gotoPro(6)"><span class="head5"></span><p>公司社保</p></a>
+        <router-link :to="{ path: '/m/mIndexList'}"><span class="head6"></span><p>知识产权</p></router-link>
+        <router-link :to="{ path: '/m/mIndexList'}"><span class="headAll"></span><p>全部服务</p></router-link>
         <a href="javascript:void(0)"><span></span></a>
     </div>
     <div class="body">
@@ -56,12 +56,15 @@
         <h3>信达</h3>
     </div>
     <p class="bottom">一站式企业交易中心</p>
+    <mobileBottom/>
 </div>
   
 </template>
 
 <script>
+import mobileBottom from '../mobileBottom';
 export default {
+  components: {mobileBottom},
   data() {
     return {
       datas: []
@@ -72,9 +75,16 @@ export default {
     this.ajax
       .post("http://115.182.107.203:8088/xinda/xinda-api/recommend/list")
       .then(function(data) {
-        console.log(data.data.data);
         that.datas = data.data.data.hq;
       });
+  },
+  methods: {
+    gotoPro(code) {
+      this.$router.push({
+        path: "/m/mProduct",
+        query: { productTypeCode: code }
+      });
+    }
   }
 };
 </script>
@@ -103,7 +113,7 @@ export default {
       border-right: 0.1rem solid transparent;
       border-bottom: 0.1rem solid transparent;
       position: absolute;
-      left: 0.015rem;
+      left: 0.02rem;
       top: 0.1rem;
     }
     p {
@@ -254,5 +264,6 @@ export default {
   font-size: 0.22rem;
   color: #aeaeae;
   padding: 0.18rem 0 0.35rem;
+  margin-bottom: 0.9rem;
 }
 </style>
