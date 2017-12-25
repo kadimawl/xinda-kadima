@@ -70,7 +70,7 @@ import shopDetail from '@/mobile/shop/shopDetail' //商品详情
 
 
 import carts from '@/mobile/carts/carts' //WX端购物车框架页
-import wxshopcarHave from '@/mobile/carts/wxshopcarHave' //非空购物车
+import shopcarHave from '@/mobile/carts/shopcarHave' //非空购物车
 import shopcarNull from '@/mobile/carts/shopcarNull' //空购物车
 
 import store from '@/mobile/stores/store' //wx端店铺框架页
@@ -296,7 +296,7 @@ export default new Router({
                         component: shopcarNull,
                     }, {
                         path: 'Have', //非空购物车
-                        component: wxshopcarHave,
+                        component: shopcarHave,
                     }, ]
                 },
 

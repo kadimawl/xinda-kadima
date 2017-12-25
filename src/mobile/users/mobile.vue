@@ -50,6 +50,7 @@ export default {};
   display: flex;
   justify-content: space-between;
   a {
+    display: block;
     text-decoration: none;
     text-align: center;
     line-height: 0.59rem;
@@ -69,7 +70,7 @@ export default {};
   background-color: #e9e9e9;
   padding-right: 0.4rem;
   box-sizing: border-box;
-  margin-bottom: 4.58rem;
+  margin-bottom: .35rem;
   a {
     display: flex;
     justify-content: space-around;
