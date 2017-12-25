@@ -1,11 +1,15 @@
 <template>
-    <div class="box">
+    <div class="box" @click="myclick">
         <!-- 头部 -->
         <mt-header  title="我的订单" class="aTop">
             <router-link to="/" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
         </mt-header>
+         <!-- 错误提示框 -->
+        <div class="errorbox" v-if="errorbox" :style="{color:acolor}">
+            <div>{{error}}</div>
+        </div>
         <!-- 订单部分 -->
         <div class="aBody">
             <div class="order" v-for="list in lists" :key="list.businessNo">
@@ -28,15 +32,14 @@
                     </div>
                 </div>
                 <div v-if="list.status=='等待买家付款'" class="waitpay">
-                    <p>合计：<span>￥{{list.totalPrice}}</span></p><p>删除订单</p><button>付款</button>
+                    <p>合计：<span>￥{{list.totalPrice}}</span></p><p @click="remove(list.id)">删除订单</p><button @click="payfor(list.businessNo)">付款</button>
                 </div>
                 <div v-if="list.status=='已付款'" class="payalready">
                     <p>合计：<span>￥{{list.totalPrice}}</span></p><p>交易完成</p>
                 </div>
             </div>
         </div>
-        <!-- 错误提示框 -->
-        <div class="errorbox" v-if="errorshow" :style="{color:acolor}">{{error}}</div>
+       
     </div>
 </template>
 
@@ -54,7 +57,6 @@ export default {
             lists:[],//v-for循环数据包
             errorbox:false,//
             error:'',//
-            errorshow:true,//
             acolor:'#ff4649',//
         };
     },
@@ -75,6 +77,7 @@ export default {
                 }
             })
         },
+        // 处理获取数据
         businessshow(data){
             var data=data.data.data;
             for(let i=0;i<data.length;i++){
@@ -104,6 +107,48 @@ export default {
                 })
             }
             this.lists=data;
+        },
+        // 删除订单
+        remove(id){
+            MessageBox({
+                title:'提示',
+                message:'亲，确定要删除这个宝贝吗?',
+                showCancelButton:true,
+            });
+            MessageBox.confirm('亲，确定要删除这个宝贝吗?').then(action => {
+                var that=this;
+                that.ajax.post('/xinda-api/business-order/del',
+                that.qs.stringify(({
+                    id:id,
+                }))).then(function(data){
+                    console.log(data);
+                    // 成功后重新获取数据，重新存缓存
+                    if(data.data.status==1){
+                        that.errorbox=true;//提示
+                        that.error='删除成功';
+                        that.acolor='#55a4dc';
+                        location.reload();
+                    }else{
+                        that.errorbox=true;//提示
+                        that.error=data.data.msg;
+                        that.acolor='#ff4745';
+                    }
+                })
+            });
+        },
+        // 页面点击事件
+        myclick(){
+            var that=this;
+            if(this.errorbox==true){
+                setTimeout(function(){
+                    that.errorbox=false;
+                    that.acolor='#ff4745';
+                },3000)
+            }
+        },
+        //付款
+        payfor(code){
+            this.$router.push({path:'',query:{businessNo:code}})
         },
     },
 };
@@ -286,9 +331,20 @@ export default {
                 margin-right: 0.49rem;
             }
         }
-
     }
-    
 }
-
+//错误提示框
+.errorbox{
+    width: 100%;
+    height: 0.6rem;
+    font-size: 0.2rem;
+    z-index: 4;
+    >div{
+        width: 3rem;
+        height: 0.6rem;
+        text-align: center;
+        line-height: 0.6rem;
+        margin: 0 auto;
+    }
+}
 </style>

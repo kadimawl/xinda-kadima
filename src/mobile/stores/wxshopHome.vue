@@ -1,13 +1,20 @@
 <template>
-    <div class="routerBox">
+    <div class="shophome">
        
     </div>
 </template>
 
 <script>
-import mobileBottom from '../mobileBottom'
 export default {
-    components: {mobileBottom}
+    created(){
+        console.log(this.$route.query.storeId);
+    },
+    data(){
+        return{
+
+        };
+    },
+    components: {}
 }
 </script>
 
@@ -16,13 +23,8 @@ export default {
     margin: 0;
     padding: 0;
 }
-.routerBox{
-    min-width: 320px;
-    max-width: 768px;
-    margin: 0 auto;
-    min-height: 568px;
-    max-height: 1280px;
+.shophome{
     width: 100%;
-    height: 100%;
+    margin: 0 auto;
 }
 </style>
