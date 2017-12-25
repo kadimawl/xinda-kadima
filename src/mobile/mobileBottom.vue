@@ -9,7 +9,7 @@
                 </router-link>
             </li>
             <li @click="shop">
-                <router-link class="original" active-class="activeB" to="/m/shop/shopDetail">
+                <router-link class="original" active-class="activeB" to="/m/store">
                     <img src="../assets/mobile/btmlistG.png" alt="" v-show="shopImg">
                     <img src="../assets/mobile/btmlistB.png" alt="" v-show="!shopImg">
                     <p>店铺</p>

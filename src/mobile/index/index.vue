@@ -39,7 +39,7 @@
             <p>初创企业</p><span></span>
         </div>
         <div>
-            <div v-for="data in datas" :key="data.id" class="qiye">
+            <div v-for="data in datas" :key="data.id" class="qiye" @click="gotoShop(data.id)">
               <div class="qiyeI">
                 <img :src="'http://115.182.107.203:8088/xinda/pic'+data.providerImg" alt="">
               </div>
@@ -62,9 +62,9 @@
 </template>
 
 <script>
-import mobileBottom from '../mobileBottom';
+import mobileBottom from "../mobileBottom";
 export default {
-  components: {mobileBottom},
+  components: { mobileBottom },
   data() {
     return {
       datas: []
@@ -83,6 +83,13 @@ export default {
       this.$router.push({
         path: "/m/mProduct",
         query: { productTypeCode: code }
+      });
+    },
+    gotoShop(id) {
+      console.log(id);
+      this.$router.push({
+        path: "/m/shop/shopDetial",
+        query: { sId: id }
       });
     }
   }

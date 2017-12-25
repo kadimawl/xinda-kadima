@@ -252,21 +252,25 @@ export default new Router({
         {
             path: '/m',
             component: m,
-            children: [{
-                    path: '/', //首页二级路由
-                    component: mIndexLY,
-                    redirect: 'mIndex',
-                    children: [{
-                        path: 'mIndex', //首页
-                        component: mIndex
-                    }, {
-                        path: 'mIndexList', //店铺列表
-                        component: mIndexList
-                    }, {
-                        path: 'mProduct', //产品分类
-                        component: mProduct
-                    }]
-                },
+            children: [
+                // {
+                //     path: '/', //首页二级路由
+                //     component: mIndexLY,
+                //     redirect: 'mIndex',
+                //     children: [
+                {
+                    path: 'mIndex', //首页
+                    component: mIndex
+                }, {
+                    path: 'mIndexList', //店铺列表
+                    component: mIndexList
+                }, {
+                    path: 'mProduct', //产品分类
+                    component: mProduct
+                }
+                // ]
+                // }
+                ,
                 {
                     path: 'shop', //商品二级路由
                     component: shop,
@@ -297,7 +301,7 @@ export default new Router({
                     }, {
                         path: 'Have', //非空购物车
                         component: shopcarHave,
-                    }, ]
+                    },]
                 },
 
                 {
