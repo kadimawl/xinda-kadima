@@ -16,9 +16,8 @@
       <div class="name">
         <p>姓名：</p><input type="text" v-model="name"></div>
       <div class="gender">
-        <p>性别：</p><input type="radio" :checked='[isChecked?true:false]'>
-        <p>男</p><input type="radio" :checked='[!isChecked?true:false]'>
-        <p>女</p>
+        <p>性别：</p><el-radio v-model="radio" :label="1" id="man">男</el-radio>
+            <el-radio v-model="radio" :label="2" id="woman">女</el-radio>
       </div>
       <div class="email">
         <p>邮箱：</p><input type="text" v-model="email">
@@ -26,7 +25,7 @@
       <div class="address">
         <p>所在地区：</p>
         <div class="selected">
-          <distpicker class="mySelect" @selected="selected"></distpicker>
+          <distpicker class="mySelect" :regionId="regionId" @selected="selected"></distpicker>
         </div>
       </div>
       <button @click="preservation">保存</button>
@@ -61,30 +60,30 @@ export default {
     return {
       name: "",
       email: "",
-      isChecked: true,
       seleCode: "",
       oldPw: "",
       pw: "",
       newPw: "",
       againPw: "",
-      info: [],
-      regionId: ''
+      regionId: '',
+      radio:'',//性别
     };
   },
   created() {
     var that = this;
     //默认渲染
     this.ajax.post("/xinda-api/member/info").then(data => {
-      this.info = data.data.data;
-      that.email = this.info.email;
-      that.name = this.info.name;
-      that.pw = this.info.password;
-      that.setRegionId(this.info.regionId);
-      console.log(this.info.regionId)
+      var infos=data.data.data;
+      that.email = infos.email;
+      that.regionId=infos.regionId;
+      that.radio=infos.gender;
+      that.name = infos.name;
+      that.pw = infos.password;
+      console.log(infos.regionId);
+      console.log('data==',data)
     });
   },
   methods: {
-     ...mapActions(['setRegionId']),
     selected: function(code) {
       this.seleCode = code;
     },
@@ -216,16 +215,6 @@ export default {
   .gender {
     display: flex;
     margin-bottom: 0.25rem;
-    input {
-      height: 0.32rem;
-      width: 0.32rem;
-      background-color: #fff;
-      margin-left: 4.25%;
-      margin-right: 2.17%;
-    }
-    input:last-child {
-      margin-left: 9.8%;
-    }
   }
   .email {
     display: flex;

@@ -1,7 +1,6 @@
 <template>
   <div class="shop">
       <router-view></router-view>
-      <!-- <mobileBottom/> -->
   </div>
 </template>
 
