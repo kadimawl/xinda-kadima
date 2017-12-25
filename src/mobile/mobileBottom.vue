@@ -33,7 +33,10 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      isTrue: true,
+      // [isTrue?"/m/users/mobileLogin":"/m/users/logined"]
+    };
   },
   methods: {}
 };
@@ -74,55 +77,62 @@ li {
   width: 0.36rem;
   height: 0.36rem;
   margin: 0.1rem auto 0.12rem;
-  background-size: contain;
   background-repeat: no-repeat;
 }
 .index {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmhomeG.png);
+  background-size: contain;
   }
 }
 .indexChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/btmhomeB.png) no-repeat;
+  background-size: contain;
   }
 }
 .shop {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmlistG.png) no-repeat;
+  background-size: contain;
   }
 }
 .shopChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/btmlistB.png);
+  background-size: contain;
   }
 }
 .cart {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmcart.png) no-repeat;
+  background-size: contain;
   }
 }
 .cartChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/blueCart.png) no-repeat;
+  background-size: contain;
   }
 }
 .mine {
   color: #b0b0b2;
   .bg {
     background: url(../assets/mobile/btmmine.png) no-repeat;
+  background-size: contain;
   }
 }
 .mineChange {
   color: #2693d4;
   .bg {
     background: url(../assets/mobile/blueMine.png) no-repeat;
+  background-size: contain;
   }
 }
 </style>
