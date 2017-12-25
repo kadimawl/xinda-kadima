@@ -86,9 +86,10 @@ export default new Router({
             path: '/',
             name: 'HelloWorld',
             component: HelloWorld,
+            redirect: 'HomePage' ,
             children: [{
                     path: '/HomePage',
-                    alias: '/',
+                    // alias: '/',
                     component: HomePage,
                 },
                 {
