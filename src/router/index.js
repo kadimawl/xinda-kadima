@@ -108,20 +108,9 @@ export default new Router({
                   component: companyList
                 },
                 {
-<<<<<<< HEAD
-                  path: 'goodsDetails', //商品详情
-                  name: 'goodsDetails',
-                  component: goodsDetails
-                },
-                {
-                  path: 'shoppingCart', //购物车
-                  name: 'shoppingCart',
-                  component: shoppingCart
-=======
                     path: 'shoppingCart', //购物车
                     name: 'shoppingCart',
                     component: shoppingCart
->>>>>>> 23deac7fd3bd6a5abddc5196ea67c0c0351d1ee0
                 },
                 {
                   path: 'toJoinIn', //加入我们
