@@ -2,14 +2,14 @@
     <div class="store">
         <!-- 店铺二级路由，下有两个独立模块 -->
         <router-view/>
-        <!-- <mobileBottom/> -->
+        <mobileBottom/>
     </div>
 </template>
 
 <script>
-// import mobileBottom from '@/mobile/mobileBottom'
+import mobileBottom from '@/mobile/mobileBottom'
 export default {
-    components: {},
+    components: {mobileBottom},
 }
 </script>
 

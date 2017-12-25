@@ -116,7 +116,7 @@ export default {
         })
       )
       .then(function(data) {
-        //   console.log(data.data.data)
+          console.log(data)
         var rData = data.data.data;
         that.Products = rData;
         that.products.push(rData.product);
