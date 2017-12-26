@@ -1,80 +1,82 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld' //默认首页
-import outter from '../components/outter' //一级路由（登录、注册、忘记密码）
-import tabs from '../components/tabs'
-import login from '@/views/login' //注册
-import register from '@/views/register' //登录
-import forgetpw from '@/views/forgetpw' //忘记密码
+
+//pc懒加载
+const HelloWorld = () => import('@/components/HelloWorld' )//默认首页
+const outter = () => import('../components/outter') //一级路由（登录、注册、忘记密码）
+const tabs = () => import('../components/tabs')
+const login = () => import('@/views/login') //注册
+const register  = () => import( '@/views/register' )//登录
+const forgetpw  = () => import( '@/views/forgetpw') //忘记密码
 
 
-import HomePage from '@/components/ModelHomePage/HomePage' //首页模块
-import taxationList from '@/components/ModelHomePage/taxationList' //财税服务模块
-import companyList from '@/components/ModelHomePage/companyList' //公司工商模块
-import shoppingCart from '@/components/ModelHomePage/shoppingCart' //购物车模块
-import toJoinIn from '@/components/ModelHomePage/toJoinIn' //加入我们模块
+const HomePage  = () => import( '@/components/ModelHomePage/HomePage') //首页模块
+const taxationList  = () => import( '@/components/ModelHomePage/taxationList') //财税服务模块
+const companyList  = () => import( '@/components/ModelHomePage/companyList' )//公司工商模块
+const shoppingCart  = () => import( '@/components/ModelHomePage/shoppingCart') //购物车模块
+const toJoinIn  = () => import( '@/components/ModelHomePage/toJoinIn' )//加入我们模块
 
-import member from '@/members/member' //会员中心首页
-import memberBody from '@/members/memberBody' //会员body组件
-import userEval from '@/members/userEval' //用户评价模块
-import gotoeval from '@/members/gotoeval' //去评价模块
-import accountSet from '@/members/accountSet' //账户设置模块
-import evalNone from '@/members/evalNone' //未评价模块
-import evalAlready from '@/members/evalAlready' //已评价模块
-import accountsetBody from '@/members/accountsetBody' //账户设置body组件
-import changePd from '@/members/changePd' //改变密码模块
+const member  = () => import( '@/members/member') //会员中心首页
+const memberBody  = () => import( '@/members/memberBody' )//会员body组件
+const userEval  = () => import( '@/members/userEval') //用户评价模块
+const gotoeval  = () => import( '@/members/gotoeval' )//去评价模块
+const accountSet  = () => import( '@/members/accountSet' )//账户设置模块
+const evalNone  = () => import( '@/members/evalNone') //未评价模块
+const evalAlready  = () => import( '@/members/evalAlready') //已评价模块
+const accountsetBody  = () => import( '@/members/accountsetBody') //账户设置body组件
+const changePd  = () => import( '@/members/changePd') //改变密码模块
 
-import detial from '@/components/company/detial' //商品详情路由
-import service from '@/components/company/ShopDetial/service' //商品详情
-import evaluate from '@/components/company/ShopDetial/evaluate' //商品详情
+const detial  = () => import( '@/components/company/detial' )//商品详情路由
+const service  = () => import( '@/components/company/ShopDetial/service') //商品详情
+const evaluate  = () => import( '@/components/company/ShopDetial/evaluate') //商品详情
 
-import shopIndex from '@/components/company/shopIndex' //店铺首页
+const shopIndex  = () => import( '@/components/company/shopIndex' )//店铺首页
 
-import shopList from '@/components/company/shopList' //店铺列表路由
-import credentials from '@/components/company/ShopList/credentials' //店铺列表服务
-import custom from '@/components/company/ShopList/custom' //店铺列表客服
-import product from '@/components/company/ShopList/product' //店铺列表资质
+const shopList  = () => import( '@/components/company/shopList') //店铺列表路由
+const credentials  = () => import( '@/components/company/ShopList/credentials') //店铺列表服务
+const custom  = () => import( '@/components/company/ShopList/custom') //店铺列表客服
+const product  = () => import( '@/components/company/ShopList/product' )//店铺列表资质
 
-import orderdetail from '@/components/order/orderdetail' //订单详情
-import Order from '@/components/Order' //订单详情路由
-import paymentSuccess from '@/components/order/paymentSuccess' //支付成功
-import paymentFailure from '@/components/order/paymentFailure' //支付失败
-import payZfb from '@/components/order/payZfb' //支付宝支付
-import payBank from '@/components/order/payBank' //银行支付
+const orderdetail  = () => import( '@/components/order/orderdetail') //订单详情
+const Order  = () => import( '@/components/Order') //订单详情路由
+const paymentSuccess  = () => import( '@/components/order/paymentSuccess') //支付成功
+const paymentFailure  = () => import( '@/components/order/paymentFailure' )//支付失败
+const payZfb  = () => import( '@/components/order/payZfb' )//支付宝支付
+const payBank  = () => import( '@/components/order/payBank' )//银行支付
 
 
 //WX端
-import m from '@/mobile/m' //WX端一级路由
+const m = () => import( '@/mobile/m' )//WX端一级路由
 
-import users from '@/mobile/users/users' //WX端我的框架页
-import mobile from '@/mobile/users/mobile' //WX端我的未注册页
-import mobileRegister from '@/views/mobileRegister' //WX端我的注册页
-import logined from '@/mobile/users/logined' //WX端我的已登录页
-import mobileLogin from '@/views/mobileLogin' //WX端我的登录页
-import mobileForgetPw from '@/views/mobileForgetPw' //WX端我的忘记密码页
-import accountSetting from '@/mobile/users/accountSetting' //WX端我的账户设置页
-import myOrder from '@/mobile/users/myOrder' //WX端我的我的订单页
-
-
-
-import mIndexLY from '@/mobile/mIndex' //WX端主页路由
-import mIndex from '@/mobile/index/index' //WX端主页
-import mIndexList from '@/mobile/index/indexList' //WX端列表
-import mProduct from '@/mobile/index/product' //WX端产品
+const users = () => import( '@/mobile/users/users') //WX端我的框架页
+const mobile = () => import( '@/mobile/users/mobile') //WX端我的未注册页
+const mobileRegister = () => import( '@/views/mobileRegister') //WX端我的注册页
+const logined = () => import( '@/mobile/users/logined') //WX端我的已登录页
+const mobileLogin = () => import( '@/views/mobileLogin' )//WX端我的登录页
+const mobileForgetPw = () => import( '@/views/mobileForgetPw' )//WX端我的忘记密码页
+const accountSetting = () => import( '@/mobile/users/accountSetting') //WX端我的账户设置页
+const myOrder = () => import( '@/mobile/users/myOrder') //WX端我的我的订单页
 
 
 
-import shop from '@/mobile/shop/shop' //WX端商品框架页
-import shopDetail from '@/mobile/shop/shopDetail' //商品详情
+const mIndexLY = () => import( '@/mobile/mIndex') //WX端主页路由
+const mIndex = () => import( '@/mobile/index/index') //WX端主页
+const mIndexList = () => import( '@/mobile/index/indexList' )//WX端列表
+const mProduct = () => import( '@/mobile/index/product') //WX端产品
 
 
-import carts from '@/mobile/carts/carts' //WX端购物车框架页
-import shopcarHave from '@/mobile/carts/shopcarHave' //非空购物车
-import shopcarNull from '@/mobile/carts/shopcarNull' //空购物车
 
-import store from '@/mobile/stores/store' //wx端店铺框架页
-import wxshopHome from '@/mobile/stores/wxshopHome' //店铺首页
-import wxshopList from '@/mobile/stores/wxshopList' //店铺列表，也是店铺的默认跳转页
+const shop = () => import( '@/mobile/shop/shop') //WX端商品框架页
+const shopDetail = () => import( '@/mobile/shop/shopDetail' )//商品详情
+
+
+const carts = () => import( '@/mobile/carts/carts' )//WX端购物车框架页
+const shopcarHave = () => import( '@/mobile/carts/shopcarHave' )//非空购物车
+const shopcarNull = () => import( '@/mobile/carts/shopcarNull' )//空购物车
+
+const store = () => import( '@/mobile/stores/store') //wx端店铺框架页
+const wxshopHome = () => import( '@/mobile/stores/wxshopHome' )//店铺首页
+const wxshopList = () => import( '@/mobile/stores/wxshopList') //店铺列表，也是店铺的默认跳转页
 
 
 
