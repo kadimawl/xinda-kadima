@@ -51,7 +51,6 @@ export default {
                 sort:sort,
             })).then(function(data){
                 if(data.data.data.length){
-                    console.log('data==',data);
                     that.datahandle(data);
                 }
             })

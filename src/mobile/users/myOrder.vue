@@ -110,11 +110,11 @@ export default {
         },
         // 删除订单
         remove(id){
-            MessageBox({
-                title:'提示',
-                message:'亲，确定要删除这个宝贝吗?',
-                showCancelButton:true,
-            });
+            // MessageBox({
+            //     title:'提示',
+            //     message:'亲，确定要删除这个宝贝吗?',
+            //     showCancelButton:true,
+            // });
             MessageBox.confirm('亲，确定要删除这个宝贝吗?').then(action => {
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/del',
