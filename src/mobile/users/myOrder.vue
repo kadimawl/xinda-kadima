@@ -1,12 +1,6 @@
 <template>
     <div class="box" @click="myclick">
-        <!-- 头部 -->
-        <!-- <mt-header  title="我的订单" class="aTop">
-            <router-link to="/m/users/logined" slot="left">
-                <mt-button icon="back"></mt-button>
-            </router-link>
-        </mt-header> -->
-         <!-- 错误提示框 -->
+         <!-- 错误提示框，所有的错误提示都在这里 -->
         <div class="errorbox" v-if="errorbox" :style="{color:acolor}">
             <div>{{error}}</div>
         </div>
@@ -26,7 +20,7 @@
                             <p>下单时间：{{serv.createTime}}</p>
                             <div>
                                 <p><span>￥{{serv.unitPrice}}</span>元</p>
-                                <p>&#10005<span>{{serv.buyNum}}</span></p>
+                                <p>X<span>{{serv.buyNum}}</span></p>
                             </div>
                         </div>
                     </div>
@@ -111,12 +105,7 @@ export default {
         },
         // 删除订单
         remove(id){
-            MessageBox({
-                title:'提示',
-                message:'亲，确定要删除这个宝贝吗?',
-                showCancelButton:true,
-            });
-            MessageBox.confirm('亲，确定要删除这个宝贝吗?').then(action => {
+            MessageBox.confirm('亲，确定要删除这个订单吗?').then(action => {
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/del',
                 that.qs.stringify(({
@@ -125,9 +114,6 @@ export default {
                     console.log(data);
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
-                        that.errorbox=true;//提示
-                        that.error='删除成功';
-                        that.acolor='#55a4dc';
                         location.reload();
                     }else{
                         that.errorbox=true;//提示
@@ -161,17 +147,6 @@ export default {
     width: 100%;
     margin: 0 auto;
     background: #f8f8f8;
-}
-// 顶部标签
-.aTop {
-    width: 100%;
-    height: 0.77rem;
-    background-color: #e5e5e5;
-    font-size: 0.28rem;
-    color: #000;
-    .mintui {
-        font-size: 0.2rem;
-    }
 }
 // 订单部分
 .aBody{
@@ -224,9 +199,10 @@ export default {
                 // 公司logo
                 >div:first-child{
                     width: 1.7rem;
-                    height: 2.17rem;
+                    height: 1.7rem;
                     margin: 0 0.15rem;
                     text-align: center;
+                    border:0.01rem solid #2693d4;
                     img{
                         width: 1.7rem;
                         height: 1.7rem;
