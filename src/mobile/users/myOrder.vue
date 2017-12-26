@@ -76,7 +76,6 @@ export default {
         businessshow(data){
             var data=data.data.data;
             for(let i=0;i<data.length;i++){
-                // data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
                 data[i].servitem=[];
                 var orderN=data[i].businessNo;
                 //关于订单状态
@@ -114,7 +113,7 @@ export default {
                     console.log(data);
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
-                        location.reload();
+                        // location.reload();
                     }else{
                         that.errorbox=true;//提示
                         that.error=data.data.msg;
