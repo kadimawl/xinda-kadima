@@ -8,13 +8,13 @@
         </router-link>
       </li>
       <li>
-        <router-link class=" shop" active-class="shopChange" to="/m/store/List">
+        <router-link class="shop" active-class="shopChange" to="/m/store/List">
           <div class="bg shop"></div>
           <p>店铺</p>
         </router-link>
       </li>
       <li>
-        <router-link class="cart " active-class="cartChange" to="/m/carts/Have">
+        <router-link class="cart" active-class="cartChange" to="/m/carts/Have">
           <div class="bg cart"></div>
           <p>购物车</p>
         </router-link>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const mineRoute =  ["/m/users/logined","/m/users/mobileLogin"];
+const mineRoute = ["/m/users/logined", "/m/users/mobileLogin"];
 export default {
   data() {
     return {
@@ -39,15 +39,13 @@ export default {
     };
   },
   created() {
-    this.ajax.post('xinda-api/sso/login-info').then(data=>{
-      if(data.data.status == 0){
-        this.routes = mineRoute[1]
+    this.ajax.post("xinda-api/sso/login-info").then(data => {
+      if (data.data.status == 0) {
+        this.routes = mineRoute[1];
       }
-    })
+    });
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 
@@ -71,19 +69,6 @@ ul {
 }
 li {
   width: 25%;
-<<<<<<< HEAD
-  p {
-    width: 100%;
-    height: 0.23rem;
-    font-size: 0.23rem;
-    text-align: center;
-    line-height: 0.23rem;
-  }
-}
-.original {
-  width: 25%;
-=======
->>>>>>> e65ec4bad85aebb732966100b4e4132be2672544
   height: 0.88rem;
   cursor: pointer;
   p {
@@ -94,10 +79,6 @@ li {
     line-height: 0.23rem;
   }
 }
-<<<<<<< HEAD
-
-.activeB {
-=======
 .bg {
   display: block;
   width: 0.36rem;
@@ -107,57 +88,56 @@ li {
 }
 .index {
   color: #b0b0b2;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeG.png);
     background-size: contain;
   }
 }
 .indexChange {
->>>>>>> e65ec4bad85aebb732966100b4e4132be2672544
   color: #2693d4;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeB.png) no-repeat;
     background-size: contain;
   }
 }
 .shop {
   color: #b0b0b2;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistG.png) no-repeat;
     background-size: contain;
   }
 }
 .shopChange {
   color: #2693d4;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistB.png);
     background-size: contain;
   }
 }
 .cart {
   color: #b0b0b2;
-  .bg {
+  .cart {
     background: url(../assets/mobile/btmcart.png) no-repeat;
     background-size: contain;
   }
 }
 .cartChange {
   color: #2693d4;
-  .bg {
+  .cart {
     background: url(../assets/mobile/blueCart.png) no-repeat;
     background-size: contain;
   }
 }
 .mine {
   color: #b0b0b2;
-  .bg {
+  .mine {
     background: url(../assets/mobile/btmmine.png) no-repeat;
     background-size: contain;
   }
 }
 .mineChange {
   color: #2693d4;
-  .bg {
+  .mine {
     background: url(../assets/mobile/blueMine.png) no-repeat;
     background-size: contain;
   }

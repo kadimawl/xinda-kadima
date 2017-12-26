@@ -6,18 +6,6 @@
       <tr>
         <td><h5>服务区域</h5></td>
         <td>
-          <!-- <select name="" id="">
-            <option value="xuanze">省</option>
-            <option value="beijing">北京市</option>
-          </select>
-          <select name="" id="">
-            <option value="xuanze">市</option>
-            <option value="beijing">北京市</option>
-          </select>
-          <select name="" id="">
-            <option value="xuanze">区</option>
-            <option value="beijing">北京市</option>
-          </select> -->
           <distpicker @selected="selected"></distpicker>
         </td>
       </tr>
