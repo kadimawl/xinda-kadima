@@ -101,7 +101,7 @@ export default {
 <style lang="less" scoped>
 .shophome{
     width: 100%;
-    margin: .65rem auto 0;
+    margin: .65rem auto 1rem;
     // 顶部logo
     >div:first-child{
         width: 1.06rem;
