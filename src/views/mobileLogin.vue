@@ -40,6 +40,9 @@ export default {
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
   },
+  created() {
+    console.log(this.$route.query.id)
+  },
   methods: {
     phone() {
       let pResult = pReg.test(this.phoneInput);
@@ -108,7 +111,7 @@ export default {
                 if (status == 1) {
                   //成功登陆
                   MessageBox.alert("登录成功").then(function() {
-                    that.$router.push({ path: "/m" }); //页面跳转
+                    that.$router.push({path: that.$route.query.redirect ||'/m',query:{sId: that.$route.query.id}})
                     that.ajax.post("/xinda-api/sso/login-info").then(data => {
                       let name = data.data.data.name;
                     });

@@ -103,7 +103,8 @@ export default {
         })
           .then(() => {
             this.$router.push({
-              path: "/outter/login"
+              path: "/outter/login",
+              query: {redirect: '/tabs/companyList'}
             });
           })
           .catch(() => {});

@@ -3,8 +3,8 @@ import Router from 'vue-router'
 
 //pc懒加载
 const HelloWorld = () => import('@/components/HelloWorld' )//默认首页
-const outter = () => import('../components/outter') //一级路由（登录、注册、忘记密码）
-const tabs = () => import('../components/tabs')
+const outter = () => import('@/components/outter') //一级路由（登录、注册、忘记密码）
+const tabs = () => import('@/components/tabs')
 const login = () => import('@/views/login') //注册
 const register  = () => import( '@/views/register' )//登录
 const forgetpw  = () => import( '@/views/forgetpw') //忘记密码

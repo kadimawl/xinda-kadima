@@ -61,7 +61,6 @@ export default {
                 start:start,
                 limit:limit,
             })).then(function(data){
-                console.log('origin==',data);
                 if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
                 }else{
@@ -90,7 +89,7 @@ export default {
                     var servdata=servdata.data.data;
                     for(var key in servdata){
                         // 关于订单时间
-                        servdata[key].createTime=moment(servdata[key].createTime).format('YYYY-MM-DD hh:mm:ss');
+                        servdata[key].createTime=moment(servdata[key].createTime).format('YYYY-MM-DD HH:mm:ss');
                         // 将服务订单信息添加到循环包里  
                         data[i].servitem.push(servdata[key]);
                     }
@@ -106,7 +105,6 @@ export default {
                 that.qs.stringify(({
                     id:id,
                 }))).then(function(data){
-                    console.log(data);
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
                         // location.reload();

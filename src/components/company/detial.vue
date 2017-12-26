@@ -62,7 +62,7 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        console.log(shop)
+        // console.log(shop);
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
@@ -76,6 +76,7 @@ export default {
     ...mapActions(["setNum"]),
     //确认是否登录
     isLogged() {
+      console.log(this.getName)
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -84,7 +85,11 @@ export default {
         })
           .then(() => {
             this.$router.push({
-              path: "/outter/login"
+              path: "/outter/login",
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
             });
           })
           .catch(() => {});
@@ -94,6 +99,7 @@ export default {
       var that = this;
       this.isLogged();
       plugins(id, that);
+      // this.$router.push({path: '/tabs/shoppingCart'})
     },
     buyAdd(id, num) {
       var that = this;

@@ -107,7 +107,8 @@ export default {
         })
           .then(() => {
             this.$router.push({
-              path: "/outter/login"
+              path: "/outter/login",
+              query: {redirect: '/tabs/taxationList'}
             });
           })
           .catch(() => {});
@@ -193,6 +194,7 @@ export default {
       var that = this;
       this.isLogged()
       plugins(id, that); //立即购买公共方法
+      // this.$router.push({path: '/tabs/shoppingCart'})
     },
     addCart: function(id) {
       this.isLogged()

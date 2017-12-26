@@ -162,7 +162,7 @@ export default {
                 // console.log('this.total==',this.total);
                 var data=data.data.data;
                 for(let i=0;i<data.length;i++){
-                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
+                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD HH:mm:ss');
                     data[i].servitem=[];
                     //关于订单状态
                     if(data[i].status==1){
@@ -250,7 +250,6 @@ export default {
                     that.errorshow=true;//提示
                     that.error='删除成功';
                     that.acolor='#55a4dc';
-                    location.reload();
                 }else{
                     that.errorshow=true;//提示
                     that.error=data.data.msg;

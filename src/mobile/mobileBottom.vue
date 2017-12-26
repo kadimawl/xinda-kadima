@@ -31,7 +31,7 @@
 </template>
 
 <script>
-const mineRoute = ["/m/users/logined", "/m/users/mobileLogin"];
+const mineRoute = ["/m/users/logined", "/m/users/mobile"];
 const cartList = ['/m/carts/Have','/m/carts/Null']
 export default {
   data() {
