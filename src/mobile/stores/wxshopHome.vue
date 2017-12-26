@@ -10,7 +10,7 @@
                 <p>{{serv.serviceName}}</p>
                 <p class="serviceInfo">{{serv.serviceInfo}}</p>
                 <div>
-                    <div><span></span><p>{{serv.regionName}}</p></div>
+                    <div><span><img src="../../assets/mobile/addIcon.jpg" alt=""></span><p>{{serv.regionName}}</p></div>
                     <p><span>￥{{serv.marketPrice}}</span>元</p>
                 </div>
             </div>
@@ -32,7 +32,7 @@ export default {
             providerInfo:'',//..
             servs:[],//
             start:0,//
-            limit:4,//
+            limit:'',//
         };
     },
     components: {},
@@ -199,8 +199,10 @@ export default {
                         width: 0.3rem;
                         height: 0.4rem;
                         margin-right: 0.1rem;
-                        background: url('../../assets/mobile/mobileS.png')  no-repeat;
-                        background-position: -69px -91px; 
+                        img{
+                            width: 100%;
+                            height: 100%;
+                        }
                     }
                     >p{
                         font-size: 0.18rem;

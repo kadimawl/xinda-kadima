@@ -1,15 +1,15 @@
 <template>
   <div class="cart">
-      <router-view></router-view>
-      <cartBottom/>
+    <router-view></router-view>
+    <mobileBottom/>
   </div>
 </template>
 
 <script>
-import cartBottom from './cartBottom'
+import mobileBottom from "../mobileBottom";
 export default {
-  components: {cartBottom}
-}
+  components: { mobileBottom }
+};
 </script>
 
 <style lang="less" scoped>

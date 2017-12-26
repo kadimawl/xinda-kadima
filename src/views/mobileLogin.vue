@@ -1,11 +1,11 @@
 <template>
   <div>
     <mt-header title="登录">
-      <router-link to="/m/users/mobile" slot="left">
+      <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
     </mt-header>
-    
+
     <div class="box">
 
       <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
@@ -45,11 +45,7 @@ export default {
       let pResult = pReg.test(this.phoneInput);
       if (this.phoneInput != "") {
         if (!pResult) {
-          MessageBox({
-            title: "Notice",
-            message: "请输入正确的手机号",
-            showCancelButton: true
-          });
+          MessageBox.alert("请输入正确的手机号", "Notice");
         }
       }
     },
@@ -58,11 +54,7 @@ export default {
       let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
       let pwResult = pwReg.test(this.pwInput);
       if (!pwResult && this.pwInput !== "") {
-        MessageBox({
-          title: "Notice",
-          message: "请输入20位数字、大小写字母",
-          showCancelButton: true
-        });
+        MessageBox.alert("请输入20位数字、大小写字母", "Notice");
       }
     },
     //密码可视
@@ -83,11 +75,7 @@ export default {
       let vReg = /^[0-9a-zA-Z]{4}$/;
       let imgVR = vReg.test(this.imgVInput);
       if (!imgVR && this.imgVInput !== "") {
-        MessageBox({
-          title: "Notice",
-          message: "图片验证码为4位（数字或者大小写字母）",
-          showCancelButton: true
-        });
+        MessageBox.alert("图片验证码为4位（数字或者大小写字母）", "Notice");
       }
     },
     imgVA() {
@@ -117,60 +105,32 @@ export default {
               .then(data => {
                 let msg = data.data.msg;
                 let status = data.data.status;
-                console.log(msg);
                 if (status == 1) {
                   //成功登陆
-                  MessageBox.confirm("登录成功").then(function() {
-                    // sessionStorage.setItem("user", this.phoneInput);
+                  MessageBox.alert("登录成功").then(function() {
                     that.$router.push({ path: "/m" }); //页面跳转
                     that.ajax.post("/xinda-api/sso/login-info").then(data => {
                       let name = data.data.data.name;
-                      // this.setName(this.phoneInput);
                     });
                   });
                 } else if (status == -1) {
                   if (msg == "图片验证码错误！") {
-                    MessageBox({
-                      title: "Notice",
-                      message: "图片验证码错误！",
-                      showCancelButton: true
-                    });
+                    MessageBox.alert("图片验证码错误！", "Notice");
                   } else if (msg == "账号或密码不正确！") {
-                    MessageBox({
-                      title: "Notice",
-                      message: "账号或密码不正确！",
-                      showCancelButton: true
-                    });
+                    MessageBox.alert("账号或密码不正确！", "Notice");
                   } else if (msg == "账号不存在") {
-                    MessageBox({
-                      title: "Notice",
-                      message: "该手机号未注册",
-                      showCancelButton: true
-                    });
+                    MessageBox.alert("该手机号未注册", "Notice");
                   }
                 }
               });
           } else {
-            MessageBox({
-              title: "Notice",
-              message: "请输入验证码",
-              showCancelButton: true
-            });
-            this.imgVMsg = "请输入验证码";
+            MessageBox.alert("请输入验证码", "Notice");
           }
         } else {
-          MessageBox({
-            title: "Notice",
-            message: "请输入密码",
-            showCancelButton: true
-          });
+          MessageBox.alert("请输入密码", "Notice");
         }
       } else {
-        MessageBox({
-          title: "Notice",
-          message: "请输入手机号",
-          showCancelButton: true
-        });
+        MessageBox.alert("请输入手机号", "Notice");
       }
     }
   }
@@ -184,15 +144,6 @@ export default {
   padding: 0 1rem;
   box-sizing: border-box;
 }
-.head {
-  width: 100%;
-  height: 0.77rem;
-  background: #e5e5e5;
-  margin-bottom: 0.39rem;
-  font-size: 0.28rem;
-  text-align: center;
-  line-height: 0.77rem;
-}
 input {
   display: block;
   width: 5.47rem;
@@ -204,7 +155,7 @@ input {
   display: flex;
   justify-content: space-between;
   margin-top: 0.3rem;
-  margin-bottom: .32rem;
+  margin-bottom: 0.32rem;
   input {
     width: 2.72rem;
     margin: 0;
@@ -227,14 +178,14 @@ input {
   text-align: center;
   line-height: 0.75rem;
   border: none;
-  margin: 1.60rem auto 0;
+  margin: 1.6rem auto 0;
 }
 
-.forget{
+.forget {
   display: block;
   width: 100%;
   text-align: right;
-  font-size: .14rem;
+  font-size: 0.14rem;
   color: #2693d4;
 }
 .box-4d {
@@ -279,13 +230,10 @@ input {
   font-size: 0.28rem;
   height: 40px;
   line-height: 1;
-  padding: 0 .01rem;
+  padding: 0 0.01rem;
   position: relative;
   text-align: center;
   white-space: nowrap;
-  button{
-    width: .40rem;
-  }
 }
 </style>
 

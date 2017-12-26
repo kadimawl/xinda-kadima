@@ -1,32 +1,28 @@
 <template>
   <div class="mBottom">
     <ul>
-      <li @click="index">
-        <router-link class="original" active-class="activeB" to="/m/mIndex">
-        <img src="../assets/mobile/btmhomeG.png" alt="" v-show="indexImg">
-        <img src="../assets/mobile/btmhomeB.png" alt="" v-show="!indexImg">
-        <p>首页</p>
+      <li>
+        <router-link class="index" active-class="indexChange" to="/m/mIndex">
+          <div class="bg index"></div>
+          <p>首页</p>
         </router-link>
       </li>
-      <li @click="shop">
-        <router-link class="original" active-class="activeB" to="/m/shop/shopDetail">
-        <img src="../assets/mobile/btmlistG.png" alt="" v-show="shopImg">
-        <img src="../assets/mobile/btmlistB.png" alt="" v-show="!shopImg">
-        <p>店铺</p>
+      <li>
+        <router-link class=" shop" active-class="shopChange" to="/m/store/List">
+          <div class="bg shop"></div>
+          <p>店铺</p>
         </router-link>
       </li>
-      <li @click="cart">
-        <router-link class="original" active-class="activeB" to="/m/carts/Have">
-        <img src="../assets/mobile/btmcart.png" alt="" v-show="cartImg">
-        <img src="../assets/mobile/blueCart.png" alt="" v-show="!cartImg">
-        <p>购物车</p>
+      <li>
+        <router-link class="cart " active-class="cartChange" to="/m/carts/Have">
+          <div class="bg cart"></div>
+          <p>购物车</p>
         </router-link>
       </li>
-      <li @click="mine">
-        <router-link class="original" active-class="activeB" to="/m/users/mobile">
-        <img src="../assets/mobile/btmmine.png" alt="" v-show="mineImg">
-        <img src="../assets/mobile/blueMine.png" alt="" v-show="!mineImg">
-        <p>我的</p>
+      <li>
+        <router-link class="mine" active-class="mineChange" :to="routes">
+          <div class="bg mine"></div>
+          <p>我的</p>
         </router-link>
       </li>
 
@@ -35,29 +31,22 @@
 </template>
 
 <script>
+const mineRoute =  ["/m/users/logined","/m/users/mobileLogin"];
 export default {
   data() {
     return {
-      indexImg: false,
-      shopImg: true,
-      cartImg: true,
-      mineImg: true
+      routes: mineRoute[0]
     };
   },
+  created() {
+    this.ajax.post('xinda-api/sso/login-info').then(data=>{
+      if(data.data.status == 0){
+        this.routes = mineRoute[1]
+      }
+    })
+  },
   methods: {
-    index() {
-      console.log("index");
-      this.indexImg = false;
-    },
-    shop() {
-      this.shopImg = false;
-    },
-    cart() {
-      this.cartImg = false;
-    },
-    mine() {
-      this.mineImg = false;
-    }
+
   }
 };
 </script>
@@ -82,6 +71,7 @@ ul {
 }
 li {
   width: 25%;
+<<<<<<< HEAD
   p {
     width: 100%;
     height: 0.23rem;
@@ -92,18 +82,84 @@ li {
 }
 .original {
   width: 25%;
+=======
+>>>>>>> e65ec4bad85aebb732966100b4e4132be2672544
   height: 0.88rem;
-  color: #b0b0b2;
   cursor: pointer;
-  img {
-    display: block;
-    width: 0.36rem;
-    height: 0.36rem;
-    margin: 0.1rem auto 0.12rem;
+  p {
+    width: 100%;
+    height: 0.23rem;
+    font-size: 0.23rem;
+    text-align: center;
+    line-height: 0.23rem;
   }
 }
+<<<<<<< HEAD
 
 .activeB {
+=======
+.bg {
+  display: block;
+  width: 0.36rem;
+  height: 0.36rem;
+  margin: 0.1rem auto 0.12rem;
+  background-repeat: no-repeat;
+}
+.index {
+  color: #b0b0b2;
+  .bg {
+    background: url(../assets/mobile/btmhomeG.png);
+    background-size: contain;
+  }
+}
+.indexChange {
+>>>>>>> e65ec4bad85aebb732966100b4e4132be2672544
   color: #2693d4;
+  .bg {
+    background: url(../assets/mobile/btmhomeB.png) no-repeat;
+    background-size: contain;
+  }
+}
+.shop {
+  color: #b0b0b2;
+  .bg {
+    background: url(../assets/mobile/btmlistG.png) no-repeat;
+    background-size: contain;
+  }
+}
+.shopChange {
+  color: #2693d4;
+  .bg {
+    background: url(../assets/mobile/btmlistB.png);
+    background-size: contain;
+  }
+}
+.cart {
+  color: #b0b0b2;
+  .bg {
+    background: url(../assets/mobile/btmcart.png) no-repeat;
+    background-size: contain;
+  }
+}
+.cartChange {
+  color: #2693d4;
+  .bg {
+    background: url(../assets/mobile/blueCart.png) no-repeat;
+    background-size: contain;
+  }
+}
+.mine {
+  color: #b0b0b2;
+  .bg {
+    background: url(../assets/mobile/btmmine.png) no-repeat;
+    background-size: contain;
+  }
+}
+.mineChange {
+  color: #2693d4;
+  .bg {
+    background: url(../assets/mobile/blueMine.png) no-repeat;
+    background-size: contain;
+  }
 }
 </style>
