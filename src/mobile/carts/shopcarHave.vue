@@ -247,7 +247,7 @@ export default {
     border: 0.01rem solid #c7c7c7;
   }
   input {
-    width: 0.37rem;
+    width: 0.77rem;
     height: 0.31rem;
     font-size: 0.19rem;
     text-align: center;
@@ -283,6 +283,7 @@ export default {
 
 .all {
   margin-top: 0.17rem;
+  margin-bottom: 3rem;
   height: 0.22rem;
   font-size: 0.22rem;
   display: flex;

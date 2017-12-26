@@ -21,7 +21,7 @@
 <script>
 export default {
     created(){
-        console.log(this.$route.query.storeId);
+        // console.log(this.$route.query.storeId);
         this.getData(this.$route.query.storeId);
         this.getservData(this.start,this.limit,this.$route.query.storeId);
     },
@@ -44,9 +44,9 @@ export default {
                 that.ajax.post('/xinda-api/provider/detail',that.qs.stringify({
                     id:id,
                 })).then(function(data){
-                    console.log(data);
+                    // console.log(data);
                     if(data.data.data){
-                        console.log(data);
+                        // console.log(data);
                         that.datashow(data);
                     }
                 })
@@ -64,9 +64,9 @@ export default {
                     providerId:id,
                     sort:2,
                 })).then(function(data){
-                    console.log(data);
+                    // console.log(data);
                     if(data.data.data.length){
-                        console.log(data);
+                        // console.log(data);
                         that.servdatashow(data);
                     }
                 })
@@ -99,13 +99,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-*{
-    margin: 0;
-    padding: 0;
-}
 .shophome{
     width: 100%;
-    margin: 0 auto;
+    margin: .65rem auto 0;
     // 顶部logo
     >div:first-child{
         width: 1.06rem;

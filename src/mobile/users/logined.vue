@@ -1,25 +1,33 @@
 <template>
-  <div class="mobile">
-    <div class="portrait"><img src="../../assets/mobile/h.jpg" alt=""></div>
-    <div class="name">{{name}}</div>
-    <div class="order e9">
-      <a href="/#/m/users/myOrder">
-        <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
-        <span class="msg">我的订单</span>
-        <img class="arrow" src="../../assets/mobile/arrow.png">
-      </a>
+  <!-- <div> -->
+    <!-- <mt-header title="">
+      <router-link to="history.go(-1)" slot="left">
+        <mt-button icon="back"></mt-button>
+      </router-link>
+    </mt-header> -->
+    <div class="mobile">
+      <div class="portrait"><img src="../../assets/mobile/h.jpg" alt=""></div>
+      <div class="name">{{name}}</div>
+      <div class="order e9">
+        <a href="/#/m/users/myOrder">
+          <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
+          <span class="msg">我的订单</span>
+          <img class="arrow" src="../../assets/mobile/arrow.png">
+        </a>
 
-    </div>
-    <div class="design e9">
-      <a href="/#/m/users/accountSetting">
-        <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
-        <span class="msg">账户设置</span>
-        <img class="arrow" src="../../assets/mobile/arrow.png">
-      </a>
+      </div>
+      <div class="design e9">
+        <a href="/#/m/users/accountSetting">
+          <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
+          <span class="msg">账户设置</span>
+          <img class="arrow" src="../../assets/mobile/arrow.png">
+        </a>
 
+      </div>
+      <a href="javascript: void(0)" class="exit" @click="exit">退出登录</a>
     </div>
-    <a href="javascript: void(0)" class="exit" @click="exit">退出登录</a>
-  </div>
+  <!-- </div> -->
+
 </template>
 
 <script>
@@ -43,7 +51,7 @@ export default {
       var that = this;
       this.ajax.post("xinda-api/sso/ logout").then(data => {
         if (data.data.status == 1) {
-          MessageBox.confirm("您已成功退出登录?").then(action => {
+          MessageBox.confirm("确定退出登录?").then(action => {
             that.name = "未登录";
             this.$router.push({ path: "/m" });
           });
@@ -58,8 +66,8 @@ export default {
 .mobile {
   width: 100%;
   background: #f8f8f8;
-  margin: 0 auto;
-  padding: 2.79rem 0.71rem 3.77rem 0.69rem;
+  margin: .60rem auto 0;
+  padding: 3.39rem 0.71rem 3.77rem 0.69rem;
   box-sizing: border-box;
 }
 .portrait {
@@ -132,5 +140,25 @@ export default {
   color: #fff;
   font-family: "宋体";
   margin-top: 0.65rem;
+}
+
+.mint-header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #2693d4;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
+  height: .77rem;
+  line-height: .77rem;
+  // padding: 0 0.01rem;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
 }
 </style>

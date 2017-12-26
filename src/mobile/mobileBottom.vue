@@ -91,7 +91,7 @@ li {
 .index {
   color: #b0b0b2;
   .bg {
-    background: url(../assets/mobile/btmhomeG.png);
+    background: url(../assets/mobile/btmhomeG.png) no-repeat;
     background-size: contain;
   }
 }
@@ -112,7 +112,7 @@ li {
 .shopChange {
   color: #2693d4;
   .bg {
-    background: url(../assets/mobile/btmlistB.png);
+    background: url(../assets/mobile/btmlistB.png) no-repeat;
     background-size: contain;
   }
 }
