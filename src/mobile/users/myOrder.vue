@@ -1,11 +1,11 @@
 <template>
     <div class="box" @click="myclick">
         <!-- 头部 -->
-        <mt-header  title="我的订单" class="aTop">
-            <router-link to="/m" slot="left">
+        <!-- <mt-header  title="我的订单" class="aTop">
+            <router-link to="/m/users/logined" slot="left">
                 <mt-button icon="back"></mt-button>
             </router-link>
-        </mt-header>
+        </mt-header> -->
          <!-- 错误提示框 -->
         <div class="errorbox" v-if="errorbox" :style="{color:acolor}">
             <div>{{error}}</div>
@@ -45,6 +45,7 @@
 
 <script>
 var moment = require("moment");
+import { MessageBox } from "mint-ui";
 export default {
     created(){
         // if(){
@@ -346,5 +347,25 @@ export default {
         line-height: 0.6rem;
         margin: 0 auto;
     }
+}
+
+.mint-header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #000;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 0.28rem;
+  height: .77rem;
+  line-height: .77rem;
+  // padding: 0 0.01rem;
+  position: relative;
+  text-align: center;
+  white-space: nowrap;
 }
 </style>

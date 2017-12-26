@@ -8,19 +8,19 @@
         </router-link>
       </li>
       <li>
-        <router-link class=" shop" active-class="shopChange" to="/m/store/List">
+        <router-link class="shop" active-class="shopChange" to="/m/store/List">
           <div class="bg shop"></div>
           <p>店铺</p>
         </router-link>
       </li>
       <li>
-        <router-link class="cart " active-class="cartChange" to="/m/carts/Have">
+        <router-link class="cart" active-class="cartChange" to="/m/carts/Have">
           <div class="bg cart"></div>
           <p>购物车</p>
         </router-link>
       </li>
       <li>
-        <router-link class="mine" active-class="mineChange" to="/m/users/logined">
+        <router-link class="mine" active-class="mineChange" :to="routes">
           <div class="bg mine"></div>
           <p>我的</p>
         </router-link>
@@ -31,9 +31,19 @@
 </template>
 
 <script>
+const mineRoute = ["/m/users/logined", "/m/users/mobileLogin"];
 export default {
   data() {
-    return {};
+    return {
+      routes: mineRoute[0]
+    };
+  },
+  created() {
+    this.ajax.post("xinda-api/sso/login-info").then(data => {
+      if (data.data.status == 0) {
+        this.routes = mineRoute[1];
+      }
+    });
   },
   methods: {}
 };
@@ -74,55 +84,62 @@ li {
   width: 0.36rem;
   height: 0.36rem;
   margin: 0.1rem auto 0.12rem;
-  background-size: contain;
   background-repeat: no-repeat;
 }
 .index {
   color: #b0b0b2;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeG.png);
+    background-size: contain;
   }
 }
 .indexChange {
   color: #2693d4;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeB.png) no-repeat;
+    background-size: contain;
   }
 }
 .shop {
   color: #b0b0b2;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistG.png) no-repeat;
+    background-size: contain;
   }
 }
 .shopChange {
   color: #2693d4;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistB.png);
+    background-size: contain;
   }
 }
 .cart {
   color: #b0b0b2;
-  .bg {
+  .cart {
     background: url(../assets/mobile/btmcart.png) no-repeat;
+    background-size: contain;
   }
 }
 .cartChange {
   color: #2693d4;
-  .bg {
+  .cart {
     background: url(../assets/mobile/blueCart.png) no-repeat;
+    background-size: contain;
   }
 }
 .mine {
   color: #b0b0b2;
-  .bg {
+  .mine {
     background: url(../assets/mobile/btmmine.png) no-repeat;
+    background-size: contain;
   }
 }
 .mineChange {
   color: #2693d4;
-  .bg {
+  .mine {
     background: url(../assets/mobile/blueMine.png) no-repeat;
+    background-size: contain;
   }
 }
 </style>
