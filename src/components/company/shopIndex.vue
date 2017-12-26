@@ -6,7 +6,7 @@
       <tr>
         <td><h5>服务区域</h5></td>
         <td>
-          <select name="" id="">
+          <!-- <select name="" id="">
             <option value="xuanze">省</option>
             <option value="beijing">北京市</option>
           </select>
@@ -17,7 +17,8 @@
           <select name="" id="">
             <option value="xuanze">区</option>
             <option value="beijing">北京市</option>
-          </select>
+          </select> -->
+          <distpicker @selected="selected"></distpicker>
         </td>
       </tr>
       <tr>
@@ -59,7 +60,9 @@
 </template>
 
 <script>
+import distpicker from "../distpicker";
 export default {
+  components: { distpicker },
   created() {
     this.getShop(); //调用商品列表请求函数
 
@@ -83,7 +86,8 @@ export default {
       productTypes: [],
       shopTypes: [],
       shopID: "",
-      butblue: "-1"
+      butblue: "-1",
+      seleCode: ""
     };
   },
   methods: {
@@ -104,7 +108,7 @@ export default {
           limit: 6,
           productTypeCode: 10,
           regionId: 110102,
-          sort: 1,
+          sort: 1
           // productTypeCode: TypeCode
         })
         .then(data => {
@@ -117,6 +121,10 @@ export default {
           }
           that.shopTypes = shops;
         });
+    },
+    selected: function(code) {
+      this.seleCode = code;
+      console.log(this.seleCode);
     }
   }
 };

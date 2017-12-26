@@ -82,6 +82,13 @@ ul {
 }
 li {
   width: 25%;
+  p {
+    width: 100%;
+    height: 0.23rem;
+    font-size: 0.23rem;
+    text-align: center;
+    line-height: 0.23rem;
+  }
 }
 .original {
   width: 25%;
@@ -94,13 +101,6 @@ li {
     height: 0.36rem;
     margin: 0.1rem auto 0.12rem;
   }
-}
-p {
-  width: 100%;
-  height: 0.23rem;
-  font-size: 0.23rem;
-  text-align: center;
-  line-height: 0.23rem;
 }
 
 .activeB {
