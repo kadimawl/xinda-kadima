@@ -85,7 +85,7 @@ export default {
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/recommend/list")
+      .post("/xinda-api/recommend/list")
       .then(function(data) {
         that.datas = data.data.data.hq;
       });

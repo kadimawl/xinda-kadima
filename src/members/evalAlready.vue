@@ -69,10 +69,10 @@ export default {
                 limit:limit,
                 status:1	
             }).then(function(data){
-                if(data.data.data.length){
+                if(data.data.data&&data.data.data.length){
                     that.datashow(data);
                 }
-                console.log(data);
+                // console.log(data);
             })
         },
         // 拉取数据处理
@@ -93,7 +93,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 * {
   margin: 0;

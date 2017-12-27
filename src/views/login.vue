@@ -14,7 +14,7 @@
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
         <p class="errorMsg">{{imgVMsg}} </p>
-      </div>
+      </div> 
       <div class="forget" @click="forgetpw">
         <a href="/#/outter/forgetpw">忘记密码？</a>
       </div>

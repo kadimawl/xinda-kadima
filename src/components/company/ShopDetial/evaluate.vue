@@ -59,7 +59,7 @@ export default {
     var shoppingID = this.$route.query.shoppingId;
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/judge/detail",
+        "/xinda-api/product/judge/detail",
         this.qs.stringify({
           serviceId: shoppingID
         })
@@ -69,7 +69,7 @@ export default {
       });
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/judge/grid",
+        "/xinda-api/product/judge/grid",
         this.qs.stringify({
           start: 0,
           limit: 10,

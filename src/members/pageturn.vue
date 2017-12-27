@@ -35,9 +35,11 @@ export default {
     methods:{
         // 上一页
         prepage(){
-            this.pagenum=this.pagenum==0?0:this.pagenum-1;
-            // console.log('this.pagenum==',this.pagenum)
-            this.$emit('pagevary',this.pagenum);
+            if(this.pagenum>=0){
+                this.pagenum=this.pagenum==0?0:this.pagenum-1;
+                // console.log('this.pagenum==',this.pagenum)
+                this.$emit('pagevary',this.pagenum);
+            }
         },
         // 页数改变
         pagechange(index){
@@ -47,9 +49,11 @@ export default {
         },
         // 下一页
         nextpage(){
-            this.pagenum=this.pagenum==this.nums.length-1?this.pagenum:this.pagenum+1;
-            // console.log('this.pagenum==',this.pagenum)
-            this.$emit('pagevary',this.pagenum);
+            if(this.pagenum>=0){
+                this.pagenum=this.pagenum==this.nums.length-1?this.pagenum:this.pagenum+1;
+                // console.log('this.pagenum==',this.pagenum)
+                this.$emit('pagevary',this.pagenum);
+            }
         },
     }
 };

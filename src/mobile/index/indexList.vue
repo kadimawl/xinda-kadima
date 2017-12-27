@@ -37,7 +37,7 @@ export default {
   created() {
     var that = this;
     this.ajax
-      .post("http://115.182.107.203:8088/xinda/xinda-api/product/style/list")
+      .post("/xinda-api/product/style/list")
       .then(function(data) {
         var datas = data.data.data;
         for (var i in datas) {
