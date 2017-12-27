@@ -35,7 +35,7 @@
                     <div class="all" v-for="serv in list.servitem" :key="serv.id">
                         <div>
                             <!-- 公司logo图片 接口数据无logo图片链接-->
-                            <div><img :src="serv.smallImg" alt="公司logo"></div>
+                            <div><img src="../assets/index/icon.png" alt="公司logo"></div>
                             <p>{{serv.serviceName}}</p>
                         </div>
                         <!-- 单价 -->
@@ -69,7 +69,7 @@
     <!-- 删除订单提示框 -->
     <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
         <div class="removebox">
-            <div><p>确认删除这个宝贝吗</p><span @click="cancel">&#10005</span></div>
+            <div><p>确认删除这个宝贝吗</p><span @click="cancel">X</span></div>
             <div><button @click="confirm" class="confirm">确定</button><button @click="cancel" class="cancel">取消</button></div>
         </div>
     </div>
@@ -162,7 +162,7 @@ export default {
                 // console.log('this.total==',this.total);
                 var data=data.data.data;
                 for(let i=0;i<data.length;i++){
-                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
+                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD HH:mm:ss');
                     data[i].servitem=[];
                     //关于订单状态
                     if(data[i].status==1){
@@ -250,7 +250,6 @@ export default {
                     that.errorshow=true;//提示
                     that.error='删除成功';
                     that.acolor='#55a4dc';
-                    location.reload();
                 }else{
                     that.errorshow=true;//提示
                     that.error=data.data.msg;

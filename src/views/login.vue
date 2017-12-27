@@ -41,9 +41,7 @@ const eyes = [
 ];
 export default {
   created(){
-    document.onkeyup = function(){
-      
-    }
+    var shoppingID = this.$route.query.id;
   },
   data() {
     return {
@@ -132,7 +130,6 @@ export default {
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
-      console.log(md5(this.pwInput))
       if (userName != "") {
         if (pw != "") {
           if (this.imgVInput != "") {
@@ -151,8 +148,12 @@ export default {
                 if (status == 1) {
                   //成功登陆
                   sessionStorage.setItem("user", this.phoneInput);
+<<<<<<< HEAD
                   // this.$router.push({ path: "/HomePage" }); //页面跳转
                   this.$router.push(this.$router.push.redirect||'/HomePage',)
+=======
+                  this.$router.push({path: this.$route.query.redirect || '/HomePage',query:{shoppingId: this.$route.query.id}})
+>>>>>>> 4fff3aecf1e3bf36615556f2ce409fdef1af1bae
                   this.ajax.post("/xinda-api/sso/login-info").then(data => {
                     // console.log(data);
                     let name = data.data.data.name;

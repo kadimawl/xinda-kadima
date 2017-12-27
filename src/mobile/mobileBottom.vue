@@ -14,7 +14,7 @@
         </router-link>
       </li>
       <li>
-        <router-link class="cart" active-class="cartChange" to="/m/carts/Have">
+        <router-link class="cart" active-class="cartChange" :to="cartRoute">
           <div class="bg cart"></div>
           <p>购物车</p>
         </router-link>
@@ -31,19 +31,28 @@
 </template>
 
 <script>
-const mineRoute = ["/m/users/logined", "/m/users/mobileLogin"];
+const mineRoute = ["/m/users/logined", "/m/users/mobile"];
+const cartList = ['/m/carts/Have','/m/carts/Null']
 export default {
   data() {
     return {
-      routes: mineRoute[0]
+      routes: mineRoute[0],
+      cartRoute: cartList[1]
     };
   },
   created() {
+    //判断是否登录
     this.ajax.post("xinda-api/sso/login-info").then(data => {
       if (data.data.status == 0) {
         this.routes = mineRoute[1];
       }
     });
+    //判断是否购物车为空
+    this.ajax.post('/xinda-api/cart/list').then(data=>{
+      if(data.data.data.length != 0){
+        this.cartRoute = cartList[0]
+      }
+    })
   },
   methods: {}
 };

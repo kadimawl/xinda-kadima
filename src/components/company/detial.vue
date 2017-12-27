@@ -58,6 +58,10 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
+<<<<<<< HEAD
+=======
+        // console.log(shop);
+>>>>>>> 4fff3aecf1e3bf36615556f2ce409fdef1af1bae
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
@@ -70,7 +74,8 @@ export default {
   methods: {
     ...mapActions(["setNum"]),
     //确认是否登录
-    isLogged() {
+    isLogged(id) {
+      var that = this;
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -80,7 +85,10 @@ export default {
           .then(() => {
             this.$router.push({
               path: "/outter/login",
+<<<<<<< HEAD
               // query: {redirect: '/detial/service'}
+=======
+>>>>>>> 4fff3aecf1e3bf36615556f2ce409fdef1af1bae
               query: {
                 redirect: "/detial/service",
                 id: this.$route.query.shoppingId
@@ -88,17 +96,40 @@ export default {
             });
           })
           .catch(() => {});
+      } else {
+        plugins(id, that, "/tabs/shoppingCart"); //加入购物车/立即购买公共方法
       }
     },
-    buyNow(id, num) {
+
+    buyNow(id, num) { //立即购买
       var that = this;
-      this.isLogged();
-      plugins(id, that);
+      this.isLogged(id);
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
     },
-    buyAdd(id, num) {
+    buyAdd(id, num) { //加入购物车
       var that = this;
-      this.isLogged();
-      this.ajax
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              //登录之后在跳转回当前页
+              path: "/outter/login",
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
+            });
+          })
+          .catch(() => {});
+      } else {
+         this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
         .then(function() {
           that.ajax.post("xinda-api/cart/cart-num").then(data => {
@@ -106,6 +137,8 @@ export default {
             that.setNum(cartNum);
           });
         });
+      }
+     
     },
     les() {
       this.num -= 1;

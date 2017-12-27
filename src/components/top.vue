@@ -44,7 +44,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import isLogged from "../isLogged";
+// import isLogged from "../isLogged";
 export default {
   created() {
     var that = this;
@@ -76,6 +76,7 @@ export default {
     exit() {
       sessionStorage.clear();
       location.reload();
+      this.setNum(0)
     },
     cartBut() {
       if (this.getName) {
@@ -84,7 +85,7 @@ export default {
         this.$alert("请先进行登录", "标题名称", {
           confirmButtonText: "确定",
           callback: action => {
-            this.$router.push({ path: "/outter/login" });
+            this.$router.push({ path: "/outter/login",query: {redirect: '/tabs/shoppingCart'} });
           }
         });
       }

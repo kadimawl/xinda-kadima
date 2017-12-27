@@ -7,10 +7,24 @@
 
 <script>
 import sele from "./sele";
+import {mapActions} from 'vuex'
 export default {
   components: { sele }, //需要在当前组件内注册（添加）
   data() {
-    return {};
+    return {
+      cartNum: ''
+    };
+  },
+  methods:{
+    ...mapActions(['setNum'])
+  },
+  created() {
+    var that = this;
+    this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      that.cartNum = data.data.data.cartNum;
+      that.setNum(that.cartNum);
+    });
+    console.log(this.cartNum)
   }
 };
 </script>

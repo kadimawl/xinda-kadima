@@ -4,7 +4,7 @@
         <div class="nowtx">
             <p>当前头像：</p>
             <!-- <img src="../assets/index/user.png" alt=""> -->
-            <img :src="headimg" alt="">
+            <img src="../assets/mobile/h.jpg" alt="">
         </div>
         <!-- 姓名 -->
         <div class="name">
@@ -302,6 +302,12 @@ export default {
     margin-top: 30px;
     p {
       margin-right: 50px;
+    }
+    img{
+        width: 60px;
+        height: 60px;
+        margin: auto;
+        border-radius: 50%;
     }
   }
   // 名字
