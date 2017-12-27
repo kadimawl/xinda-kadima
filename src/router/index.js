@@ -86,7 +86,7 @@ export default new Router({
             path: '/',
             name: 'HelloWorld',
             component: HelloWorld,
-            redirect: 'HomePage' ,
+            redirect: 'HomePage',
             children: [{
                     path: '/HomePage',
                     // alias: '/',
@@ -263,18 +263,6 @@ export default new Router({
                     children: [{
                         path: 'shopDetail', //商品详情
                         component: shopDetail
-                    }]
-                },
-                {
-                    path: 'store', //店铺二级路由
-                    component: store,
-                    redirect: 'store/List',
-                    children: [{
-                        path: 'List', //店铺列表
-                        component: wxshopList,
-                    }, {
-                        path: 'Home', //店铺首页
-                        component: wxshopHome,
                     }]
                 },
                 {

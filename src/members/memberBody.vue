@@ -183,7 +183,7 @@ export default {
                     })
                 }
                 this.lists=data;
-                // console.log('data==',data);
+                console.log('data==',data);
             }
         },
         
@@ -351,7 +351,7 @@ export default {
         display: flex;
         width: 932px;
         height: 32px;
-        background: #f7f7f7;
+        background: #f8f8f8;
         margin-bottom: 10px;
         p {
             height: 32px;
@@ -398,7 +398,7 @@ export default {
                 width: 100%;
                 height: 40px;
                 display: flex;
-                background: #f7f7f7;
+                background: #f8f8f8;
                 p{
                     line-height: 30px;
                     margin-left: 20px;
@@ -420,7 +420,7 @@ export default {
                             width: 323px;
                             height: 100px;
                             display: flex;
-                            border: 2px solid #f7f7f7;
+                            border: 2px solid #f8f8f8;
                             align-items: center;
                             // 装logo的盒子
                             >div{
@@ -442,16 +442,16 @@ export default {
                             height: 100px;
                             line-height: 100px;
                             font-size: 18px;
-                            border: 2px solid #f7f7f7;
+                            border: 2px solid #f8f8f8;
                         }
                     }
                 }
                 // 状态和总价
                 .pcommon{
                     width: 140px;
-                    height: 100px;
+                    height: 100%;
                     text-align: center;
-                    border: 2px solid #f7f7f7;
+                    border: 2px solid #f8f8f8;
                     p{
                         margin-top: 30px;
                         height: 40px;
@@ -465,7 +465,7 @@ export default {
                     width: 120px;
                     height: 100%;
                     text-align: center;
-                    border: 1px solid #f7f7f7;
+                    border: 1px solid #f8f8f8;
                     button{
                         width: 60px;
                         height: 40%;
@@ -488,7 +488,7 @@ export default {
                     width: 120px;
                     height: 100%;
                     text-align: center;
-                    border: 1px solid #f7f7f7;
+                    border: 1px solid #f8f8f8;
                     p{
                         font-size: 18px;
                     }
@@ -505,7 +505,7 @@ export default {
         top: 300px;
         text-align: center;
         line-height: 100px;
-        background: #f7f7f7;
+        background: #f8f8f8;
         z-index: 4;
         p {
         font-size: 18px;
