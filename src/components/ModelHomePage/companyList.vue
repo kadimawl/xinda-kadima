@@ -118,7 +118,7 @@ export default {
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
+      // console.log(this.seleCode);
     },
     types(key, typeCode) {
       this.currentIndex = typeCode;

@@ -15,9 +15,9 @@
         </div>
       </div>
       <div class="box-left" v-show="getName">
-        <a href="/#/member" class="username">{{getName}}</a>
+        <router-link to="/member"  class="username" >{{getName}}</router-link>
         <p class="w-come">欢迎来到信达！</p>
-        <a href="javascript:void(0)" class="exit" @click="exit">【退出】</a>
+        <p class="exit" @click="exit">【退出】</p>
       </div>
       <div class="box-right">
         <div class="shop-cart">
@@ -31,10 +31,10 @@
         </div>
         <div class="myOrder " v-show="getName">
           <span class="bgOrder"></span>
-          <a href="#/member/memberBody">我的订单</a>
+          <router-link to="/member/memberBody"  class="myOrder" >我的订单</router-link>
         </div>
         <div class="entrance">
-          <a href="#/shopIndex">服务商入口</a>
+          <router-link to="/shopIndex"  class="entranceR" >服务商入口</router-link>
         </div>
       </div>
     </div>
@@ -44,7 +44,6 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-// import isLogged from "../isLogged";
 export default {
   created() {
     var that = this;
@@ -155,7 +154,7 @@ export default {
       margin-left: 17px;
       padding-top: 3px;
       box-sizing: border-box;
-      a {
+      .entranceR {
         color: @69c;
       }
     }
@@ -182,12 +181,13 @@ export default {
 }
 
 .myOrder {
-  a {
+  .myOrder {
     color: #000;
   }
 }
 .exit {
   color: #000;
+  cursor: pointer;
 }
 .username {
   display: inline-block;
