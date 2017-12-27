@@ -88,7 +88,7 @@ import pageturn from "./pageturn";
 export default {
     // 拉取数据
     created(){
-        console.log('run in created');
+        // console.log('run in created');
         this.msg='false';
         this.errorshow=false;
         // 未登录不拉取数据
@@ -138,10 +138,8 @@ export default {
                 endTime:time2,
                 businessNo:code,
             })).then(function(data){
-                console.log('origin==',data);
                 if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
-                    // console.log('origin1==',data);
                 }else{
                     that.msg=true;
                     that.sermsg='无结果';
@@ -152,7 +150,6 @@ export default {
         // 自定义事件
         pagevary(msg){
             this.pagenum=msg*this.pagesize;
-            // console.log('msg==',this.pagenum);
         },
         // // 处理ajax获取的business数据显示在页面
         businessshow(data){
@@ -175,7 +172,7 @@ export default {
                     that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:orderN,
                     })).then(function(servdata){
-                        console.log('servicedata==',servdata);
+                        // console.log('servicedata==',servdata);
                         var servdata=servdata.data.data;
                         for(var key in servdata){
                             data[i].servitem.push(servdata[key]);
@@ -244,7 +241,7 @@ export default {
             that.qs.stringify(({
                 id:that.orderid,
             }))).then(function(data){
-                console.log(data);
+                // console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
                     that.errorshow=true;//提示

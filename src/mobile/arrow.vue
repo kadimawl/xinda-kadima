@@ -1,6 +1,7 @@
 <template>
     <div class="header">
         <div class="icon" @click="goBack"></div>
+        <img src="../assets/index/icon.png" alt="">
     </div>
 </template>
 
@@ -32,6 +33,12 @@ export default {
     margin-left: 0.1rem;
     background: url(../assets/HomePageimages/arrow_left.png);
     background-size: 100% 100%;
+  }
+  img{
+    width: .35rem;
+    height: .35rem;
+    display: block;
+    margin: auto;
   }
 }
 </style>
