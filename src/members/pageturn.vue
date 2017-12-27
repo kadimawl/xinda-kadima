@@ -10,10 +10,8 @@
 </template>
 
 <script>
-// import select from 
 export default {
     created(){
-        
     },
     data() {
         return {
@@ -27,7 +25,7 @@ export default {
     },
     watch:{//检测变化
         total(newVal,oldVal){
-            var pages = Math.ceil(newVal/this.pagesize);
+            var pages = Math.ceil(this.total/this.pagesize);
             for(let i=0;i<pages;i++){//无法实时检测数组的赋值，而数组的push可以检测到
                 this.nums.push(i+1);
             }
