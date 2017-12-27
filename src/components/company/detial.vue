@@ -86,39 +86,47 @@ export default {
           .then(() => {
             this.$router.push({
               path: "/outter/login",
-              query: { redirect: "/detial/service",
-                id: this.$route.query.shoppingId }
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
             });
-            // plugins(id, that); //立即购买公共方法
           })
           .catch(() => {});
       } else {
-        plugins(id, that); //立即购买公共方法
-      } 
+        plugins(id, that, "/tabs/shoppingCart"); //加入购物车/立即购买公共方法
+      }
     },
-    
-    buyNow(id, num) {
+
+    buyNow(id, num) { //立即购买
       var that = this;
       this.isLogged(id);
-      // this.$router.push({path: '/tabs/shoppingCart'})
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
     },
-    buyAdd(id, num) {
+    buyAdd(id, num) { //加入购物车
       var that = this;
-       if (!this.getName) {
+      if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
         })
-          .then(() => {   
-            this.$router.push({  //登录之后在跳转回当前页
+          .then(() => {
+            this.$router.push({
+              //登录之后在跳转回当前页
               path: "/outter/login",
-              query: { redirect: "/tabs/taxationList" , id: this.$route.query.shoppingId }
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
             });
           })
           .catch(() => {});
-      } 
-      this.ajax
+      } else {
+         this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
         .then(function() {
           that.ajax.post("xinda-api/cart/cart-num").then(data => {
@@ -126,6 +134,8 @@ export default {
             that.setNum(cartNum);
           });
         });
+      }
+     
     },
     les() {
       this.num -= 1;
