@@ -10,9 +10,9 @@ export default function purchase(id, that) {
   }))
     .then(data => {
       if (data.data.status == 1) {
-        that.$router.push({
-          path: "/tabs/shoppingCart"
-        });
+        // that.$router.push({
+        //   path: "/tabs/shoppingCart"
+        // });
       }
     });
 }

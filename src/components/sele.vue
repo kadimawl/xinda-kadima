@@ -55,7 +55,7 @@ export default {
       seleList: [],
       getSele: [],
       seleId: [],
-      socId: ''
+      socId: ""
     };
   },
   created() {
@@ -107,7 +107,7 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
-      console.log(id)
+      // console.log(id)
       if (id) {
         this.$router.push({ path: "/detial", query: { shoppingId: id } });
         this.selebox = false;
@@ -116,23 +116,27 @@ export default {
     },
     social() {
       this.ajax
-          .post(
-            "/xinda-api/product/package/search-grid",
-            this.qs.stringify({
-              searchName: '社保开户'
-            })
-          )
-          .then(data=>{
-            for(var key in data.data.data){
-              this.socId = data.data.data[key].id;
-              console.log(this.socId);
-            };
+        .post(
+          "/xinda-api/product/package/search-grid",
+          this.qs.stringify({
+            searchName: "社保开户"
           })
-      this.$router.push({
-        path: "/detial",
-        query: { shoppingId: this.socId }
-      });
-      location.reload();
+        )
+        .then(data => {
+          for (var key in data.data.data) {
+            this.socId = data.data.data[key].id;
+            console.log(this.socId);
+            this.$router.push({
+              path: "/detial",
+              query: { shoppingId: this.socId }
+            });
+          }
+        });
+      // this.$router.push({
+      // path: "/detial",
+      // query: { shoppingId: this.socId }
+      // });
+      // location.reload();
     },
     cReg() {
       this.$router.push({ path: "/tabs/companyList" });

@@ -29,7 +29,8 @@
     </div>
     <div class="head">
         <a href="javascript:void(0)" @click="gotoPro(6)"><span class="head5"></span><p>公司社保</p></a>
-        <router-link :to="{ path: '/m/mIndexList'}"><span class="head6"></span><p>知识产权</p></router-link>
+        <a href="javascript:void(0)" @click="gotoLis()"><span class="head6"></span><p>知识产权</p></a>
+        <!-- <router-link :to="{ path: '/m/mIndexList'}"><span class="head6"></span><p>知识产权</p></router-link> -->
         <router-link :to="{ path: '/m/mIndexList'}"><span class="headAll"></span><p>全部服务</p></router-link>
         <a href="javascript:void(0)"><span></span></a>
     </div>
@@ -96,6 +97,12 @@ export default {
         query: { productTypeCode: code }
       });
     },
+    gotoLis() {
+      this.$router.push({
+        path: "/m/mIndexList",
+        query: { code: "5af629246fa34f6f8d49758c6a7b25f1" }
+      });
+    },
     gotoShop(id) {
       console.log(id);
       this.$router.push({
@@ -109,7 +116,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-
 .el-carousel {
   width: 100%;
   height: 2.5rem;
@@ -183,7 +189,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 0.3rem 0.3rem 0;
-  // margin-top: 0.5erm;  
+  // margin-top: 0.5erm;
   span {
     display: block;
     width: 1.1rem;
