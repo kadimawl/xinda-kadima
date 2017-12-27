@@ -58,10 +58,6 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-<<<<<<< HEAD
-=======
-        // console.log(shop);
->>>>>>> 4fff3aecf1e3bf36615556f2ce409fdef1af1bae
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
@@ -85,10 +81,6 @@ export default {
           .then(() => {
             this.$router.push({
               path: "/outter/login",
-<<<<<<< HEAD
-              // query: {redirect: '/detial/service'}
-=======
->>>>>>> 4fff3aecf1e3bf36615556f2ce409fdef1af1bae
               query: {
                 redirect: "/detial/service",
                 id: this.$route.query.shoppingId
