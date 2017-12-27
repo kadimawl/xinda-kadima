@@ -96,7 +96,7 @@ export default {
                         that.error='评价成功';
                         that.acolor='#5d95e8';
                         that.setEvaldetail({});
-                        location.href='http://localhost:8080/#/member/userEval/evalNone';
+                        location.reload();
                     }else{
                         that.errorshow=true;
                         that.error=data.data.msg;

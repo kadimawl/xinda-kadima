@@ -42,7 +42,7 @@ export default {
   },
   created() {
     //判断是否登录
-    this.ajax.post("xinda-api/sso/login-info").then(data => {
+    this.ajax.post("/xinda-api/sso/login-info").then(data => {
       if (data.data.status == 0) {
         this.routes = mineRoute[1];
       }

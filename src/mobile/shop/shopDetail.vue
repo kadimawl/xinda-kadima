@@ -135,7 +135,7 @@ export default {
     isLogged(id) {
       //判断是否登录
       var that = this;
-      this.ajax.post("xinda-api/sso/login-info").then(data => {
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
         if (data.data.status == 0) {
           MessageBox.confirm("请先进行登录, 是否继续?").then(action => {
             this.$router.push({
@@ -183,7 +183,7 @@ export default {
 
     addCart: function(id) {
       var that = this;
-      this.ajax.post("xinda-api/sso/login-info").then(data => {
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
         if (data.data.status == 0) {
           MessageBox.confirm("请先进行登录, 是否继续?").then(action => {
             this.$router.push({

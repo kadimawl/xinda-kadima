@@ -138,7 +138,7 @@ export default {
     },
     //结算
     settlement() {
-      this.ajax.post("xinda-api/cart/submit").then(data => {
+      this.ajax.post("/xinda-api/cart/submit").then(data => {
         if (data.data.status == 1) {
           this.$router.push({ path: "/m/users/myOrder" });
           this.render();

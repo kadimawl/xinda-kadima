@@ -63,7 +63,7 @@ export default {
     //商品类别导航
     this.ajax
       .post(
-        "http://115.182.107.203:8088/xinda/xinda-api/product/style/list",
+        "/xinda-api/product/style/list",
         {}
       )
       .then(data => {
@@ -98,7 +98,7 @@ export default {
     getShop: function(TypeCode) {//商品列表请求函数
       var that = this;
       this.ajax
-        .post("http://115.182.107.203:8088/xinda/xinda-api/provider/grid", {
+        .post("/xinda-api/provider/grid", {
           start: 0,
           limit: 6,
           productTypeCode: 10,

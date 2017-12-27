@@ -2,7 +2,7 @@
   <div class="body">
     <p class="topP">首页/{{product.info}}</p>
     <div class="shopBuy">
-      <img :src="picURL" :onerror="picURL=require('../../assets/shop/u1182.png')" alt="">
+      <img :src="picURL" :onerror="picURL=require('../../assets/shop/u1182.jpg')" alt="">
       <div>
         <h3>{{product.info}}</h3>
         <p>{{product.name}}</p>
@@ -96,9 +96,6 @@ export default {
         plugins(id, that, "/tabs/shoppingCart"); //加入购物车/立即购买公共方法
       }
     },
-    // changeURL() {
-    //   this.picURL = "../../assets/shop/u1182.png";
-    // },
     buyNow(id, num) {
       //立即购买
       var that = this;

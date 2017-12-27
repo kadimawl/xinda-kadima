@@ -49,7 +49,7 @@ export default {
   methods: {
     exit() {
       var that = this;
-      this.ajax.post("xinda-api/sso/ logout").then(data => {
+      this.ajax.post("/xinda-api/sso/ logout").then(data => {
         if (data.data.status == 1) {
           MessageBox.confirm("确定退出登录?").then(action => {
             that.name = "未登录";
