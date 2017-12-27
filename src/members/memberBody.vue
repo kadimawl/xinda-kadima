@@ -247,6 +247,7 @@ export default {
                     that.errorshow=true;//提示
                     that.error='删除成功';
                     that.acolor='#55a4dc';
+                    that.getData(that.pagenum,that.pagesize,that.value1,that.value2,that.inputcode);
                 }else{
                     that.errorshow=true;//提示
                     that.error=data.data.msg;
