@@ -103,7 +103,7 @@ export default {
       //立即购买
       var that = this;
       this.isLogged(id);
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum);
       });
@@ -132,7 +132,7 @@ export default {
         this.ajax
           .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
           .then(function() {
-            that.ajax.post("xinda-api/cart/cart-num").then(data => {
+            that.ajax.post("/xinda-api/cart/cart-num").then(data => {
               var cartNum = data.data.data.cartNum;
               that.setNum(cartNum);
             });
