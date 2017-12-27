@@ -219,8 +219,8 @@ export default {
           })
           .catch(() => {});
       } else {
-        addCart(id, that); //加入购物车公共方法
-      }
+        plugins(id, that); //加入购物车/立即购买公共方法
+      };
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         console.log(data.data)
         var cartNum = data.data.data.cartNum;
@@ -300,7 +300,6 @@ export default {
       for (const key in rData) {
         if (rData[key].name == "财税服务") {
           that.ItemLists = rData[key].itemList;
-
           break;
         }
       }

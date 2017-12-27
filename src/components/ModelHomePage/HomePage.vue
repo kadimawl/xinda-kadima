@@ -364,8 +364,8 @@ export default {
   position: relative;
 }
 .el-carousel {
-  width: 1200px;
-  height: 405px;
+  // width: 1200px;
+  // height: 405px;
   .el-carousel__item:nth-child(1) {
     border: 5px solid #000;
   }

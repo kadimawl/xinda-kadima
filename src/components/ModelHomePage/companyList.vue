@@ -111,7 +111,7 @@ export default {
           })
           .catch(() => {});
       } else {
-        plugins(id, that,'/tabs/shoppingCart'); //立即购买公共方法
+        plugins(id, that,'/tabs/shoppingCart'); //加入购物车/立即购买公共方法
       } 
     },
     ...mapActions(["setNum"]),
@@ -223,8 +223,8 @@ export default {
           })
           .catch(() => {});
       } else {
-        addCart(id, that); //立即购买公共方法
-      }
+        plugins(id, that); //加入购物车/立即购买公共方法
+      };
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         console.log(data.data)
         var cartNum = data.data.data.cartNum;

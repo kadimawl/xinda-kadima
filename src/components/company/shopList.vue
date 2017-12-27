@@ -37,25 +37,35 @@ export default {
     };
   },
   created() {
-    var shopID = this.$route.query.shopID;
     var that = this;
-    this.ajax
-      .post(
-        "/xinda-api/provider/detail",
-        this.qs.stringify({
-          id: shopID
-          //请求店铺信息
-        })
-      )
-      .then(function(data) {
-        var shop = data.data.data;
-        that.providerName = shop.name;
-        that.regionName = shop.regionName;
-        that.providerInfo = shop.providerInfo;
-        that.LogoUrl = shop.providerImg;
-        var shopStory = JSON.stringify(shop);
-        sessionStorage.setItem("GoToshop", shopStory);
-      });
+    console.log(this.$route.query.shopID);
+    if (this.$route.query.shopID) {
+      var shopID = this.$route.query.shopID;
+      this.ajax
+        .post(
+          "/xinda-api/provider/detail",
+          this.qs.stringify({
+            id: shopID
+            //请求店铺信息
+          })
+        )
+        .then(function(data) {
+          var shop = data.data.data;
+          that.providerName = shop.name;
+          that.regionName = shop.regionName;
+          that.providerInfo = shop.providerInfo;
+          that.LogoUrl = shop.providerImg;
+          console.log(shop);
+          var shopStory = JSON.stringify(shop);
+          sessionStorage.setItem("GoToshop", shopStory);
+        });
+    } else {
+      var shop = JSON.parse(sessionStorage.getItem("GoToshop"));
+      that.providerName = shop.name;
+      that.regionName = shop.regionName;
+      that.providerInfo = shop.providerInfo;
+      that.LogoUrl = shop.providerImg;
+    }
   }
 };
 </script>

@@ -63,6 +63,10 @@ export default {
         }
         that.datas = datas;
         that.leftC("1eff122d06604fc1aadf9e7acefba21a");
+        var code = that.$route.query.code;
+        if (code) {
+          that.leftC(code);
+        }
       });
   },
   methods: {
@@ -149,12 +153,12 @@ export default {
   font-size: 0.28rem;
   height: 40px;
   line-height: 1;
-  padding: 0 .01rem;
+  padding: 0 0.01rem;
   position: relative;
   text-align: center;
   white-space: nowrap;
-  button{
-    width: .40rem;
+  button {
+    width: 0.4rem;
   }
 }
 </style>
