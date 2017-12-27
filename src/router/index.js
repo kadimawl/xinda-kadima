@@ -318,10 +318,6 @@ export default new Router({
                     }]
                 }
             ]
-        },
-        {
-            path: '/mIndexList', //店铺列表
-            component: mIndexList
         }
     ]
 })
