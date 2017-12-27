@@ -88,7 +88,7 @@ import pageturn from "./pageturn";
 export default {
     // 拉取数据
     created(){
-        console.log('run in created');
+        // console.log('run in created');
         this.msg='false';
         this.errorshow=false;
         // 未登录不拉取数据
@@ -138,10 +138,8 @@ export default {
                 endTime:time2,
                 businessNo:code,
             })).then(function(data){
-                console.log('origin==',data);
                 if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
-                    // console.log('origin1==',data);
                 }else{
                     that.msg=true;
                     that.sermsg='无结果';
@@ -152,7 +150,6 @@ export default {
         // 自定义事件
         pagevary(msg){
             this.pagenum=msg*this.pagesize;
-            // console.log('msg==',this.pagenum);
         },
         // // 处理ajax获取的business数据显示在页面
         businessshow(data){
@@ -175,7 +172,7 @@ export default {
                     that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:orderN,
                     })).then(function(servdata){
-                        console.log('servicedata==',servdata);
+                        // console.log('servicedata==',servdata);
                         var servdata=servdata.data.data;
                         for(var key in servdata){
                             data[i].servitem.push(servdata[key]);
@@ -183,7 +180,7 @@ export default {
                     })
                 }
                 this.lists=data;
-                // console.log('data==',data);
+                console.log('data==',data);
             }
         },
         
@@ -244,7 +241,7 @@ export default {
             that.qs.stringify(({
                 id:that.orderid,
             }))).then(function(data){
-                console.log(data);
+                // console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
                     that.errorshow=true;//提示
@@ -350,7 +347,7 @@ export default {
         display: flex;
         width: 932px;
         height: 32px;
-        background: #f7f7f7;
+        background: #f8f8f8;
         margin-bottom: 10px;
         p {
             height: 32px;
@@ -397,7 +394,7 @@ export default {
                 width: 100%;
                 height: 40px;
                 display: flex;
-                background: #f7f7f7;
+                background: #f8f8f8;
                 p{
                     line-height: 30px;
                     margin-left: 20px;
@@ -419,7 +416,7 @@ export default {
                             width: 323px;
                             height: 100px;
                             display: flex;
-                            border: 2px solid #f7f7f7;
+                            border: 2px solid #f8f8f8;
                             align-items: center;
                             // 装logo的盒子
                             >div{
@@ -441,16 +438,16 @@ export default {
                             height: 100px;
                             line-height: 100px;
                             font-size: 18px;
-                            border: 2px solid #f7f7f7;
+                            border: 2px solid #f8f8f8;
                         }
                     }
                 }
                 // 状态和总价
                 .pcommon{
                     width: 140px;
-                    height: 100px;
+                    height: 100%;
                     text-align: center;
-                    border: 2px solid #f7f7f7;
+                    border: 2px solid #f8f8f8;
                     p{
                         margin-top: 30px;
                         height: 40px;
@@ -464,7 +461,7 @@ export default {
                     width: 120px;
                     height: 100%;
                     text-align: center;
-                    border: 1px solid #f7f7f7;
+                    border: 1px solid #f8f8f8;
                     button{
                         width: 60px;
                         height: 40%;
@@ -487,7 +484,7 @@ export default {
                     width: 120px;
                     height: 100%;
                     text-align: center;
-                    border: 1px solid #f7f7f7;
+                    border: 1px solid #f8f8f8;
                     p{
                         font-size: 18px;
                     }
@@ -504,7 +501,7 @@ export default {
         top: 300px;
         text-align: center;
         line-height: 100px;
-        background: #f7f7f7;
+        background: #f8f8f8;
         z-index: 4;
         p {
         font-size: 18px;

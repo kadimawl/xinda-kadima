@@ -9,60 +9,10 @@
 export default {
   name: "app",
   created() {
-    console.log(this.$route.path)
-    //判断移动端还是pc端
-    if (this.$route.path == "/") {
-      if (this.browserRedirect()) {
-        this.$router.push("/m");
-        (function(doc, win) {
-          var docEl = doc.documentElement,
-            resizeEvt =
-              "orientationchange" in window ? "orientationchange" : "resize",
-            recalc = function() {
-              var clientWidth = docEl.clientWidth;
-              if (!clientWidth) return;
-              if (clientWidth >= 750) {
-                docEl.style.fontSize = "100px";
-              } else {
-                docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-              }
-            };
-
-          if (!doc.addEventListener) return;
-          win.addEventListener(resizeEvt, recalc, false);
-          doc.addEventListener("DOMContentLoaded", recalc, false);
-        })(document, window);
-      } else {
-        this.$router.push("/HomePage");
-      }
-    }
+    
   },
   methods: {
-    browserRedirect() {
-      var sUserAgent = navigator.userAgent.toLowerCase();
-      var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
-      var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-      var bIsMidp = sUserAgent.match(/midp/i) == "midp";
-      var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-      var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
-      var bIsAndroid = sUserAgent.match(/android/i) == "android";
-      var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
-      var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-      if (
-        bIsIpad ||
-        bIsIphoneOs ||
-        bIsMidp ||
-        bIsUc7 ||
-        bIsUc ||
-        bIsAndroid ||
-        bIsCE ||
-        bIsWM
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    },
+    
     //子组件(login)将用户名传过来
     userSignIn(userName) {
       sessionStorage.userName = userName;

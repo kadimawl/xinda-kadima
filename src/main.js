@@ -71,6 +71,33 @@ Vue.prototype.debounce = function debounce(fn, delay) {
   }
 }
 
+const routeList = ['/tabs/companyList','/tabs/taxationList','/detial','/tabs/shoppingCart','/Order']
+router.beforeEach((to,from,next)=>{
+  for (var i = 0; i < routeList.length; i++) {
+    if (to.path == routeList[i]) { //检测需要登录地址
+      //判断当前有没有登录
+      //如果没有登录则跳转到登录页
+      axios.post('/xinda-api/sso/login-info').then(data=>{
+        if (data.data.status == 0) { //没有登录
+          next('/outter/login');
+        }else{
+          next();
+        }
+      })
+      break;
+    }
+    next();
+  }
+  //判断移动端还是pc端
+  if (to.path == "/HomePage") {
+    if (browserRedirect()) {
+      next("/m")
+    } else {
+      next();
+    }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -82,3 +109,46 @@ new Vue({
   }
 })
 
+function browserRedirect() {
+  var sUserAgent = navigator.userAgent.toLowerCase();
+  var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+  var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+  var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+  var bIsAndroid = sUserAgent.match(/android/i) == "android";
+  var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+  var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+  if (
+    bIsIpad ||
+    bIsIphoneOs ||
+    bIsMidp ||
+    bIsUc7 ||
+    bIsUc ||
+    bIsAndroid ||
+    bIsCE ||
+    bIsWM
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
+//判断手机端重新设置fon-size
+if(browserRedirect()) {
+  (function(doc, win) {
+    var docEl = doc.documentElement,
+      resizeEvt =
+        "orientationchange" in window ? "orientationchange" : "resize",
+      recalc = function() {
+        var clientWidth = docEl.clientWidth;
+        if (!clientWidth) return;
+          docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+      };
+    if (!doc.addEventListener) return;
+    win.addEventListener(resizeEvt, recalc, false);
+    doc.addEventListener("DOMContentLoaded", recalc, false);
+  })(document, window);
+}

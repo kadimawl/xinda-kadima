@@ -7,7 +7,7 @@
       <div class="block">
         <span class="demonstrantion"></span>
         <el-carousel trigger="click" height="405px">
-          <el-carousel-item v-for="item in 4" :key="item">
+          <el-carousel-item v-for="item in 4" :key="item.id">
           </el-carousel-item>
         </el-carousel>
       </div>
