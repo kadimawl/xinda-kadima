@@ -71,7 +71,7 @@ Vue.prototype.debounce = function debounce(fn, delay) {
   }
 }
 
-const routeList = ['/tabs/companyList','/tabs/taxationList','/detial','/tabs/shoppingCart','/Order']
+const routeList = ['/tabs/shoppingCart','/Order',]
 router.beforeEach((to,from,next)=>{
   for (var i = 0; i < routeList.length; i++) {
     if (to.path == routeList[i]) { //检测需要登录地址

@@ -76,7 +76,7 @@ export default {
     exit() {
       sessionStorage.clear();
       location.reload();
-      this.setNum(0)
+      this.setNum(0);
     },
     cartBut() {
       if (this.getName) {
@@ -85,7 +85,10 @@ export default {
         this.$alert("请先进行登录", "标题名称", {
           confirmButtonText: "确定",
           callback: action => {
-            this.$router.push({ path: "/outter/login",query: {redirect: '/tabs/shoppingCart'} });
+            this.$router.push({
+              path: "/outter/login",
+              query: { redirect: "/tabs/shoppingCart" }
+            });
           }
         });
       }
@@ -150,6 +153,8 @@ export default {
     }
     .entrance {
       margin-left: 17px;
+      padding-top: 3px;
+      box-sizing: border-box;
       a {
         color: @69c;
       }
@@ -164,28 +169,8 @@ export default {
   margin-right: 5px;
   margin-top: 10px;
   background: url(../assets/index/Sprites.png) 0 -73px;
-}
-.box-Right {
-  display: flex;
-  width: 29%;
-  text-align: right;
-  .shop-cart {
-    display: flex;
-    span {
-      color: @69c;
-    }
-  }
-  .entrance {
-    margin-left: 17px;
-    a {
-      color: @69c;
-    }
-  }
-}
-.bgCart {
   margin-left: 10px;
 }
-
 .bgOrder {
   display: inline-block;
   width: 20px;
