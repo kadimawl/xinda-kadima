@@ -4,18 +4,50 @@ import Vue from 'vue'
 import App from './App'
 import router from './router' //vue的路由实例化对象
 import store from './store'
-import axios from 'axios'
+
+
+// import axios from 'axios'
+import qs from 'qs'
+
+//element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+<<<<<<< HEAD
+
+//mint
+import { Header,MessageBox,Button,Radio } from 'mint-ui';
+import 'mint-ui/lib/style.css'
+=======
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import qs from 'qs'
 import { Header, MessageBox, Button, Radio } from 'mint-ui';
+>>>>>>> 098e6f671da028d3c477d74f80b1d9c1f40c3b62
 
 Vue.component(Radio.name, Radio);
 Vue.component(Header.name, Header);
 Vue.component(Button.name, Button)
 
+<<<<<<< HEAD
+
+var objSort = function (name) {
+  return function (o, p) {
+    var a, b;
+    if (typeof o === "object" && typeof p === "object" && o && p) {
+      a = o[name];
+      b = p[name];
+      if (a === b) {
+        return 0;
+      }
+      if (typeof a === typeof b) {
+        return a < b ? -1 : 1;
+      }
+      return typeof a < typeof b ? -1 : 1;
+    } else {
+      throw "error";
+    }
+  };
+=======
 var objSort = function(name) {
     return function(o, p) {
         var a, b;
@@ -33,6 +65,7 @@ var objSort = function(name) {
             throw "error";
         }
     };
+>>>>>>> 098e6f671da028d3c477d74f80b1d9c1f40c3b62
 };
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;

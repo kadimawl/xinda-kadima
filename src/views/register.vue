@@ -35,7 +35,7 @@
     <div class="rightOut">
       <p class="notYet">已有账号？</p>
       <p class="immediately" @click="login">
-        <a href="/#/outter/login">立即登录>></a>
+        <router-link class="imLogin" to="/outter/login">立即登录>></router-link>
       </p>
       <img src="../assets/index/okmanr.jpg" alt="">
     </div>
@@ -339,7 +339,7 @@ export default {
     }
     .immediately {
       margin: 23px 0 19px;
-      a {
+      .imLogin {
         margin-left: 30px;
         color: #2693d4;
         font-size: 17px;
