@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header title="登录">
+    <!-- <mt-header title="登录">
       <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header> -->
 
     <div class="box">
 
@@ -39,6 +39,9 @@ export default {
       imgVInput: "", //验证码
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
+  },
+  created() {
+    console.log(this.$route.query.id)
   },
   methods: {
     phone() {
@@ -108,7 +111,7 @@ export default {
                 if (status == 1) {
                   //成功登陆
                   MessageBox.alert("登录成功").then(function() {
-                    that.$router.push({ path: "/m" }); //页面跳转
+                    that.$router.push({path: that.$route.query.redirect ||'/m',query:{sId: that.$route.query.id}})
                     that.ajax.post("/xinda-api/sso/login-info").then(data => {
                       let name = data.data.data.name;
                     });
@@ -141,7 +144,7 @@ export default {
 .box {
   width: 100%;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: .650rem 1rem 0;
   box-sizing: border-box;
 }
 input {
@@ -192,7 +195,7 @@ input {
   width: 100%;
   height: 0.78rem;
   background: #4d4d4d;
-  margin: 5.34rem auto 0;
+  margin: 4.24rem auto 0;
   display: flex;
   .left {
     width: 2.75rem;
@@ -216,24 +219,24 @@ input {
   }
 }
 
-.mint-header {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #e5e5e5;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #000;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-size: 0.28rem;
-  height: 40px;
-  line-height: 1;
-  padding: 0 0.01rem;
-  position: relative;
-  text-align: center;
-  white-space: nowrap;
-}
+// .mint-header {
+//   -webkit-box-align: center;
+//   -ms-flex-align: center;
+//   align-items: center;
+//   background-color: #2693d4;
+//   -webkit-box-sizing: border-box;
+//   box-sizing: border-box;
+//   color: #fff;
+//   display: -webkit-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   font-size: 0.28rem;
+//   height: .77rem;
+//   line-height: .77rem;
+//   // padding: 0 0.01rem;
+//   position: relative;
+//   text-align: center;
+//   white-space: nowrap;
+// }
 </style>
 

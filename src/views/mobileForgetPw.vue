@@ -1,10 +1,10 @@
 <template>
   <div>
-    <mt-header title="忘记密码">
+    <!-- <mt-header title="忘记密码">
       <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header> -->
     <div class="lOut">
       <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
       <div class="v-box">
@@ -259,16 +259,16 @@ button {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #e5e5e5;
+  background-color: #2693d4;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  color: #000;
+  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   font-size: 0.28rem;
-  height: 40px;
-  line-height: 1;
+  height: .77rem;
+  line-height: .77rem;
   padding: 0 .01rem;
   position: relative;
   text-align: center;

@@ -18,7 +18,7 @@
           <div class="total">
             <p>购买数量 :</p>
             <button @click="subtraction(list.serviceId,list.buyNum)">-</button>
-            <input type="text" readonly="readonly" v-model="list.buyNum" @focus="numChange">
+            <input type="text" readonly="readonly" v-model="list.buyNum">
             <button @click="add(list.serviceId)">+</button>
           </div>
           <div class="address">
@@ -40,13 +40,13 @@
     </div>
 
     <div class="cartBtn">
-        <div class="combined">
-            <p>合计 :</p>
-            <p class="totals">￥
-                <span>{{total}}</span>
-            </p>
-        </div>
-        <button @click="settlement">去结算</button>
+      <div class="combined">
+        <p>合计 :</p>
+        <p class="totals">￥
+          <span>{{total}}</span>
+        </p>
+      </div>
+      <button @click="settlement">去结算</button>
     </div>
   </div>
 
@@ -140,16 +140,10 @@ export default {
     settlement() {
       this.ajax.post("xinda-api/cart/submit").then(data => {
         if (data.data.status == 1) {
-          this.$router.push({ path: "/m/carts/Null" });
+          this.$router.push({ path: "/m/users/myOrder" });
           this.render();
         }
       });
-    },
-    //输入框改变数量
-    numChange() {
-      // MessageBox.prompt("请输入数量").then(({ value, action }) => {
-      //   console.log(value);
-      // });
     }
   }
 };
@@ -185,24 +179,32 @@ export default {
 }
 .box {
   display: flex;
+  justify-content: space-between;
   .imgBox {
     width: 1.66rem;
     height: 1.66rem;
+    padding: 0.15rem 0;
+    box-sizing: border-box;
     border: 0.02rem solid #e3e3e3;
-    margin-right: 0.18rem;
     img {
-      width: 1.66rem;
-      height: 1.66rem;
+      display: block;
+      width: 1.36rem;
+      height: 1.36rem;
+      margin: auto;
     }
   }
 }
 .cartMsg {
-  width: 4.15rem;
+  // width: 4.15rem;
   padding-top: 0.02rem;
   box-sizing: border-box;
   .name {
+    width: 2.5rem;
     height: 0.28rem;
-    font-size: 0.28rem;
+    font-size: 0.26rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     line-height: 0.28rem;
     color: #010101;
     margin-bottom: 0.29rem;
@@ -230,7 +232,9 @@ export default {
 .total {
   display: flex;
   p {
-    width: 0.98rem;
+    display: block;
+    // width: 0.98rem;
+    margin-right: 0.17rem;
     height: 0.16rem;
     font-size: 0.16rem;
     line-height: 0.33rem;
@@ -247,7 +251,7 @@ export default {
     border: 0.01rem solid #c7c7c7;
   }
   input {
-    width: 0.37rem;
+    width: 0.6rem;
     height: 0.31rem;
     font-size: 0.19rem;
     text-align: center;
@@ -271,18 +275,24 @@ export default {
     height: 0.21rem;
     margin-left: 0.15rem;
     font-size: 0.16rem;
-    line-height: .21rem;
+    line-height: 0.21rem;
     color: #242424;
   }
 }
 .del {
+  width: 1.4rem;
+  height: 0.5rem;
+  border: 0.01rem solid #f56c6c;
+  border-radius: 0.05rem;
   font-size: 0.23rem;
-  line-height: 0.23rem;
-  color: #fe0000;
+  line-height: 0.5rem;
+  text-align: center;
+  color: #f56c6c;
 }
 
 .all {
   margin-top: 0.17rem;
+  margin-bottom: 3rem;
   height: 0.22rem;
   font-size: 0.22rem;
   display: flex;
@@ -301,18 +311,18 @@ export default {
   }
 }
 
-.cartBtn{
+.cartBtn {
   width: 100%;
   height: 1.1rem;
   display: flex;
   margin-top: 0.3rem;
-  margin-bottom: .10rem;
+  margin-bottom: 0.1rem;
   position: fixed;
-  bottom: .60rem;
+  bottom: 0.6rem;
   .combined {
     width: 4.94rem;
     background: #e5e5e5;
-    padding-left: 0.10rem;
+    padding-left: 0.1rem;
     box-sizing: border-box;
     display: flex;
     margin: 0;
@@ -320,7 +330,7 @@ export default {
       font-size: 0.28rem;
       letter-spacing: 0.02rem;
       line-height: 1.1rem;
-      margin-left: .20rem;
+      margin-left: 0.2rem;
       color: #4c4c4c;
     }
     .totals {

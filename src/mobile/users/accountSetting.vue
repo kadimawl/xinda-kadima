@@ -1,10 +1,10 @@
 <template>
   <div class="box">
-    <mt-header title="账户设置">
+    <!-- <mt-header title="账户设置">
       <router-link to="/m/users/logined" slot="left">
         <mt-button icon="back"></mt-button>
       </router-link>
-    </mt-header>
+    </mt-header> -->
     <div class="topTitle">账户设置
       <span></span>
     </div>
@@ -165,6 +165,7 @@ export default {
   color: #000;
   padding-top: 0.4rem;
   box-sizing: border-box;
+  text-align: left;
   span {
     display: flex;
     width: 0;
@@ -173,7 +174,7 @@ export default {
     border-width: 0.08rem;
     border-color: transparent transparent #2693d4 transparent;
     border-style: solid dashed dashed dashed;
-    margin-top: -0.11rem;
+    margin-top: -0.12rem;
     margin-left: 6.9%;
   }
 }
@@ -316,17 +317,17 @@ export default {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  background-color: #e5e5e5;
+  background-color: #2693d4;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  color: #000;
+  color: #fff;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   font-size: 0.28rem;
-  height: 40px;
-  line-height: 1;
-  padding: 0 0.01rem;
+  height: .77rem;
+  line-height: .77rem;
+  // padding: 0 0.01rem;
   position: relative;
   text-align: center;
   white-space: nowrap;

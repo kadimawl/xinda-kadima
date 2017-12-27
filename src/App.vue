@@ -6,27 +6,12 @@
 
 
 <script>
-if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
-  (function(doc, win) {
-    var docEl = doc.documentElement,
-      resizeEvt =
-        "orientationchange" in window ? "orientationchange" : "resize",
-      recalc = function() {
-        var clientWidth = docEl.clientWidth;
-        if (!clientWidth) return;
-        docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-      };
-
-    if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvt, recalc, false);
-    doc.addEventListener("DOMContentLoaded", recalc, false);
-  })(document, window);
-}
 export default {
   name: "app",
   created() {
+    console.log(this.$route.path)
     //判断移动端还是pc端
-    if (this.$route.path == "/HomePage") {
+    if (this.$route.path == "/") {
       if (this.browserRedirect()) {
         this.$router.push("/m");
         (function(doc, win) {
@@ -96,7 +81,6 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 a {
   text-decoration: none;

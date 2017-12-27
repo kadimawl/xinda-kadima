@@ -11,7 +11,16 @@
             <h3>信达</h3>
         </div>
     </div>
-    <img src="../../assets/mobile/index/dalou.jpg" class="lunbo">
+
+    <div class="block">
+      <span class="demonstrantion"></span>
+      <el-carousel trigger="click" height="2.5rem" indicator-position="none">
+        <el-carousel-item v-for="item in 4" :key="item">
+        </el-carousel-item>
+      </el-carousel>
+    </div>
+
+    <!-- <img src="../../assets/mobile/index/dalou.jpg" class="lunbo"> -->
     <div class="head">
         <router-link :to="{ path: '/m/mIndexList'}"><span class="head1"></span><p>财税服务</p></router-link>
         <a href="javascript:void(0)" @click="gotoPro(4)"><span class="head2"></span><p>开公司</p></a>
@@ -100,6 +109,32 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+
+.el-carousel {
+  width: 100%;
+  height: 2.5rem;
+  overflow: hidden;
+  .el-carousel__item:nth-child(1) {
+    border: 5px solid #000;
+  }
+  .el-carousel__item:nth-child(3) {
+    background: url(../../assets/HomePageimages/lun1.jpg);
+    background-size: 100% 100%;
+  }
+  .el-carousel__item:nth-child(4) {
+    background: url(../../assets/HomePageimages/lun2.jpg);
+    background-size: 100% 100%;
+  }
+  .el-carousel__item:nth-child(5) {
+    background: url(../../assets/HomePageimages/lun3.jpg);
+    background-size: 100% 100%;
+  }
+  .el-carousel__item:nth-child(6) {
+    background: url(../../assets/HomePageimages/lun4.jpg);
+    background-size: 100% 100%;
+  }
+}
+
 .top {
   position: relative;
   padding: 0.1rem 0.2rem;
@@ -144,13 +179,11 @@ export default {
     padding: 0 0.15rem;
   }
 }
-.lunbo {
-  width: 100%;
-}
 .head {
   display: flex;
   justify-content: space-between;
-  padding: 0 0.3rem 0.3rem;
+  padding: 0.3rem 0.3rem 0;
+  // margin-top: 0.5erm;  
   span {
     display: block;
     width: 1.1rem;
@@ -228,6 +261,7 @@ export default {
 }
 .qiye {
   display: flex;
+  align-items: center;
   padding: 0.27rem 0.17rem;
   .qiyeI {
     width: 1.68rem;

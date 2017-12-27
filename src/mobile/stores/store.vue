@@ -1,25 +1,26 @@
 <template>
-    <div class="store">
-        <!-- 店铺二级路由，下有两个独立模块 -->
-        <router-view/>
-        <mobileBottom/>
+    <div>
+        <arrow/>
+        <div class="store">
+            <!-- 店铺二级路由，下有两个独立模块 -->
+            <router-view/>
+            <mobileBottom/>
+        </div>
     </div>
+
 </template>
 
 <script>
-import mobileBottom from '@/mobile/mobileBottom'
+import mobileBottom from "@/mobile/mobileBottom";
+import arrow from "../arrow";
 export default {
-    components: {mobileBottom},
-}
+  components: { mobileBottom, arrow }
+};
 </script>
 
 <style lang="less" scoped>
-*{
-    margin: 0;
-    padding: 0;
-}
-.store{
-    width: 100%;
-    margin: 0 auto;
+.store {
+  width: 100%;
+  margin-top: .80rem;
 }
 </style>

@@ -8,13 +8,13 @@
         </router-link>
       </li>
       <li>
-        <router-link class=" shop" active-class="shopChange" to="/m/store/List">
+        <router-link class="shop" active-class="shopChange" to="/m/store/List">
           <div class="bg shop"></div>
           <p>店铺</p>
         </router-link>
       </li>
       <li>
-        <router-link class="cart " active-class="cartChange" to="/m/carts/Have">
+        <router-link class="cart" active-class="cartChange" :to="cartRoute">
           <div class="bg cart"></div>
           <p>购物车</p>
         </router-link>
@@ -31,23 +31,30 @@
 </template>
 
 <script>
-const mineRoute =  ["/m/users/logined","/m/users/mobileLogin"];
+const mineRoute = ["/m/users/logined", "/m/users/mobile"];
+const cartList = ['/m/carts/Have','/m/carts/Null']
 export default {
   data() {
     return {
-      routes: mineRoute[0]
+      routes: mineRoute[0],
+      cartRoute: cartList[1]
     };
   },
   created() {
-    this.ajax.post('xinda-api/sso/login-info').then(data=>{
-      if(data.data.status == 0){
-        this.routes = mineRoute[1]
+    //判断是否登录
+    this.ajax.post("xinda-api/sso/login-info").then(data => {
+      if (data.data.status == 0) {
+        this.routes = mineRoute[1];
+      }
+    });
+    //判断是否购物车为空
+    this.ajax.post('/xinda-api/cart/list').then(data=>{
+      if(data.data.data.length != 0){
+        this.cartRoute = cartList[0]
       }
     })
   },
-  methods: {
-
-  }
+  methods: {}
 };
 </script>
 
@@ -90,56 +97,56 @@ li {
 }
 .index {
   color: #b0b0b2;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeG.png);
     background-size: contain;
   }
 }
 .indexChange {
   color: #2693d4;
-  .bg {
+  .index {
     background: url(../assets/mobile/btmhomeB.png) no-repeat;
     background-size: contain;
   }
 }
 .shop {
   color: #b0b0b2;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistG.png) no-repeat;
     background-size: contain;
   }
 }
 .shopChange {
   color: #2693d4;
-  .bg {
+  .shop {
     background: url(../assets/mobile/btmlistB.png);
     background-size: contain;
   }
 }
 .cart {
   color: #b0b0b2;
-  .bg {
+  .cart {
     background: url(../assets/mobile/btmcart.png) no-repeat;
     background-size: contain;
   }
 }
 .cartChange {
   color: #2693d4;
-  .bg {
+  .cart {
     background: url(../assets/mobile/blueCart.png) no-repeat;
     background-size: contain;
   }
 }
 .mine {
   color: #b0b0b2;
-  .bg {
+  .mine {
     background: url(../assets/mobile/btmmine.png) no-repeat;
     background-size: contain;
   }
 }
 .mineChange {
   color: #2693d4;
-  .bg {
+  .mine {
     background: url(../assets/mobile/blueMine.png) no-repeat;
     background-size: contain;
   }

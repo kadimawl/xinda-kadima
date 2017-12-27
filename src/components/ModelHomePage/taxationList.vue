@@ -85,11 +85,12 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
-import { mapActions ,mapGetters} from "vuex";
+import addCart from "../../addCart";
+import { mapActions, mapGetters } from "vuex";
 export default {
   components: { distpicker },
   computed: {
-    ...mapGetters(['getName'])
+    ...mapGetters(["getName"])
   },
   methods: {
     ...mapActions(["setNum"]),
@@ -98,7 +99,8 @@ export default {
       this.seleCode = code;
       console.log(this.seleCode);
     },
-    isLogged() {
+    isLogged(id) {
+      var that = this;
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -107,12 +109,16 @@ export default {
         })
           .then(() => {
             this.$router.push({
-              path: "/outter/login"
+              path: "/outter/login",
+              query: { redirect: "/tabs/taxationList" }
             });
           })
           .catch(() => {});
-      }
+      } else {
+        plugins(id, that,'/tabs/shoppingCart'); //立即购买公共方法
+      } 
     },
+
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
@@ -191,21 +197,35 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
-      this.isLogged()
-      plugins(id, that); //立即购买公共方法
+      this.isLogged(id);
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
     },
     addCart: function(id) {
-      this.isLogged()
       var that = this;
-      this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) {
-          //添加购物车
-        });
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {   
+            this.$router.push({  //登录之后在跳转回当前页
+              path: "/outter/login",
+              query: { redirect: "/tabs/taxationList" }
+            });
+          })
+          .catch(() => {});
+      } else {
+        addCart(id, that); //加入购物车公共方法
+      }
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
-        that.cartNum = data.data.data.cartNum;
-        that.setNum(that.cartNum);
-        sessionStorage.setItem(that.cartNum, that.cartNum);
+        console.log(data.data)
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum+1);
+        console.log(cartNum)
       });
     },
     changePage: function() {
@@ -301,7 +321,8 @@ export default {
         var gData = data.data.data;
         that.products = gData;
       });
-      if (this.getName) {
+      console.log(this.getName)
+    if (this.getName) {
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum);
