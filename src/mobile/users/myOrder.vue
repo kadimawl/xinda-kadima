@@ -21,7 +21,7 @@
                             <div>
                                 <p><span>￥{{serv.unitPrice}}</span>元</p>
                                 <p>X<span>{{serv.buyNum}}</span></p>
-                            </div>
+                            </div>                                                                                                                                                                                                                                                                       
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,9 @@ var moment = require("moment");
 import { MessageBox } from "mint-ui";
 export default {
     created(){
-            this.getData(0,2);
+        // if(){ CV                                                                                              
+            this.getData(0,this.limit);
+        // }
     },
     components:{},
     data(){
@@ -51,6 +53,7 @@ export default {
             errorbox:false,//
             error:'',//
             acolor:'#ff4649',//
+            limit:'',//
         };
     },
     methods:{

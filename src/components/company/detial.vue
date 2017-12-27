@@ -2,7 +2,7 @@
   <div class="body">
     <p class="topP">首页/{{product.info}}</p>
     <div class="shopBuy">
-      <img src="../../assets/shop/u1182.png" alt="">
+      <img :src="picURL" :onerror="picURL=require('../../assets/shop/u1182.png')" alt="">
       <div>
         <h3>{{product.info}}</h3>
         <p>{{product.name}}</p>
@@ -43,7 +43,8 @@ export default {
       product: [],
       provider: [],
       id: "",
-      num: 1
+      num: 1,
+      picURL: ""
     };
   },
   created() {
@@ -58,10 +59,13 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
+        console.log(shop);
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
         that.id = shoppingID;
+        that.picURL =
+          "http://115.182.107.203:8088/xinda/pic" + shop.product.img;
       });
   },
   computed: {
@@ -92,8 +96,11 @@ export default {
         plugins(id, that, "/tabs/shoppingCart"); //加入购物车/立即购买公共方法
       }
     },
-
-    buyNow(id, num) { //立即购买
+    // changeURL() {
+    //   this.picURL = "../../assets/shop/u1182.png";
+    // },
+    buyNow(id, num) {
+      //立即购买
       var that = this;
       this.isLogged(id);
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
@@ -101,7 +108,8 @@ export default {
         that.setNum(cartNum);
       });
     },
-    buyAdd(id, num) { //加入购物车
+    buyAdd(id, num) {
+      //加入购物车
       var that = this;
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
@@ -121,16 +129,15 @@ export default {
           })
           .catch(() => {});
       } else {
-         this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
-        .then(function() {
-          that.ajax.post("xinda-api/cart/cart-num").then(data => {
-            var cartNum = data.data.data.cartNum;
-            that.setNum(cartNum);
+        this.ajax
+          .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
+          .then(function() {
+            that.ajax.post("xinda-api/cart/cart-num").then(data => {
+              var cartNum = data.data.data.cartNum;
+              that.setNum(cartNum);
+            });
           });
-        });
       }
-     
     },
     les() {
       this.num -= 1;
