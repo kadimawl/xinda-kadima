@@ -49,7 +49,7 @@ export default {
   created() {
     var that = this;
     if (this.getName) {
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum);
       });

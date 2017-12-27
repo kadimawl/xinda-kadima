@@ -221,7 +221,7 @@ export default {
       } else {
         plugins(id, that); //加入购物车/立即购买公共方法
       };
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         console.log(data.data)
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum+1);
@@ -322,7 +322,7 @@ export default {
       });
       console.log(this.getName)
     if (this.getName) {
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum);
       });
