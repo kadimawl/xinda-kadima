@@ -85,6 +85,7 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
+import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
 export default {
   components: { distpicker },
@@ -111,13 +112,11 @@ export default {
               path: "/outter/login",
               query: { redirect: "/tabs/taxationList" }
             });
-            plugins(id, that); //立即购买公共方法
           })
           .catch(() => {});
       } else {
-        plugins(id, that); //立即购买公共方法
-        this.$router.push({ path: "/tabs/shoppingCart" });
-      }
+        plugins(id, that,'/tabs/shoppingCart'); //立即购买公共方法
+      } 
     },
 
     types(key, typeCode) {
@@ -205,8 +204,6 @@ export default {
       });
     },
     addCart: function(id) {
-      // this.isLogged(id);
-      var that = this;
       var that = this;
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
@@ -214,20 +211,21 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         })
-          .then(() => {
-            this.$router.push({
+          .then(() => {   
+            this.$router.push({  //登录之后在跳转回当前页
               path: "/outter/login",
               query: { redirect: "/tabs/taxationList" }
             });
-            plugins(id, that); //立即购买公共方法
           })
           .catch(() => {});
       } else {
-        plugins(id, that); //立即购买公共方法
+        addCart(id, that); //加入购物车公共方法
       }
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        console.log(data.data)
         var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
+        that.setNum(cartNum+1);
+        console.log(cartNum)
       });
     },
     changePage: function() {
@@ -323,6 +321,7 @@ export default {
         var gData = data.data.data;
         that.products = gData;
       });
+      console.log(this.getName)
     if (this.getName) {
       this.ajax.post("xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;

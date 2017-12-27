@@ -99,12 +99,12 @@ export default {
   methods: {
     ...mapActions(["setNum"]),
     focus(id, old) {
-      console.log(old);
+      // console.log(old);
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
         .then(data => {
-          console.log(data);
+          // console.log(data);
         });
     },
     numChange(id, numbers) {
@@ -216,10 +216,10 @@ export default {
         console.log(data)
         that.orderNo = rData;
         that.toPay(that.orderNo);
-        console.log(that.orderNo);
+        // console.log(that.orderNo);
       });
       this.recData(); //拉取购物品项列表
-    this.recomData(); //拉取推荐服务列表f
+      this.recomData(); //拉取推荐服务列表f
     },
     todetail(id) {
       //传参产品详情

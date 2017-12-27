@@ -76,6 +76,7 @@ export default {
     exit() {
       sessionStorage.clear();
       location.reload();
+      this.setNum(0)
     },
     cartBut() {
       if (this.getName) {
