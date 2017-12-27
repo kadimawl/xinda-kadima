@@ -55,7 +55,7 @@
       <div class="pList">
         <div class="icon iconTwo"></div>
         <div @mouseenter="colorCh" @mouseleave="colorRE" :class='[stylesO]'>
-          <p class="h3" >财税服务 </h3>
+        <p class="h3" >财税服务 </p>
         <p>SERIVER</p>
         </div>
         
