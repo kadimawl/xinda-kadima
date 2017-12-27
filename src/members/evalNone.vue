@@ -68,32 +68,29 @@ export default {
                 limit:limit,
                 status:2	
             }).then(function(data){
-                if(data.data.data.length){
+                if(data.data.data&&data.data.data.length){
                     that.datashow(data);
                 }
-                console.log(data);
+                // console.log(data);
             })
         },
         // 拉取数据处理
         datashow(data){
-            if(data.data.data){
-                var data=data.data.data;
-                for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
-                    var dataindex=i-this.pagethum;
-                    this.datas[i]=data[dataindex];
-                    this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data[dataindex].providerImg+'';
-                    this.datas[i].buyTime=moment(data[dataindex].buyTime).format('YYYY-MM-DD hh:mm:ss');
-                }
-                this.total=data.data.totalCount;
-                this.evals=this.datas.splice(this.pagenum,this.pagesize);
+            var data=data.data.data;
+            for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
+                var dataindex=i-this.pagethum;
+                this.datas[i]=data[dataindex];
+                this.datas[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data[dataindex].providerImg+'';
+                this.datas[i].buyTime=moment(data[dataindex].buyTime).format('YYYY-MM-DD hh:mm:ss');
             }
+            this.total=data.data.totalCount;
+            this.evals=this.datas.splice(this.pagenum,this.pagesize);
         },
         // 去评价点击,传参
         gotoEval(index){
             this.setEvaldetail({codes:this.datas[index].serviceNo,conts:this.datas[index].serviceInfo,btimes:this.datas[index].buyTime});
         },
     }
-    
 };
 </script>
 

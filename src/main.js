@@ -12,15 +12,23 @@ import qs from 'qs'
 //element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+<<<<<<< HEAD
 
 //mint
 import { Header,MessageBox,Button,Radio } from 'mint-ui';
 import 'mint-ui/lib/style.css'
+=======
+import MintUI from 'mint-ui'
+import 'mint-ui/lib/style.css'
+import qs from 'qs'
+import { Header, MessageBox, Button, Radio } from 'mint-ui';
+>>>>>>> 098e6f671da028d3c477d74f80b1d9c1f40c3b62
 
 Vue.component(Radio.name, Radio);
 Vue.component(Header.name, Header);
 Vue.component(Button.name, Button)
 
+<<<<<<< HEAD
 
 var objSort = function (name) {
   return function (o, p) {
@@ -39,6 +47,25 @@ var objSort = function (name) {
       throw "error";
     }
   };
+=======
+var objSort = function(name) {
+    return function(o, p) {
+        var a, b;
+        if (typeof o === "object" && typeof p === "object" && o && p) {
+            a = o[name];
+            b = p[name];
+            if (a === b) {
+                return 0;
+            }
+            if (typeof a === typeof b) {
+                return a < b ? -1 : 1;
+            }
+            return typeof a < typeof b ? -1 : 1;
+        } else {
+            throw "error";
+        }
+    };
+>>>>>>> 098e6f671da028d3c477d74f80b1d9c1f40c3b62
 };
 Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
@@ -56,105 +83,106 @@ Vue.config.devtools = false;
  */
 Vue.prototype.debounce = function debounce(fn, delay) {
 
-  // 定时器，用来 setTimeout
-  var timer
+    // 定时器，用来 setTimeout
+    var timer
 
-  // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
-  return function () {
+    // 返回一个函数，这个函数会在一个时间区间结束后的 delay 毫秒时执行 fn 函数
+    return function() {
 
-    // 保存函数调用时的上下文和参数，传递给 fn
-    var context = this
-    var args = arguments
+        // 保存函数调用时的上下文和参数，传递给 fn
+        var context = this
+        var args = arguments
 
-    // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
-    clearTimeout(timer)
+        // 每次这个返回的函数被调用，就清除定时器，以保证不执行 fn
+        clearTimeout(timer)
 
-    // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
-    // 再过 delay 毫秒就执行 fn
-    timer = setTimeout(function () { //句柄
-      fn.apply(this, args)
-    }, delay)
-  }
+        // 当返回的函数被最后一次调用后（也就是用户停止了某个连续的操作），
+        // 再过 delay 毫秒就执行 fn
+        timer = setTimeout(function() { //句柄
+            fn.apply(this, args)
+        }, delay)
+    }
 }
 
-const routeList = ['/tabs/shoppingCart','/Order',]
-router.beforeEach((to,from,next)=>{
-  for (var i = 0; i < routeList.length; i++) {
-    if (to.path == routeList[i]) { //检测需要登录地址
-      //判断当前有没有登录
-      //如果没有登录则跳转到登录页
-      axios.post('/xinda-api/sso/login-info').then(data=>{
-        if (data.data.status == 0) { //没有登录
-          next('/outter/login');
-        }else{
-          next();
+const routeList = ['/tabs/shoppingCart', '/Order', ]
+router.beforeEach((to, from, next) => {
+    for (var i = 0; i < routeList.length; i++) {
+        if (to.path == routeList[i]) { //检测需要登录地址
+            //判断当前有没有登录
+            //如果没有登录则跳转到登录页
+            axios.post('/xinda-api/sso/login-info').then(data => {
+                if (data.data.status == 0) { //没有登录
+                    next('/outter/login');
+                } else {
+                    next();
+                }
+                next();
+            })
+            break;
         }
-      })
-      break;
+        next();
     }
-    next();
-  }
-  //判断移动端还是pc端
-  if (to.path == "/HomePage") {
-    if (browserRedirect()) {
-      next("/m")
-    } else {
-      next();
+    //判断移动端还是pc端
+    if (to.path == "/HomePage") {
+        if (browserRedirect()) {
+            next("/m")
+        } else {
+            next();
+        }
     }
-  }
 })
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>', //用字符串的内容<App/>替换了#app的标签
-  components: {
-    App
-  }
+    el: '#app',
+    router,
+    store,
+    template: '<App/>', //用字符串的内容<App/>替换了#app的标签
+    components: {
+        App
+    },
 })
 
 function browserRedirect() {
-  var sUserAgent = navigator.userAgent.toLowerCase();
-  var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
-  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
-  var bIsMidp = sUserAgent.match(/midp/i) == "midp";
-  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
-  var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
-  var bIsAndroid = sUserAgent.match(/android/i) == "android";
-  var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
-  var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
-  if (
-    bIsIpad ||
-    bIsIphoneOs ||
-    bIsMidp ||
-    bIsUc7 ||
-    bIsUc ||
-    bIsAndroid ||
-    bIsCE ||
-    bIsWM
-  ) {
-    return true;
-  } else {
-    return false;
-  }
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+    var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+    var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+    var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+    var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+    var bIsAndroid = sUserAgent.match(/android/i) == "android";
+    var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+    var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+    if (
+        bIsIpad ||
+        bIsIphoneOs ||
+        bIsMidp ||
+        bIsUc7 ||
+        bIsUc ||
+        bIsAndroid ||
+        bIsCE ||
+        bIsWM
+    ) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 
 //判断手机端重新设置fon-size
-if(browserRedirect()) {
-  (function(doc, win) {
-    var docEl = doc.documentElement,
-      resizeEvt =
-        "orientationchange" in window ? "orientationchange" : "resize",
-      recalc = function() {
-        var clientWidth = docEl.clientWidth;
-        if (!clientWidth) return;
-          docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
-      };
-    if (!doc.addEventListener) return;
-    win.addEventListener(resizeEvt, recalc, false);
-    doc.addEventListener("DOMContentLoaded", recalc, false);
-  })(document, window);
+if (browserRedirect()) {
+    (function(doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt =
+            "orientationchange" in window ? "orientationchange" : "resize",
+            recalc = function() {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                docEl.style.fontSize = 100 * (clientWidth / 750) + "px";
+            };
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener("DOMContentLoaded", recalc, false);
+    })(document, window);
 }

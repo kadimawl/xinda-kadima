@@ -260,7 +260,6 @@ export default {
                     }
                 }
                 p:nth-child(1){
-                    width: 280px;
                     margin-left: 40px;
                 }
                 p:nth-child(4){

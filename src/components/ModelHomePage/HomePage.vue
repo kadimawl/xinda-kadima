@@ -55,7 +55,7 @@
       <div class="topFrame">
         <h3>明星产品推荐</h3>
       </div>
-      <div class="starContent">
+      <div class="starContent" @click="starclick">
         <div class="boxFrame">
           <div class="showBox">
             <img class="boxImg" src="../../assets/HomePageimages/i1.jpg">
@@ -209,6 +209,10 @@ export default {
     };
   },
   methods: {
+    // 明星产品推荐的点击事件
+    starclick(){
+        this.$router.push('/tabs/companyList');
+    },
     dataRequest1: function() {
       //三级菜单
       var that = this;
@@ -529,6 +533,7 @@ export default {
     margin-top: 50px;
     display: flex;
     justify-content: space-around;
+    cursor: pointer;
     .boxFrame {
       width: 270px;
       height: 400px;

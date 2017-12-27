@@ -30,7 +30,8 @@ const detial  = () => import(/* webpackChunkName: 'company' */  '@/components/co
 const service  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopDetial/service') //商品详情
 const evaluate  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopDetial/evaluate') //商品详情
 
-const shopIndex  = () => import( '@/components/company/shopIndex' )//店铺首页
+const shopIndex = () =>
+    import ('@/components/company/shopIndex') //店铺首页
 
 const shopList  = () => import(/* webpackChunkName: 'company' */  '@/components/company/shopList') //店铺列表路由
 const credentials  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopList/credentials') //店铺列表服务
@@ -46,7 +47,8 @@ const payBank  = () => import( /* webpackChunkName: 'order' */'@/components/orde
 
 
 //WX端
-const m = () => import( '@/mobile/m' )//WX端一级路由
+const m = () =>
+    import ('@/mobile/m') //WX端一级路由
 
 const users = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/users') //WX端我的框架页
 const mobile = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/mobile') //WX端我的未注册页
@@ -59,15 +61,21 @@ const myOrder = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/myO
 
 
 
-const mIndexLY = () => import( '@/mobile/mIndex') //WX端主页路由
-const mIndex = () => import( '@/mobile/index/index') //WX端主页
-const mIndexList = () => import( '@/mobile/index/indexList' )//WX端列表
-const mProduct = () => import( '@/mobile/index/product') //WX端产品
+const mIndexLY = () =>
+    import ('@/mobile/mIndex') //WX端主页路由
+const mIndex = () =>
+    import ('@/mobile/index/index') //WX端主页
+const mIndexList = () =>
+    import ('@/mobile/index/indexList') //WX端列表
+const mProduct = () =>
+    import ('@/mobile/index/product') //WX端产品
 
 
 
-const shop = () => import( '@/mobile/shop/shop') //WX端商品框架页
-const shopDetail = () => import( '@/mobile/shop/shopDetail' )//商品详情
+const shop = () =>
+    import ('@/mobile/shop/shop') //WX端商品框架页
+const shopDetail = () =>
+    import ('@/mobile/shop/shopDetail') //商品详情
 
 
 const carts = () => import(/* webpackChunkName: 'cart' */  '@/mobile/carts/carts' )//WX端购物车框架页
