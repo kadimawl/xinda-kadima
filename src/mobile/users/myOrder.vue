@@ -42,13 +42,9 @@ var moment = require("moment");
 import { MessageBox } from "mint-ui";
 export default {
     created(){
-<<<<<<< HEAD
         // if(){ CV                                                                                              
             this.getData(0,this.limit);
         // }
-=======
-            this.getData(0,2);
->>>>>>> e84e88b86eebbc87f087749a8168ee3d03348a82
     },
     components:{},
     data(){
