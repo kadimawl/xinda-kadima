@@ -171,7 +171,7 @@ export default {
     toStore(id) {
       //跳转店铺详情
       this.$router.push({
-        path: "/store/Home",
+        path: "/m/store/Home",
         query: { storeId: id }
       });
     },

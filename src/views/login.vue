@@ -16,7 +16,7 @@
         <p class="errorMsg">{{imgVMsg}} </p>
       </div> 
       <div class="forget" @click="forgetpw">
-        <a href="/#/outter/forgetpw">忘记密码？</a>
+        <router-link  class="fpw" to="/outter/forgetpw">忘记密码？</router-link>
       </div>
       
       <button @click="iLogin" >立即登录</button>
@@ -25,7 +25,7 @@
     <div class="rightOut">
       <p class="notYet">还没有账号？</p>
       <p class="immediately" @click="register">
-        <a href="/#/outter/register">立即注册>></a>
+        <router-link class="imt" to="/outter/register">立即注册>></router-link>
       </p>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
@@ -61,11 +61,9 @@ export default {
   methods: {
     ...mapActions(["setTitle", "setName"]),
     forgetpw() {
-      // this.$router.push({ path: "/outter/forgetpw" });
       this.setTitle("忘记密码");
     },
     register() {
-      // this.$router.push({ path: "/outter/register" });
       this.setTitle("欢迎注册");
     },
     //手机号输入验证
@@ -253,7 +251,7 @@ export default {
     .forget {
       width: 281px;
       height: 13px;
-      a {
+      .fpw{
         display: block;
         font-size: 13px;
         color: #2693d4;
@@ -276,7 +274,7 @@ export default {
     }
     .immediately {
       margin: 23px 0 19px;
-      a {
+      .imt{
         margin-left: 30px;
         color: #2693d4;
         font-size: 17px;

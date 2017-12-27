@@ -2,23 +2,20 @@
   <div class="mobile">
     <div class="portrait"><img src="../../assets/mobile/btmmine.png" alt=""></div>
     <div class="buttonSum">
-      <a href="/#/m/users/mobileRegister">注册</a>
-      <a href="/#/m/users/mobileLogin">登录</a>
+      <router-link class="buts" to="/m/users/mobileRegister">注册</router-link>
+      <router-link class="buts" to="/m/users/mobileLogin">登录</router-link>
     </div>
     <div class="order e9">
-      <a href="/#/m/users/myOrder">
-      <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
+      <router-link class="orderBox" to="/m/users/myOrder"><img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
         <span class="msg">我的订单</span>
         <img class="arrow" src="../../assets/mobile/arrow.png">
-      </a>
+      </router-link>
 
     </div>
     <div class="design e9">
-      <a href="/#/m/users/accountSetting">
-        <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
+      <router-link class="orderBox" to="/m/users/accountSetting"><img class="bgOrder" src="../../assets/mobile/account.png" alt="">
         <span class="msg">账户设置</span>
-        <img class="arrow" src="../../assets/mobile/arrow.png">
-      </a>
+        <img class="arrow" src="../../assets/mobile/arrow.png"></router-link>
 
     </div>
   </div>
@@ -43,10 +40,10 @@ export default {};
   border-radius: 50%;
   background: #fff;
   margin: 0 auto;
-  img{
+  img {
     width: 1.65rem;
-  height: 1.65rem;
-  border-radius: 50%;
+    height: 1.65rem;
+    border-radius: 50%;
   }
 }
 .buttonSum {
@@ -54,7 +51,7 @@ export default {};
   width: 3.5rem;
   display: flex;
   justify-content: space-between;
-  a {
+  .buts {
     display: block;
     text-decoration: none;
     text-align: center;
@@ -75,8 +72,8 @@ export default {};
   background-color: #e9e9e9;
   padding-right: 0.4rem;
   box-sizing: border-box;
-  margin-bottom: .35rem;
-  a {
+  margin-bottom: 0.35rem;
+  .orderBox {
     display: flex;
     justify-content: space-around;
     color: #9c9c9c;

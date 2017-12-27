@@ -4,17 +4,23 @@ import Vue from 'vue'
 import App from './App'
 import router from './router' //vue的路由实例化对象
 import store from './store'
-import axios from 'axios'
+
+
+// import axios from 'axios'
+import qs from 'qs'
+
+//element
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import qs from 'qs'
+
+//mint
 import { Header,MessageBox,Button,Radio } from 'mint-ui';
+import 'mint-ui/lib/style.css'
 
 Vue.component(Radio.name, Radio);
 Vue.component(Header.name, Header);
 Vue.component(Button.name, Button)
+
 
 var objSort = function (name) {
   return function (o, p) {

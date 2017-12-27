@@ -31,7 +31,7 @@
     <div class="midB"></div>
     <div class="rightB">
       <p>想起密码来了？</p>
-      <a href="/#/outter/login">返回登录>></a>
+      <router-link class="ret" to="/outter/login">返回登录>></router-link>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
@@ -296,7 +296,7 @@ input {
     margin-bottom: 23px;
     margin-left: 188px;
   }
-  a {
+  .ret {
     color: #409cd7;
     text-decoration: none;
     display: block;

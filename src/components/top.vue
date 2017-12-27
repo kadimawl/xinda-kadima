@@ -7,11 +7,13 @@
         <div class="please">
           <p>请</p>
           <div @click="login">
-            <a href="/#/outter/login">登录</a>
+            <router-link class="color69" to="/outter/login">登录</router-link>
+            <!-- <a href="/#">登录</a> -->
           </div>
         </div>
         <div class="item-reg" @click="register">
-          <a href="/#/outter/register">快速注册</a>
+          <router-link class="color69" to="/outter/register">快速注册</router-link>
+          <!-- <a href="/#"></a> -->
         </div>
       </div>
       <div class="box-left" v-show="getName">
@@ -127,12 +129,12 @@ export default {
     .please {
       display: flex;
       margin: 0 24px 0 16px;
-      a {
+      .color69 {
         color: @69c;
       }
     }
     .item-reg {
-      a {
+      .color69 {
         color: @69c;
       }
     }
