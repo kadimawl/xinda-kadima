@@ -7,7 +7,7 @@
       <div class="block">
         <span class="demonstrantion"></span>
         <el-carousel trigger="click" height="405px">
-          <el-carousel-item v-for="item in 4" :key="item">
+          <el-carousel-item v-for="item in 4" :key="item.id">
           </el-carousel-item>
         </el-carousel>
       </div>
@@ -364,8 +364,8 @@ export default {
   position: relative;
 }
 .el-carousel {
-  width: 1200px;
-  height: 405px;
+  // width: 1200px;
+  // height: 405px;
   .el-carousel__item:nth-child(1) {
     border: 5px solid #000;
   }

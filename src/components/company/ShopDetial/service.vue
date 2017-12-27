@@ -20,8 +20,7 @@ export default {
   created() {
     var that = this;
     var shoppingID = this.$route.query.shoppingId;
-    var ifff = JSON.parse(sessionStorage.getItem(shoppingID));
-    if (ifff == null) {
+    if (shoppingID) {
       this.ajax
         .post(
           "/xinda-api/product/package/detail",
@@ -31,14 +30,14 @@ export default {
         )
         .then(function(data) {
           var shop = data.data.data;
-          sessionStorage.setItem(shoppingID, JSON.stringify(shop));
+          sessionStorage.setItem("shoppingID", JSON.stringify(shop));
           shops(shop);
         });
       var shops = function(shop) {
         that.servers = shop.serviceList[0].serviceContent;
       };
     } else {
-      var shopSer = JSON.parse(sessionStorage.getItem(shoppingID));
+      var shopSer = JSON.parse(sessionStorage.getItem("shoppingID"));
       !(function(shops) {
         that.servers = shops.serviceList[0].serviceContent;
       })(shopSer);

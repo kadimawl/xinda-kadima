@@ -14,7 +14,7 @@
                 <div v-for="serv in list.servitem" :key="serv.id" class="servbox">
                     <div><p>{{serv.providerName}}</p></div>
                     <div>
-                        <div><img :src="serv.smallImg" alt="公司logo"></div>
+                        <div><img src="../../assets/index/icon.png" alt="公司logo"></div>
                         <div>
                             <p>{{serv.serviceName}}</p>
                             <p>下单时间：{{serv.createTime}}</p>
@@ -42,9 +42,13 @@ var moment = require("moment");
 import { MessageBox } from "mint-ui";
 export default {
     created(){
+<<<<<<< HEAD
         // if(){ CV                                                                                              
             this.getData(0,this.limit);
         // }
+=======
+            this.getData(0,2);
+>>>>>>> e84e88b86eebbc87f087749a8168ee3d03348a82
     },
     components:{},
     data(){
@@ -64,7 +68,6 @@ export default {
                 start:start,
                 limit:limit,
             })).then(function(data){
-                console.log('origin==',data);
                 if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
                 }else{
@@ -92,10 +95,8 @@ export default {
                     console.log('servicedata==',servdata);
                     var servdata=servdata.data.data;
                     for(var key in servdata){
-                        // 公司logo
-                        // servdata[key].smallImg='http://115.182.107.203:8088/xinda/pic'+servdata[key].providerImg+'';
                         // 关于订单时间
-                        servdata[key].createTime=moment(servdata[key].createTime).format('YYYY-MM-DD hh:mm:ss');
+                        servdata[key].createTime=moment(servdata[key].createTime).format('YYYY-MM-DD HH:mm:ss');
                         // 将服务订单信息添加到循环包里  
                         data[i].servitem.push(servdata[key]);
                     }
@@ -111,7 +112,6 @@ export default {
                 that.qs.stringify(({
                     id:id,
                 }))).then(function(data){
-                    console.log(data);
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
                         // location.reload();
@@ -202,10 +202,13 @@ export default {
                     height: 1.7rem;
                     margin: 0 0.15rem;
                     text-align: center;
-                    border:0.01rem solid #2693d4;
+                    padding: .15rem;
+                    box-sizing: border-box;
+                    border:0.01rem solid #e3e3e3;
                     img{
-                        width: 1.7rem;
-                        height: 1.7rem;
+                        display: block;
+                        width: 1.4rem;
+                        height: 1.4rem;
                     }
                 }
                 // 订单详情

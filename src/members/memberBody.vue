@@ -35,7 +35,7 @@
                     <div class="all" v-for="serv in list.servitem" :key="serv.id">
                         <div>
                             <!-- 公司logo图片 接口数据无logo图片链接-->
-                            <div><img :src="serv.smallImg" alt="公司logo"></div>
+                            <div><img src="../assets/index/icon.png" alt="公司logo"></div>
                             <p>{{serv.serviceName}}</p>
                         </div>
                         <!-- 单价 -->
@@ -69,7 +69,7 @@
     <!-- 删除订单提示框 -->
     <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
         <div class="removebox">
-            <div><p>确认删除这个宝贝吗</p><span @click="cancel">&#10005</span></div>
+            <div><p>确认删除这个宝贝吗</p><span @click="cancel">X</span></div>
             <div><button @click="confirm" class="confirm">确定</button><button @click="cancel" class="cancel">取消</button></div>
         </div>
     </div>
@@ -88,7 +88,7 @@ import pageturn from "./pageturn";
 export default {
     // 拉取数据
     created(){
-        console.log('run in created');
+        // console.log('run in created');
         this.msg='false';
         this.errorshow=false;
         // 未登录不拉取数据
@@ -138,10 +138,8 @@ export default {
                 endTime:time2,
                 businessNo:code,
             })).then(function(data){
-                console.log('origin==',data);
                 if(data.data.data&&data.data.data.length){
                     that.businessshow(data);
-                    // console.log('origin1==',data);
                 }else{
                     that.msg=true;
                     that.sermsg='无结果';
@@ -152,7 +150,6 @@ export default {
         // 自定义事件
         pagevary(msg){
             this.pagenum=msg*this.pagesize;
-            // console.log('msg==',this.pagenum);
         },
         // // 处理ajax获取的business数据显示在页面
         businessshow(data){
@@ -162,7 +159,7 @@ export default {
                 // console.log('this.total==',this.total);
                 var data=data.data.data;
                 for(let i=0;i<data.length;i++){
-                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD hh:mm:ss');
+                    data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD HH:mm:ss');
                     data[i].servitem=[];
                     //关于订单状态
                     if(data[i].status==1){
@@ -175,7 +172,7 @@ export default {
                     that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:orderN,
                     })).then(function(servdata){
-                        console.log('servicedata==',servdata);
+                        // console.log('servicedata==',servdata);
                         var servdata=servdata.data.data;
                         for(var key in servdata){
                             data[i].servitem.push(servdata[key]);
@@ -244,13 +241,12 @@ export default {
             that.qs.stringify(({
                 id:that.orderid,
             }))).then(function(data){
-                console.log(data);
+                // console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
                     that.errorshow=true;//提示
                     that.error='删除成功';
                     that.acolor='#55a4dc';
-                    location.reload();
                 }else{
                     that.errorshow=true;//提示
                     that.error=data.data.msg;

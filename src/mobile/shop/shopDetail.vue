@@ -103,8 +103,13 @@
 </template>
 
 <script>
-import mplugins from "../../mplugins";
+import plugins from "../../plugins";
+import { MessageBox } from "mint-ui";
+import { mapGetters } from "vuex";
 export default {
+  computed: {
+    ...mapGetters(["getName"])
+  },
   created() {
     var id = this.$route.query.sId;
     var that = this;
@@ -116,7 +121,6 @@ export default {
         })
       )
       .then(function(data) {
-        console.log(data);
         var rData = data.data.data;
         that.Products = rData;
         that.products.push(rData.product);
@@ -125,29 +129,30 @@ export default {
         that.regions.push(rData.regionText);
         that.proBus.push(rData.providerBusiness);
         that.serInf = that.pvdpdts[0].serviceContent;
-        // console.log(that.serInf);
       });
   },
   methods: {
-    isLogged() {
+    isLogged(id) {
       //判断是否登录
-      if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        })
-          .then(() => {
+      var that = this;
+      this.ajax.post("xinda-api/sso/login-info").then(data => {
+        if (data.data.status == 0) {
+          MessageBox.confirm("请先进行登录, 是否继续?").then(action => {
             this.$router.push({
-              path: "/m/users/mobileLogin"
+              path: "/m/users/mobileLogin",
+              query: {
+                redirect: "/m/shop/shopDetail",
+                id: this.$route.query.sId
+              }
             });
-          })
-          .catch(() => {});
-      }
+          });
+        } else {
+          plugins(id, that, "/m/carts/Have"); //立即购买公共方法
+        }
+      });
     },
     popupCall() {
       //联系商家弹窗
-      // console.log(this)
       this.popHide = true;
     },
     popupClose() {
@@ -173,21 +178,33 @@ export default {
     toPay: function(id) {
       //立即购买
       var that = this;
-      // this.isLogged();
-      mplugins(id, that); //立即购买公共方法
+      this.isLogged(id);
     },
+
     addCart: function(id) {
-      //添加购物车
-      // this.isLogged();
       var that = this;
-      this.ajax
-        .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
-        .then(function(data) {
-          that.success = true;
-        });
-      setInterval(() => {
-        that.success = false;
-      }, 1000);
+      this.ajax.post("xinda-api/sso/login-info").then(data => {
+        if (data.data.status == 0) {
+          MessageBox.confirm("请先进行登录, 是否继续?").then(action => {
+            this.$router.push({
+              path: "/m/users/mobileLogin",
+              query: {
+                redirect: "/m/shop/shopDetail",
+                id: this.$route.query.sId
+              }
+            });
+          });
+        } else {
+          this.ajax
+            .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
+            .then(function(data) {
+              that.success = true;
+            });
+          setInterval(() => {
+            that.success = false;
+          }, 1000);
+        }
+      });
     }
   },
   data() {
@@ -244,6 +261,9 @@ export default {
       color: #fff;
       margin-top: 0.2rem;
       margin-left: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 

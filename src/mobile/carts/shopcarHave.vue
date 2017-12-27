@@ -18,7 +18,7 @@
           <div class="total">
             <p>购买数量 :</p>
             <button @click="subtraction(list.serviceId,list.buyNum)">-</button>
-            <input type="text" readonly="readonly" v-model="list.buyNum" @focus="numChange">
+            <input type="text" readonly="readonly" v-model="list.buyNum">
             <button @click="add(list.serviceId)">+</button>
           </div>
           <div class="address">
@@ -140,7 +140,7 @@ export default {
     settlement() {
       this.ajax.post("xinda-api/cart/submit").then(data => {
         if (data.data.status == 1) {
-          this.$router.push({ path: "/m/carts/Null" });
+          this.$router.push({ path: "/m/users/myOrder" });
           this.render();
         }
       });
@@ -201,7 +201,7 @@ export default {
   .name {
     width: 2.5rem;
     height: 0.28rem;
-    font-size: 0.28rem;
+    font-size: 0.26rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

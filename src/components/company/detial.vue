@@ -7,17 +7,13 @@
         <h3>{{product.info}}</h3>
         <p>{{product.name}}</p>
         <div>
-          <h5>市场价：
-            <del>￥{{product.marketPrice}}</del>
-          </h5>
-          <h5>价&nbsp;&nbsp;格：
-            <h4>￥{{product.status}}</h4>元</h5>
+          <h5>市场价：<del>￥{{product.marketPrice}}</del></h5>
+          <h5>价&nbsp;&nbsp;格：<h4>￥{{product.status}}</h4>元</h5>
         </div>
-        <p>类&nbsp;&nbsp;型：
-          <a href="javascript:void(0)">{{product.info}}</a>
-        </p>
+        <p>类&nbsp;&nbsp;型：<a href="javascript:void(0)">{{product.info}}</a></p>
         <p>地&nbsp;&nbsp;区：{{shops.providerRegionText}}</p>
-        <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" @blur="blurInp()" class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
+        <p>购买数量：<input @click="les()" type="button" value="-"><input :oninput="change()" @blur="blurInp()"
+        class="math" type="text" v-model="num"><input @click="add()" type="button" value="+"></p>
         <button class="buyNow" @click="buyNow(id,num)">立即购买</button>
         <button @click="buyAdd(id,num)">加入购物车</button>
       </div>
@@ -62,7 +58,6 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        console.log(shop)
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;
@@ -75,7 +70,8 @@ export default {
   methods: {
     ...mapActions(["setNum"]),
     //确认是否登录
-    isLogged() {
+    isLogged(id) {
+      var that = this;
       if (!this.getName) {
         this.$confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
@@ -84,21 +80,48 @@ export default {
         })
           .then(() => {
             this.$router.push({
-              path: "/outter/login"
+              path: "/outter/login",
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
             });
           })
           .catch(() => {});
+      } else {
+        plugins(id, that, "/tabs/shoppingCart"); //加入购物车/立即购买公共方法
       }
     },
-    buyNow(id, num) {
+
+    buyNow(id, num) { //立即购买
       var that = this;
-      this.isLogged();
-      plugins(id, that);
+      this.isLogged(id);
+      this.ajax.post("xinda-api/cart/cart-num").then(data => {
+        var cartNum = data.data.data.cartNum;
+        that.setNum(cartNum);
+      });
     },
-    buyAdd(id, num) {
+    buyAdd(id, num) { //加入购物车
       var that = this;
-      this.isLogged();
-      this.ajax
+      if (!this.getName) {
+        this.$confirm("请先进行登录, 是否继续?", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
+            this.$router.push({
+              //登录之后在跳转回当前页
+              path: "/outter/login",
+              query: {
+                redirect: "/detial/service",
+                id: this.$route.query.shoppingId
+              }
+            });
+          })
+          .catch(() => {});
+      } else {
+         this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: num }))
         .then(function() {
           that.ajax.post("xinda-api/cart/cart-num").then(data => {
@@ -106,6 +129,8 @@ export default {
             that.setNum(cartNum);
           });
         });
+      }
+     
     },
     les() {
       this.num -= 1;
@@ -205,6 +230,8 @@ p {
       background: #ffffff;
       width: 50px;
       line-height: 20px;
+      text-indent: -2px;
+      text-align: center;
     }
     button {
       width: 95px;

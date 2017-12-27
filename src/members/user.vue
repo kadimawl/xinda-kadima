@@ -3,7 +3,7 @@
     <p>首页&nbsp/&nbsp个人主页</p>
     <!-- 头像框，用户登录后会显示用户头像和name -->
     <div class="touxiang">
-        <div><img :src="headimg" alt="用户头像"></div>
+        <div><img src="../assets/index/user.png" alt="用户头像"></div>
         <p>{{getName}}</p>
     </div>
     <!-- 导航栏，控制  我的订单、用户评价和账户设置 的跳转 -->
@@ -60,6 +60,9 @@ export default {
             height: 90px;
             text-align: center;
             img{
+                width: 60px;
+                height: 60px;
+                margin: auto;
                 padding-top: 10px;
                 vertical-align: middle;
             }

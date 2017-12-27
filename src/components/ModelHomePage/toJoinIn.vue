@@ -12,7 +12,7 @@
     
     <div class="edf0f3">
       <h4>YOU WILL RECEIVE</h4>
-      <p class="f00">你讲获得</p>
+      <p class="f00">你将获得</p>
       <div class="a6 a6second"><div class="fff"></div></div>
       <p class="url">www.xinda.com</p>
       <div class="edInner">
