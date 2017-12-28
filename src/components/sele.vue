@@ -39,7 +39,6 @@
       <router-link class="defaults" active-class="colorChange" to='/tabs/companyList'>公司工商</router-link>
       <router-link class="defaults" active-class="colorChange" to="/tabs/toJoinIn">加盟我们</router-link>
       <router-link class="defaults" active-class="colorChange" to="/shopIndex">店铺</router-link>
-
     </div>
   </div>
 </template>
@@ -85,7 +84,6 @@ export default {
             })
           )
           .then(data => {
-            console.log(data.data.data)
             this.seleList = [];
             this.getSele = [];
             this.seleList = data.data.data;
@@ -95,7 +93,7 @@ export default {
                 { products: "抱歉，没有相关服务商，请搜索其他产品，谢谢" }
               ];
             }
-            for (var key in this.seleList) {
+            for (let key in this.seleList) {
               this.getSele.push(this.seleList[key]);
               this.seleId.push(this.seleList[key].id);
             }
