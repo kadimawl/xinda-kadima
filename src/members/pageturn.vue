@@ -29,7 +29,6 @@ export default {
             for(let i=0;i<pages;i++){//无法实时检测数组的赋值，而数组的push可以检测到
                 this.nums.push(i+1);
             }
-            // console.log(123,oldVal,newVal,pages,this.nums);
         }
     },
     methods:{
@@ -37,21 +36,18 @@ export default {
         prepage(){
             if(this.pagenum>=0){
                 this.pagenum=this.pagenum==0?0:this.pagenum-1;
-                // console.log('this.pagenum==',this.pagenum)
                 this.$emit('pagevary',this.pagenum);
             }
         },
         // 页数改变
         pagechange(index){
             this.pagenum=index;
-            // console.log('this.pagenum==',this.pagenum)
             this.$emit('pagevary',this.pagenum);
         },
         // 下一页
         nextpage(){
             if(this.pagenum>=0){
                 this.pagenum=this.pagenum==this.nums.length-1?this.pagenum:this.pagenum+1;
-                // console.log('this.pagenum==',this.pagenum)
                 this.$emit('pagevary',this.pagenum);
             }
         },

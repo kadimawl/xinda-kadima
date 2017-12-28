@@ -104,7 +104,6 @@ export default {
       });
     },
     gotoShop(id) {
-      console.log(id);
       this.$router.push({
         path: "/m/shop/shopDetail",
         query: { sId: id }

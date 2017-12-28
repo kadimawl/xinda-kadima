@@ -38,7 +38,6 @@ export default {
   },
   created() {
     var that = this;
-    console.log(this.$route.query.shopID);
     if (this.$route.query.shopID) {
       var shopID = this.$route.query.shopID;
       this.ajax
@@ -55,7 +54,6 @@ export default {
           that.regionName = shop.regionName;
           that.providerInfo = shop.providerInfo;
           that.LogoUrl = shop.providerImg;
-          console.log(shop);
           var shopStory = JSON.stringify(shop);
           sessionStorage.setItem("GoToshop", shopStory);
         });

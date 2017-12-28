@@ -51,7 +51,6 @@ export default {
   methods: {
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
     },
     login() {
       this.setTitle("欢迎登录");
@@ -206,7 +205,7 @@ export default {
                   .then(data => {
                     if (data.data.status == 1) {
                       MessageBox.alert("您已注册成功").then(action => {
-                        that.$router.push({ path: "/outter/login" });
+                        that.$router.push({ path: "/outter/mobileLogin" });
                       });
                     } else {
                       MessageBox.alert("请重新注册，谢谢。", "提示");

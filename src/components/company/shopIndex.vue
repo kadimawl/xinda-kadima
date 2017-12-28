@@ -112,7 +112,6 @@ export default {
     },
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
     }
   }
 };

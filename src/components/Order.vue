@@ -24,7 +24,6 @@ export default {
       that.cartNum = data.data.data.cartNum;
       that.setNum(that.cartNum);
     });
-    console.log(this.cartNum)
   }
 };
 </script>

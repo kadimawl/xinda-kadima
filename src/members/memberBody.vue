@@ -88,7 +88,6 @@ import pageturn from "./pageturn";
 export default {
     // 拉取数据
     created(){
-        // console.log('run in created');
         this.msg='false';
         this.errorshow=false;
         // 未登录不拉取数据
@@ -156,7 +155,6 @@ export default {
             if(data.data.data.length){
                 //获取订单总数，传给翻页组件
                 this.total=data.data.totalCount+'';
-                // console.log('this.total==',this.total);
                 var data=data.data.data;
                 for(let i=0;i<data.length;i++){
                     data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD HH:mm:ss');
@@ -172,7 +170,6 @@ export default {
                     that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                         businessNo:orderN,
                     })).then(function(servdata){
-                        // console.log('servicedata==',servdata);
                         var servdata=servdata.data.data;
                         for(var key in servdata){
                             data[i].servitem.push(servdata[key]);
@@ -180,7 +177,6 @@ export default {
                     })
                 }
                 this.lists=data;
-                // console.log('data==',data);
             }
         },
         
@@ -217,7 +213,6 @@ export default {
         },
         // 付款
         payfor:function(num,status){
-            // console.log(num,status);
             if(status==1){
                 this.$router.push({path:'/Order/orderdetail',query:{orderNo:num}});
             }
@@ -226,7 +221,7 @@ export default {
         remove:function(code){
             this.conRemove=true;
             this.orderid=code;
-            
+            this.getData(start,limit,time1,time2,code)
         },
         // 隐藏删除订单提示框
         cancel(){
@@ -241,7 +236,6 @@ export default {
             that.qs.stringify(({
                 id:that.orderid,
             }))).then(function(data){
-                // console.log(data);
                 // 成功后重新获取数据，重新存缓存
                 if(data.data.status==1){
                     that.errorshow=true;//提示

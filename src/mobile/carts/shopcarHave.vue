@@ -89,7 +89,6 @@ export default {
     },
     //删除
     del(id) {
-      console.log(id);
       this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(data => {

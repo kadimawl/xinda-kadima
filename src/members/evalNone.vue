@@ -71,7 +71,6 @@ export default {
                 if(data.data.data&&data.data.data.length){
                     that.datashow(data);
                 }
-                // console.log(data);
             })
         },
         // 拉取数据处理

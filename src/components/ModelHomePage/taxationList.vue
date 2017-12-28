@@ -97,7 +97,6 @@ export default {
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
     },
     isLogged(id) {
       var that = this;
@@ -222,10 +221,8 @@ export default {
         plugins(id, that); //加入购物车/立即购买公共方法
       };
       this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        console.log(data.data)
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum+1);
-        console.log(cartNum)
       });
     },
     changePage: function() {
@@ -320,7 +317,6 @@ export default {
         var gData = data.data.data;
         that.products = gData;
       });
-      console.log(this.getName)
     if (this.getName) {
       this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;

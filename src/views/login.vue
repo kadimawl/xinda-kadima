@@ -1,5 +1,5 @@
 <template>
-  <div class="lOut" @keyup.13="enterUp($event)">
+  <div class="lOut" >
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
@@ -172,11 +172,7 @@ export default {
         this.phoneMsg = "请输入手机号";
       }
     },
-    enterUp (ev) {
-      if(ev.keyCode == 13){
-        console.log('enterUp');
-      }
-    }
+    
   }
 };
 </script>

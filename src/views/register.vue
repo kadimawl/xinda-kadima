@@ -78,7 +78,6 @@ export default {
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
-      console.log(this.seleCode);
     },
     login() {
       // this.$router.push({ path: "/outter/login" });

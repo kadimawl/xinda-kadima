@@ -41,10 +41,8 @@
 var moment = require("moment");
 import { MessageBox } from "mint-ui";
 export default {
-    created(){
-        // if(){ CV                                                                                              
+    created(){                                                                                         
             this.getData(0,this.limit);
-        // }
     },
     components:{},
     data(){
@@ -88,7 +86,6 @@ export default {
                 that.ajax.post('/xinda-api/service-order/grid',that.qs.stringify({
                     businessNo:orderN,
                 })).then(function(servdata){
-                    console.log('servicedata==',servdata);
                     var servdata=servdata.data.data;
                     for(var key in servdata){
                         // 关于订单时间

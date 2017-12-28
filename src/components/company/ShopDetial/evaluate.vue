@@ -65,7 +65,6 @@ export default {
         })
       )
       .then(function(data) {
-        // console.log(data.data.data);
       });
     this.ajax
       .post(
@@ -78,7 +77,6 @@ export default {
         })
       )
       .then(function(data) {
-        // console.log(data.data.data);
       });
   }
 };

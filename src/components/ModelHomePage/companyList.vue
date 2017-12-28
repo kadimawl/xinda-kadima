@@ -118,7 +118,6 @@ export default {
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
-      // console.log(this.seleCode);
     },
     types(key, typeCode) {
       this.currentIndex = typeCode;
@@ -129,7 +128,6 @@ export default {
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key, index) {
-      // console.log(this.subList[key].id);
       this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);
@@ -183,7 +181,6 @@ export default {
         .then(function(data) {
           var gData = data.data.data;
           that.products = gData;
-          // console.log(that.products);
         });
     },
     todetail(id) {
@@ -226,10 +223,8 @@ export default {
         plugins(id, that); //加入购物车/立即购买公共方法
       };
       this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        console.log(data.data)
         var cartNum = data.data.data.cartNum;
         that.setNum(cartNum+1);
-        console.log(cartNum)
       });
     },
     changePage: function() {
@@ -298,7 +293,6 @@ export default {
     }
   },
   created() {
-    // console.log(name);
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
@@ -310,7 +304,6 @@ export default {
         }
       }
       that.types("1b58d4f1f258495e8bf4b8a2df5c0e8e"); //默认渲染审计报告
-      // console.log(that.ItemLists);
     });
 
     this.ajax
@@ -324,10 +317,8 @@ export default {
         })
       )
       .then(function(data) {
-        // console.log(data.data);
         var gData = data.data.data;
         that.products = gData;
-        // console.log(that.products);
       });
       if (this.getName) {
       this.ajax.post("/xinda-api/cart/cart-num").then(data => {

@@ -125,7 +125,6 @@ export default {
                 if(datas.gender=='1'||datas.gender=='2'){
                     this.radio=datas.gender;
                     this.choosesex();
-                    console.log(this.radio);
                 }
                 // 处理三级联动
                 this.seleCode=datas.regionId;
@@ -219,7 +218,6 @@ export default {
                             regionId:that.seleCode,
                         })
                     ).then(function(data){
-                        console.log(data);
                         if(data.data.status==1){//更新成功
                             that.errorshow=true;
                             that.error='更新成功';

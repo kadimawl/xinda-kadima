@@ -59,7 +59,6 @@ export default {
       )
       .then(function(data) {
         var shop = data.data.data;
-        console.log(shop);
         that.product = shop.product;
         that.provider = shop.provider;
         that.shops = shop;

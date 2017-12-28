@@ -99,12 +99,10 @@ export default {
   methods: {
     ...mapActions(["setNum"]),
     focus(id, old) {
-      // console.log(old);
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
         .then(data => {
-          // console.log(data);
         });
     },
     numChange(id, numbers) {
@@ -113,7 +111,6 @@ export default {
         this.ajax
           .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: numC }))
           .then(data => {
-            console.log(data);
             this.recData();
           });
       }
@@ -145,7 +142,6 @@ export default {
         .then(function(data) {
           var tData = data.data.data;
           that.products = tData;
-          // console.log(that.products);
         });
     },
     add(id) {
@@ -154,14 +150,12 @@ export default {
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: 1 }))
         .then(function(data) {
-          // console.log(data);
           that.recData();
         });
     },
     minus(id, bnum) {
       //减少商品数量
       var that = this;
-      // console.log(this.num)
       if (bnum - 1 >= 1) {
         var that = this;
         this.ajax
@@ -213,10 +207,8 @@ export default {
       var that = this;
       this.ajax.post("/xinda-api/cart/submit").then(function(data) {
         var rData = data.data.data;
-        console.log(data)
         that.orderNo = rData;
         that.toPay(that.orderNo);
-        // console.log(that.orderNo);
       });
       this.recData(); //拉取购物品项列表
       this.recomData(); //拉取推荐服务列表f

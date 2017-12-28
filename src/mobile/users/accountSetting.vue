@@ -79,8 +79,6 @@ export default {
       that.radio=infos.gender;
       that.name = infos.name;
       that.pw = infos.password;
-      console.log(infos.regionId);
-      console.log('data==',data)
     });
   },
   methods: {
@@ -100,7 +98,6 @@ export default {
           })
         )
         .then(data => {
-          console.log(data.data);
           if (data.data.status == 1) {
             MessageBox.alert("修改成功", "提示");
           }

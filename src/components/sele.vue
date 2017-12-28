@@ -85,6 +85,7 @@ export default {
             })
           )
           .then(data => {
+            console.log(data.data.data)
             this.seleList = [];
             this.getSele = [];
             this.seleList = data.data.data;
@@ -107,11 +108,9 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
-      // console.log(id)
       if (id) {
-        this.$router.push({ path: "/detial", query: { shoppingId: id } });
+        this.$router.push({ path: "/detial/service", query: { shoppingId: id } });
         this.selebox = false;
-        location.reload();
       }
     },
     social() {
@@ -125,18 +124,12 @@ export default {
         .then(data => {
           for (var key in data.data.data) {
             this.socId = data.data.data[key].id;
-            console.log(this.socId);
             this.$router.push({
-              path: "/detial",
+              path: "/detial/service",
               query: { shoppingId: this.socId }
             });
           }
         });
-      // this.$router.push({
-      // path: "/detial",
-      // query: { shoppingId: this.socId }
-      // });
-      // location.reload();
     },
     cReg() {
       this.$router.push({ path: "/tabs/companyList" });

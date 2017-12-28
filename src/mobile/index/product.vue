@@ -43,12 +43,10 @@ export default {
       .then(function(data) {
         var gData = data.data.data;
         that.products = gData;
-        console.log(gData);
       });
   },
   methods: {
     gotoShop(id) {
-      console.log(id);
       this.$router.push({
         path: "/m/shop/shopDetail",
         query: { sId: id }

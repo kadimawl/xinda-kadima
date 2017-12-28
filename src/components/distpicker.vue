@@ -32,7 +32,6 @@ export default {
   },
   watch:{
     regionId(newval,oldval){
-      console.log(newval);
       this.showarea(newval);
     }
   },
@@ -57,7 +56,6 @@ export default {
     },
     // 三级联动显示
     showarea(code) {
-      console.log(code);
       var codearr = code.split("");
       codearr.splice(4, 2, "0", "0");
       var codecity = codearr.join("");

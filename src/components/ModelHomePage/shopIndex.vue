@@ -88,7 +88,6 @@ export default {
   },
   methods: {
     productTypesC: function(event) {//商品分类单击事件
-      console.log(123123);
     },
     shopGoto: function(e) {//商品页面跳转事件//获取店铺ID
       var shopID=e.target.getAttribute('id');//获取店铺ID
