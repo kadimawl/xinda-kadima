@@ -6,11 +6,11 @@
         <router-link :to="{ path: '/shopList/product'}" replace>资质证书</router-link>
     </div>
     <div class="productBody">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+img1" alt="">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+img2" alt="">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+img3" alt="">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+img4" alt="">
-        <img :src="'http://115.182.107.203:8088/xinda/pic'+img5" alt="">
+        <img :src="tUrl+img1" alt="">
+        <img :src="tUrl+img2" alt="">
+        <img :src="tUrl+img3" alt="">
+        <img :src="tUrl+img4" alt="">
+        <img :src="tUrl+img5" alt="">
     </div>
   </div>
 </template>

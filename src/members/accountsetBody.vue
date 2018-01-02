@@ -119,7 +119,7 @@ export default {
         pageshow:function(data){
             if(data){
                 var datas=data.data.data;
-                this.headimg='http://123.58.241.146:8088/xinda/pic'+datas.headImg+'';
+                this.headimg=this.tUrl+datas.headImg;
                 this.inputN=datas.name;
                 this.inputM=datas.email;
                 if(datas.gender=='1'||datas.gender=='2'){

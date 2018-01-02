@@ -27,8 +27,11 @@ import 'mint-ui/lib/style.css'
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
 Vue.prototype.tUrl = 'http://123.58.241.146:8088/xinda/pic';
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 840820a2fb53519976a539adb5bb74418d78f5f1
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 

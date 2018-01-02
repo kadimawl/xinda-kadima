@@ -51,7 +51,7 @@
         <div>
             <div v-for="data in datas" :key="data.id" class="qiye" @click="gotoShop(data.id)">
               <div class="qiyeI">
-                <img :src="'http://123.58.241.146:8088/xinda/pic'+data.providerImg" alt="">
+                <img :src="tUrl+data.providerImg" alt="">
               </div>
               <div class="qiyeS">
                 <div>
