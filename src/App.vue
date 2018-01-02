@@ -18,7 +18,7 @@ export default {
       sessionStorage.userName = userName;
       this.userName = sessionStorage.userName;
     }
-  }
+  },
 };
 </script>
 

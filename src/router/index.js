@@ -13,6 +13,8 @@ const forgetpw  = () => import(/* webpackChunkName: 'outter' */ '@/views/forgetp
 const HomePage  = () => import(/* webpackChunkName: 'HomePage' */ '@/components/ModelHomePage/HomePage') //首页模块
 const taxationList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/taxationList') //财税服务模块
 const companyList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/companyList' )//公司工商模块
+const wisdomList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/wisdomList' )//知识产权模块
+const securityList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/securityList' )//社保代理模块
 const shoppingCart  = () => import( /* webpackChunkName: 'tabs' */'@/components/ModelHomePage/shoppingCart') //购物车模块
 const toJoinIn  = () => import( /* webpackChunkName: 'tabs' */'@/components/ModelHomePage/toJoinIn' )//加入我们模块
 
@@ -118,6 +120,16 @@ export default new Router({
                             path: 'companyList', //公司工商
                             name: 'companyList',
                             component: companyList
+                        },
+                        {
+                            path:'wisdomList', //知识产权
+                            name:'wisdomList',
+                            component: wisdomList
+                        },
+                        {
+                            path:'securityList', //社保代理
+                            name:'securityList',
+                            component: securityList
                         },
                         {
                             path: 'shoppingCart', //购物车
