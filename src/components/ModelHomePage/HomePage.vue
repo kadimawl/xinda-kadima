@@ -105,7 +105,7 @@
       </div>
       <div class="com-inf">
         <div class="infBox" v-for="product in products" :key="product.id">
-          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+product.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+product.providerImg" alt=""></div>
           <h4>{{product.providerName}}</h4>
           <p class="service">{{product.serviceName}}</p>
           <p class="service-inf">{{product.serviceInfo}}</p>
@@ -142,7 +142,7 @@
       </div>
       <div class="providers" v-show="!SorH">
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
-          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
           <p>提供的服务：</p>
@@ -155,7 +155,7 @@
           <!-- 推荐服务商 -->
         </div>
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
-          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
           <p>提供的服务：</p>
@@ -169,7 +169,7 @@
       </div>
       <div class="com-inf" v-show="SorH">
         <div class="services" v-for="Service in services" :key="Service.id">
-          <div class="pro-logo"><img :src="'http://115.182.107.203:8088/xinda/pic'+Service.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Service.providerImg" alt=""></div>
           <h4>{{Service.providerName}}</h4>
           <p class="service">{{Service.serviceName}}</p>
           <p class="service-inf">{{Service.serviceInfo}}</p>

@@ -64,7 +64,7 @@ export default {
         that.shops = shop;
         that.id = shoppingID;
         that.picURL =
-          "http://115.182.107.203:8088/xinda/pic" + shop.product.img;
+          "http://123.58.241.146:8088/xinda/pic" + shop.product.img;
       });
   },
   computed: {

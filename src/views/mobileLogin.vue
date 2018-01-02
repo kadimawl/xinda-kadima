@@ -22,7 +22,6 @@
 import { MessageBox } from "mint-ui";
 
 let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
-var md5 = require("md5");
 export default {
   data() {
     return {
@@ -34,8 +33,7 @@ export default {
       imgUrl: "/xinda-api/ajaxAuthcode"
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
     phone() {
       let pResult = pReg.test(this.phoneInput);
@@ -82,6 +80,7 @@ export default {
       }
     },
     iLogin() {
+      var md5 = require("md5");
       var that = this;
       let userName = this.phoneInput;
       let pw = this.pwInput;
@@ -104,7 +103,10 @@ export default {
                 if (status == 1) {
                   //成功登陆
                   MessageBox.alert("登录成功").then(function() {
-                    that.$router.push({path: that.$route.query.redirect ||'/m',query:{sId: that.$route.query.id}})
+                    that.$router.push({
+                      path: that.$route.query.redirect || "/m",
+                      query: { sId: that.$route.query.id }
+                    });
                     that.ajax.post("/xinda-api/sso/login-info").then(data => {
                       let name = data.data.data.name;
                     });
@@ -137,7 +139,7 @@ export default {
 .box {
   width: 100%;
   margin: 0 auto;
-  padding: .650rem 1rem 0;
+  padding: 0.65rem 1rem 0;
   box-sizing: border-box;
 }
 input {

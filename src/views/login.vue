@@ -1,5 +1,5 @@
 <template>
-  <div class="lOut" >
+  <div class="lOut">
     <div class="leftOut">
       <div class="phoneBox">
         <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
@@ -14,12 +14,12 @@
         <input type="text" placeholder="  请输入验证码" id="verification" v-model="imgVInput" @blur="imgVB" @focus="imgVA">
         <img @click="reImg" :src="imgUrl" alt="">
         <p class="errorMsg">{{imgVMsg}} </p>
-      </div> 
-      <div class="forget" @click="forgetpw">
-        <router-link  class="fpw" to="/outter/forgetpw">忘记密码？</router-link>
       </div>
-      
-      <button @click="iLogin" >立即登录</button>
+      <div class="forget" @click="forgetpw">
+        <router-link class="fpw" to="/outter/forgetpw">忘记密码？</router-link>
+      </div>
+
+      <button @click="iLogin">立即登录</button>
     </div>
     <div class="midOut"></div>
     <div class="rightOut">
@@ -33,14 +33,13 @@
 </template>
 
 <script>
-var md5 = require("md5");
 import { mapActions } from "vuex";
 const eyes = [
   require("../assets/invisible.png"),
   require("../assets/visible.png")
 ];
 export default {
-  created(){
+  created() {
     var shoppingID = this.$route.query.id;
   },
   data() {
@@ -125,6 +124,7 @@ export default {
 
     //立即登录
     iLogin() {
+      var md5 = require("md5");
       let userName = this.phoneInput;
       let pw = this.pwInput;
       let storage = window.sessionStorage;
@@ -146,7 +146,10 @@ export default {
                 if (status == 1) {
                   //成功登陆
                   sessionStorage.setItem("user", this.phoneInput);
-                  this.$router.push({path: this.$route.query.redirect || '/HomePage',query:{shoppingId: this.$route.query.id}})
+                  this.$router.push({
+                    path: this.$route.query.redirect || "/HomePage",
+                    query: { shoppingId: this.$route.query.id }
+                  });
                   this.ajax.post("/xinda-api/sso/login-info").then(data => {
                     // console.log(data);
                     let name = data.data.data.name;
@@ -156,7 +159,7 @@ export default {
                   if (msg == "图片验证码错误！") {
                     this.imgVMsg = "图片验证码错误！";
                   } else if (msg == "账号或密码不正确！") {
-                    this.phoneMsg = '账号或密码不正确！';
+                    this.phoneMsg = "账号或密码不正确！";
                   } else if (msg == "账号不存在") {
                     this.phoneMsg = "该手机号未注册";
                   }
@@ -171,8 +174,7 @@ export default {
       } else {
         this.phoneMsg = "请输入手机号";
       }
-    },
-    
+    }
   }
 };
 </script>
@@ -247,7 +249,7 @@ export default {
     .forget {
       width: 281px;
       height: 13px;
-      .fpw{
+      .fpw {
         display: block;
         font-size: 13px;
         color: #2693d4;
@@ -270,7 +272,7 @@ export default {
     }
     .immediately {
       margin: 23px 0 19px;
-      .imt{
+      .imt {
         margin-left: 30px;
         color: #2693d4;
         font-size: 17px;

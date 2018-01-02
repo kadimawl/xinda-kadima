@@ -195,7 +195,7 @@ h1 {
     }
     button {
       width: 101px;
-      height: 41px;
+      height: 37px;
       border: none;
       background: url("../assets/index/memCen.png") no-repeat -21px -401px;
       background-color: #2693d4;
@@ -259,7 +259,7 @@ h1 {
 }
 
 .selebox {
-  width: 485px;
+  width: 481px;
   list-style: none;
   background: #169bd5;
   position: absolute;

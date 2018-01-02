@@ -3,7 +3,7 @@
     <div class="shopD" v-for="product in products" :key="product.code">
       <div class="deTails">
         <div class="picture">
-          <img :src="'http://115.182.107.203:8088/xinda/pic'+product.img" alt="">
+          <img :src="'http://123.58.241.146:8088/xinda/pic'+product.img" alt="">
         </div>
         <div class="infor" v-for="pvdpdt in pvdpdts" :key="pvdpdt.code">
           <b>{{pvdpdt.serviceName}}</b>

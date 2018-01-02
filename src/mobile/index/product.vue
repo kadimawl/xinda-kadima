@@ -3,7 +3,7 @@
   <div class="top"><button v-bind:class="{'active':top==1}" @click="act(1)">默认排序</button><button v-bind:class="{'active':top==2}" @click="act(2)">价格</button></div>
   <div class="body" v-for="Product in products" :key="Product.id" @click="gotoShop(Product.id)">
     <div class="logo">
-      <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
+      <img :src="'http://123.58.241.146:8088/xinda/pic'+Product.productImg" alt="">
     </div>
     <div class="listInf">
       <div>

@@ -16,8 +16,9 @@
       <div class="name">
         <p>姓名：</p><input type="text" v-model="name"></div>
       <div class="gender">
-        <p>性别：</p><el-radio v-model="radio" :label="1" id="man">男</el-radio>
-            <el-radio v-model="radio" :label="2" id="woman">女</el-radio>
+        <p>性别：</p>
+        <el-radio v-model="radio" :label="1" id="man">男</el-radio>
+        <el-radio v-model="radio" :label="2" id="woman">女</el-radio>
       </div>
       <div class="email">
         <p>邮箱：</p><input type="text" v-model="email">
@@ -49,11 +50,10 @@
 </template>
 
 <script>
-import {  mapActions } from "vuex";
+import { mapActions } from "vuex";
 import distpicker from "@/components/distpicker";
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 import { MessageBox } from "mint-ui";
-var md5 = require("md5");
 export default {
   components: { distpicker },
   data() {
@@ -65,18 +65,18 @@ export default {
       pw: "",
       newPw: "",
       againPw: "",
-      regionId: '',
-      radio:'',//性别
+      regionId: "",
+      radio: "" //性别
     };
   },
   created() {
     var that = this;
     //默认渲染
     this.ajax.post("/xinda-api/member/info").then(data => {
-      var infos=data.data.data;
+      var infos = data.data.data;
       that.email = infos.email;
-      that.regionId=infos.regionId;
-      that.radio=infos.gender;
+      that.regionId = infos.regionId;
+      that.radio = infos.gender;
       that.name = infos.name;
       that.pw = infos.password;
     });
@@ -129,6 +129,7 @@ export default {
     },
     //修改密码
     changePw() {
+      var md5 = require("md5");
       this.ajax
         .post(
           "/xinda-api/sso/change-pwd",
@@ -195,7 +196,7 @@ export default {
       background: red;
       margin-left: 0.25rem;
     }
-    img{
+    img {
       border-radius: 50%;
       width: 0.96rem;
       height: 0.96rem;
@@ -322,8 +323,8 @@ export default {
   display: -ms-flexbox;
   display: flex;
   font-size: 0.28rem;
-  height: .77rem;
-  line-height: .77rem;
+  height: 0.77rem;
+  line-height: 0.77rem;
   // padding: 0 0.01rem;
   position: relative;
   text-align: center;

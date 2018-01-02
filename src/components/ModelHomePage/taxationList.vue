@@ -37,7 +37,7 @@
             </div>
             <div class="B-lists" v-for="Product in products" :key="Product.id">
               <div class="listImg">
-                <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
+                <img :src="'http://123.58.241.146:8088/xinda/pic'+Product.productImg" alt="">
               </div>
               <div class="listInf">
                 <div class="infLeft" @click="todetail(Product.id)">
