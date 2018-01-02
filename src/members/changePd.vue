@@ -36,8 +36,8 @@ import {mapGetters} from 'vuex'
 // 引用md5和密码显示按钮图片
 var md5 = require("md5");
 const eyes = [
-    require("../assets/visible/invisible.png"),
-    require("../assets/visible/visible.png")
+    require("../assets/invisible.png"),
+    require("../assets/visible.png")
 ];
 export default {
     created(){

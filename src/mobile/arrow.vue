@@ -1,7 +1,7 @@
 <template>
     <div class="header">
         <div class="icon" @click="goBack"></div>
-        <img src="../assets/index/icon.png" alt="">
+        <img src="../assets/icon.png" alt="">
     </div>
 </template>
 

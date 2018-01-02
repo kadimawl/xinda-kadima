@@ -35,7 +35,7 @@
                     <div class="all" v-for="serv in list.servitem" :key="serv.id">
                         <div>
                             <!-- 公司logo图片 接口数据无logo图片链接-->
-                            <div><img src="../assets/index/icon.png" alt="公司logo"></div>
+                            <div><img src="../assets/icon.png" alt="公司logo"></div>
                             <p>{{serv.serviceName}}</p>
                         </div>
                         <!-- 单价 -->

@@ -36,8 +36,8 @@
 var md5 = require("md5");
 import { mapActions } from "vuex";
 const eyes = [
-  require("../assets/visible/invisible.png"),
-  require("../assets/visible/visible.png")
+  require("../assets/invisible.png"),
+  require("../assets/visible.png")
 ];
 export default {
   created(){

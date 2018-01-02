@@ -14,7 +14,7 @@
                 <div v-for="serv in list.servitem" :key="serv.id" class="servbox">
                     <div><p>{{serv.providerName}}</p></div>
                     <div>
-                        <div><img src="../../assets/index/icon.png" alt="公司logo"></div>
+                        <div><img src="../../assets/icon.png" alt="公司logo"></div>
                         <div>
                             <p>{{serv.serviceName}}</p>
                             <p>下单时间：{{serv.createTime}}</p>
