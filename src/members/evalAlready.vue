@@ -82,7 +82,7 @@ export default {
                 for(let i=this.pagenum;i<this.pagenum+this.pagesize;i++){
                     var dataindex=i-this.pagethum;
                     this.datas[i]=data[dataindex];
-                    this.datas[i].providerImg='http://123.58.241.146:8088/xinda/pic'+data[dataindex].providerImg+'';
+                    this.datas[i].providerImg=this.tUrl+data[dataindex].providerImg;
                     this.datas[i].buyTime=moment(data[dataindex].buyTime).format('YYYY-MM-DD hh:mm:ss');
                 }
                 this.total=data.data.totalCount;

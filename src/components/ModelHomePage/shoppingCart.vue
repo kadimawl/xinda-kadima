@@ -30,7 +30,7 @@
             <tr class="itemLists">
               <td class="itemPic">
                 <!-- <el-checkbox v-model="checked" class="check"></el-checkbox> -->
-                <img :src="'http://123.58.241.146:8088/xinda/pic'+Goods.providerImg" alt=""></td>
+                <img :src="tUrl+Goods.providerImg" alt=""></td>
               <td class="serviceName">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>

@@ -25,7 +25,7 @@
     <div class="shopTypes">
       <div v-for="shopType in shopTypes" :key="shopType.id">
         <div class="logo">
-          <img :src="'http://123.58.241.146:8088/xinda/pic'+shopType.providerImg" alt="" class="logoImg">
+          <img :src="tUrl+shopType.providerImg" alt="" class="logoImg">
           <img class="logoGold" src="../../assets/shop/GoldShop.png" alt="">
         </div>
         <div class="shopText">
