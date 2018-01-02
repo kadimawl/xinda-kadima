@@ -7,7 +7,7 @@
       <div class="comID">{{list.providerName}}</div>
       <div class="box">
         <div class="imgBox">
-          <img :src="'http://123.58.241.146:8088/xinda/pic'+list.providerImg" alt="">
+          <img :src="tUrl+list.providerImg" alt="">
         </div>
         <div class="cartMsg">
           <p class="name">{{list.serviceName}}</p>
