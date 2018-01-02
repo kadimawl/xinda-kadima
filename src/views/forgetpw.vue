@@ -39,8 +39,8 @@
 
 <script>
 const eyes = [
-  require("../assets/visible/invisible.png"),
-  require("../assets/visible/visible.png")
+  require("../assets/invisible.png"),
+  require("../assets/visible.png")
 ]; //webpack的require
 export default {
   data() {

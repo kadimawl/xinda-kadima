@@ -58,7 +58,7 @@ export default {
     };
   },
   created() {
-    // this.getInput = this.debounce(this.seleBlur, 1000);
+    this.getInput = this.debounce(this.seleBlur, 1000);
   },
   methods: {
     over: function() {

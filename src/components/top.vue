@@ -8,12 +8,10 @@
           <p>请</p>
           <div @click="login">
             <router-link class="color69" to="/outter/login">登录</router-link>
-            <!-- <a href="/#">登录</a> -->
           </div>
         </div>
         <div class="item-reg" @click="register">
           <router-link class="color69" to="/outter/register">快速注册</router-link>
-          <!-- <a href="/#"></a> -->
         </div>
       </div>
       <div class="box-left" v-show="getName">
@@ -23,13 +21,11 @@
       </div>
       <div class="box-right">
         <div class="shop-cart">
-          <!-- <a class="cartLink" href="/#/tabs/shoppingCart"> -->
           <span class="bgCart"></span>
           <el-button type="text" class="cartBut" @click="cartBut">
             <p>购物车
               <span>{{getNum}}</span> 件</p>
           </el-button>
-          <!-- </a> -->
         </div>
         <div class="myOrder " v-show="getName">
           <span class="bgOrder"></span>

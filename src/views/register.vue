@@ -46,8 +46,8 @@
 import { mapActions } from "vuex";
 import distpicker from "@/components/distpicker";
 const eyes = [
-  require("../assets/visible/invisible.png"),
-  require("../assets/visible/visible.png")
+  require("../assets/invisible.png"),
+  require("../assets/visible.png")
 ];
 let pwReg = /^(?=.*\d)(?=.*[A-Z])(?=.*[a-z]).{8,20}$/;
 export default {
