@@ -50,7 +50,7 @@ h5 {
     display: block;
     width: 130px;
     height: 130px;
-    background: url("../../assets/index/Sprites.png") no-repeat -323px -160px;
+    background: url("../../assets/index/face.png") no-repeat ;
     position: absolute;
     top: 125px;
     left: 200px;

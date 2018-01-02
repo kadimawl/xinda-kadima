@@ -259,17 +259,17 @@ h4 {
     .bgBox {
       width: 85px;
       height: 80px;
-      background: url(../../assets/index/Sprites.png) -166px -477px;
+      background: url(../../assets/HomePageimages/Sprites.png) -422px -453px;
       margin-bottom: 86px;
     }
     .bgOne {
-      background-position-y: -383px;
+      background-position: -168px -380px;
     }
     .bgTwo {
-      background-position: -153px -285px;
+      background-position: -154px -280px;
     }
     .bgThree {
-      background-position: -358px -326px;
+      background-position: -345px 0;
     }
     p {
       font-size: 16px;

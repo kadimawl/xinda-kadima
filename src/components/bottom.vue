@@ -18,7 +18,7 @@
                 <p>©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号</p>
             </div>
             <div>
-                <img src="../assets/index/u265.png" alt="">
+                <img :sr="imgUrl" c alt="">
             </div>
             <div>
                 <P>&nbsp</P>
@@ -31,9 +31,12 @@
 </template>
 
 <script>
+const urlArr  = require("../assets/index/u265.png");
 export default {
   data () {
-      return {}
+      return {
+        imgUrl : urlArr,
+      }
   }
 }
 </script>

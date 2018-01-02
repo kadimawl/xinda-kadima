@@ -165,7 +165,7 @@ export default {
   height: 25px;
   margin-right: 5px;
   margin-top: 10px;
-  background: url(../assets/index/Sprites.png) 0 -73px;
+  background: url(../assets/HomePageimages/Sprites.png) 0 -73px;
   margin-left: 10px;
 }
 .bgOrder {

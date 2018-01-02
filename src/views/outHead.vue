@@ -37,7 +37,7 @@ export default {
     width: 52px;
     height: 56px;
     margin: auto 12px;
-    background: url(../assets/index/Sprites.png) 0 0;
+    background: url(../assets/HomePageimages/Sprites.png) 0 0;
   }
   .sinda {
     width: 98px;
