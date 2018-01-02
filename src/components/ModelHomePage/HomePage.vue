@@ -209,9 +209,9 @@ export default {
       services: [],
       index: -1,
       king: urlArr[0],
-      reg: urlArr[1],
+      reg: i2,
       little: urlArr[2],
-      icons: urlArr[1],
+      icons: i2
     };
   },
   methods: {

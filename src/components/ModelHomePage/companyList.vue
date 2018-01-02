@@ -486,7 +486,6 @@ export default {
       margin: 13px auto 29px;
       border-radius: 50%;
       background: url('../../assets/HomePageimages/Sprites.png') no-repeat;
-      // background: url(../../assets/index/Sprites.png);
     }
     p {
       width: 171px;
