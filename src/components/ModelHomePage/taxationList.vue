@@ -482,7 +482,7 @@ export default {
       height: 93px;
       margin: 13px auto 29px;
       border-radius: 50%;
-      background: url(../../assets/index/Sprites.png);
+      background: url(../../assets/HomePageimages/Sprites.png);
     }
     p {
       width: 171px;
