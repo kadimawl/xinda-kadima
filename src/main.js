@@ -28,7 +28,7 @@ Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
 Vue.prototype.tUrl = 'http://123.58.241.146:8088/xinda/pic';
 
-Vue.use(ElementUI);
+
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
