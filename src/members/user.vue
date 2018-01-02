@@ -101,20 +101,20 @@ export default {
         }
         .myorder{
             span{
-                background: url('../assets/index/memCen.png') no-repeat;
-                background-position: -25px -125px;
+                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background-position: -102px -126px;
             }
         }
         .usereval{
             span{
-                background: url('../assets/index/memCen.png') no-repeat;
-                background-position: -25px -157px;
+                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background-position: -104px -185px;
             }
         }
         .accountset{
             span{
-                background: url('../assets/index/memCen.png') no-repeat;
-                background-position: -25px -190px;
+                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background-position: -99px -76px;
             }
         }
     }

@@ -4,18 +4,25 @@ import Vue from 'vue'
 import App from './App'
 import router from './router' //vue的路由实例化对象
 import store from './store'
-
-
-import axios from 'axios'
-import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import 'mint-ui/lib/style.css'
 import qs from 'qs'
-import { Header,MessageBox,Button,Radio } from 'mint-ui';
+// import axios from 'axios'
 
-Vue.component(Radio.name, Radio);
-Vue.component(Header.name, Header);
-Vue.component(Button.name, Button)
+
+import {Radio,Input,DatePicker,Rate,Button,Carousel,CarouselItem,MessageBox,Message} from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
+Vue.use(Radio);
+Vue.use(Input);
+Vue.use(DatePicker);
+Vue.use(Rate);
+Vue.use(Button);
+Vue.use(Carousel );
+Vue.use(CarouselItem);
+Vue.prototype.$confirm = MessageBox.confirm;
+Vue.prototype.$message = Message
+
+import mint from 'mint-ui';
+import 'mint-ui/lib/style.css'
 
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;

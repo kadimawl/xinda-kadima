@@ -7,7 +7,7 @@
             <p>北京市</p>
         </div>
         <div class="logo">
-            <img src="../../assets/index/icon.png" alt="">
+            <img src="../../assets/icon.png" alt="">
             <h3>信达</h3>
         </div>
     </div>
@@ -51,7 +51,7 @@
         <div>
             <div v-for="data in datas" :key="data.id" class="qiye" @click="gotoShop(data.id)">
               <div class="qiyeI">
-                <img :src="'http://115.182.107.203:8088/xinda/pic'+data.providerImg" alt="">
+                <img :src="'http://123.58.241.146:8088/xinda/pic'+data.providerImg" alt="">
               </div>
               <div class="qiyeS">
                 <div>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="logo">
-        <img src="../../assets/index/icon.png" alt="">
+        <img src="../../assets/icon.png" alt="">
         <h3>信达</h3>
     </div>
     <p class="bottom">一站式企业交易中心</p>

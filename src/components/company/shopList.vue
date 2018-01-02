@@ -2,7 +2,7 @@
 <div class="shopList">
     <!-- <h3>这是店铺首页</h3> -->
     <div class="logo">
-      <img :src="'http://115.182.107.203:8088/xinda/pic'+LogoUrl" alt="">
+      <img :src="'http://123.58.241.146:8088/xinda/pic'+LogoUrl" alt="">
       <div>
         <h1>{{providerName}}</h1>
         <p>{{regionName}}</p>

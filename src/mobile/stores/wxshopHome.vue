@@ -92,7 +92,7 @@ export default {
     datashow(data) {
       var data = data.data.data;
       this.providerImg =
-        "http://115.182.107.203:8088/xinda/pic" + data.providerImg + "";
+        "http://123.58.241.146:8088/xinda/pic" + data.providerImg + "";
       this.name = data.name;
       this.providerInfo = data.providerInfo;
     },

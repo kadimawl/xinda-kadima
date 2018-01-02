@@ -59,7 +59,7 @@ export default {
         datahandle(data){
             var data=data.data.data;
             for(let i=0;i<data.length;i++){
-                data[i].providerImg='http://115.182.107.203:8088/xinda/pic'+data[i].providerImg+'';
+                data[i].providerImg='http://123.58.241.146:8088/xinda/pic'+data[i].providerImg+'';
                 data[i].regionName=data[i].regionName.substr(3).replace(/-/g,'  ');
                 if(data[i].totalJudge==0){
                     data[i].goodJudge='暂无评价';

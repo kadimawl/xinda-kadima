@@ -1,6 +1,6 @@
 <template>
   <div class="toJoinUs">
-    <img src="../../assets/index/join/jiameng.jpg" alt="" class="firstIMg">
+    <img src="../../assets/jiameng.jpg" alt="" class="firstIMg">
     <div class="valuable"><span>加盟我们</span><br><span>只做有价值的平台</span></div>
     
     <h4>TO JOIN IN</h4>
@@ -8,7 +8,7 @@
     <div class="a6"><div class="fff"></div></div>
     <p class="url">www.xinda.com</p>
     <p class="introduce">信达提供线上精准营销方案、帮助服务商快捷、低成本的获得有效客户，为传统优质服务商插上互联网的翅膀，助力企业腾飞。</p>
-    <div class="lv"><img src="../../assets/index/join/lv.jpg" alt=""></div>
+    <div class="lv"><img src="../../assets/lv.jpg" alt=""></div>
     
     <div class="edf0f3">
       <h4>YOU WILL RECEIVE</h4>

@@ -19,7 +19,6 @@ export default {
   components: { outHead ,top,anotherBottom},
   data() {
     return {
-      // seleShow: false,
     };
   }
 };

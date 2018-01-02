@@ -1,10 +1,5 @@
 <template>
   <div>
-    <!-- <mt-header title="注册">
-      <router-link to="/m/users/logined" slot="left">
-        <mt-button icon="back"></mt-button>
-      </router-link>
-    </mt-header> -->
     <div class="lOut">
 
       <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone">
