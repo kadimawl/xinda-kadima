@@ -105,7 +105,7 @@
       </div>
       <div class="com-inf">
         <div class="infBox" v-for="product in products" :key="product.id">
-          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+product.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="tUrl+product.providerImg" alt=""></div>
           <h4>{{product.providerName}}</h4>
           <p class="service">{{product.serviceName}}</p>
           <p class="service-inf">{{product.serviceInfo}}</p>
@@ -142,7 +142,7 @@
       </div>
       <div class="providers" v-show="!SorH">
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
-          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="tUrl+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
           <p>提供的服务：</p>
@@ -155,7 +155,7 @@
           <!-- 推荐服务商 -->
         </div>
         <div class="provider" v-for="Providers in providers" :key="Providers.id" @click="toStore(Providers.id)">
-          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Providers.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="tUrl+Providers.providerImg" alt=""></div>
           <h4>{{Providers.providerName}}</h4>
           <p>服务指数：8.9分</p>
           <p>提供的服务：</p>
@@ -169,7 +169,7 @@
       </div>
       <div class="com-inf" v-show="SorH">
         <div class="services" v-for="Service in services" :key="Service.id">
-          <div class="pro-logo"><img :src="'http://123.58.241.146:8088/xinda/pic'+Service.providerImg" alt=""></div>
+          <div class="pro-logo"><img :src="tUrl+Service.providerImg" alt=""></div>
           <h4>{{Service.providerName}}</h4>
           <p class="service">{{Service.serviceName}}</p>
           <p class="service-inf">{{Service.serviceInfo}}</p>
@@ -248,7 +248,7 @@ export default {
           }
         }
         that.ItemLists = datas;
-        // console.log(that.ItemLists);
+        console.log(that.ItemLists);
       });
     },
     dataRequest2: function() {
@@ -258,7 +258,7 @@ export default {
         var tData = data.data.data.hq; //
         var gData = data.data.data.provider;
         var lData = data.data.data.product;
-        // console.log(data.data.data.provider);
+        console.log(data.data.data.hq);
         that.products = tData;
         that.providers = gData;
         that.services = lData;
@@ -283,13 +283,23 @@ export default {
         var rData = data.data.data;
         if (code == 1) {
           that.$router.push({
-            path: "/tabs/taxationList",
+            path: "/tabs/taxationList", //财税服务
             query: { code: code }
           });
         } else if (code == 2) {
           that.$router.push({
-            path: "/tabs/companyList",
+            path: "/tabs/companyList", //公司工商
             query: { code: code }
+          });
+        }else if(code == 3) {
+          that.$router.push({
+            path:"/tabs/wisdomList", //知识产权
+            query:{code: code}
+          });
+        }else if(code == 4) {
+          that.$router.push({
+            path:"/tabs/securityList", //社保代理
+            query:{code: code}
           });
         }
       });
@@ -299,35 +309,54 @@ export default {
       var that = this;
       this.ajax.post("/xinda-api/product/style/list").then(function(data) {
         var rData = data.data.data;
-        // console.log(code);
         if (code == 1) {
-          // console.log(code, "1");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 2) {
-          // console.log(code, "2");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 3) {
-          // console.log(code, "3");
           that.$router.push({
             path: "/tabs/taxationList",
             query: { code: code }
           });
         } else if (code == 4) {
-          // console.log(code, "4");
           that.$router.push({
             path: "/tabs/companyList",
             query: { code: code }
           });
         } else if (code == 5) {
-          // console.log(code, "5");
           that.$router.push({
             path: "/tabs/companyList",
+            query: { code: code }
+          });
+        }else if (code == 6) {
+          that.$router.push({
+            path: "/tabs/securityList",
+            query: { code: code }
+          });
+        }else if (code == 7) {
+          that.$router.push({
+            path: "/tabs/securityList",
+            query: { code: code }
+          });
+        }else if (code == 8) {
+          that.$router.push({
+            path: "/tabs/wisdomList",
+            query: { code: code }
+          });
+        }else if (code == 9) {
+          that.$router.push({
+            path: "/tabs/wisdomList",
+            query: { code: code }
+          });
+        }else if (code == 10) {
+          that.$router.push({
+            path: "/tabs/wisdomList",
             query: { code: code }
           });
         }
@@ -650,7 +679,7 @@ export default {
     }
   }
 }
-.infBox:nth-child(1) {
+.infBox:nth-child(3) {
   img {
     width: 146px;
     margin: 40px auto !important;

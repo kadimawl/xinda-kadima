@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="home">首页/财税服务</div>
+    <div class="home">首页/知识产权</div>
     <div class="box">
       <div class="left">
         <div class="innerT">
@@ -37,7 +37,7 @@
             </div>
             <div class="B-lists" v-for="Product in products" :key="Product.id">
               <div class="listImg">
-                <img :src="'http://123.58.241.146:8088/xinda/pic'+Product.productImg" alt="">
+                <img :src="'http://115.182.107.203:8088/xinda/pic'+Product.productImg" alt="">
               </div>
               <div class="listInf">
                 <div class="infLeft" @click="todetail(Product.id)">
@@ -294,14 +294,14 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      console.log(rData)
+      console.log(data.data.data)
       for (const key in rData) {
-        if (rData[key].name == "财税服务") {
+        if (rData[key].name == "商标注册") {
           that.ItemLists = rData[key].itemList;
           break;
         }
       }
-      that.types("09fb10e276744114a232ac04b7b72e5d"); //默认渲染审计报告
+      that.types("93bfade97b784891847995255419cbaa"); //默认渲染商标注册
     });
 
     this.ajax
@@ -310,7 +310,7 @@ export default {
         this.qs.stringify({
           start: 0,
           limit: 3,
-          productTypeCode: "3",
+          productTypeCode: "8",
           sort: 2
         })
       )
@@ -483,7 +483,7 @@ export default {
       height: 93px;
       margin: 13px auto 29px;
       border-radius: 50%;
-      background: url(../../assets/HomePageimages/Sprites.png);
+      background: url(../../assets/index/Sprites.png);
     }
     p {
       width: 171px;

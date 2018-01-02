@@ -24,27 +24,11 @@ Vue.prototype.$message = Message
 import mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
-var objSort = function (name) {
-  return function (o, p) {
-    var a, b;
-    if (typeof o === "object" && typeof p === "object" && o && p) {
-      a = o[name];
-      b = p[name];
-      if (a === b) {
-        return 0;
-      }
-      if (typeof a === typeof b) {
-        return a < b ? -1 : 1;
-      }
-      return typeof a < typeof b ? -1 : 1;
-    } else {
-      throw "error";
-    }
-  };
-};
-Vue.prototype.objSort = objSort;
 Vue.prototype.ajax = axios;
 Vue.prototype.qs = qs;
+Vue.prototype.tUrl = 'http://123.58.241.146:8088/xinda/pic';
+
+Vue.use(ElementUI);
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
