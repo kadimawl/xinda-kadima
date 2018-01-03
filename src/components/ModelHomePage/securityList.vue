@@ -198,9 +198,14 @@ export default {
       //立即购买
       var that = this;
       this.isLogged(id);
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
+      //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
       });
     },
     addCart: function(id) {
@@ -221,9 +226,14 @@ export default {
       } else {
         plugins(id, that); //加入购物车/立即购买公共方法
       };
-      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum+1);
+     //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
       });
     },
     changePage: function() {

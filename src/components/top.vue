@@ -72,9 +72,11 @@ export default {
       this.setTitle("欢迎注册");
     },
     exit() {
+      this.ajax.post('/xinda-api/sso/ logout').then(data=>console.log(data.data))
       sessionStorage.clear();
-      location.reload();
       this.setNum(0);
+      location.reload();
+      
     },
     cartBut() {
       if (this.getName) {
