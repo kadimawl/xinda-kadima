@@ -58,7 +58,7 @@
       <div class="starContent" @click="starclick">
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="king">
+            <img class="boxImg" :src="require('../../assets/HomePageimages/i1.jpg')">
             <h4>标准五险一金</h4>
             <p>定制化社保代理，定制化代缴服务</p>
             <span>20
@@ -68,7 +68,8 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="reg">
+            <img class="boxImg" :src="require('../../assets/HomePageimages/i2.jpg')">
+            <!-- <img class="boxImg" :src="reg"> -->
             <h4>内资有限公司注册</h4>
             <p>一键完成注册，快速开办公司</p>
             <span>600
@@ -78,7 +79,7 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="little">
+            <img class="boxImg" :src="require('../../assets/HomePageimages/i3.jpg')">
             <h4>小规模代理记账/年</h4>
             <p>专业会计报税，高效、便捷、贴心</p>
             <span>3000
@@ -88,7 +89,7 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="icons">
+            <img class="boxImg" :src="require('../../assets/HomePageimages/i2.jpg')">
             <h4>国内普通商标注册</h4>
             <p>次日提交商标申请，最快保护品牌价值</p>
             <span>1000
@@ -191,8 +192,6 @@
 
 <script>
 import sele from "@/components/sele"; //头部部分引用
-const urlArr = [require("../../assets/HomePageimages/i1.jpg"),require("../../assets/HomePageimages/i2.jpg"),require("../../assets/HomePageimages/i3.jpg"),]
-const i2 = require("../../assets/HomePageimages/i2.jpg");
 export default {
   components: { sele },
   created() {
@@ -208,10 +207,6 @@ export default {
       providers: [],
       services: [],
       index: -1,
-      king: urlArr[0],
-      reg: i2,
-      little: urlArr[2],
-      icons: i2
     };
   },
   methods: {

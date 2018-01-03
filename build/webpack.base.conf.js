@@ -21,8 +21,10 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   externals: {
+    'vue': 'Vue',
     'axios': 'axios',
-    'md5': 'md5'
+    'md5': 'md5',
+    'qs': 'Qs'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -47,7 +49,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 8192,
+          limit: 50000,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
@@ -63,7 +65,7 @@ module.exports = {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 50000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
       }
