@@ -87,6 +87,7 @@ import distpicker from "../distpicker";
 import plugins from "../../plugins";
 import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
+import {MessageBox} from 'element-ui'
 export default {
   components: { distpicker },
   computed: {
@@ -101,7 +102,7 @@ export default {
     isLogged(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -121,7 +122,6 @@ export default {
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
-      console.log("111")
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
@@ -206,7 +206,7 @@ export default {
     addCart: function(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -295,7 +295,6 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      console.log(rData)
       for (const key in rData) {
         if (rData[key].name == "社保代理") {
           that.ItemLists = rData[key].itemList;

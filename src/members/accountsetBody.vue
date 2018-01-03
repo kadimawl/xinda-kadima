@@ -8,7 +8,7 @@
         <!-- 姓名 -->
         <div class="name">
             <p>姓名：</p>
-            <el-input v-model="inputN" class="inputname" placeholder="请输入姓名" @blur="inputname"></el-input>
+            <input v-model="inputN" class="inputname" placeholder="请输入姓名" @blur="inputname">
             <span class="mark" :style="{color:colorN}">*</span>
         </div>
         <!-- 性别 -->
@@ -21,7 +21,7 @@
         <!-- 邮箱 -->
         <div class="mailbox">
             <p>邮箱：</p>
-            <el-input v-model="inputM" class="inputname" placeholder="请输入邮箱" @blur="mail"></el-input>
+            <input v-model="inputM" class="inputname" placeholder="请输入邮箱" @blur="mail">
             <span class="mark" :style="{color:colorM}">*</span>
         </div>
         <!-- 地区 -->
@@ -60,7 +60,7 @@
 // 引入
 import {  mapGetters } from "vuex";
 import dist from "../districts/districts";
-import {Input,Radio} from 'element-ui'
+import {Radio} from 'element-ui'
 export default {
     created() {
         if (this.getName) {
@@ -108,7 +108,6 @@ export default {
     },
     components: {
         [Radio.name]: Radio,
-        [Input.name]: Input
     },
     methods:{
         // 处理ajax拉取数据
@@ -339,7 +338,7 @@ export default {
     line-height: 40px;
     margin-left: 10px;
     margin-top: 20px;
-    .el-input {
+    input {
       width: 180px; 
     font-size: .8em;
     }

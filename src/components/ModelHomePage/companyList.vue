@@ -86,6 +86,7 @@
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
 import addCart from "../../addCart";
+import {MessageBox} from 'element-ui'
 import { mapActions,mapGetters } from "vuex";
 export default {
   components: { distpicker },
@@ -98,7 +99,7 @@ export default {
     isLogged(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -207,7 +208,7 @@ export default {
       var that = this;
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"

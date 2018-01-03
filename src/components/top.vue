@@ -20,9 +20,9 @@
         <p class="exit" @click="exit">【退出】</p>
       </div>
       <div class="box-right">
-        <div class="shop-cart">
+        <div class="shop-cart"  @click="cartBut">
           <span class="bgCart"></span>
-          <el-button type="text" class="cartBut" @click="cartBut">
+          <el-button type="text" class="cartBut">
             <p>购物车
               <span>{{getNum}}</span> 件</p>
           </el-button>
@@ -42,6 +42,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import {MessageBox} from 'element-ui'
 export default {
   created() {
     var that = this;
@@ -79,15 +80,19 @@ export default {
       if (this.getName) {
         this.$router.push({ path: "/tabs/shoppingCart" });
       } else {
-        this.$alert("请先进行登录", "标题名称", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
-          callback: action => {
+          cancelButtonText: "取消",
+          type: "warning"
+        })
+          .then(() => {
             this.$router.push({
               path: "/outter/login",
               query: { redirect: "/tabs/shoppingCart" }
             });
-          }
-        });
+          })
+          .catch(() => {});
+        
       }
     }
   }
@@ -165,7 +170,7 @@ export default {
   height: 25px;
   margin-right: 5px;
   margin-top: 10px;
-  background: url(../assets/HomePageimages/Sprites.png) 0 -73px;
+  background: url(../assets/cart.png)  no-repeat;
   margin-left: 10px;
 }
 .bgOrder {

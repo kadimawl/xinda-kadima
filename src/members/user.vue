@@ -101,19 +101,19 @@ export default {
         }
         .myorder{
             span{
-                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background: url('../assets/ACCOUNT.png') no-repeat;
                 background-position: -102px -126px;
             }
         }
         .usereval{
             span{
-                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background: url('../assets/note.png') no-repeat;
                 background-position: -104px -185px;
             }
         }
         .accountset{
             span{
-                background: url('../assets/HomePageimages/Sprites.png') no-repeat;
+                background: url('../assets/mes.png') no-repeat;
                 background-position: -99px -76px;
             }
         }
