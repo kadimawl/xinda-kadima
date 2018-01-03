@@ -3,7 +3,6 @@
         <!-- 头像 -->
         <div class="nowtx">
             <p>当前头像：</p>
-            <!-- <img src="../assets/index/user.png" alt=""> -->
             <img src="../assets/mobile/h.jpg" alt="">
         </div>
         <!-- 姓名 -->
@@ -59,27 +58,23 @@
 
 <script>
 // 引入
-import { mapActions, mapGetters } from "vuex";
+import {  mapGetters } from "vuex";
 import dist from "../districts/districts";
 
 export default {
     created() {
         if (this.getName) {
-            if (sessionStorage.getItem("account" + this.getName + "")) {
-                var data = JSON.parse(sessionStorage.getItem("account" + this.getName + ""));
-                this.pageshow(data);
-            } else {
-                var that = this;
-                that.ajax.post("/xinda-api/member/info").then(function(data) {
+            var that = this;
+            that.ajax.post("/xinda-api/member/info").then(function(data) {
                 if (data.data.status == 1) {
+                    sessionStorage.setItem('account'+this.getName+'',JSON.stringify(data));
                     that.pageshow(data);
                 } else {
                     that.errorshow = true;
                     that.error = data.data.msg;
                     that.acolor = "#ff4745";
                 }
-                });
-            }
+            })
         } else {
             // 未登录不拉取数据
             this.errorshow = true;
@@ -92,7 +87,6 @@ export default {
     },
     data() {
         return {
-        headimg: "", //头像
         inputN: "", //输入姓名
         inputM: "", //输入邮箱
         radio: "1", //性别单选框
@@ -114,12 +108,10 @@ export default {
     },
     components: {},
     methods:{
-        ...mapActions(['setheadX']),
         // 处理ajax拉取数据
         pageshow:function(data){
             if(data){
                 var datas=data.data.data;
-                this.headimg=this.tUrl+datas.headImg;
                 this.inputN=datas.name;
                 this.inputM=datas.email;
                 if(datas.gender=='1'||datas.gender=='2'){
@@ -129,9 +121,6 @@ export default {
                 // 处理三级联动
                 this.seleCode=datas.regionId;
                 this.showarea(this.seleCode);
-                    // vuex传参
-                this.setheadX(this.headimg);
-                sessionStorage.setItem('account'+this.getName+'',JSON.stringify(data))
             }
         },
         // 页面点击事件
@@ -180,7 +169,6 @@ export default {
         },
         // 保存
         store:function(){
-
             if(this.getName){  // 登录
                 this.acolor='#ff4745';
                 if(!this.colorN=='#5d95e8'){//判断名字输入
@@ -211,7 +199,6 @@ export default {
                     var that=this;
                     that.ajax.post('/xinda-api/member/update-info',
                         that.qs.stringify({
-                            headImg:that.headimg,
                             name:that.inputN,
                             gender:that.radio,
                             email:that.inputM,
