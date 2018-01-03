@@ -67,7 +67,7 @@ export default {
             var that = this;
             that.ajax.post("/xinda-api/member/info").then(function(data) {
                 if (data.data.status == 1) {
-                    sessionStorage.setItem('account'+this.getName+'',JSON.stringify(data));
+                    sessionStorage.setItem('account'+that.getName+'',JSON.stringify(data));
                     that.pageshow(data);
                 } else {
                     that.errorshow = true;
@@ -150,7 +150,13 @@ export default {
         // 名字失去焦点
         inputname:function(){
             if(this.inputN){
-                this.colorN='#5d95e8';
+                if(this.inputN.length<=8&&this.inputN.length>=2){
+                    this.colorN='#5d95e8';
+                }else{
+                    this.errorshow=true;//提示
+                    this.error='名字过短或过长';
+                    this.inputN='';
+                }
             }
         },
         // 性别框改变
@@ -339,7 +345,7 @@ export default {
     margin-left: 10px;
     margin-top: 20px;
     input {
-      width: 180px; 
+    width: 180px; 
     font-size: .8em;
     }
     p {

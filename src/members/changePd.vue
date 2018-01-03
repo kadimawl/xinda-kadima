@@ -289,7 +289,7 @@ export default {
   // 所有输入框
   input {
     width: 200px;
-    height: 25px;
+    height: 40px;
     border: 1px solid #b0b0b0;
   }
   // 旧密码
@@ -354,7 +354,7 @@ export default {
     width: 17px;
     height: 12px;
     position: relative;
-    top: 18px;
+    top: 15px;
     right: 25px;
   }
 }
