@@ -299,7 +299,7 @@ export default {
       for (const key in rData) {
         if (rData[key].name == "社保代理") {
           that.ItemLists = rData[key].itemList;
-          return;
+          break;
         }
       }
       that.types("17c8ba5bba6a4a879d828613e6e5e38e"); 
