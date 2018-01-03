@@ -413,7 +413,6 @@ export default {
         }
         .B-lists {
           width: 926px;
-          // height: 110px;
           margin: 0 auto;
           margin-bottom: 10px;
           border-bottom: 1px solid #ccc;
@@ -485,7 +484,7 @@ export default {
       height: 93px;
       margin: 13px auto 29px;
       border-radius: 50%;
-      background: url('../../assets/HomePageimages/Sprites.png') no-repeat;
+      background: url(../../assets/HomePageimages/Sprites.png);
     }
     p {
       width: 171px;

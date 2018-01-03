@@ -121,6 +121,7 @@ export default {
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
+      console.log("111")
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
@@ -294,14 +295,14 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      console.log(data.data.data)
+      console.log(rData)
       for (const key in rData) {
-        if (rData[key].name == "商标注册") {
+        if (rData[key].name == "知识产权") {
           that.ItemLists = rData[key].itemList;
-          break;
+          return;
         }
       }
-      that.types("93bfade97b784891847995255419cbaa"); //默认渲染商标注册
+      that.types("6e129158ea5544ebac88cd6804e3aa65"); 
     });
 
     this.ajax
@@ -310,7 +311,7 @@ export default {
         this.qs.stringify({
           start: 0,
           limit: 3,
-          productTypeCode: "8",
+          productTypeCode: "3",
           sort: 2
         })
       )
