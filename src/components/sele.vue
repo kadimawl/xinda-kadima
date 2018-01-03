@@ -17,7 +17,9 @@
         </div>
         <div>
           <input type="text" placeholder="搜索您需要的服务或服务商" v-model="seleVal" @keyup="seleBlur" @focus="seleFocus">
-          <div class="btn"><span></span></div>
+          <div class="btn" @click="search">
+            <span></span>
+          </div>
         </div>
         <ul class="selebox" v-show="selebox">
           <li v-for="item in getSele" :key="item.id" @click="seleJump(item.id)">{{item.serviceName||item.productTypes}}</li>
@@ -107,8 +109,31 @@ export default {
     //点击跳转商品详情页
     seleJump(id) {
       if (id) {
-        this.$router.push({ path: "/detial/service", query: { shoppingId: id } });
+        this.$router.push({
+          path: "/detial/service",
+          query: { shoppingId: id }
+        });
         this.selebox = false;
+      }
+    },
+    //搜索按钮
+    search() {
+      var seleUrl;
+      console.log(this.seleVal)
+      if (this.seleVal != "") {
+        if (this.isTrue) {
+          seleUrl = "/xinda-api/product/package/search-grid";
+        } else {
+          seleUrl = "/xinda-api/provider/search-grid";
+        }
+        this.ajax
+          .post(
+            seleUrl,
+            this.qs.stringify({
+              searchName: this.seleVal
+            })
+          )
+          .then(data=>console.log(data.data));
       }
     },
     social() {
@@ -199,7 +224,7 @@ h1 {
       width: 101px;
       height: 37px;
       border: none;
-      span{
+      span {
         width: 30px;
         height: 30px;
         display: block;

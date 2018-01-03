@@ -1,11 +1,10 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
-import Vue from 'vue'
+// import Vue from 'vue'
 import App from './App'
 import router from './router' //vue的路由实例化对象
 import store from './store'
-import qs from 'qs'
-// import axios from 'axios'
+// import qs from 'qs'
 
 
 import {Radio,Input,DatePicker,Rate,Button,Carousel,CarouselItem,MessageBox,Message} from 'element-ui'
@@ -25,10 +24,10 @@ import mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
 Vue.prototype.ajax = axios;
-Vue.prototype.qs = qs;
+Vue.prototype.qs = Qs;
 Vue.prototype.tUrl = 'http://123.58.241.146:8088/xinda/pic';
 
-Vue.use(ElementUI);
+
 Vue.config.productionTip = false;
 Vue.config.devtools = false;
 
