@@ -5,7 +5,6 @@ import App from './App'
 import router from './router' //vue的路由实例化对象
 import store from './store'
 import qs from 'qs'
-// import axios from 'axios'
 
 
 import {Radio,Input,DatePicker,Rate,Button,Carousel,CarouselItem,MessageBox,Message} from 'element-ui'

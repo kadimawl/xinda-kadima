@@ -20,6 +20,10 @@ module.exports = {
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
   },
+  externals: {
+    'axios': 'axios',
+    'md5': 'md5'
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
@@ -43,7 +47,7 @@ module.exports = {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
-          limit: 10000,
+          limit: 8192,
           name: utils.assetsPath('img/[name].[hash:7].[ext]')
         }
       },
