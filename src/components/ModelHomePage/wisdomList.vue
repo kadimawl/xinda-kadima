@@ -12,10 +12,10 @@
               </div>
             </div>
           </div>
-          <div class="typeRow Row">
+          <div class="typeRow">
             <div class="type">类型</div>
-            <div v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name">
-              <div class="lists" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
+            <div class="typeList">
+              <div class="lists" v-for="(itemNameIII,key,index) in subList" :key="itemNameIII.name" @click="kinds(key,index)" :class="[(listIndex|0)===index?'color2693d4':'color000']">{{itemNameIII.name}}</div>
             </div>
           </div>
           <div class="spaceRow Row">
@@ -114,14 +114,14 @@ export default {
           })
           .catch(() => {});
       } else {
-        plugins(id, that,'/tabs/shoppingCart'); //立即购买公共方法
-      } 
+        plugins(id, that, "/tabs/shoppingCart"); //立即购买公共方法
+      }
     },
 
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
-      console.log("111")
+      console.log("111");
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
@@ -211,8 +211,9 @@ export default {
           cancelButtonText: "取消",
           type: "warning"
         })
-          .then(() => {   
-            this.$router.push({  //登录之后在跳转回当前页
+          .then(() => {
+            this.$router.push({
+              //登录之后在跳转回当前页
               path: "/outter/login",
               query: { redirect: "/tabs/taxationList" }
             });
@@ -220,10 +221,10 @@ export default {
           .catch(() => {});
       } else {
         plugins(id, that); //加入购物车/立即购买公共方法
-      };
+      }
       this.ajax.post("/xinda-api/cart/cart-num").then(data => {
         var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum+1);
+        that.setNum(cartNum + 1);
       });
     },
     changePage: function() {
@@ -295,14 +296,14 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      console.log(rData)
+      console.log(rData);
       for (const key in rData) {
         if (rData[key].name == "知识产权") {
           that.ItemLists = rData[key].itemList;
-          return;
+          break;
         }
       }
-      that.types("6e129158ea5544ebac88cd6804e3aa65"); 
+      that.types("6e129158ea5544ebac88cd6804e3aa65");
     });
 
     this.ajax
@@ -440,9 +441,14 @@ export default {
                 margin-bottom: 20px;
               }
               p {
+                height: 20px;
                 font-size: 14px;
                 margin-left: 20px;
                 margin-bottom: 15px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+
                 span {
                   margin-right: 50px;
                 }
@@ -511,46 +517,20 @@ export default {
     }
   }
 }
-
-.Row {
-  height: 40px;
-  border-top: 1px solid #ccc;
+.typeRow {
+  width: 947px;
   display: flex;
-  .server {
-    width: 98px;
-    height: 40px;
-    border-right: 1px solid #ccc;
-    font-size: 15px;
-    line-height: 40px;
-    text-align: center;
-  }
-  .serverList {
-    width: 847px;
-    height: 40px;
-    display: flex;
-    flex-wrap: wrap;
-    .lists {
-      height: 25px;
-      border-radius: 5px;
-      font-size: 14px;
-      line-height: 25px;
-      margin: 5px 10px;
-      padding: 2px 5px;
-    }
-    .innerServer {
-      display: flex;
-    }
-  }
-  .innerServer {
-    display: flex;
-  }
   .type {
     width: 98px;
-    height: 40px;
-    border-right: 1px solid #ccc;
     font-size: 15px;
-    line-height: 40px;
+    line-height: 117px;
     text-align: center;
+  }
+  .typeList {
+    width: 847px;
+    display: flex;
+    flex-wrap: wrap;
+    border-left: 1px solid #ccc;
   }
   .lists {
     height: 25px;
@@ -565,7 +545,24 @@ export default {
     color: #fff;
     cursor: pointer;
   }
+}
+.Row {
+  height: 40px;
+  border-top: 1px solid #ccc;
+  display: flex;
+  .server {
+    width: 98px;
+    height: 40px;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    font-size: 15px;
+    line-height: 40px;
+    text-align: center;
+  }
 
+  .innerServer {
+    display: flex;
+  }
   .space {
     width: 98px;
     height: 40px;
@@ -575,6 +572,30 @@ export default {
     line-height: 40px;
     text-align: center;
   }
+}
+.serverList {
+  width: 847px;
+  height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ccc;
+  .innerServer {
+    display: flex;
+  }
+}
+.lists {
+  height: 25px;
+  border-radius: 5px;
+  font-size: 14px;
+  line-height: 25px;
+  text-align: center;
+  margin: 5px 10px;
+  padding: 2px 5px;
+}
+.lists:hover {
+  background-color: #2693d4;
+  color: #fff;
+  cursor: pointer;
 }
 
 .spaceList {

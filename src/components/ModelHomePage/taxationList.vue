@@ -121,6 +121,7 @@ export default {
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
+      console.log("222")
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;

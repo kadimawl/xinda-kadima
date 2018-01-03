@@ -131,7 +131,6 @@ export default {
     [DatePicker.name]:DatePicker
     },
     methods:{
-        ...mapActions(['setCode']),
         // 调用数据公共方法
         getData(start,limit,time1,time2,code){
             var that=this;
@@ -224,9 +223,8 @@ export default {
         },
         // 删除订单
         remove:function(code){
-            this.conRemove=true;
+            this.conRem0ove=true;
             this.orderid=code;
-            this.getData(start,limit,time1,time2,code)
         },
         // 隐藏删除订单提示框
         cancel(){
@@ -449,11 +447,8 @@ export default {
                     text-align: center;
                     border: 2px solid #f8f8f8;
                     p{
-                        margin-top: 30px;
-                        height: 40px;
                         color: #2393d3;
                         font-size: 18px;
-                        line-height: 40px;
                     }
                 }
                 // 操作按钮

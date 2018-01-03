@@ -3,21 +3,21 @@
         <!-- 旧密码 -->
         <div class="oldpd">
             <p>旧密码</p>
-            <el-input :type="oldpdtype" v-model="inputoldpd" class="inputoldpd" placeholder="请输入旧密码" @blur="oldpdB"></el-input>
+            <input :type="oldpdtype" v-model="inputoldpd" class="inputoldpd" placeholder="请输入旧密码" @blur="oldpdB">
             <img class="visible" :src="oldpdurl" @click="oldpdshow">
             <span class="mark" :style="{color:colorOld}">*</span>
         </div>
         <!-- 新密码 -->
         <div class="newpd">
             <p>新密码</p>
-            <el-input :type="newpdtype" v-model="inputnewpd" class="inputnewpd" placeholder="请输入新密码" @blur="newpdB"></el-input>
+            <input :type="newpdtype" v-model="inputnewpd" class="inputnewpd" placeholder="请输入新密码" @blur="newpdB">
             <img class="visible" :src="newpdurl" @click="newpdshow">
             <span class="mark" :style="{color:colorNew}">*</span>
         </div>
         <!-- 再次输入新密码 -->
         <div class="again">
             <p>再次输入新密码</p>
-            <el-input :type="againtype" v-model="inputagain" class="inputagain" placeholder="请再次输入新密码" @blur="againB"></el-input>
+            <input :type="againtype" v-model="inputagain" class="inputagain" placeholder="请再次输入新密码" @blur="againB">
             <img class="visible" :src="againurl" @click="againshow">
             <span class="mark" :style="{color:colorAgain}">*</span>
         </div>
@@ -287,13 +287,10 @@ export default {
     color: #676767;
   }
   // 所有输入框
-  .el-input {
+  input {
     width: 200px;
-    input {
-      width: 200px;
-      height: 25px;
-      border: 1px solid #b0b0b0;
-    }
+    height: 25px;
+    border: 1px solid #b0b0b0;
   }
   // 旧密码
   .oldpd {

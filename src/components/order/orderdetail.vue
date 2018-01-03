@@ -164,7 +164,6 @@ export default {
         errorstop:function(){
             this.errorts=false;
         },
-        
     }
 };
 </script>
