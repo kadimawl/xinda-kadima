@@ -10,7 +10,7 @@ const register  = () => import(/* webpackChunkName: 'outter' */ '@/views/registe
 const forgetpw  = () => import(/* webpackChunkName: 'outter' */ '@/views/forgetpw') //忘记密码
 
 
-const HomePage  = () => import(/* webpackChunkName: 'HomePage' */ '@/components/ModelHomePage/HomePage') //首页模块
+const HomePage  = () => import('@/components/ModelHomePage/HomePage') //首页模块
 const taxationList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/taxationList') //财税服务模块
 const companyList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/companyList' )//公司工商模块
 const wisdomList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/wisdomList' )//知识产权模块

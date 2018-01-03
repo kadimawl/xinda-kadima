@@ -315,28 +315,26 @@ h4 {
     box-sizing: border-box;
     .icon {
       width: 160px;
-      height: 180px;
-      background: url(../../assets/index/sum.png) -265px 0;
+      height: 185px;
+      background: url(../../assets/pen.png) no-repeat;
     }
     .iconTwo {
-      background-position-y: -210px;
+      background: url(../../assets/money.png)
     }
     .iconThree {
-      background-position: -264px -427px;
+      background: url(../../assets/com.png)
     }
     .iconFour {
-      background-position-y: -650px;
+     background: url(../../assets/star.png)
     }
     p {
       text-align: center;
       font-size: 11px;
-      // color: #a3a3a3;
       margin: 0;
     }
     .h3 {
       font-size: 18px;
       font-weight: 600;
-      // color: #000;
       margin: 18px 0 5px;
       text-align: center;
     }

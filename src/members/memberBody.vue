@@ -84,6 +84,7 @@
 // 引入模块
 var moment = require("moment");
 import { mapActions, mapGetters } from "vuex";
+import {Input,DatePicker} from 'element-ui';
 import pageturn from "./pageturn";
 export default {
     // 拉取数据
@@ -124,7 +125,11 @@ export default {
     computed:{
         ...mapGetters(['getName']),
     },
-    components:{pageturn},
+    components:{
+        pageturn,
+    [Input.name]:Input,
+    [DatePicker.name]:DatePicker
+    },
     methods:{
         // 调用数据公共方法
         getData(start,limit,time1,time2,code){

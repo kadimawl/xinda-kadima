@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <img class="ad" src="../../assets/shop/u1225.png" alt="">
+    <img class="ad" src="../../assets/shop/u1225.jpg" alt="">
     <div>
       <router-view/>
     </div>
