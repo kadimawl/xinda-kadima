@@ -29,7 +29,6 @@
             </tr>
             <tr class="itemLists">
               <td class="itemPic">
-                <!-- <el-checkbox v-model="checked" class="check"></el-checkbox> -->
                 <img :src="tUrl+Goods.providerImg" alt=""></td>
               <td class="serviceName">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
@@ -74,8 +73,10 @@
 </template>
 
 <script>
+import {Message,MessageBox,Button} from 'element-ui'
 import { mapActions } from "vuex";
 export default {
+  components: {[Button.name]:Button},
   created() {
     var that = this;
     this.recData(); //拉取购物品项列表
@@ -171,7 +172,7 @@ export default {
     dele(id) {
       var that = this;
       //删除
-          this.$confirm('确认删除该商品？, 是否继续?', '提示', {
+          MessageBox.confirm('确认删除该商品？, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -185,12 +186,12 @@ export default {
             that.setNum(that.cartNum);
           });
         });
-          this.$message({
+          Message({
             type: 'success',
             message: '删除成功!'
           });
         }).catch(() => {
-          this.$message({
+          Message({
             type: 'info',
             message: '已取消删除'
           });          

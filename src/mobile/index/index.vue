@@ -43,7 +43,7 @@
               <img src="../../assets/mobile/index/shangbiao.png" alt="">
               <img src="../../assets/mobile/index/banquan.png" alt="">
             </div>
-            <img src="../../assets/mobile/index/zhuzuo.png" alt="">
+            <img src="../../assets/mobile/index/zhuzuo.jpg" alt="">
         </div>
         <div class="bodyT">
             <p>初创企业</p><span></span>
@@ -75,8 +75,13 @@
 
 <script>
 import mobileBottom from "../mobileBottom";
+import {Carousel,CarouselItem} from 'element-ui'
+  
 export default {
-  components: { mobileBottom },
+  components: { mobileBottom ,
+  [CarouselItem.name]: CarouselItem,
+  [Carousel.name]: Carousel
+   },
   data() {
     return {
       datas: []
@@ -123,19 +128,19 @@ export default {
     border: 5px solid #000;
   }
   .el-carousel__item:nth-child(3) {
-    background: url(../../assets/HomePageimages/lun1.jpg);
+    background: url(../../../static/lun1.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(4) {
-    background: url(../../assets/HomePageimages/lun2.jpg);
+    background: url(../../../static/lun2.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(5) {
-    background: url(../../assets/HomePageimages/lun3.jpg);
+    background: url(../../../static/lun3.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(6) {
-    background: url(../../assets/HomePageimages/lun4.jpg);
+    background: url(../../../static/lun4.jpg);
     background-size: 100% 100%;
   }
 }

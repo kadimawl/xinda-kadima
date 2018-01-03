@@ -7,20 +7,9 @@ import store from './store'
 // import qs from 'qs'
 
 
-import {Radio,Input,DatePicker,Rate,Button,Carousel,CarouselItem,MessageBox,Message} from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
-Vue.use(Radio);
-Vue.use(Input);
-Vue.use(DatePicker);
-Vue.use(Rate);
-Vue.use(Button);
-Vue.use(Carousel );
-Vue.use(CarouselItem);
-Vue.prototype.$confirm = MessageBox.confirm;
-Vue.prototype.$message = Message
 
-import mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
 Vue.prototype.ajax = axios;

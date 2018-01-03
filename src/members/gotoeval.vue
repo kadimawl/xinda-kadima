@@ -41,7 +41,7 @@
 
 <script>
 import {mapGetters,mapActions} from 'vuex' 
-
+import {Radio,Rate} from 'element-ui';
 export default {
     created(){//获得服务信息
 
@@ -64,7 +64,10 @@ export default {
             evalcont:'',//
         };
     },
-    components:{},
+    components:{
+        [Radio.name]:Radio,
+        [Rate.name]:Rate
+    },
     computed:{
         ...mapGetters(['getEvaldetail']),
     },

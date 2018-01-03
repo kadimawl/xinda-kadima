@@ -58,7 +58,7 @@
       <div class="starContent" @click="starclick">
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="require('../../assets/HomePageimages/i1.jpg')">
+            <img class="boxImg" src="../../../static/i1.jpg">
             <h4>标准五险一金</h4>
             <p>定制化社保代理，定制化代缴服务</p>
             <span>20
@@ -68,8 +68,7 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="require('../../assets/HomePageimages/i2.jpg')">
-            <!-- <img class="boxImg" :src="reg"> -->
+            <img class="boxImg" src="../../../static/i2.jpg">
             <h4>内资有限公司注册</h4>
             <p>一键完成注册，快速开办公司</p>
             <span>600
@@ -79,7 +78,7 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="require('../../assets/HomePageimages/i3.jpg')">
+            <img class="boxImg" src="../../../static/i3.jpg">
             <h4>小规模代理记账/年</h4>
             <p>专业会计报税，高效、便捷、贴心</p>
             <span>3000
@@ -89,7 +88,7 @@
         </div>
         <div class="boxFrame">
           <div class="showBox">
-            <img class="boxImg" :src="require('../../assets/HomePageimages/i2.jpg')">
+            <img class="boxImg" src="../../../static/i2.jpg">
             <h4>国内普通商标注册</h4>
             <p>次日提交商标申请，最快保护品牌价值</p>
             <span>1000
@@ -123,16 +122,17 @@
       </div>
       <div class="IP-AD">
         <div class="ad-Pic">
-          <div class="picLeft"></div>
+          <div class="picLeft"><img src="../../../static/i4.jpg" alt="">
+             </div>
           <div class="picRight">
             <div class="rightTop">
-              <div class="topI"></div>
-              <div class="topII"></div>
+              <div class="topI"><img  src="../../../static/i5.jpg" alt=""></div>
+              <div class="topII"><img src="../../../static/i6.jpg" alt=""></div>
             </div>
-            <div class="rightBottom"></div>
+            <div class="rightBottom"><img src="../../../static/i7.jpg" alt=""></div>
           </div>
         </div>
-        <div class="ad-special"></div>
+        <div class="ad-special"><img src="../../../static/i9_03.png" alt=""></div>
       </div>
     </div>
     <!-- 推荐服务 -->
@@ -185,15 +185,20 @@
       <div class="topFrame">
         <h3>合作伙伴</h3>
       </div>
-      <div class="partnerImg"></div>
+      <div class="partnerImg"><img src="../../../static/i10_03.png" alt=""></div>
+      <div class="partnerImg"><img src="" alt=""></div>
     </div>
   </div>
 </template>
 
 <script>
 import sele from "@/components/sele"; //头部部分引用
+import {Carousel,CarouselItem} from 'element-ui'
 export default {
-  components: { sele },
+  components: { sele,
+  [CarouselItem.name]: CarouselItem,
+  [Carousel.name]: Carousel
+   },
   created() {
     var that = this;
     this.dataRequest1();
@@ -404,19 +409,19 @@ export default {
     border: 5px solid #000;
   }
   .el-carousel__item:nth-child(3) {
-    background: url(../../assets/HomePageimages/lun1.jpg);
+    background: url(../../../static/lun1.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(4) {
-    background: url(../../assets/HomePageimages/lun2.jpg);
+    background: url(../../../static/lun2.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(5) {
-    background: url(../../assets/HomePageimages/lun3.jpg);
+    background: url(../../../static/lun3.jpg);
     background-size: 100% 100%;
   }
   .el-carousel__item:nth-child(6) {
-    background: url(../../assets/HomePageimages/lun4.jpg);
+    background: url(../../../static/lun4.jpg);
     background-size: 100% 100%;
   }
 }
@@ -705,7 +710,6 @@ export default {
       .picLeft {
         width: 325px;
         height: 480px;
-        background: url(../../assets/HomePageimages/i4.jpg);
       }
       .picRight {
         width: 850px;
@@ -721,18 +725,15 @@ export default {
           .topI {
             width: 413px;
             height: 230px;
-            background: url(../../assets/HomePageimages/i5.jpg);
           }
           .topII {
             width: 413px;
             height: 230px;
-            background: url(../../assets/HomePageimages/i6.png);
           }
         }
         .rightBottom {
           width: 850px;
           height: 230px;
-          background: url(../../assets/HomePageimages/i7.jpg) no-repeat;
         }
       }
     }
@@ -740,7 +741,6 @@ export default {
       width: 1200px;
       height: 154px;
       margin-top: 45px;
-      background: url(../../assets/HomePageimages/i9_03.png);
     }
   }
 }
@@ -928,7 +928,6 @@ export default {
     width: 1200px;
     height: 147px;
     margin-top: 35px;
-    background: url(../../assets/HomePageimages/i10_03.png);
   }
 }
 
