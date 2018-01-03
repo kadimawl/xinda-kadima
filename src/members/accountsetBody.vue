@@ -8,7 +8,7 @@
         <!-- 姓名 -->
         <div class="name">
             <p>姓名：</p>
-            <el-input v-model="inputN" class="inputname" placeholder="请输入姓名" @blur="inputname"></el-input>
+            <input v-model="inputN" class="inputname" placeholder="请输入姓名" @blur="inputname">
             <span class="mark" :style="{color:colorN}">*</span>
         </div>
         <!-- 性别 -->
@@ -21,7 +21,7 @@
         <!-- 邮箱 -->
         <div class="mailbox">
             <p>邮箱：</p>
-            <el-input v-model="inputM" class="inputname" placeholder="请输入邮箱" @blur="mail"></el-input>
+            <input v-model="inputM" class="inputname" placeholder="请输入邮箱" @blur="mail">
             <span class="mark" :style="{color:colorM}">*</span>
         </div>
         <!-- 地区 -->
@@ -67,7 +67,7 @@ export default {
             var that = this;
             that.ajax.post("/xinda-api/member/info").then(function(data) {
                 if (data.data.status == 1) {
-                    sessionStorage.setItem('account'+this.getName+'',JSON.stringify(data));
+                    sessionStorage.setItem('account'+that.getName+'',JSON.stringify(data));
                     that.pageshow(data);
                 } else {
                     that.errorshow = true;
@@ -148,7 +148,13 @@ export default {
         // 名字失去焦点
         inputname:function(){
             if(this.inputN){
-                this.colorN='#5d95e8';
+                if(this.inputN.length<=8&&this.inputN.length>=2){
+                    this.colorN='#5d95e8';
+                }else{
+                    this.errorshow=true;//提示
+                    this.error='名字过短或过长';
+                    this.inputN='';
+                }
             }
         },
         // 性别框改变
@@ -336,8 +342,8 @@ export default {
     line-height: 40px;
     margin-left: 10px;
     margin-top: 20px;
-    .el-input {
-      width: 180px; 
+    input {
+    width: 180px; 
     font-size: .8em;
     }
     p {

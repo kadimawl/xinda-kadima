@@ -7,7 +7,7 @@
     <!-- 订单号搜索框 -->
     <div class="search">
       <p>订单号：</p>
-      <el-input v-model="inputcode" placeholder="请输入订单号搜索"></el-input>
+      <input v-model="inputcode" placeholder="请输入订单号搜索">
       <button @click="searchs">搜索</button>
       <span v-if="msg">{{sermsg}}</span>
     </div>
@@ -299,12 +299,9 @@ export default {
             margin-right: 20px;
         }
         input {
-            width: 265px;
-            height: 24px;
-            border: 1px solid #b0b0b0;
-        }
-        .el-input {
             width: 220px;
+            height: 40px;
+            border: 1px solid #b0b0b0;
         }
         button {
             width: 72px;
