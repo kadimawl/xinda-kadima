@@ -484,11 +484,7 @@ export default {
       height: 93px;
       margin: 13px auto 29px;
       border-radius: 50%;
-<<<<<<< HEAD
       background: url(../../assets/HomePageimages/Sprites.png);
-=======
-      background: url('../../assets/HomePageimages/Sprites.png') no-repeat;
->>>>>>> 840820a2fb53519976a539adb5bb74418d78f5f1
     }
     p {
       width: 171px;
