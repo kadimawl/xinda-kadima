@@ -2,7 +2,7 @@
   <div class="body">
     <p class="topP">首页/{{product.info}}</p>
     <div class="shopBuy">
-      <img :src="picURL" :onerror="picURL=require('../../assets/shop/u1182.jpg')" alt="">
+      <img :src="picURL" :onerror="loadDefault" alt="">
       <div>
         <h3>{{product.info}}</h3>
         <p>{{product.name}}</p>
@@ -36,6 +36,7 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import plugins from "../../plugins";
+import {MessageBox} from 'element-ui'
 export default {
   data() {
     return {
@@ -63,8 +64,7 @@ export default {
         that.provider = shop.provider;
         that.shops = shop;
         that.id = shoppingID;
-        that.picURL =
-          this.tUrl + shop.product.img;
+        that.picURL =that.tUrl + shop.product.img;
       });
   },
   computed: {
@@ -72,11 +72,14 @@ export default {
   },
   methods: {
     ...mapActions(["setNum"]),
+    loadDefault(){
+      this.picURL=require('../../assets/shop/u1182.jpg');
+    },
     //确认是否登录
     isLogged(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -108,7 +111,8 @@ export default {
       //加入购物车
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -184,7 +188,6 @@ p {
   img {
     width: 525px;
     height: 390px;
-    background: pink;
   }
   h3 {
     font-size: 23px;

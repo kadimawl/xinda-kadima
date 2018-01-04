@@ -64,7 +64,7 @@ export default {
           productType.push(newpro[a]);
         }
       }
-      productType.sort(this.objSort("code"));
+      this.objSort(productType);
       this.productTypes = productType;
     });
     this.productTypesC(0);
@@ -112,6 +112,17 @@ export default {
     },
     selected: function(code) {
       this.seleCode = code;
+    },
+    objSort(obj) {
+      for (var i = 0; i < obj.length; i++) {
+        for (var j = 0; j < obj.length; j++) {
+          if (i != j && obj[i].code < obj[j].code) {
+            var num = obj[i];
+            obj[i] = obj[j];
+            obj[j] = num;
+          }
+        }
+      }
     }
   }
 };

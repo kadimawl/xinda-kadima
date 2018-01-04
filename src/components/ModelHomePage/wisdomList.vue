@@ -87,6 +87,7 @@ import distpicker from "../distpicker";
 import plugins from "../../plugins";
 import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
+import {MessageBox} from 'element-ui'
 export default {
   components: { distpicker },
   computed: {
@@ -101,7 +102,7 @@ export default {
     isLogged(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+        MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -121,7 +122,6 @@ export default {
     types(key, typeCode) {
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
-      console.log("111");
       this.subList = this.ItemLists[key].itemList;
       this.typecode = this.ItemLists[key].code;
       var typeCode = this.typecode;
@@ -198,15 +198,20 @@ export default {
       //立即购买
       var that = this;
       this.isLogged(id);
-      this.ajax.post("xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
+      //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
       });
     },
     addCart: function(id) {
       var that = this;
       if (!this.getName) {
-        this.$confirm("请先进行登录, 是否继续?", "提示", {
+       MessageBox.confirm("请先进行登录, 是否继续?", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -222,9 +227,14 @@ export default {
       } else {
         plugins(id, that); //加入购物车/立即购买公共方法
       }
-      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum + 1);
+      //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
       });
     },
     changePage: function() {
@@ -296,7 +306,6 @@ export default {
     var that = this;
     this.ajax.post("/xinda-api/product/style/list").then(function(data) {
       var rData = data.data.data;
-      console.log(rData);
       for (const key in rData) {
         if (rData[key].name == "知识产权") {
           that.ItemLists = rData[key].itemList;
@@ -320,12 +329,15 @@ export default {
         var gData = data.data.data;
         that.products = gData;
       });
-    if (this.getName) {
-      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
+    //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
       });
-    }
   },
   data() {
     return {

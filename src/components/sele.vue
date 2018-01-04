@@ -2,7 +2,7 @@
   <div class="Select" v-show="seleShow">
     <div class="sele">
       <div class="logo">
-        <div class="backG"></div>
+        <div class="backG" @click="getHome"></div>
         <h1>信达</h1>
         <div>
           <p>北京市</p>
@@ -108,6 +108,7 @@ export default {
     },
     //点击跳转商品详情页
     seleJump(id) {
+      console.log(id)
       if (id) {
         this.$router.push({
           path: "/detial/service",
@@ -119,7 +120,6 @@ export default {
     //搜索按钮
     search() {
       var seleUrl;
-      console.log(this.seleVal)
       if (this.seleVal != "") {
         if (this.isTrue) {
           seleUrl = "/xinda-api/product/package/search-grid";
@@ -156,6 +156,9 @@ export default {
     },
     cReg() {
       this.$router.push({ path: "/tabs/companyList" });
+    },
+    getHome() {
+      this.$router.push({path: '/'})
     }
   }
 };
@@ -229,7 +232,7 @@ h1 {
         height: 30px;
         display: block;
         margin: auto;
-        background: url("../assets/HomePageimages/Sprites.png") no-repeat 0 -110px;
+        background: url("../assets/search.png") no-repeat ;
       }
       background-color: #2693d4;
       vertical-align: bottom;
@@ -262,7 +265,7 @@ h1 {
   display: block;
   width: 46px;
   height: 49px;
-  background: url("../assets/index/memCen.png") no-repeat -27px -337px;
+  background: url("../assets/teleP.png") no-repeat -27px -337px;
   margin: 10px 0 0;
 }
 .telP {

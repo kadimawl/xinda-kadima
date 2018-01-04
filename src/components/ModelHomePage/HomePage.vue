@@ -248,17 +248,15 @@ export default {
           }
         }
         that.ItemLists = datas;
-        console.log(that.ItemLists);
       });
     },
     dataRequest2: function() {
       //各类产品服务
       var that = this;
       this.ajax.post("/xinda-api/recommend/list").then(function(data) {
-        var tData = data.data.data.hq; //
+        var tData = data.data.data.hq; 
         var gData = data.data.data.provider;
         var lData = data.data.data.product;
-        console.log(data.data.data.hq);
         that.products = tData;
         that.providers = gData;
         that.services = lData;
@@ -363,11 +361,9 @@ export default {
       });
     },
     shorhi() {
-      // console.log("切换");
       this.SorH = true;
     },
     shorhi2() {
-      // console.log("切换");
       this.SorH = false;
     },
     toDetail(id) {
@@ -378,7 +374,6 @@ export default {
       });
     },
     toStore(id) {
-      // console.log("111");
       // 跳转店铺详情
       this.$router.push({
         path: "/shopList",
@@ -403,8 +398,6 @@ export default {
   position: relative;
 }
 .el-carousel {
-  // width: 1200px;
-  // height: 405px;
   .el-carousel__item:nth-child(1) {
     border: 5px solid #000;
   }
