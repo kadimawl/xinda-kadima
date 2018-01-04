@@ -15,6 +15,11 @@
             <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval" @click="gotoEval(index)">去评价</router-link>
         </div>
     </div>
+    <!-- 用于跳转去评价页面 ，由于没有评价数据-->
+    <div class="Nright" v-if="datas.length==0">
+        <p>由于没有评价数据,用于跳转去评价页面 </p>
+        <router-link :to="{path:'/member/userEval/gotoeval'}" tag="button" class="gotoeval" @click="gotoEval()">去评价</router-link>
+    </div>
     <pageturn :total="tatal" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
 </div>
   
@@ -152,5 +157,23 @@ export default {
         }
     }
 }
- 
+.Nright{
+        width: 300px;
+        height: 70px;
+        text-align: center;
+        margin-left: 50px;
+        p{
+            line-height: 30px;
+        }
+        .gotoeval{
+            width: 118px;
+            height: 38px;
+            border: 1px solid #2494d4;
+            border-radius: 5px;
+            color: #2494d4;
+            background: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    }
 </style>

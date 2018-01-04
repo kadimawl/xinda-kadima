@@ -514,7 +514,7 @@ export default {
             background:#ffffff;
             margin: 350px auto;
             box-shadow: 3px 3px 2px #8d8d8d;
-            z-index: 12;
+            z-index: 10;
             >div:first-child{
                 width:100%;
                 height: 40px;
@@ -529,6 +529,7 @@ export default {
                     margin-right: 10px;
                     margin-top: 2px;
                     font-size: 20px;
+                    cursor: pointer;
                 }
             }
             >div:last-child{
@@ -537,6 +538,8 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
+                background:#fff;
+                z-index: 30;
                 button{
                     width: 65px;
                     height: 36px;
