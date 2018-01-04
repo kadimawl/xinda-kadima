@@ -42,16 +42,21 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import {MessageBox} from 'element-ui'
+import {MessageBox,Button} from 'element-ui'
 export default {
+  component :{
+    [Button.name]: Button
+  },
   created() {
     var that = this;
-    if (this.getName) {
-      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
-      });
-    }
+     this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
+    })
   },
   data() {
     return {
