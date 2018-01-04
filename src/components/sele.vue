@@ -265,7 +265,7 @@ h1 {
   display: block;
   width: 46px;
   height: 49px;
-  background: url("../assets/teleP.png") no-repeat -27px -337px;
+  background: url("../assets/teleP.png") no-repeat;
   margin: 10px 0 0;
 }
 .telP {

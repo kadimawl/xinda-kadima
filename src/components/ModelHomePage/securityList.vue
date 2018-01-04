@@ -328,12 +328,14 @@ export default {
         var gData = data.data.data;
         that.products = gData;
       });
-    if (this.getName) {
-      this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-        var cartNum = data.data.data.cartNum;
-        that.setNum(cartNum);
-      });
-    }
+    this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
+    })
   },
   data() {
     return {

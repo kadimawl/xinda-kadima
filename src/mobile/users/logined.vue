@@ -1,31 +1,27 @@
 <template>
-  <!-- <div> -->
-    <!-- <mt-header title="">
-      <router-link to="history.go(-1)" slot="left">
-        <mt-button icon="back"></mt-button>
+  <div class="mobile">
+    <div class="portrait"><img src="../../assets/mobile/h.jpg" alt=""></div>
+    <div class="name">{{name}}</div>
+    <div class="order e9">
+      <router-link class="links" to="/m/users/myOrder">
+        <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
+        <span class="msg">我的订单</span>
+        <img class="arrow" src="../../assets/mobile/arrow.png">
       </router-link>
-    </mt-header> -->
-    <div class="mobile">
-      <div class="portrait"><img src="../../assets/mobile/h.jpg" alt=""></div>
-      <div class="name">{{name}}</div>
-      <div class="order e9">
-        <a href="/#/m/users/myOrder">
-          <img class="bgOrder" src="../../assets/mobile/ORDER.png" alt="">
-          <span class="msg">我的订单</span>
-          <img class="arrow" src="../../assets/mobile/arrow.png">
-        </a>
 
-      </div>
-      <div class="design e9">
-        <a href="/#/m/users/accountSetting">
-          <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
-          <span class="msg">账户设置</span>
-          <img class="arrow" src="../../assets/mobile/arrow.png">
-        </a>
-
-      </div>
-      <a href="javascript: void(0)" class="exit" @click="exit">退出登录</a>
     </div>
+    <div class="design e9">
+      <router-link class="links" to="/m/users/accountSetting">
+        <img class="bgOrder" src="../../assets/mobile/account.png" alt="">
+        <span class="msg">账户设置</span>
+        <img class="arrow" src="../../assets/mobile/arrow.png">
+      </router-link>
+        
+
+    </div>
+    <router-link  class="exit" to="" @click.native="exit">退出登录</router-link>
+    <a href="javascript: void(0)" class="exit" @click="exit">退出登录</a>
+  </div>
   <!-- </div> -->
 
 </template>
@@ -66,7 +62,7 @@ export default {
 .mobile {
   width: 100%;
   background: #f8f8f8;
-  margin: .60rem auto 0;
+  margin: 0.6rem auto 0;
   padding: 3.39rem 0.71rem 3.77rem 0.69rem;
   box-sizing: border-box;
 }
@@ -98,7 +94,7 @@ export default {
   padding-right: 0.4rem;
   box-sizing: border-box;
   margin-bottom: 0.35rem;
-  a {
+  .links {
     display: flex;
     justify-content: space-around;
     color: #9c9c9c;
@@ -154,8 +150,8 @@ export default {
   display: -ms-flexbox;
   display: flex;
   font-size: 0.28rem;
-  height: .77rem;
-  line-height: .77rem;
+  height: 0.77rem;
+  line-height: 0.77rem;
   // padding: 0 0.01rem;
   position: relative;
   text-align: center;
