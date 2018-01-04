@@ -60,7 +60,6 @@
                     <button @click="payfor(list.businessNo,list.status)">付款</button>
                     <p @click="remove(list.id)">删除订单</p>
                 </div>
-                
             </div>
         </div>    
     </div>
@@ -84,7 +83,7 @@
 // 引入模块
 var moment = require("moment");
 import { mapActions, mapGetters } from "vuex";
-import {Input,DatePicker} from 'element-ui';
+import {DatePicker} from 'element-ui';
 import pageturn from "./pageturn";
 export default {
     // 拉取数据
@@ -127,8 +126,7 @@ export default {
     },
     components:{
         pageturn,
-    [Input.name]:Input,
-    [DatePicker.name]:DatePicker
+    [DatePicker.name]:DatePicker,
     },
     methods:{
         // 调用数据公共方法
@@ -543,6 +541,7 @@ export default {
                     width: 65px;
                     height: 36px;
                     border-radius: 10px;
+                    cursor: pointer;
                 }
                 .confirm{
                     background: #2693d4;

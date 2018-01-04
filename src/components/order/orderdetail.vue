@@ -69,7 +69,7 @@
 <script>
 //   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
 import waitpay from './waitpay'//等待支付
-import {Radio} from 'element-ui'
+import {Radio} from 'element-ui'//按需引入组件
 export default {
     created(){
         // console.log(this.$route.query.orderNo);
