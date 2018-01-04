@@ -60,7 +60,7 @@
 // 引入
 import {  mapGetters } from "vuex";
 import dist from "../districts/districts";
-import {Input,Radio} from 'element-ui'
+import {Radio} from 'element-ui'
 export default {
     created() {
         if (this.getName) {
@@ -108,7 +108,6 @@ export default {
     },
     components: {
         [Radio.name]: Radio,
-        [Input.name]: Input
     },
     methods:{
         // 处理ajax拉取数据
