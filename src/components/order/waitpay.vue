@@ -1,5 +1,5 @@
 <template>
-    <div class="waitpay" v-if="displays">
+    <div class="waitpay" v-if="displays" :style="{height:heights,width:widths}">
         <!-- 微信扫码框 -->
         <div class="scanCode" v-if="type==2">
             <div class="topbox">
@@ -46,6 +46,8 @@ export default {
     data() {
         return {
             error: "", //提示框内容
+            heights:window.innerWidth+'px',//
+            widths:window.innerWidth+'px',//
         };
     },
     computed: {
@@ -106,13 +108,11 @@ export default {
     padding: 0;
 }
 .waitpay {
-    height: 1000px;
     position: absolute;
     top: 0;
-    width: 1200px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    opacity: 0.9;
+    left: 0;
+    background: #000;
+    opacity: 0.8;
     padding: 10px 20px;
     // 页面所有的p标签
     p {
@@ -124,9 +124,7 @@ export default {
     .tsbox {
         width: 450px;
         height: 160px;
-        position: absolute;
-        top: 300px;
-        left: 400px;
+        margin: 400px auto;
         box-shadow: 2px 2px 2px #8d8d8d;
         > p {
         width: 450px;
@@ -142,9 +140,7 @@ export default {
     .scanCode {
         width: 336px;
         height: 370px;
-        position: relative;
-        top: 200px;
-        left: 400px;
+        margin: 400px auto;
         box-shadow: 3px 3px 2px #8d8d8d;
         // 顶部
         .topbox {
@@ -212,9 +208,7 @@ export default {
     .payBack {
         width: 450px;
         height: 280px;
-        position: relative;
-        top: 200px;
-        left: 400px;
+        margin: 400px auto;
         box-shadow: 3px 3px 2px #8d8d8d;
         // 顶部
         .topbox {

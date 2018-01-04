@@ -69,6 +69,7 @@
 <script>
 //   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
 import waitpay from './waitpay'//等待支付
+import {Radio} from 'element-ui'//按需引入组件
 export default {
     created(){
         // console.log(this.$route.query.orderNo);
@@ -101,7 +102,8 @@ export default {
             lists:[],//订单明细隐藏内容框
         };
     },
-    components:{waitpay},
+    components:{waitpay,
+    [Radio.name]: Radio},
     methods:{
         // 处理订单数据
         datashow(data){
@@ -370,7 +372,7 @@ export default {
         top: 500px;
         left: 800px;
         box-shadow: 2px 2px 2px #8d8d8d;
-        z-index: 10;
+        z-index: 50;
         >div{
             width: 450px;
             height: 60px;
@@ -378,7 +380,7 @@ export default {
             justify-content: space-between;
             background: #f8f8f8;
             line-height: 60px;
-            z-index: 10;
+            z-index: 50;
             >p{
                 height: 60px;
                 line-height: 60px;
@@ -401,7 +403,7 @@ export default {
             font-size: 20px; 
             line-height: 100px;
             text-align: center;
-            z-index: 10;
+            z-index: 50;
         }
     }
 }

@@ -60,7 +60,6 @@
                     <button @click="payfor(list.businessNo,list.status)">付款</button>
                     <p @click="remove(list.id)">删除订单</p>
                 </div>
-                
             </div>
         </div>    
     </div>
@@ -69,7 +68,7 @@
     <!-- 删除订单提示框 -->
     <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
         <div class="removebox">
-            <div><p>确认删除这个宝贝吗</p><span @click="cancel">X</span></div>
+            <div><p>确认删除这个订单吗</p><span @click="cancel">X</span></div>
             <div><button @click="confirm" class="confirm">确定</button><button @click="cancel" class="cancel">取消</button></div>
         </div>
     </div>
@@ -84,7 +83,7 @@
 // 引入模块
 var moment = require("moment");
 import { mapActions, mapGetters } from "vuex";
-import {Input,DatePicker} from 'element-ui';
+import {DatePicker} from 'element-ui';
 import pageturn from "./pageturn";
 export default {
     // 拉取数据
@@ -127,8 +126,7 @@ export default {
     },
     components:{
         pageturn,
-    [Input.name]:Input,
-    [DatePicker.name]:DatePicker
+    [DatePicker.name]:DatePicker,
     },
     methods:{
         // 调用数据公共方法
@@ -217,13 +215,16 @@ export default {
         },
         // 付款
         payfor:function(num,status){
-            if(status==1){
+            if(status=='等待买家付款'){
                 this.$router.push({path:'/Order/orderdetail',query:{orderNo:num}});
+            }else{
+                that.errorshow=true;//提示
+                that.error='该订单已付款';
             }
         },
         // 删除订单
         remove:function(code){
-            this.conRem0ove=true;
+            this.conRemove=true;
             this.orderid=code;
         },
         // 隐藏删除订单提示框
@@ -540,6 +541,7 @@ export default {
                     width: 65px;
                     height: 36px;
                     border-radius: 10px;
+                    cursor: pointer;
                 }
                 .confirm{
                     background: #2693d4;
