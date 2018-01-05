@@ -48,7 +48,7 @@ h5 {
     display: block;
     width: 130px;
     height: 130px;
-    background: url("../../assets/index/face.png") no-repeat 0 -60px;
+    background: url("../../assets/index/face.png") no-repeat 0 -3px;
     position: absolute;
     top: 125px;
     left: 200px;

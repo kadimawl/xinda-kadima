@@ -102,7 +102,6 @@ export default {
                 let status = data.data.status;
                 if (status == 1) {
                   //成功登陆
-                  MessageBox.alert("登录成功").then(function() {
                     that.$router.push({
                       path: that.$route.query.redirect || "/m",
                       query: { sId: that.$route.query.id }
@@ -110,7 +109,6 @@ export default {
                     that.ajax.post("/xinda-api/sso/login-info").then(data => {
                       let name = data.data.data.name;
                     });
-                  });
                 } else if (status == -1) {
                   if (msg == "图片验证码错误！") {
                     MessageBox.alert("图片验证码错误！", "Notice");

@@ -92,6 +92,7 @@ export default {
     },
     //删除
     del(id) {
+      var that = this;
       this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(data => {
@@ -106,6 +107,7 @@ export default {
             });
           }
         });
+      this.render();
     },
     //加
     add(id) {

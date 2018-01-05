@@ -99,6 +99,7 @@ export default {
         },
         // 删除订单
         remove(id){
+            var that = this;
             MessageBox.confirm('亲，确定要删除这个订单吗?').then(action => {
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/del',
@@ -107,7 +108,6 @@ export default {
                 }))).then(function(data){
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
-                        // location.reload();
                     }else{
                         that.errorbox=true;//提示
                         that.error=data.data.msg;

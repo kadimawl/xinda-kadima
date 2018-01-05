@@ -2,8 +2,6 @@
 <div class="turn">
     <div class="prepage pageturn" @click="prepage">上一页</div>
     <div class="diamond"  v-for="(page,index) in nums" :key="index" @click="pagechange(index)" :class="{'checked':index==pagenum}">{{page}}</div>
-    <!-- <div class="diamond" v-if="maxshow">...</div>
-    <div class="diamond" v-if="maxshow">{{maxpage}}</div> --> 
     <div class="nextpage pageturn" @click="nextpage">下一页</div>
 </div>
   

@@ -20,7 +20,6 @@
 
     </div>
     <router-link  class="exit" to="" @click.native="exit">退出登录</router-link>
-    <a href="javascript: void(0)" class="exit" @click="exit">退出登录</a>
   </div>
   <!-- </div> -->
 

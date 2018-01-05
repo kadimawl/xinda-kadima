@@ -4,7 +4,7 @@
         <div class="scanCode" v-if="type==2">
             <div class="topbox">
                 <p>微信支付</p>
-                <span @click="weixinstop">&#10005</span>
+                <!-- <span @click="weixinstop">&#10005</span> -->
             </div>
             <div class="scan"><img src="../../assets/index/weixinsaoma.png" alt="">
                 <p>请使用微信扫一扫&nbsp进行扫码支付</p>
@@ -13,13 +13,13 @@
                 <button @click="payR">已完成支付</button>&nbsp
                 <button @click="payno">支付遇到问题</button>
             </div>
-            <p @click="back">返回重新选择支付方式</p>
+            <!-- <p @click="back">返回重新选择支付方式</p> -->
         </div>
         <!-- 支付跳转等待框，可跳转支付成功及失败页，也可重新选择支付方式 -->
         <div class="payBack" v-if="type==1||type==3">
             <div class="topbox">
                 <p>支付反馈</p>
-                <span @click="paybackstop">&#10005</span>
+                <!-- <span @click="paybackstop">&#10005</span> -->
             </div>
             <p class="firp">请您在新打开的页面上完成订单付款</p>
             <p class="secp">根据您的支付完成情况，选择下步操作</p>
@@ -27,7 +27,7 @@
                 <button @click="payR" class="firbtn">已完成支付</button>&nbsp
                 <button @click="payno">支付遇到问题</button>
             </div>
-            <p @click="back" class="thip">返回重新选择支付方式</p>
+            <!-- <p @click="back" class="thip">返回重新选择支付方式</p> -->
         </div>
         <!-- 提示框 -->
         <div class="tsbox" v-if="type==6">
@@ -54,48 +54,34 @@ export default {
     },
     methods: {
         // 关闭微信扫码框
-        weixinstop: function() {
-            this.$emit('ts');
-            var that=this;
-            this.error = "1秒后返回支付方式界面";
-            setTimeout(function() {
-                that.$emit('close');
-            }, 1000);
-        },
+        // weixinstop: function() {
+        //     this.$emit('ts');
+        //     var that=this;
+        //     this.error = "1秒后返回支付方式界面";
+        //     setTimeout(function() {
+        //         that.$emit('close');
+        //     }, 1000);
+        // },
         //关闭支付反馈框
-        paybackstop: function() {
-            this.$emit('ts');
-            this.error = "1秒后返回支付方式界面";
-            var that=this;
-            setTimeout(function() {
-                that.$emit('close');
-            }, 1000);
-        },
+        // paybackstop: function() {
+        //     this.$emit('ts');
+        //     this.error = "1秒后返回支付方式界面";
+        //     var that=this;
+        //     setTimeout(function() {
+        //         that.$emit('close');
+        //     }, 1000);
+        // },
         // 重新返回支付方式
-        back: function() {
-            this.$emit('close');
-        },
+        // back: function() {
+        //     this.$emit('close');
+        // },
         //支付成功,要与返回的数据进行验证
         payR: function() {
-            location.href='http://localhost:8080/#/order/success';
-            // if(){//验证成功
-            //     this.$emit('close');
-            //     loaction.href='http://localhost:8080/#/order/success';
-            // }else{//验证失败
-            //     this.$emit('close');
-            //     loaction.href='http://localhost:8080/#/order/failure';
-            // }
+            this.$router.push({path: '/order/success'})
         },
         // 支付失败
         payno: function() {
-            location.href='http://localhost:8080/#/order/failure';
-        //     if(){//验证成功
-        //     this.$emit('close');
-        //             location.href='http://localhost:8080/#/order/success';
-        //     }else{//验证失败
-        //    this.$emit('close');
-        //         loaction.href='http://localhost:8080/#/order/failure';
-        //     }
+            this.$router.push({path: '/order/failure'})
         }
     }
 };
