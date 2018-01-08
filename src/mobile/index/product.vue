@@ -1,5 +1,6 @@
 <template>
 <div>
+  <arrow/>
   <div class="top"><button v-bind:class="{'active':top==1}" @click="act(1)">默认排序</button><button v-bind:class="{'active':top==2}" @click="act(2)">价格</button></div>
   <div class="body" v-for="Product in products" :key="Product.id" @click="gotoShop(Product.id)">
     <div class="logo">
@@ -20,7 +21,9 @@
 </template>
 
 <script>
+import arrow from "../arrow";
 export default {
+  components: {  arrow },
   data() {
     return {
       shopTypes: [],
@@ -62,6 +65,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 .top {
+  margin-top: .60rem;
   padding: 0.45rem;
   display: flex;
   justify-content: center;

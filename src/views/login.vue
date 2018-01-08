@@ -71,7 +71,23 @@ export default {
       let result = pReg.test(this.phoneInput);
       let user = this.phoneInput;
       if (!this.phoneInput == "") {
-        this.phoneMsg = "";
+        //验证手机号是否已经注册
+          this.ajax
+            .post(
+              "/xinda-api/register/valid-sms",
+              this.qs.stringify({
+                cellphone: this.phoneInput,
+                smsType: 1,
+                validCode: 111111
+              })
+            )
+            .then(data => {
+              if (data.data.status != -2) {
+                this.phoneMsg = "该手机号未注册";
+              }else{
+                this.phoneMsg = '';
+              }
+            });
         if (!result) {
           this.phoneMsg = "请输入正确的手机号";
           let user = this.phoneInput;

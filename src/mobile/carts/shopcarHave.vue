@@ -77,6 +77,9 @@ export default {
     render() {
       var that = this;
       this.ajax.post("/xinda-api/cart/list").then(data => {
+        if (data.data.data.length == 0) {
+          that.$router.push({ path: "/m/carts/Null" });
+        }
         this.cartList = data.data.data;
         var total = 0;
         for (var i in that.cartList) {
@@ -89,6 +92,7 @@ export default {
     },
     //删除
     del(id) {
+      var that = this;
       this.ajax
         .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
         .then(data => {
@@ -96,8 +100,14 @@ export default {
             MessageBox.confirm("确定删除该商品?").then(action => {
               this.render();
             });
+            this.ajax.post("/xinda-api/cart/list").then(data => {
+              if (data.data.data.length == 0) {
+                that.$router.push({ path: "/m/carts/Null" });
+              }
+            });
           }
         });
+      this.render();
     },
     //加
     add(id) {

@@ -30,7 +30,7 @@
             <tr class="itemLists">
               <td class="itemPic">
                 <img :src="tUrl+Goods.providerImg" alt=""></td>
-              <td class="serviceName">{{Goods.serviceName}}</td>
+              <td class="serviceName" @click="getDetail(Goods.serviceId)">{{Goods.serviceName}}</td>
               <td>￥{{Goods.unitPrice}}</td>
               <td>
                 <button @click="minus(Goods.serviceId,Goods.buyNum)">-</button>
@@ -73,18 +73,23 @@
 </template>
 
 <script>
-import {Message,MessageBox,Button} from 'element-ui'
+import { Message, MessageBox, Button } from "element-ui";
 import { mapActions } from "vuex";
 export default {
-  components: {[Button.name]:Button},
+  components: { [Button.name]: Button },
   created() {
     var that = this;
     this.recData(); //拉取购物品项列表
     this.recomData(); //拉取推荐服务列表
-    this.ajax.post("xinda-api/cart/cart-num").then(data => {
-      that.cartNum = data.data.data.cartNum;
-      that.setNum(that.cartNum);
-    });
+     //判断是否登录
+      this.ajax.post("/xinda-api/sso/login-info").then(data => {
+        if (data.data.status != 0) {
+          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+            var cartNum = data.data.data.cartNum;
+            that.setNum(cartNum);
+          });
+        }
+      });
   },
   data() {
     return {
@@ -94,17 +99,22 @@ export default {
       tlPay: 0,
       orderNo: "",
       cartNum: "",
-      checked: ''
+      checked: ""
     };
   },
   methods: {
     ...mapActions(["setNum"]),
+    getDetail(id) {
+      this.$router.push({
+        path: "/detial",
+        query: { shoppingId: id }
+      });
+    },
     focus(id, old) {
       var that = this;
       this.ajax
         .post("/xinda-api/cart/add", this.qs.stringify({ id: id, num: -old }))
-        .then(data => {
-        });
+        .then(data => {});
     },
     numChange(id, numbers) {
       var numC = Number(numbers);
@@ -172,29 +182,31 @@ export default {
     dele(id) {
       var that = this;
       //删除
-          MessageBox.confirm('确认删除该商品？, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
+      MessageBox.confirm("确认删除该商品？, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
           this.ajax
-        .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
-        .then(function(data) {
-          that.recData();
-          that.ajax.post("xinda-api/cart/cart-num").then(data => {
-            that.cartNum = data.data.data.cartNum;
-            that.setNum(that.cartNum);
-          });
-        });
+            .post("/xinda-api/cart/del", this.qs.stringify({ id: id }))
+            .then(function(data) {
+              that.recData();
+              that.ajax.post("xinda-api/cart/cart-num").then(data => {
+                that.cartNum = data.data.data.cartNum;
+                that.setNum(that.cartNum);
+              });
+            });
           Message({
-            type: 'success',
-            message: '删除成功!'
+            type: "success",
+            message: "删除成功!"
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           Message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除"
+          });
         });
     },
     toPay(orderNo) {
@@ -313,7 +325,7 @@ thead {
         margin: auto 0;
         border: 1px solid #eee;
       }
-      .check{
+      .check {
         margin: auto 0;
       }
     }
@@ -338,7 +350,7 @@ thead {
     }
     .delete {
       cursor: pointer;
-      .delBut{
+      .delBut {
         background: #f7f7f7;
       }
     }
