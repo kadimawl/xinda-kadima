@@ -2,8 +2,7 @@
 <div class="turn">
     <div class="prepage pageturn" @click="prepage">上一页</div>
     <div class="diamond"  v-for="(page,index) in nums" :key="index" @click="pagechange(index)" :class="{'checked':index==pagenum}">{{page}}</div>
-    <!-- <div class="diamond" v-if="maxshow">...</div>
-    <div class="diamond" v-if="maxshow">{{maxpage}}</div> --> 
+     <!-- <div class="diamond" v-if="maxshow">...</div> -->
     <div class="nextpage pageturn" @click="nextpage">下一页</div>
 </div>
   
@@ -16,7 +15,7 @@ export default {
     data() {
         return {
             pagenum:0,//
-            nums:[],//
+            nums:0,//
         };
     },
     props:{//['total','pagesize']
@@ -25,10 +24,8 @@ export default {
     },
     watch:{//检测变化
         total(newVal,oldVal){
-            var pages = Math.ceil(this.total/this.pagesize);
-            for(let i=0;i<pages;i++){//无法实时检测数组的赋值，而数组的push可以检测到
-                this.nums.push(i+1);
-            }
+            var pages = Math.ceil(newVal/this.pagesize);
+            this.nums = pages;
         }
     },
     methods:{

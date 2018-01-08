@@ -140,11 +140,15 @@ export default {
                 businessNo:code,
             })).then(function(data){
                 if(data.data.data&&data.data.data.length){
-                    that.businessshow(data);
+                    that.businessshow(data); 
                 }else{
-                    that.msg=true;
-                    that.sermsg='无结果';
-                    that.list=[];
+                    if(that.error!='删除成功'){
+                        that.msg=true;
+                        that.sermsg='亲，没有找到订单';
+                        that.list=[];
+                    }
+                    that.total='';
+                    that.lists='';
                 }
             })
         },
@@ -155,8 +159,8 @@ export default {
         // // 处理ajax获取的business数据显示在页面
         businessshow(data){
             if(data.data.data.length){
-                //获取订单总数，传给翻页组件
                 this.total=data.data.totalCount+'';
+                //获取订单总数，传给翻页组件
                 var data=data.data.data;
                 for(let i=0;i<data.length;i++){
                     data[i].createTime=moment(data[i].createTime).format('YYYY-MM-DD HH:mm:ss');
@@ -203,14 +207,34 @@ export default {
             }else if(this.inputcode!=''){
                 // 简单验证订单号
                 if(/^S1\d{18}$/.test(this.inputcode)){
-                    this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
+                    var start='';
+                    var end='';
+                    if(this.value1!=''){
+                        var startD=new Date(this.value1);
+                        start=startD.getFullYear()+'-'+(startD.getMonth()+1)+'-'+startD.getDate();
+                    }
+                    if(this.value2!=''){
+                        var endD=new Date(this.value2);
+                        end=endD.getFullYear()+'-'+(endD.getMonth()+1)+'-'+endD.getDate();
+                    }
+                    this.getData(this.pagenum,this.pagesize,start,end,this.inputcode);
                 }else{
                     this.sermsg='请输入正确的订单号';
                     this.inputcode='';
                     this.msg='true';
                 }
             }else{
-                this.getData(this.pagenum,this.pagesize,this.value1,this.value2,this.inputcode);
+                var start='';
+                var end='';
+                if(this.value1!=''){
+                    var startD=new Date(this.value1);
+                    start=startD.getFullYear()+'-'+(startD.getMonth()+1)+'-'+startD.getDate();
+                }
+                if(this.value2!=''){
+                    var endD=new Date(this.value2);
+                    end=endD.getFullYear()+'-'+(endD.getMonth()+1)+'-'+endD.getDate();
+                }
+                this.getData(this.pagenum,this.pagesize,start,end);
             }
         },
         // 付款
@@ -319,6 +343,7 @@ export default {
             background: #ffffff;
             color: #66a9dd;
             box-shadow: 0 0 1px 1px #66a9dd;
+            cursor: pointer;
         }
     }
     // 创建时间
