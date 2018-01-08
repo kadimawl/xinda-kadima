@@ -103,8 +103,11 @@ export default {
               })
             )
             .then(data => {
+              console.log(data.data)
               if (data.data.status == -2) {
                 this.phoneMsg = "该手机号已注册";
+              }else{
+                this.phoneMsg = '';
               }
             });
         }

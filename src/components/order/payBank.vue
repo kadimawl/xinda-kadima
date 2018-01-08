@@ -1,15 +1,27 @@
 <template>
-  <div class="body">
-      <h3>这是银行支付</h3>
+  <div class="pay">
+      
   </div>
 </template>
 
 <script>
 export default {
-  name:'payBank',
-  data() {
-    return {};
-  }
+    mounted(){
+      var pay=document.querySelector('.pay');
+      var payfor=sessionStorage.getItem('payfor');
+      // console.log('payfor==',payfor);
+      pay.innerHTML=payfor.substring(
+        payfor.indexOf('<form'),
+        payfor.indexOf('/form>')+6
+      );
+      var getid=document.querySelector('#pay_form');
+      if(getid){
+        getid.submit();
+      }else{
+         getid=document.querySelector('#alipaysubmit');
+         getid.submit();
+      }
+    }
 };
 </script>
 

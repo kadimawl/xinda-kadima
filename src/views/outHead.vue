@@ -1,6 +1,6 @@
 <template>
   <div class="headeBox">
-    <div class="imgBox"></div>
+    <div class="imgBox" @click="getHome"></div>
     <div class="sinda"><p >信达</p></div>
     <div class="nullLine"></div>
     <div class="welcome">{{getTitle}}</div>
@@ -20,7 +20,9 @@ export default {
   },
   methods:{
     ...mapActions(['setTitle']),
-    
+    getHome() {
+      this.$router.push({path: '/'})
+    }
   }
 };
 </script>

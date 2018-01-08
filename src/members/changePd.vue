@@ -1,35 +1,35 @@
 <template>
-    <div class="changePd" @click="changePdclick">
-        <!-- 旧密码 -->
-        <div class="oldpd">
-            <p>旧密码</p>
-            <input :type="oldpdtype" v-model="inputoldpd" class="inputoldpd" placeholder="请输入旧密码" @blur="oldpdB">
-            <img class="visible" :src="oldpdurl" @click="oldpdshow">
-            <span class="mark" :style="{color:colorOld}">*</span>
-        </div>
-        <!-- 新密码 -->
-        <div class="newpd">
-            <p>新密码</p>
-            <input :type="newpdtype" v-model="inputnewpd" class="inputnewpd" placeholder="请输入新密码" @blur="newpdB">
-            <img class="visible" :src="newpdurl" @click="newpdshow">
-            <span class="mark" :style="{color:colorNew}">*</span>
-        </div>
-        <!-- 再次输入新密码 -->
-        <div class="again">
-            <p>再次输入新密码</p>
-            <input :type="againtype" v-model="inputagain" class="inputagain" placeholder="请再次输入新密码" @blur="againB">
-            <img class="visible" :src="againurl" @click="againshow">
-            <span class="mark" :style="{color:colorAgain}">*</span>
-        </div>
-        <!-- 保存按钮 -->
-        <div class="storage">
-            <button @click="store">保存</button>
-        </div>
-        <!-- 错误提示框 -->
-        <div class="errorbox" v-if="errorshow">
-            <p :style="{color:acolor}">{{error}}</p>
-        </div>
+  <div class="changePd" @click="changePdclick">
+    <!-- 旧密码 -->
+    <div class="oldpd">
+      <p>旧密码</p>
+      <input :type="oldpdtype" v-model="inputoldpd" class="inputoldpd" placeholder="请输入旧密码" @blur="oldpdB">
+      <img class="visible" :src="oldpdurl" @click="oldpdshow">
+      <span class="mark" :style="{color:colorOld}">*</span>
     </div>
+    <!-- 新密码 -->
+    <div class="newpd">
+      <p>新密码</p>
+      <input :type="newpdtype" v-model="inputnewpd" class="inputnewpd" placeholder="请输入新密码" @blur="newpdB">
+      <img class="visible" :src="newpdurl" @click="newpdshow">
+      <span class="mark" :style="{color:colorNew}">*</span>
+    </div>
+    <!-- 再次输入新密码 -->
+    <div class="again">
+      <p>再次输入新密码</p>
+      <input :type="againtype" v-model="inputagain" class="inputagain" placeholder="请再次输入新密码" @blur="againB">
+      <img class="visible" :src="againurl" @click="againshow">
+      <span class="mark" :style="{color:colorAgain}">*</span>
+    </div>
+    <!-- 保存按钮 -->
+    <div class="storage">
+      <button @click="store">保存</button>
+    </div>
+    <!-- 错误提示框 -->
+    <div class="errorbox" v-if="errorshow">
+      <p :style="{color:acolor}">{{error}}</p>
+    </div>
+  </div>
 
 </template>
 
@@ -246,6 +246,11 @@ export default {
                 that.inputoldpd = "";
                 that.inputnewpd = "";
                 that.inputagain = "";
+                that.ajax
+                  .post("/xinda-api/sso/ logout")
+                  .then(data => {if(data.data.status ==1){
+                    that.$router.push({path: '/outter/login'})
+                  }});
               } else {
                 that.errorshow = true;
                 that.error = "修改密码失败";

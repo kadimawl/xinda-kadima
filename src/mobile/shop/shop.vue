@@ -19,12 +19,6 @@ export default {
 
 <style lang="less" scoped>
 
-  // p {
-  //   font-size: 0.3rem;
-  //   color: #fff;
-  //   margin:0 auto;
-  //   margin-left: 36%;
-  //   line-height: 0.6rem;
-  // }
+ 
 
 </style>

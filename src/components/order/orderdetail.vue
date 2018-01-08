@@ -62,16 +62,16 @@
             <div><p>错误提示</p><span @click="errorstop">&#10005</span></div>
             <p>{{error}}</p>
         </div>
-        <waitpay :displays="paywait" :type="type" @close="close" @ts="tsbox"></waitpay>
+        <waitpay :displays="paywait" :type="type" :code="code" @close="close"></waitpay>
     </div>
 </template>
 
 <script>
 //   所有功能都写完了，就订单明细隐藏内容的数据为空，都是根据接口文档的模拟操作
 import waitpay from './waitpay'//等待支付
+import {Radio} from 'element-ui'//按需引入组件
 export default {
     created(){
-        // console.log(this.$route.query.orderNo);
         if(this.$route.query.orderNo){
             var that=this;
             that.ajax.post('/xinda-api/business-order/detail',
@@ -79,7 +79,7 @@ export default {
                 businessNo:that.$route.query.orderNo, 
             })).then(function(data){
                 if(data.data.status==1){
-                    console.log('data==',data);
+                    // console.log('data==',data);
                     that.datashow(data);
                 }
             })
@@ -101,7 +101,8 @@ export default {
             lists:[],//订单明细隐藏内容框
         };
     },
-    components:{waitpay},
+    components:{waitpay,
+    [Radio.name]: Radio},
     methods:{
         // 处理订单数据
         datashow(data){
@@ -118,48 +119,47 @@ export default {
         },
         // 去结算按钮的点击事件，跳转支付等待页面，然后根据支付状况去跳转其他页
         pay(){
-            this.errorts=false;
-            // 选择了支付方式
-            if(this.radio){
-                // 自助转账
-                if(this.radio==4){
-                    this.errorts=true;
-                    this.error='亲，该支付方式还未开通，请选择别的支付方式';
+            if(this.code){
+                // 选择了支付方式
+                if(this.radio){
+                    // 自助转账
+                    if(this.radio==4){
+                        this.errorts=true;
+                        this.error='亲，该支付方式还未开通，请选择别的支付方式';
+                    }else if(this.radio==1){
+                        this.setpay('/xinda-api/pay/china-pay');
+                    }else if(this.radio==3){
+                        this.setpay('/xinda-api/pay/ali-pay');
+                    }else{
+                        this.paywait=true;
+                        this.type=this.radio;
+                    }
                 }else{
-                    var that=this;
-                    that.ajax.post('/xinda-api/pay/detail',that.qs.stringify({
-                        businessNo:that.code
-                    }))
-                    .then(function(data){
-                        if(data.data.status==1){//请求成功
-                            that.paywait=true;
-                            that.type=that.radio;
-                            if(that.radio==1){//非网银支付
-                                window.open('http://localhost:8080/#/order/payBank');
-                            }
-                            if(that.radio==3){//支付宝支付
-                                window.open('http://localhost:8080/#/order/payZfb');
-                            }
-                        }else{
-                            that.errorts=true;
-                            that.error=data.data.msg;
-                        }
-                    })
+                    this.errorts=true;
+                    this.error='请选择支付方式!!';
+                    return;
                 }
             }else{
                 this.errorts=true;
-                this.error='请选择支付方式!!';
-                return;
+                this.error='sorry，没有订单可以操作';
             }
         },
-        // 关闭支付等待框
-        close(){
-            this.paywait = false;
+        // 向后台发送支付请求信息
+        setpay(Url){
+            var that=this;
+            this.ajax.post(Url,this.qs.stringify({
+                businessNo:this.code
+            }))
+            .then(function(data){
+                // console.log('data==',data);
+                sessionStorage.setItem('payfor',data.data);
+                that.paywait=true;
+                that.type=that.radio;
+                var payfor=sessionStorage.getItem('payfor');
+                window.open('/#/Order/payBank');
+            })
         },
-        // 出现提示框
-        tsbox(){
-            this.type='6';
-        },
+       
         // 关闭错误提示框
         errorstop:function(){
             this.errorts=false;
@@ -370,7 +370,7 @@ export default {
         top: 500px;
         left: 800px;
         box-shadow: 2px 2px 2px #8d8d8d;
-        z-index: 10;
+        z-index: 50;
         >div{
             width: 450px;
             height: 60px;
@@ -378,7 +378,7 @@ export default {
             justify-content: space-between;
             background: #f8f8f8;
             line-height: 60px;
-            z-index: 10;
+            z-index: 50;
             >p{
                 height: 60px;
                 line-height: 60px;
@@ -401,7 +401,7 @@ export default {
             font-size: 20px; 
             line-height: 100px;
             text-align: center;
-            z-index: 10;
+            z-index: 50;
         }
     }
 }

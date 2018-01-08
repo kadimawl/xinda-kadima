@@ -200,7 +200,6 @@ export default {
       this.isLogged(id);
       //判断是否登录
       this.ajax.post("/xinda-api/sso/login-info").then(data => {
-        console.log(data.data);
         if (data.data.status != 0) {
           this.ajax.post("/xinda-api/cart/cart-num").then(data => {
             var cartNum = data.data.data.cartNum;

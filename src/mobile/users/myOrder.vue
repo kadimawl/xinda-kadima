@@ -99,6 +99,7 @@ export default {
         },
         // 删除订单
         remove(id){
+            var that = this;
             MessageBox.confirm('亲，确定要删除这个订单吗?').then(action => {
                 var that=this;
                 that.ajax.post('/xinda-api/business-order/del',
@@ -107,7 +108,6 @@ export default {
                 }))).then(function(data){
                     // 成功后重新获取数据，重新存缓存
                     if(data.data.status==1){
-                        // location.reload();
                     }else{
                         that.errorbox=true;//提示
                         that.error=data.data.msg;
@@ -144,7 +144,6 @@ export default {
 // 订单部分
 .aBody{
     font-size: 0.18rem;
-    // height: 10rem;
     width: 100%;
     background: #f8f8f8;
     .order{
@@ -321,23 +320,5 @@ export default {
     }
 }
 
-.mint-header {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: #e5e5e5;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  color: #000;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  font-size: 0.28rem;
-  height: .77rem;
-  line-height: .77rem;
-  // padding: 0 0.01rem;
-  position: relative;
-  text-align: center;
-  white-space: nowrap;
-}
+
 </style>
