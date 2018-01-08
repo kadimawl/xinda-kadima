@@ -4,10 +4,7 @@
         <div class="scanCode boxstyle" v-if="type==2">
             <div class="topbox">
                 <p>微信支付</p>
-<<<<<<< HEAD
-=======
                 <!-- <span @click="weixinstop">&#10005</span> -->
->>>>>>> 2f864da38c5fd3bfaa6ed04895ee8f13f6334bec
             </div>
             <div class="scan"><img src="../../assets/index/weixinsaoma.png" alt="">
                 <p>请使用微信扫一扫  进行扫码支付</p>
@@ -16,19 +13,13 @@
                 <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
-<<<<<<< HEAD
-=======
             <!-- <p @click="back">返回重新选择支付方式</p> -->
->>>>>>> 2f864da38c5fd3bfaa6ed04895ee8f13f6334bec
         </div>
         <!-- 支付跳转等待框，可跳转支付成功及失败页，也可重新选择支付方式 -->
         <div class="payBack boxstyle" v-if="type==1||type==3">
             <div class="topbox">
                 <p>支付反馈</p>
-<<<<<<< HEAD
-=======
                 <!-- <span @click="paybackstop">&#10005</span> -->
->>>>>>> 2f864da38c5fd3bfaa6ed04895ee8f13f6334bec
             </div>
             <p class="firp">请您在新打开的页面上完成订单付款</p>
             <p class="secp">根据您的支付完成情况，选择下步操作</p>
@@ -36,10 +27,7 @@
                 <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
-<<<<<<< HEAD
-=======
             <!-- <p @click="back" class="thip">返回重新选择支付方式</p> -->
->>>>>>> 2f864da38c5fd3bfaa6ed04895ee8f13f6334bec
         </div>
         <!-- 提示框 -->
         <div class="tsbox boxstyle" v-if="errorbox">
