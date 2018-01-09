@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import pageturn from './pageturn'
+import pageturn from '../components/pageturn'
 import {mapActions,mapGetters} from 'vuex' 
 var moment = require('moment');
 export default {

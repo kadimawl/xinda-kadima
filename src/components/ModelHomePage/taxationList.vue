@@ -128,6 +128,7 @@ export default {
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key, index) {
+      console.log(key,index)
       this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);

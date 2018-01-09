@@ -27,7 +27,7 @@
 
 <script>
 // 思路如下，ajax拉取数据，把数据处理，存入datas这个数组，evals得到截取值。根据页数拉取，分位置存入datas。
-import pageturn from './pageturn'
+import pageturn from '../components/pageturn'
 import {mapActions,mapGetters} from 'vuex' 
 var moment = require('moment');
 export default {

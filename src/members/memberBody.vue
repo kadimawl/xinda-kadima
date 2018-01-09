@@ -58,11 +58,6 @@
               </div>
             </div>
           </div>
-
-          <!-- 操作按钮 -->
-          <!-- <div v-if="list.status=='已完成'" class="finish">
-            <p>交易完成</p>
-          </div> -->
           <div v-if="list.status=='等待买家付款'" class="waitpay" >
             <div>
               <button @click="payfor(list.businessNo,list.status)">付款</button>
@@ -71,10 +66,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- 错误提示框 -->
-    <div class="errorbox" v-if="errorshow">
-      <p :style="{color:acolor}">{{error}}</p>
     </div>
     <!-- 翻页组件 -->
     <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
@@ -88,7 +79,7 @@
 var moment = require("moment");
 import { mapActions, mapGetters } from "vuex";
 import { DatePicker, MessageBox, Message } from "element-ui";
-import pageturn from "./pageturn";
+import pageturn from "../components/pageturn";
 export default {
   // 拉取数据
   created() {

@@ -1,5 +1,5 @@
 <template>
-    <div class="turn">
+    <div class="turn" v-if="nums">
         <div class="prepage pageturn" @click="prepage">上一页</div>
         <div class="diamond" v-for="(page,index) in nums" :key="index" @click="pagechange(index)" :class="{'checked':index==pagenum}">{{page}}</div>
         <div class="nextpage pageturn" @click="nextpage">下一页</div>
@@ -38,6 +38,11 @@ export default {
     pagechange(index) {
       this.pagenum = index;
       this.$emit("pagevary", this.pagenum);
+    },
+    // 自定义事件
+    pagevary(msg) {
+      console.log(msg)
+      this.pagenum = msg * this.pagesize;
     },
     // 下一页
     nextpage(index) {
