@@ -15,11 +15,15 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
-      payID: "12314414"
+      payID: ''
     };
+  },
+  created() {
+    this.payID = this.$route.query.id;
   }
 };
 </script>
@@ -40,6 +44,7 @@ h5 {
   color: #2793d4;
   font-size: 13px;
   padding: 0 0 10px;
+  margin-bottom: 13px;
 }
 .success {
   height: 380px;

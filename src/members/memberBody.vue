@@ -1,97 +1,84 @@
 <template>
-    <div class="myorder" @click="myorderclick">
-        <!-- 顶部标签 -->
-        <div class="topname">
-            <p>我的订单</p>
-        </div>
-        <!-- 订单号搜索框 -->
-        <div class="search">
-            <p>订单号：</p>
-            <input v-model="inputcode" placeholder="请输入订单号搜索">
-            <button @click="searchs">搜索</button>
-            <span v-if="msg">{{sermsg}}</span>
-        </div>
-        <!-- 创建时间 -->
-        <div class="time">
-            <p>创建时间：</p>
-            <el-date-picker v-model="value1" type="date" placeholder="选择日期" class="datepick1"></el-date-picker>至
-            <el-date-picker v-model="value2" type="date" placeholder="选择日期" class="datepick2"></el-date-picker>
-        </div>
-        <!-- 订单列表 -->
-        <div class="list">
-            <p class="name">商品名称</p>
-            <p class="unitprice">单价</p>
-            <p class="amount">数量</p>
-            <p class="sum">总金额</p>
-            <p class="orderStatus">订单状态</p>
-            <p class="orderHandle">订单操作</p>
-        </div>
-        <!-- 订单展示 -->
-        <div class="listshow">
-            <div class="innerbox" v-for="list in lists" :key="list.id">
-                <div class="codetime">
-                    <p>订单号：{{list.businessNo}}</p>
-                    <p>下单时间：{{list.createTime}}</p>
-                </div>
-                <div class="codebody">
-                    <div>
-                        <div class="all" v-for="serv in list.servitem" :key="serv.id">
-                            <div>
-                                <!-- 公司logo图片 接口数据无logo图片链接-->
-                                <div class="logo"><img src="../assets/icon.png" alt="公司logo"></div>
-                                <div class="descr">
-                                    <p>{{serv.providerName}}</p>
-                                    <p>{{serv.serviceName}}</p>
-                                </div>
-
-                            </div>
-                            <!-- 单价 -->
-                            <p>￥{{serv.unitPrice}}</p>
-                            <!-- 数量 -->
-                            <p>{{serv.buyNum}}</p>
-                        </div>
-                    </div>
-                    <!-- 总价 -->
-                    <div class="pcommon">
-                        <p>￥{{list.totalPrice}}</p>
-                    </div>
-                    <!-- 订单状态 -->
-                    <div class="pcommon">
-                        <p>{{list.status}}</p>
-                    </div>
-                    <!-- 操作按钮 -->
-                    <div v-if="list.status=='已完成'" class="finish">
-                        <p>交易完成</p>
-                    </div>
-                    <div v-if="list.status=='等待买家付款'" class="waitpay">
-                        <div>
-                            <button @click="payfor(list.businessNo,list.status)">付款</button>
-                            <p @click="remove(list.id)">删除订单</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- 错误提示框 -->
-        <div class="errorbox" v-if="errorshow">
-            <p :style="{color:acolor}">{{error}}</p>
-        </div>
-        <!-- 删除订单提示框 -->
-        <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
-            <div class="removebox">
-                <div>
-                    <p>确认删除这个订单吗</p>
-                    <span @click="cancel">X</span>
-                </div>
-                <div>
-                    <button @click="confirm" class="confirm">确定</button>
-                    <button @click="cancel" class="cancel">取消</button>
-                </div>
-            </div>
-        </div>
-        <!-- 翻页组件 -->
-        <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
+  <div class="myorder" @click="myorderclick">
+    <!-- 顶部标签 -->
+    <div class="topname">
+      <p>我的订单</p>
     </div>
+    <!-- 订单号搜索框 -->
+    <div class="search">
+      <p>订单号：</p>
+      <input v-model="inputcode" placeholder="请输入订单号搜索">
+      <button @click="searchs">搜索</button>
+    </div>
+    <!-- 创建时间 -->
+    <div class="time">
+      <p>创建时间：</p>
+      <el-date-picker v-model="value1" type="date" placeholder="选择日期" class="datepick1"></el-date-picker>至
+      <el-date-picker v-model="value2" type="date" placeholder="选择日期" class="datepick2"></el-date-picker>
+    </div>
+    <!-- 订单列表 -->
+    <div class="list">
+      <p class="name">商品名称</p>
+      <p class="unitprice">单价</p>
+      <p class="amount">数量</p>
+      <p class="sum">总金额</p>
+      <p class="orderStatus">订单状态</p>
+      <p class="orderHandle">订单操作</p>
+    </div>
+    <!-- 订单展示 -->
+    <div class="listshow">
+      <div class="innerbox" v-for="list in lists" :key="list.id">
+        <div class="codetime">
+          <p>订单号：{{list.businessNo}}</p>
+          <p>下单时间：{{list.createTime}}</p>
+        </div>
+        <div class="codebody">
+          <div>
+            <div class="all" v-for="serv in list.servitem" :key="serv.id">
+              <div>
+                <!-- 公司logo图片 接口数据无logo图片链接-->
+                <div class="logo"><img src="../assets/icon.png" alt="公司logo"></div>
+                <div class="descr">
+                  <p>{{serv.providerName}}</p>
+                  <p>{{serv.serviceName}}</p>
+                </div>
+
+              </div>
+              <!-- 单价 -->
+              <p>￥{{serv.unitPrice}}</p>
+              <!-- 数量 -->
+              <p>{{serv.buyNum}}</p>
+              <!-- 总价 -->
+              <div class="pcommon">
+                ￥{{list.totalPrice}}
+              </div>
+              <!-- 订单状态 -->
+              <div class="pcommon">
+                {{list.status}}
+              </div>
+            </div>
+          </div>
+
+          <!-- 操作按钮 -->
+          <!-- <div v-if="list.status=='已完成'" class="finish">
+            <p>交易完成</p>
+          </div> -->
+          <div v-if="list.status=='等待买家付款'" class="waitpay" >
+            <div>
+              <button @click="payfor(list.businessNo,list.status)">付款</button>
+              <p @click="remove(list.id)">删除订单</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 错误提示框 -->
+    <div class="errorbox" v-if="errorshow">
+      <p :style="{color:acolor}">{{error}}</p>
+    </div>
+    <!-- 翻页组件 -->
+    <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
+  </div>
 
 </template>
 
@@ -134,20 +121,13 @@ export default {
       value1: "", //时间输入框开始
       value2: "", //时间输入框结束
       inputcode: "", //订单编号输入
-      msg: false, //控制提示框
-      sermsg: "", //提示内容
       lists: [], //循环数组
       searchR: "s", //将搜索的索引赋给本变量
-      errorshow: false, //控制错误框
-      error: "", //错误提示
       acolor: "#ff4649", //错误提示的颜色
       pagenum: 0, //
       pagesize: 2, //
       total: "", //总条目
-      conRemove: false, //确认删除
       orderid: "", //订单id
-      heights: window.innerWidth + "px", //
-      widths: window.innerWidth + "px" //
     };
   },
   computed: {
@@ -173,7 +153,7 @@ export default {
           })
         )
         .then(data => {
-          var innerList =  data.data.data;
+          var innerList = data.data.data;
           this.businessshow(data);
         });
     },
@@ -184,7 +164,7 @@ export default {
     // // 处理ajax获取的business数据显示在页面
     businessshow(data) {
       if (data.data.data.length) {
-        this.total = data.data.totalCount + "";
+        this.total = data.data.totalCount ;
         //获取订单总数，传给翻页组件
         var data = data.data.data;
         for (let i = 0; i < data.length; i++) {
@@ -207,7 +187,7 @@ export default {
                 businessNo: orderN
               })
             )
-            .then(function(servdata) {
+            .then(servdata => {
               var servdata = servdata.data.data;
               for (var key in servdata) {
                 data[i].servitem.push(servdata[key]);
@@ -261,9 +241,8 @@ export default {
           }
           this.getData(this.pagenum, this.pagesize, start, end, this.inputcode);
         } else {
-          this.sermsg = "请输入正确的订单号";
+          Message.error("请输入正确的订单号")
           this.inputcode = "";
-          this.msg = "true";
         }
       } else {
         var start = "";
@@ -379,11 +358,6 @@ export default {
     line-height: 40px;
     display: flex;
     margin-top: 25px;
-    span {
-      display: block;
-      margin-left: 40px;
-      color: #e42b12;
-    }
     p {
       width: 80px;
       color: #888888;
@@ -396,9 +370,9 @@ export default {
       border: 1px solid #dcdfe6;
       padding: 0 10px;
       box-sizing: border-box;
-      ::placeholder{
-        color: #dcdfe6;
-      }
+    }
+    input::placeholder {
+      color: #dcdfe6;
     }
     button {
       width: 72px;
@@ -484,62 +458,7 @@ export default {
       font-size: 18px;
     }
   }
-  // 删除订单提示框
-  .remove {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0.7;
-    z-index: 5;
-    background: #000;
-    .removebox {
-      width: 300px;
-      height: 120px;
-      background: #ffffff;
-      margin: 350px auto;
-      box-shadow: 3px 3px 2px #8d8d8d;
-      z-index: 10;
-      > div:first-child {
-        width: 100%;
-        height: 40px;
-        display: flex;
-        justify-content: space-between;
-        background: #e9e9e9;
-        p {
-          line-height: 40px;
-          margin-left: 10px;
-        }
-        span {
-          margin-right: 10px;
-          margin-top: 2px;
-          font-size: 20px;
-          cursor: pointer;
-        }
-      }
-      > div:last-child {
-        width: 100%;
-        height: 80px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #fff;
-        z-index: 30;
-        button {
-          width: 65px;
-          height: 36px;
-          border-radius: 10px;
-          cursor: pointer;
-        }
-        .confirm {
-          background: #2693d4;
-          margin-right: 10px;
-        }
-        .cancel {
-          background: #e9e9e9;
-        }
-      }
-    }
-  }
+  
 }
 
 // 订单展示列表，主体部分
@@ -572,13 +491,13 @@ export default {
       border: 1px solid #eee;
       color: #828282;
       > div:first-child {
-        width: 533px;
+        width: 816px;
         border-right: 1px solid #eee;
-        .all:first-child{
-            border-top: none;
+        .all:first-child {
+          border-top: none;
         }
         .all {
-          width: 100%;
+          width: 816PX;
           height: 67px;
           display: flex;
           border-top: 1px solid #eee;
@@ -616,24 +535,24 @@ export default {
       // 状态和总价
       .pcommon {
         width: 140px;
+        height: 67px;
         text-align: center;
-        border-right: 1px solid #eee;
-        p {
-          color: #2393d3;
-          font-size: 12px;
-          line-height: 1;
-          margin:  auto ;
-        }
+        color: #2393d3;
+        font-size: 12px;
+        line-height: 67px;
+        border-left: 1px solid #eee;
       }
       // 操作按钮
       .waitpay {
         width: 120px;
-        height: 100%;
         text-align: center;
         border: 1px solid #f8f8f8;
+        border-right: none;
         div {
           height: 50px;
-          margin: auto;
+          margin: 17px auto 0;
+          vertical-align: middle;
+
           button {
             width: 54px;
             height: 21px;
@@ -650,14 +569,6 @@ export default {
             font-size: 13px;
             cursor: pointer;
           }
-        }
-      }
-      .finish {
-        width: 120px;
-        text-align: center;
-        border: 1px solid #f8f8f8;
-        p {
-          font-size: 13px;
         }
       }
     }

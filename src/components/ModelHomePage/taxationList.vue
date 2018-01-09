@@ -89,7 +89,7 @@ import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
 import { MessageBox } from "element-ui";
 export default {
-  components: { distpicker },
+  components: { distpicker  },
   computed: {
     ...mapGetters(["getName"])
   },

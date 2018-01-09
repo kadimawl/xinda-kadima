@@ -79,7 +79,6 @@ export default {
                 businessNo:that.$route.query.orderNo, 
             })).then(function(data){
                 if(data.data.status==1){
-                    // console.log('data==',data);
                     that.datashow(data);
                 }
             })
@@ -151,7 +150,6 @@ export default {
                 businessNo:this.code
             }))
             .then(function(data){
-                // console.log('data==',data);
                 sessionStorage.setItem('payfor',data.data);
                 that.paywait=true;
                 that.type=that.radio;

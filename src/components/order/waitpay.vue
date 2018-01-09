@@ -52,6 +52,9 @@ export default {
             errorbox:false,//
         };
     },
+    created() {
+        var id = this.$route.query.orderNo;
+    },
     computed: {
     },
     methods: {
@@ -64,18 +67,18 @@ export default {
             })).then(function(data){
                 if(data.data.data.businessOrder.status==1){
                     that.errorbox=true;
-                    that.error='支付失败,1秒后跳转支付失败页';
+                    that.error='正在获取支付结果，请稍后';
                     that.type='';
                     setTimeout(function(){
-                        that.$router.push({path:'/order/failure'});
-                    },1000)
+                        that.$router.push({path:'/order/failure',query:{id: that.$route.query.orderNo}});
+                    },3000)
                 }else{
                     that.errorbox=true;
-                    that.error='支付成功,1秒后跳转支付成功页';
+                    that.error='正在获取支付结果，请稍后';
                     that.type='';
                     setTimeout(function(){
-                        that.$router.push({path:'/order/success'});
-                    },1000)
+                        that.$router.push({path:'/order/success',query:{id: that.$route.query.orderNo}});
+                    },3000)
                 }
             })
         },

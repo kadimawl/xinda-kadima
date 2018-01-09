@@ -2,11 +2,12 @@
   <div class="body">
     <p>首页/支付</p>
     <h5>支付失败</h5>
+    <!-- <div class="line"></div> -->
     <div class="faild">
       <span></span>
       <div>
         <h2>支付失败！</h2>
-        <h4>支付未成功：让我们再试一次吧！<a href="#/order">返回支付页</a></h4>
+        <h4>支付未成功：让我们再试一次吧！<p @click="getPay(id)">返回支付页</p></h4>
         <p>如有问题，请联系客服：</p>
         <h3>010-83421842</h3>
       </div>
@@ -18,6 +19,13 @@
 export default {
   data() {
     return {};
+  },
+  created() {
+  },
+  methods: {
+    getPay(id){
+      this.$router.push({path:'/Order/orderdetail',query: {orderNo:this.$route.query.id }})
+    }
   }
 };
 </script>
@@ -38,7 +46,9 @@ h5 {
   color: #2793d4;
   font-size: 13px;
   padding: 0 0 10px;
+  margin-bottom: 13px;
 }
+
 .faild {
   height: 380px;
   background: #f7f7f7;
@@ -63,7 +73,7 @@ h5 {
     }
     h4 {
       font-weight: normal;
-      a{
+      p{
         display: inline-block;
         width: 124px;
         height: 34px;

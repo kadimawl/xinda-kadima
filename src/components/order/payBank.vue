@@ -9,7 +9,6 @@ export default {
     mounted(){
       var pay=document.querySelector('.pay');
       var payfor=sessionStorage.getItem('payfor');
-      // console.log('payfor==',payfor);
       pay.innerHTML=payfor.substring(
         payfor.indexOf('<form'),
         payfor.indexOf('/form>')+6
