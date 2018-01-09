@@ -1,78 +1,97 @@
 <template>
-  <div class="myorder" @click="myorderclick">
-    <!-- 顶部标签 -->
-    <div class="topname">
-      <p>我的订单</p>
-    </div>
-    <!-- 订单号搜索框 -->
-    <div class="search">
-      <p>订单号：</p>
-      <input v-model="inputcode" placeholder="请输入订单号搜索">
-      <button @click="searchs">搜索</button>
-      <span v-if="msg">{{sermsg}}</span>
-    </div>
-    <!-- 创建时间 -->
-    <div class="time">
-      <p>创建时间：</p>
-      <el-date-picker v-model="value1" type="date" placeholder="选择日期" class="datepick1"></el-date-picker>至
-      <el-date-picker v-model="value2" type="date" placeholder="选择日期" class="datepick2"></el-date-picker>
-    </div>
-    <!-- 订单列表 -->
-    <div class="list">
-      <p class="name">商品名称</p>
-      <p class="unitprice">单价</p>
-      <p class="amount">数量</p>
-      <p class="sum">总金额</p>
-      <p class="orderStatus">订单状态</p>
-      <p class="orderHandle">订单操作</p>
-    </div>
-    <!-- 订单展示 -->
-    <div class="listshow">
-      <div class="innerbox" v-for="list in lists" :key="list.id">
-        <div class="codetime">
-          <p>订单号：{{list.businessNo}}</p>
-          <p>下单时间：{{list.createTime}}</p>
+    <div class="myorder" @click="myorderclick">
+        <!-- 顶部标签 -->
+        <div class="topname">
+            <p>我的订单</p>
         </div>
-        <div class="codebody">
-          <div>
-            <div class="all" v-for="serv in list.servitem" :key="serv.id">
-              <div>
-                <!-- 公司logo图片 接口数据无logo图片链接-->
-                <div><img src="../assets/icon.png" alt="公司logo"></div>
-                <p>{{serv.serviceName}}</p>
-              </div>
-              <!-- 单价 -->
-              <p>￥{{serv.unitPrice}}</p>
-              <!-- 数量 -->
-              <p>{{serv.buyNum}}</p>
+        <!-- 订单号搜索框 -->
+        <div class="search">
+            <p>订单号：</p>
+            <input v-model="inputcode" placeholder="请输入订单号搜索">
+            <button @click="searchs">搜索</button>
+            <span v-if="msg">{{sermsg}}</span>
+        </div>
+        <!-- 创建时间 -->
+        <div class="time">
+            <p>创建时间：</p>
+            <el-date-picker v-model="value1" type="date" placeholder="选择日期" class="datepick1"></el-date-picker>至
+            <el-date-picker v-model="value2" type="date" placeholder="选择日期" class="datepick2"></el-date-picker>
+        </div>
+        <!-- 订单列表 -->
+        <div class="list">
+            <p class="name">商品名称</p>
+            <p class="unitprice">单价</p>
+            <p class="amount">数量</p>
+            <p class="sum">总金额</p>
+            <p class="orderStatus">订单状态</p>
+            <p class="orderHandle">订单操作</p>
+        </div>
+        <!-- 订单展示 -->
+        <div class="listshow">
+            <div class="innerbox" v-for="list in lists" :key="list.id">
+                <div class="codetime">
+                    <p>订单号：{{list.businessNo}}</p>
+                    <p>下单时间：{{list.createTime}}</p>
+                </div>
+                <div class="codebody">
+                    <div>
+                        <div class="all" v-for="serv in list.servitem" :key="serv.id">
+                            <div>
+                                <!-- 公司logo图片 接口数据无logo图片链接-->
+                                <div class="logo"><img src="../assets/icon.png" alt="公司logo"></div>
+                                <div class="descr">
+                                    <p>{{serv.providerName}}</p>
+                                    <p>{{serv.serviceName}}</p>
+                                </div>
+
+                            </div>
+                            <!-- 单价 -->
+                            <p>￥{{serv.unitPrice}}</p>
+                            <!-- 数量 -->
+                            <p>{{serv.buyNum}}</p>
+                        </div>
+                    </div>
+                    <!-- 总价 -->
+                    <div class="pcommon">
+                        <p>￥{{list.totalPrice}}</p>
+                    </div>
+                    <!-- 订单状态 -->
+                    <div class="pcommon">
+                        <p>{{list.status}}</p>
+                    </div>
+                    <!-- 操作按钮 -->
+                    <div v-if="list.status=='已完成'" class="finish">
+                        <p>交易完成</p>
+                    </div>
+                    <div v-if="list.status=='等待买家付款'" class="waitpay">
+                        <div>
+                            <button @click="payfor(list.businessNo,list.status)">付款</button>
+                            <p @click="remove(list.id)">删除订单</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <!-- 总价 -->
-          <div class="pcommon">
-            <p>￥{{list.totalPrice}}</p>
-          </div>
-          <!-- 订单状态 -->
-          <div class="pcommon">
-            <p>{{list.status}}</p>
-          </div>
-          <!-- 操作按钮 -->
-          <div v-if="list.status=='已完成'" class="finish">
-            <p>交易完成</p>
-          </div>
-          <div v-if="list.status=='等待买家付款'" class="waitpay">
-            <button @click="payfor(list.businessNo,list.status)">付款</button>
-            <p @click="remove(list.id)">删除订单</p>
-          </div>
         </div>
-      </div>
+        <!-- 错误提示框 -->
+        <div class="errorbox" v-if="errorshow">
+            <p :style="{color:acolor}">{{error}}</p>
+        </div>
+        <!-- 删除订单提示框 -->
+        <div class="remove" v-if="conRemove" :style="{height:heights,width:widths}">
+            <div class="removebox">
+                <div>
+                    <p>确认删除这个订单吗</p>
+                    <span @click="cancel">X</span>
+                </div>
+                <div>
+                    <button @click="confirm" class="confirm">确定</button>
+                    <button @click="cancel" class="cancel">取消</button>
+                </div>
+            </div>
+        </div>
+        <!-- 翻页组件 -->
+        <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
     </div>
-    <!-- 错误提示框 -->
-    <div class="errorbox" v-if="errorshow">
-      <p :style="{color:acolor}">{{error}}</p>
-    </div>
-    <!-- 翻页组件 -->
-    <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
-  </div>
 
 </template>
 
@@ -145,7 +164,7 @@ export default {
       that.ajax
         .post(
           "/xinda-api/business-order/grid",
-          this.qs.stringify({
+          that.qs.stringify({
             start: start,
             limit: limit,
             startTime: time1,
@@ -154,6 +173,7 @@ export default {
           })
         )
         .then(data => {
+          var innerList =  data.data.data;
           this.businessshow(data);
         });
     },
@@ -161,39 +181,41 @@ export default {
     pagevary(msg) {
       this.pagenum = msg * this.pagesize;
     },
-    // 处理ajax获取的business数据显示在页面
+    // // 处理ajax获取的business数据显示在页面
     businessshow(data) {
-      //获取订单总数，传给翻页组件
-      this.total = data.data.totalCount + "";
-      var data = data.data.data;
-      for (let i = 0; i < data.length; i++) {
-        data[i].createTime = moment(data[i].createTime).format(
-          "YYYY-MM-DD HH:mm:ss"
-        );
-        data[i].servitem = [];
-        //关于订单状态
-        if (data[i].status == 1) {
-          data[i].status = "等待买家付款";
-        } else if (data[i].status == 4) {
-          data[i].status = "已完成";
+      if (data.data.data.length) {
+        this.total = data.data.totalCount + "";
+        //获取订单总数，传给翻页组件
+        var data = data.data.data;
+        for (let i = 0; i < data.length; i++) {
+          data[i].createTime = moment(data[i].createTime).format(
+            "YYYY-MM-DD HH:mm:ss"
+          );
+          data[i].servitem = [];
+          //关于订单状态
+          if (data[i].status == 1) {
+            data[i].status = "等待买家付款";
+          } else if (data[i].status == 4) {
+            data[i].status = "已完成";
+          }
+          var orderN = data[i].businessNo;
+          var that = this;
+          that.ajax
+            .post(
+              "/xinda-api/service-order/grid",
+              that.qs.stringify({
+                businessNo: orderN
+              })
+            )
+            .then(function(servdata) {
+              var servdata = servdata.data.data;
+              for (var key in servdata) {
+                data[i].servitem.push(servdata[key]);
+              }
+            });
         }
-        var orderN = data[i].businessNo;
-        var that = this;
-        that.ajax
-          .post(
-            "/xinda-api/service-order/grid",
-            that.qs.stringify({
-              businessNo: orderN
-            })
-          )
-          .then(function(servdata) {
-            var servdata = servdata.data.data;
-            for (var key in servdata) {
-              data[i].servitem.push(servdata[key]);
-            }
-          });
+        this.lists = data;
       }
-      this.lists = data;
     },
 
     // 转换为时间戳
@@ -217,25 +239,54 @@ export default {
       } else if (this.inputcode != "") {
         // 简单验证订单号
         if (/^S1\d{18}$/.test(this.inputcode)) {
-          this.getData(
-            this.pagenum,
-            this.pagesize,
-            this.value1,
-            this.value2,
-            this.inputcode
-          );
+          var start = "";
+          var end = "";
+          if (this.value1 != "") {
+            var startD = new Date(this.value1);
+            start =
+              startD.getFullYear() +
+              "-" +
+              (startD.getMonth() + 1) +
+              "-" +
+              startD.getDate();
+          }
+          if (this.value2 != "") {
+            var endD = new Date(this.value2);
+            end =
+              endD.getFullYear() +
+              "-" +
+              (endD.getMonth() + 1) +
+              "-" +
+              endD.getDate();
+          }
+          this.getData(this.pagenum, this.pagesize, start, end, this.inputcode);
         } else {
-          Message.error("请输入正确的订单号");
+          this.sermsg = "请输入正确的订单号";
           this.inputcode = "";
+          this.msg = "true";
         }
       } else {
-        this.getData(
-          this.pagenum,
-          this.pagesize,
-          this.value1,
-          this.value2,
-          this.inputcode
-        );
+        var start = "";
+        var end = "";
+        if (this.value1 != "") {
+          var startD = new Date(this.value1);
+          start =
+            startD.getFullYear() +
+            "-" +
+            (startD.getMonth() + 1) +
+            "-" +
+            startD.getDate();
+        }
+        if (this.value2 != "") {
+          var endD = new Date(this.value2);
+          end =
+            endD.getFullYear() +
+            "-" +
+            (endD.getMonth() + 1) +
+            "-" +
+            endD.getDate();
+        }
+        this.getData(this.pagenum, this.pagesize, start, end);
       }
     },
     // 付款
@@ -341,15 +392,13 @@ export default {
     input {
       width: 220px;
       height: 40px;
-      border: 1px solid #b0b0b0;
-      padding-left: 10px;
-      box-sizing: border-box;
-      border: none;
-      border: 1px solid #dcdfe6;
       border-radius: 4px;
-    }
-    input::-webkit-input-placeholder {
-      color: #b0b0b0;
+      border: 1px solid #dcdfe6;
+      padding: 0 10px;
+      box-sizing: border-box;
+      ::placeholder{
+        color: #dcdfe6;
+      }
     }
     button {
       width: 72px;
@@ -361,6 +410,7 @@ export default {
       background: #ffffff;
       color: #66a9dd;
       box-shadow: 0 0 1px 1px #66a9dd;
+      cursor: pointer;
     }
   }
   // 创建时间
@@ -418,116 +468,7 @@ export default {
       text-align: center;
     }
   }
-  // 订单展示列表，主体部分
-  .listshow {
-    width: 940px;
-    // 获取订单盒子
-    .innerbox {
-      width: 100%;
-      margin-bottom: 10px;
-      // 订单编号与时间
-      .codetime {
-        width: 100%;
-        height: 37px;
-        display: flex;
-        background: #f7f7f7;
-        border: 1px solid #e8e8e8;
-        p {
-          line-height: 37px;
-          margin-left: 25px;
-          font-size: 11px;
-          color: #7f7f7f;
-        }
-      }
-      // 订单主体
-      .codebody {
-        width: 100%;
-        display: flex;
-        margin-bottom: 10px;
-        border: 1px solid #e8e8e8;
-        > div:first-child {
-          width: 533px;
-          height: 67px;
-          // border-top: none;
-          .all {
-            width: 100%;
-            display: flex;
-            color: #898989;
-            > div:nth-child(1) {
-              width: 323px;
-              display: flex;
-              color: #898989;
-              // 装logo的盒子
-              > div {
-                width: 70px;
-                margin: 9px 15px 10px 15px;
-                img{
-                width: 48px;
-                height: 48px;
-                }
-              }
-              // 服务内容
-              > p {
-                width: 120px;
-                font-size: 11px;
-                line-height: 30px;
-              }
-            }
-            > p {
-              width: 110px;
-              text-align: center;
-              font-size: 18px;
-            }
-          }
-        }
-        // 状态和总价
-        .pcommon {
-          width: 140px;
-          height: 67px;
-          text-align: center;
-          // border: 1px solid #f8f8f8;
-          border-top: none;
-          p {
-            color: #55a4da;
-            font-size: 12px;
-          }
-        }
-        // 操作按钮
-        .waitpay {
-          width: 120px;
-          height: 100%;
-          text-align: center;
-          // border: 1px solid #f8f8f8;
-          button {
-            width: 54px;
-            height: 21px;
-            border: 1px solid #2693d4;
-            border-radius: 5px;
-            background: #fff;
-            color: #2693d4;
-            margin-top: 30%;
-            margin-bottom: 10px;
-            font-size: 13px;
-            cursor: pointer;
-          }
-          p {
-            color: #ff5b5b;
-            font-size: 13px;
-            cursor: pointer;
-          }
-        }
-        .finish {
-          width: 120px;
-          // height: 100%;
-          text-align: center;
-          border: 1px solid #f8f8f8;
-          p {
-            font-size: 18px;
-          }
-        }
-      }
-    }
-  }
+
   // 错误提示框
   .errorbox {
     width: 300px;
@@ -595,6 +536,128 @@ export default {
         }
         .cancel {
           background: #e9e9e9;
+        }
+      }
+    }
+  }
+}
+
+// 订单展示列表，主体部分
+.listshow {
+  width: 940px;
+  height: auto;
+  // 获取订单盒子
+  .innerbox {
+    width: 100%;
+    margin-bottom: 10px;
+    // 订单编号与时间
+    .codetime {
+      width: 100%;
+      height: 37px;
+      display: flex;
+      background: #f8f8f8;
+      color: #3e3e3e;
+      border: 1px solid #eee;
+      border-bottom: none;
+      p {
+        font-size: 12px;
+        line-height: 37px;
+        margin-left: 25px;
+      }
+    }
+    // 订单主体
+    .codebody {
+      width: 100%;
+      display: flex;
+      border: 1px solid #eee;
+      color: #828282;
+      > div:first-child {
+        width: 533px;
+        border-right: 1px solid #eee;
+        .all:first-child{
+            border-top: none;
+        }
+        .all {
+          width: 100%;
+          height: 67px;
+          display: flex;
+          border-top: 1px solid #eee;
+          > div:nth-child(1) {
+            width: 323px;
+            display: flex;
+            // 装logo的盒子
+            .logo {
+              width: 72px;
+              height: 67px;
+              img {
+                width: 48px;
+                height: 48px;
+                margin: 9px 11px 0 12px;
+              }
+            }
+            .descr {
+              width: 290px;
+              // 服务内容
+              > p {
+                height: 33px;
+                line-height: 33px;
+              }
+            }
+          }
+          > p {
+            width: 110px;
+            text-align: center;
+            height: 67px;
+            line-height: 67px;
+            font-size: 13px;
+          }
+        }
+      }
+      // 状态和总价
+      .pcommon {
+        width: 140px;
+        text-align: center;
+        border-right: 1px solid #eee;
+        p {
+          color: #2393d3;
+          font-size: 12px;
+          line-height: 1;
+          margin:  auto ;
+        }
+      }
+      // 操作按钮
+      .waitpay {
+        width: 120px;
+        height: 100%;
+        text-align: center;
+        border: 1px solid #f8f8f8;
+        div {
+          height: 50px;
+          margin: auto;
+          button {
+            width: 54px;
+            height: 21px;
+            border: 1px solid #2693d4;
+            border-radius: 3px;
+            background: #fff;
+            color: #409cd7;
+            margin-bottom: 9px;
+            font-size: 13px;
+            cursor: pointer;
+          }
+          p {
+            color: #ff4747;
+            font-size: 13px;
+            cursor: pointer;
+          }
+        }
+      }
+      .finish {
+        width: 120px;
+        text-align: center;
+        border: 1px solid #f8f8f8;
+        p {
+          font-size: 13px;
         }
       }
     }

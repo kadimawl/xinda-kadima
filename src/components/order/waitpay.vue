@@ -1,22 +1,22 @@
 <template>
     <div class="waitpay" v-if="displays" :style="{height:heights,width:widths}">
         <!-- 微信扫码框 -->
-        <div class="scanCode" v-if="type==2">
+        <div class="scanCode boxstyle" v-if="type==2">
             <div class="topbox">
                 <p>微信支付</p>
                 <!-- <span @click="weixinstop">&#10005</span> -->
             </div>
             <div class="scan"><img src="../../assets/index/weixinsaoma.png" alt="">
-                <p>请使用微信扫一扫&nbsp进行扫码支付</p>
+                <p>请使用微信扫一扫  进行扫码支付</p>
             </div>
             <div class="payresult">
-                <button @click="payR">已完成支付</button>&nbsp
+                <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
             <!-- <p @click="back">返回重新选择支付方式</p> -->
         </div>
         <!-- 支付跳转等待框，可跳转支付成功及失败页，也可重新选择支付方式 -->
-        <div class="payBack" v-if="type==1||type==3">
+        <div class="payBack boxstyle" v-if="type==1||type==3">
             <div class="topbox">
                 <p>支付反馈</p>
                 <!-- <span @click="paybackstop">&#10005</span> -->
@@ -24,13 +24,13 @@
             <p class="firp">请您在新打开的页面上完成订单付款</p>
             <p class="secp">根据您的支付完成情况，选择下步操作</p>
             <div class="payresult">
-                <button @click="payR" class="firbtn">已完成支付</button>&nbsp
+                <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
             <!-- <p @click="back" class="thip">返回重新选择支付方式</p> -->
         </div>
         <!-- 提示框 -->
-        <div class="tsbox" v-if="type==6">
+        <div class="tsbox boxstyle" v-if="errorbox">
             <p>{{error}}</p>
         </div>
     </div>
@@ -42,52 +42,55 @@ export default {
     props:{
         displays:Boolean,
         type:String,
+        code:String,
     },
     data() {
         return {
             error: "", //提示框内容
             heights:window.innerWidth+'px',//
             widths:window.innerWidth+'px',//
+            errorbox:false,//
         };
     },
     computed: {
     },
     methods: {
-        // 关闭微信扫码框
-        // weixinstop: function() {
-        //     this.$emit('ts');
-        //     var that=this;
-        //     this.error = "1秒后返回支付方式界面";
-        //     setTimeout(function() {
-        //         that.$emit('close');
-        //     }, 1000);
-        // },
-        //关闭支付反馈框
-        // paybackstop: function() {
-        //     this.$emit('ts');
-        //     this.error = "1秒后返回支付方式界面";
-        //     var that=this;
-        //     setTimeout(function() {
-        //         that.$emit('close');
-        //     }, 1000);
-        // },
-        // 重新返回支付方式
-        // back: function() {
-        //     this.$emit('close');
-        // },
+        // 确认支付方法
+        confirmPay(code){
+            var that=this;
+            that.ajax.post('/xinda-api/business-order/detail',
+            that.qs.stringify({
+                businessNo:code, 
+            })).then(function(data){
+                if(data.data.data.businessOrder.status==1){
+                    that.errorbox=true;
+                    that.error='支付失败,1秒后跳转支付失败页';
+                    that.type='';
+                    setTimeout(function(){
+                        that.$router.push({path:'/order/failure'});
+                    },1000)
+                }else{
+                    that.errorbox=true;
+                    that.error='支付成功,1秒后跳转支付成功页';
+                    that.type='';
+                    setTimeout(function(){
+                        that.$router.push({path:'/order/success'});
+                    },1000)
+                }
+            })
+        },
         //支付成功,要与返回的数据进行验证
         payR: function() {
-            this.$router.push({path: '/order/success'})
+            this.confirmPay(this.code);
         },
         // 支付失败
         payno: function() {
-            this.$router.push({path: '/order/failure'})
+            this.confirmPay(this.code);
         }
     }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang='less'>
 * {
     margin: 0;
@@ -110,7 +113,7 @@ export default {
     .tsbox {
         width: 450px;
         height: 160px;
-        margin: 400px auto;
+        background: #fff;
         box-shadow: 2px 2px 2px #8d8d8d;
         > p {
         width: 450px;
@@ -126,7 +129,7 @@ export default {
     .scanCode {
         width: 336px;
         height: 370px;
-        margin: 400px auto;
+        background: #fff;
         box-shadow: 3px 3px 2px #8d8d8d;
         // 顶部
         .topbox {
@@ -136,18 +139,12 @@ export default {
             justify-content: space-between;
             background: #f8f8f8;
             line-height: 45px;
+             border-radius: 10px;
             >p{
                 height: 45px;
                 line-height: 45px;
                 margin-left: 20px;
-            }
-            >span{
-                display: block;
-                width: 30px;
-                height: 30px;
-                font-size: 20px;
-                cursor: pointer;
-                margin-right: 20px;
+               
             }
         }
         // 二维码
@@ -182,19 +179,13 @@ export default {
                 font-size: 14px;
             }
             }
-            // 重新选择支付方式
-            p {
-                font-size: 12px;
-                color: #90d0d4;
-                margin-left: 60px;
-                cursor: pointer;
-            }
+            
     }
     // 支付反馈框的样式
     .payBack {
         width: 450px;
         height: 280px;
-        margin: 400px auto;
+        background: #fff;
         box-shadow: 3px 3px 2px #8d8d8d;
         // 顶部
         .topbox {
@@ -204,18 +195,11 @@ export default {
             justify-content: space-between;
             background: #f8f8f8;
             line-height: 60px;
+             border-radius: 10px;
             > p {
                 height: 60px;
                 line-height: 60px;
                 margin-left: 20px;
-            }
-            > span {
-                display: block;
-                width: 30px;
-                height: 30px;
-                font-size: 20px;
-                cursor: pointer;
-                margin-right: 20px;
             }
         }
         // 第一个p标签
@@ -251,16 +235,18 @@ export default {
             // 左边按钮
             .firbtn {
                 margin-left: 40px;
-                margin-right: 10px;
             }
         }
-        // 第三个p标签,重新选择支付方式
-        .thip {
-            font-size: 14px;
-            color: #90d0d4;
-            margin-left: 40px;
-            cursor: pointer;
-        }
     }
+    .firbtn{
+        margin-right: 20px;
+    }
+    // 所有大盒子通用样式
+    .boxstyle{
+        position: fixed;
+        top: 40%;
+        left: 40%;
+        border-radius: 10px;
+    }   
 }
 </style>

@@ -2,64 +2,105 @@
 import Router from 'vue-router'
 
 //pc懒加载
-const HelloWorld = () => import('@/components/HelloWorld' )//默认首页
-const outter = () => import(/* webpackChunkName: 'outter' */'@/components/outter') //一级路由（登录、注册、忘记密码）
-const tabs = () => import(/* webpackChunkName: 'tabs' */'@/components/tabs')
-const login = () => import(/* webpackChunkName: 'outter' */'@/views/login') //注册
-const register  = () => import(/* webpackChunkName: 'outter' */ '@/views/register' )//登录
-const forgetpw  = () => import(/* webpackChunkName: 'outter' */ '@/views/forgetpw') //忘记密码
+const HelloWorld = () =>
+    import ('@/components/HelloWorld') //默认首页
+const outter = () =>
+    import ( /* webpackChunkName: 'outter' */ '@/components/outter') //一级路由（登录、注册、忘记密码）
+const tabs = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/tabs')
+const login = () =>
+    import ( /* webpackChunkName: 'outter' */ '@/views/login') //注册
+const register = () =>
+    import ( /* webpackChunkName: 'outter' */ '@/views/register') //登录
+const forgetpw = () =>
+    import ( /* webpackChunkName: 'outter' */ '@/views/forgetpw') //忘记密码
 
 
-const HomePage  = () => import('@/components/ModelHomePage/HomePage') //首页模块
-const taxationList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/taxationList') //财税服务模块
-const companyList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/companyList' )//公司工商模块
-const wisdomList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/wisdomList' )//知识产权模块
-const securityList  = () => import(/* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/securityList' )//社保代理模块
-const shoppingCart  = () => import( /* webpackChunkName: 'tabs' */'@/components/ModelHomePage/shoppingCart') //购物车模块
-const toJoinIn  = () => import( /* webpackChunkName: 'tabs' */'@/components/ModelHomePage/toJoinIn' )//加入我们模块
+const HomePage = () =>
+    import ('@/components/ModelHomePage/HomePage') //首页模块
+const taxationList = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/taxationList') //财税服务模块
+const companyList = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/companyList') //公司工商模块
+const wisdomList = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/wisdomList') //知识产权模块
+const securityList = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/securityList') //社保代理模块
+const shoppingCart = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/shoppingCart') //购物车模块
+const toJoinIn = () =>
+    import ( /* webpackChunkName: 'tabs' */ '@/components/ModelHomePage/toJoinIn') //加入我们模块
 
-const member  = () => import(/* webpackChunkName: 'members' */ '@/members/member') //会员中心首页
-const memberBody  = () => import(/* webpackChunkName: 'members' */  '@/members/memberBody' )//会员body组件
-const userEval  = () => import(/* webpackChunkName: 'members' */  '@/members/userEval') //用户评价模块
-const gotoeval  = () => import(/* webpackChunkName: 'members' */  '@/members/gotoeval' )//去评价模块
-const accountSet  = () => import(/* webpackChunkName: 'members' */  '@/members/accountSet' )//账户设置模块
-const evalNone  = () => import( /* webpackChunkName: 'members' */ '@/members/evalNone') //未评价模块
-const evalAlready  = () => import( /* webpackChunkName: 'members' */ '@/members/evalAlready') //已评价模块
-const accountsetBody  = () => import( /* webpackChunkName: 'members' */ '@/members/accountsetBody') //账户设置body组件
-const changePd  = () => import( /* webpackChunkName: 'members' */ '@/members/changePd') //改变密码模块
+const member = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/member') //会员中心首页
+const memberBody = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/memberBody') //会员body组件
+const userEval = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/userEval') //用户评价模块
+const gotoeval = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/gotoeval') //去评价模块
+const accountSet = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/accountSet') //账户设置模块
+const evalNone = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/evalNone') //未评价模块
+const evalAlready = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/evalAlready') //已评价模块
+const accountsetBody = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/accountsetBody') //账户设置body组件
+const changePd = () =>
+    import ( /* webpackChunkName: 'members' */ '@/members/changePd') //改变密码模块
 
-const detial  = () => import(/* webpackChunkName: 'company' */  '@/components/company/detial' )//商品详情路由
-const service  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopDetial/service') //商品详情
-const evaluate  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopDetial/evaluate') //商品详情
+const detial = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/detial') //商品详情路由
+const service = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/ShopDetial/service') //商品详情
+const evaluate = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/ShopDetial/evaluate') //商品详情
 
 const shopIndex = () =>
     import ('@/components/company/shopIndex') //店铺首页
 
-const shopList  = () => import(/* webpackChunkName: 'company' */  '@/components/company/shopList') //店铺列表路由
-const credentials  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopList/credentials') //店铺列表服务
-const custom  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopList/custom') //店铺列表客服
-const product  = () => import(/* webpackChunkName: 'company' */  '@/components/company/ShopList/product' )//店铺列表资质
+const shopList = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/shopList') //店铺列表路由
+const credentials = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/ShopList/credentials') //店铺列表服务
+const custom = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/ShopList/custom') //店铺列表客服
+const product = () =>
+    import ( /* webpackChunkName: 'company' */ '@/components/company/ShopList/product') //店铺列表资质
 
-const orderdetail  = () => import(/* webpackChunkName: 'order' */  '@/components/order/orderdetail') //订单详情
-const Order  = () => import(/* webpackChunkName: 'order' */ '@/components/Order') //订单详情路由
-const paymentSuccess  = () => import( /* webpackChunkName: 'order' */'@/components/order/paymentSuccess') //支付成功
-const paymentFailure  = () => import( /* webpackChunkName: 'order' */'@/components/order/paymentFailure' )//支付失败
-const payZfb  = () => import( /* webpackChunkName: 'order' */'@/components/order/payZfb' )//支付宝支付
-const payBank  = () => import( /* webpackChunkName: 'order' */'@/components/order/payBank' )//银行支付
+const orderdetail = () =>
+    import ( /* webpackChunkName: 'order' */ '@/components/order/orderdetail') //订单详情
+const Order = () =>
+    import ( /* webpackChunkName: 'order' */ '@/components/Order') //订单详情路由
+const paymentSuccess = () =>
+    import ( /* webpackChunkName: 'order' */ '@/components/order/paymentSuccess') //支付成功
+const paymentFailure = () =>
+    import ( /* webpackChunkName: 'order' */ '@/components/order/paymentFailure') //支付失败
+const payBank = () =>
+    import ( /* webpackChunkName: 'order' */ '@/components/order/payBank') //银行支付
 
 
 //WX端
 const m = () =>
     import ('@/mobile/m') //WX端一级路由
 
-const users = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/users') //WX端我的框架页
-const mobile = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/mobile') //WX端我的未注册页
-const mobileRegister = () => import(/* webpackChunkName: 'users' */ '@/views/mobileRegister') //WX端我的注册页
-const logined = () => import( /* webpackChunkName: 'users' */ '@/mobile/users/logined') //WX端我的已登录页
-const mobileLogin = () => import(/* webpackChunkName: 'users' */ '@/views/mobileLogin' )//WX端我的登录页
-const mobileForgetPw = () => import(/* webpackChunkName: 'users' */ '@/views/mobileForgetPw' )//WX端我的忘记密码页
-const accountSetting = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/accountSetting') //WX端我的账户设置页
-const myOrder = () => import(/* webpackChunkName: 'users' */ '@/mobile/users/myOrder') //WX端我的我的订单页
+const users = () =>
+    import ( /* webpackChunkName: 'users' */ '@/mobile/users/users') //WX端我的框架页
+const mobile = () =>
+    import ( /* webpackChunkName: 'users' */ '@/mobile/users/mobile') //WX端我的未注册页
+const mobileRegister = () =>
+    import ( /* webpackChunkName: 'users' */ '@/views/mobileRegister') //WX端我的注册页
+const logined = () =>
+    import ( /* webpackChunkName: 'users' */ '@/mobile/users/logined') //WX端我的已登录页
+const mobileLogin = () =>
+    import ( /* webpackChunkName: 'users' */ '@/views/mobileLogin') //WX端我的登录页
+const mobileForgetPw = () =>
+    import ( /* webpackChunkName: 'users' */ '@/views/mobileForgetPw') //WX端我的忘记密码页
+const accountSetting = () =>
+    import ( /* webpackChunkName: 'users' */ '@/mobile/users/accountSetting') //WX端我的账户设置页
+const myOrder = () =>
+    import ( /* webpackChunkName: 'users' */ '@/mobile/users/myOrder') //WX端我的我的订单页
 
 
 
@@ -80,13 +121,19 @@ const shopDetail = () =>
     import ('@/mobile/shop/shopDetail') //商品详情
 
 
-const carts = () => import(/* webpackChunkName: 'cart' */  '@/mobile/carts/carts' )//WX端购物车框架页
-const shopcarHave = () => import(/* webpackChunkName: 'cart' */ '@/mobile/carts/shopcarHave' )//非空购物车
-const shopcarNull = () => import(/* webpackChunkName: 'cart' */ '@/mobile/carts/shopcarNull' )//空购物车
+const carts = () =>
+    import ( /* webpackChunkName: 'cart' */ '@/mobile/carts/carts') //WX端购物车框架页
+const shopcarHave = () =>
+    import ( /* webpackChunkName: 'cart' */ '@/mobile/carts/shopcarHave') //非空购物车
+const shopcarNull = () =>
+    import ( /* webpackChunkName: 'cart' */ '@/mobile/carts/shopcarNull') //空购物车
 
-const store = () => import(/* webpackChunkName: 'store' */ '@/mobile/stores/store') //wx端店铺框架页
-const wxshopHome = () => import( /* webpackChunkName: 'store' */ '@/mobile/stores/wxshopHome' )//店铺首页
-const wxshopList = () => import( /* webpackChunkName: 'store' */ '@/mobile/stores/wxshopList') //店铺列表，也是店铺的默认跳转页
+const store = () =>
+    import ( /* webpackChunkName: 'store' */ '@/mobile/stores/store') //wx端店铺框架页
+const wxshopHome = () =>
+    import ( /* webpackChunkName: 'store' */ '@/mobile/stores/wxshopHome') //店铺首页
+const wxshopList = () =>
+    import ( /* webpackChunkName: 'store' */ '@/mobile/stores/wxshopList') //店铺列表，也是店铺的默认跳转页
 
 
 
@@ -122,13 +169,13 @@ export default new Router({
                             component: companyList
                         },
                         {
-                            path:'wisdomList', //知识产权
-                            name:'wisdomList',
+                            path: 'wisdomList', //知识产权
+                            name: 'wisdomList',
                             component: wisdomList
                         },
                         {
-                            path:'securityList', //社保代理
-                            name:'securityList',
+                            path: 'securityList', //社保代理
+                            name: 'securityList',
                             component: securityList
                         },
                         {
@@ -231,9 +278,6 @@ export default new Router({
                     }, {
                         path: 'failure',
                         component: paymentFailure
-                    }, {
-                        path: 'payZfb',
-                        component: payZfb
                     }, {
                         path: 'payBank',
                         component: payBank
