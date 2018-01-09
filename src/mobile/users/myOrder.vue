@@ -114,7 +114,7 @@ export default {
                         that.acolor='#ff4745';
                     }
                 })
-            });
+            }).catch(() => {});
         },
         // 页面点击事件
         myclick(){
