@@ -59,13 +59,15 @@
             </div>
           </div>
         </div>
-        <div class="pageC" v-show="pageShow">
+        <!-- 分页组件 -->
+        <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
+        <!-- <div class="pageC" v-show="pageShow">
           <div class="prev" @click="prev(typecode)">上一页</div>
           <ul>
             <li v-for="(currentPage,index) in pageObj" :class="[index==(pageChange|0)?'pageColor':'pageccc']" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
           </ul>
           <div class="next" @click="next(typecode)">下一页</div>
-        </div>
+        </div> -->
       </div>
       <div class="right">
         <div class="platform"></div>
@@ -88,13 +90,31 @@ import plugins from "../../plugins";
 import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
 import { MessageBox } from "element-ui";
+import pageturn from "../../components/pageturn";
 export default {
-  components: { distpicker  },
+  components: { distpicker },
   computed: {
     ...mapGetters(["getName"])
   },
   methods: {
     ...mapActions(["setNum"]),
+    // 转换为时间戳
+    revertT(times) {
+      return Date.parse(new Date(times)) / 1000;
+    },
+    // 自定义事件
+    pagevary(msg) {
+      this.pagenum = msg * this.pagesize;
+    },
+    //页面点击
+    myorderclick() {
+      var that = this;
+      if (this.msg == true) {
+        setTimeout(function() {
+          that.msg = false;
+        }, 4000);
+      }
+    },
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
@@ -128,7 +148,6 @@ export default {
       this.reqData(typeCode); //按分类传递code参数切换列表
     },
     kinds(key, index) {
-      console.log(key,index)
       this.listIndex = index;
       var productId = this.subList[key].id;
       this.getData(productId);
@@ -358,7 +377,10 @@ export default {
       lastCount: "",
       pageChange: 0,
       orderNo: "",
-      cartNum: ""
+      cartNum: "",
+      pagenum: 0, //
+      pagesize: 3, //
+      total: "", //总条目
     };
   }
 };

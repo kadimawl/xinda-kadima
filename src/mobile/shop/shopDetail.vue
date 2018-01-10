@@ -112,6 +112,7 @@ export default {
   },
   created() {
     var id = this.$route.query.sId;
+    console.log(id)
     var that = this;
     this.ajax
       .post(

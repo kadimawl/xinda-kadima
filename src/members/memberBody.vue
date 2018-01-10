@@ -58,7 +58,7 @@
               </div>
             </div>
           </div>
-          <div v-if="list.status=='等待买家付款'" class="waitpay" >
+          <div v-if="list.status=='等待买家付款'" class="waitpay">
             <div>
               <button @click="payfor(list.businessNo,list.status)">付款</button>
               <p @click="remove(list.id)">删除订单</p>
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-    <!-- 翻页组件 -->
+    <!-- 分页组件 -->
     <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
   </div>
 
@@ -84,7 +84,6 @@ export default {
   // 拉取数据
   created() {
     this.msg = "false";
-    this.errorshow = false;
     // 未登录不拉取数据
     if (this.getName) {
       this.getData(
@@ -118,7 +117,7 @@ export default {
       pagenum: 0, //
       pagesize: 2, //
       total: "", //总条目
-      orderid: "", //订单id
+      orderid: "" //订单id
     };
   },
   computed: {
@@ -148,14 +147,11 @@ export default {
           this.businessshow(data);
         });
     },
-    // 自定义事件
-    pagevary(msg) {
-      this.pagenum = msg * this.pagesize;
-    },
+    
     // // 处理ajax获取的business数据显示在页面
     businessshow(data) {
       if (data.data.data.length) {
-        this.total = data.data.totalCount ;
+        this.total = data.data.totalCount;
         //获取订单总数，传给翻页组件
         var data = data.data.data;
         for (let i = 0; i < data.length; i++) {
@@ -193,12 +189,15 @@ export default {
     revertT(times) {
       return Date.parse(new Date(times)) / 1000;
     },
+    // 自定义事件
+    pagevary(msg) {
+      this.pagenum = msg * this.pagesize;
+    },
     //页面点击
     myorderclick() {
       var that = this;
-      if (this.errorshow == true || this.msg == true) {
+      if ( this.msg == true) {
         setTimeout(function() {
-          that.errorshow = false;
           that.msg = false;
         }, 4000);
       }
@@ -232,7 +231,7 @@ export default {
           }
           this.getData(this.pagenum, this.pagesize, start, end, this.inputcode);
         } else {
-          Message.error("请输入正确的订单号")
+          Message.error("请输入正确的订单号");
           this.inputcode = "";
         }
       } else {
@@ -267,8 +266,10 @@ export default {
           query: { orderNo: num }
         });
       } else {
-        that.errorshow = true; //提示
-        that.error = "该订单已付款";
+        Message({
+          type: "warning",
+          message: "该订单已付款"
+        });
       }
     },
     // 删除订单
@@ -449,7 +450,6 @@ export default {
       font-size: 18px;
     }
   }
-  
 }
 
 // 订单展示列表，主体部分
@@ -488,7 +488,7 @@ export default {
           border-top: none;
         }
         .all {
-          width: 816PX;
+          width: 816px;
           height: 67px;
           display: flex;
           border-top: 1px solid #eee;

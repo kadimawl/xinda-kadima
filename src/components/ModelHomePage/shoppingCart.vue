@@ -81,15 +81,15 @@ export default {
     var that = this;
     this.recData(); //拉取购物品项列表
     this.recomData(); //拉取推荐服务列表
-     //判断是否登录
-      this.ajax.post("/xinda-api/sso/login-info").then(data => {
-        if (data.data.status != 0) {
-          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-            var cartNum = data.data.data.cartNum;
-            that.setNum(cartNum);
-          });
-        }
-      });
+    //判断是否登录
+    this.ajax.post("/xinda-api/sso/login-info").then(data => {
+      if (data.data.status != 0) {
+        this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+          var cartNum = data.data.data.cartNum;
+          that.setNum(cartNum);
+        });
+      }
+    });
   },
   data() {
     return {
@@ -102,6 +102,7 @@ export default {
       checked: ""
     };
   },
+  watch: {},
   methods: {
     ...mapActions(["setNum"]),
     getDetail(id) {

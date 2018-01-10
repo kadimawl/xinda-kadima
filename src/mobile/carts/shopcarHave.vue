@@ -6,11 +6,11 @@
     <div class="cartList" v-for="list in this.cartList" :key="list.id">
       <div class="comID">{{list.providerName}}</div>
       <div class="box">
-        <div class="imgBox">
-          <img :src="tUrl+list.providerImg" alt="">
+        <div class="imgBox"  @click="getDetail(list.serviceId)">
+          <img :src="tUrl+list.providerImg" alt="" >
         </div>
         <div class="cartMsg">
-          <p class="name">{{list.serviceName}}</p>
+          <p class="name" @click="getDetail(list.serviceId)">{{list.serviceName}}</p>
           <div class="price">
             <p>￥{{list.unitPrice}}</p>
             <span>元</span>
@@ -89,6 +89,9 @@ export default {
         that.setNum(data.data.data.length);
         that.setwxNum(that.total);
       });
+    },
+    getDetail(id) {
+      this.$router.push({path: '/m/shop/shopDetail',query: {sId: id}})
     },
     //删除
     del(id) {
