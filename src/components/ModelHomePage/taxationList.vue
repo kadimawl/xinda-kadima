@@ -60,14 +60,14 @@
           </div>
         </div>
         <!-- 分页组件 -->
-        <pageturn :total="total" :pagesize="pagesize" @pagevary="pagevary"></pageturn>
-        <!-- <div class="pageC" v-show="pageShow">
+       
+        <div class="pageC" v-show="pageShow">
           <div class="prev" @click="prev(typecode)">上一页</div>
           <ul>
             <li v-for="(currentPage,index) in pageObj" :class="[index==(pageChange|0)?'pageColor':'pageccc']" :key="index" @click="pageIna(currentPage,index,typecode)">{{currentPage}}</li>
           </ul>
           <div class="next" @click="next(typecode)">下一页</div>
-        </div> -->
+        </div>
       </div>
       <div class="right">
         <div class="platform"></div>

@@ -4,7 +4,6 @@
         <div class="scanCode boxstyle" v-if="type==2">
             <div class="topbox">
                 <p>微信支付</p>
-                <!-- <span @click="weixinstop">&#10005</span> -->
             </div>
             <div class="scan"><img src="../../assets/index/weixinsaoma.png" alt="">
                 <p>请使用微信扫一扫  进行扫码支付</p>
@@ -13,7 +12,6 @@
                 <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
-            <!-- <p @click="back">返回重新选择支付方式</p> -->
         </div>
         <!-- 支付跳转等待框，可跳转支付成功及失败页，也可重新选择支付方式 -->
         <div class="payBack boxstyle" v-if="type==1||type==3">
@@ -27,7 +25,6 @@
                 <button @click="payR" class="firbtn">已完成支付</button>
                 <button @click="payno">支付遇到问题</button>
             </div>
-            <!-- <p @click="back" class="thip">返回重新选择支付方式</p> -->
         </div>
         <!-- 提示框 -->
         <div class="tsbox boxstyle" v-if="errorbox">
