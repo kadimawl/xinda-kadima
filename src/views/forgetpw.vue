@@ -31,13 +31,14 @@
     <div class="midB"></div>
     <div class="rightB">
       <p>想起密码来了？</p>
-      <router-link class="ret" to="/outter/login">返回登录>></router-link>
+      <router-link class="ret" to="/outter/login" @click.native = 'getBackLogin'>返回登录>></router-link>
       <img src="../assets/index/okman.jpg" alt="">
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 const eyes = [
   require("../assets/invisible.png"),
   require("../assets/visible.png")
@@ -68,6 +69,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setTitle"]),
+    getBackLogin() {
+      this.setTitle("欢迎登录");
+    },
     //手机号输入验证
     phone() {
       let pReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;

@@ -2,18 +2,21 @@
   <div class="ShopIndex">
     <!-- <h3>这是店铺首页</h3> -->
     <p>首页/公司工商</p>
-    <table cellspacing ="0">
+    <table cellspacing="0">
       <tr>
-        <td><h5>服务区域</h5></td>
+        <td>
+          <h5>服务区域</h5>
+        </td>
         <td>
           <distpicker @selected="selected"></distpicker>
         </td>
       </tr>
       <tr>
-        <td><h5>产品类型</h5></td>
+        <td>
+          <h5>产品类型</h5>
+        </td>
         <td class="productTypes">
-          <a v-for="(productType,index) in productTypes" :key="productType.id" v-on:click="productTypesC(index)"
-          href="javascript:void(0)" v-bind:class="{butblue:index==butblue}">{{productType.name}}</a>
+          <a v-for="(productType,index) in productTypes" :key="productType.id" v-on:click="productTypesC(index)" href="javascript:void(0)" v-bind:class="{butblue:index==butblue}">{{productType.name}}</a>
         </td>
       </tr>
     </table>
@@ -30,18 +33,20 @@
         </div>
         <div class="shopText">
           <p>{{shopType.providerName}}</p>
-          <p>信誉<span class="xinyu">★★★★☆</span></p>
+          <p>信誉
+            <span class="xinyu">★★★★☆</span>
+          </p>
           <p>{{shopType.regionName}}</p>
-          <p>累计服务客户次数：{{shopType.orderNum}}<span>丨</span>好评率：100%</p>
-          <a href="javascript:void(0)" v-for="product in shopType.productTypes"
-           :key="product.id">{{product}}</a>
+          <p>累计服务客户次数：{{shopType.orderNum}}
+            <span>丨</span>好评率：100%</p>
+          <a href="javascript:void(0)" v-for="product in shopType.productTypes" :key="product.id">{{product}}</a>
           <button v-bind:id="shopType.id" v-on:click="shopGoto(shopType.id)">进入店铺</button>
         </div>
       </div>
     </div>
     <div class="page">
       <button>上一页</button>
-      <a href="javascript:void(0)">1</a>
+      <div href="javascript:void(0)">1</div>
       <button>下一页</button>
     </div>
   </div>
@@ -52,7 +57,7 @@ import distpicker from "../distpicker";
 export default {
   components: { distpicker },
   created() {
-    this.getShop(); //调用商品列表请求函数
+    this.getShop(this.seleCode); //调用商品列表请求函数
 
     //商品类别导航
     this.ajax.post("/xinda-api/product/style/list").then(data => {
@@ -79,26 +84,31 @@ export default {
     };
   },
   methods: {
+    selected: function(code) {
+      this.seleCode = code;
+      this.getShop(code)
+    },
     productTypesC: function(index) {
       //商品分类单击事件
       this.butblue = index;
+      this.getShop(this.seleCode ,index)
     },
     shopGoto: function(id) {
       //商品页面跳转事件
       this.$router.push({ path: "/shopList", query: { shopID: id } });
     },
-    getShop: function() {
+    getShop: function(code,index) {
       //商品列表请求函数
       var that = this;
       this.ajax
-        .post("/xinda-api/provider/grid", {
-          start: 0,
-          limit: 6,
-          productTypeCode: 10,
-          regionId: 110102,
-          sort: 1
-          // productTypeCode: TypeCode
-        })
+        .post(
+          "/xinda-api/provider/grid",
+          this.qs.stringify({
+            regionId: code,
+            sort: 1,
+            productTypeCode: index
+          })
+        )
         .then(data => {
           var shops = data.data.data;
           for (var key in shops) {
@@ -107,11 +117,8 @@ export default {
               ","
             );
           }
-          that.shopTypes = shops;
+          this.shopTypes = shops;
         });
-    },
-    selected: function(code) {
-      this.seleCode = code;
     },
     objSort(obj) {
       for (var i = 0; i < obj.length; i++) {
@@ -281,23 +288,21 @@ table {
 .page {
   text-align: center;
   margin: 60px 0 150px;
+  font-size: 13px;
   button {
     width: 66px;
     height: 34px;
-    border: 1px solid #cccccc;
-    color: #cccccc;
-    font-size: 13px;
-    background: #ffffff;
+    border: 1px solid #ccc;
+    color: #ccc;
+    background: #fff;
   }
-  a {
+  div {
     display: inline-block;
     width: 37px;
-    height: 34px;
+    height: 32px;
     border: 1px solid #2693d4;
     color: #2693d4;
-    font-size: 13px;
     line-height: 34px;
-    text-decoration: none;
   }
 }
 </style>

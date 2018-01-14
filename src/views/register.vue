@@ -80,7 +80,6 @@ export default {
       this.seleCode = code;
     },
     login() {
-      // this.$router.push({ path: "/outter/login" });
       this.setTitle("欢迎登录");
     },
     //手机号输入

@@ -15,12 +15,12 @@
         </div>
       </div>
       <div class="box-left" v-show="getName">
-        <router-link to="/member"  class="username" >{{getName}}</router-link>
+        <router-link to="/member" class="username">{{getName}}</router-link>
         <p class="w-come">欢迎来到信达！</p>
         <p class="exit" @click="exit">【退出】</p>
       </div>
       <div class="box-right">
-        <div class="shop-cart"  @click="cartBut">
+        <div class="shop-cart" @click="cartBut">
           <span class="bgCart"></span>
           <el-button type="text" class="cartBut">
             <p>购物车
@@ -29,10 +29,10 @@
         </div>
         <div class="myOrder " v-show="getName">
           <span class="bgOrder"></span>
-          <router-link to="/member/memberBody"  class="myOrder" >我的订单</router-link>
+          <router-link to="/member/memberBody" class="myOrder">我的订单</router-link>
         </div>
         <div class="entrance">
-          <router-link to="/shopIndex"  class="entranceR" >服务商入口</router-link>
+          <router-link to="/shopIndex" class="entranceR">服务商入口</router-link>
         </div>
       </div>
     </div>
@@ -42,21 +42,21 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import {MessageBox,Button} from 'element-ui'
+import { MessageBox, Button } from "element-ui";
 export default {
-  component :{
+  component: {
     [Button.name]: Button
   },
   created() {
     var that = this;
-     this.ajax.post("/xinda-api/sso/login-info").then(data => {
-        if (data.data.status != 0) {
-          this.ajax.post("/xinda-api/cart/cart-num").then(data => {
-            var cartNum = data.data.data.cartNum;
-            that.setNum(cartNum);
-          });
-        }
-    })
+    this.ajax.post("/xinda-api/sso/login-info").then(data => {
+      if (data.data.status != 0) {
+        this.ajax.post("/xinda-api/cart/cart-num").then(data => {
+          var cartNum = data.data.data.cartNum;
+          that.setNum(cartNum);
+        });
+      }
+    });
   },
   data() {
     return {
@@ -77,7 +77,9 @@ export default {
       this.setTitle("欢迎注册");
     },
     exit() {
-      this.ajax.post('/xinda-api/sso/ logout').then(data=>console.log(data.data))
+      this.ajax
+        .post("/xinda-api/sso/ logout")
+        .then(data => console.log(data.data));
       sessionStorage.clear();
       this.setNum(0);
       location.reload();
@@ -98,7 +100,6 @@ export default {
             });
           })
           .catch(() => {});
-        
       }
     }
   }
@@ -159,24 +160,23 @@ export default {
         color: #000;
       }
     }
-    .entrance {
-      margin-left: 17px;
-      padding-top: 3px;
-      box-sizing: border-box;
-      .entranceR {
-        color: @69c;
-      }
-    }
   }
 }
 
+.entrance {
+  margin-left: 17px;
+  box-sizing: border-box;
+  .entranceR {
+    color: @69c;
+  }
+}
 .bgCart {
   display: inline-block;
   width: 25px;
   height: 25px;
   margin-right: 5px;
   margin-top: 10px;
-  background: url(../assets/cart.png)  no-repeat;
+  background: url(../assets/cart.png) no-repeat;
   margin-left: 10px;
 }
 .bgOrder {
