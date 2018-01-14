@@ -102,19 +102,6 @@ export default {
     revertT(times) {
       return Date.parse(new Date(times)) / 1000;
     },
-    // 自定义事件
-    pagevary(msg) {
-      this.pagenum = msg * this.pagesize;
-    },
-    //页面点击
-    myorderclick() {
-      var that = this;
-      if (this.msg == true) {
-        setTimeout(function() {
-          that.msg = false;
-        }, 4000);
-      }
-    },
     //三级联动选择code
     selected: function(code) {
       this.seleCode = code;
@@ -140,6 +127,7 @@ export default {
     },
 
     types(key, typeCode) {
+      this.ajax.post('xinda-api/product/style/list').then(data=>{console.log(111,data.data.data)})
       this.currentIndex = typeCode;
       //类型菜单匹配分类菜单
       this.subList = this.ItemLists[key].itemList;
