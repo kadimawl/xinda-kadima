@@ -87,7 +87,6 @@
 <script>
 import distpicker from "../distpicker";
 import plugins from "../../plugins";
-import addCart from "../../addCart";
 import { mapActions, mapGetters } from "vuex";
 import { MessageBox } from "element-ui";
 import pageturn from "../../components/pageturn";
