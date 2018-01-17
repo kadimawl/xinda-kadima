@@ -1,7 +1,7 @@
 <template>
   <div class="lBox">
     <div class="leftB">
-      <div class="phoneBox"><input type="text" v-model="phoneInput" @blur="phone" @focus="focus" placeholder="  请输入手机号码" class="phone">
+      <div class="phoneBox"><input type="text" autofocus v-model="phoneInput" @blur="phone" @focus="focus" placeholder="  请输入手机号码" class="phone">
         <span class="errorMsg">{{phoneMsg}}</span>
       </div>
       <div class="Verification"><input type="text" placeholder="  请输入验证码" @blur="imgBlur" @focus="imgVA" v-model="imgV">

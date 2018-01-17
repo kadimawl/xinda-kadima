@@ -2,7 +2,7 @@
   <div class="lOut">
     <div class="leftOut">
       <div class="phoneBox">
-        <input type="text" placeholder="  请输入手机号码" v-model="phoneInput" @blur="phone" @focus="pFocus">
+        <input type="text" placeholder="  请输入手机号码"  autofocus v-model="phoneInput" @blur="phone" @focus="pFocus">
         <p class="errorMsg">{{phoneMsg}}</p>
       </div>
       <div class="pwBox">

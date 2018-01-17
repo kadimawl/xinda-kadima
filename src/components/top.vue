@@ -151,6 +151,7 @@ export default {
     text-align: right;
     width: 29%;
     display: flex;
+    cursor: pointer;
     .shop-cart {
       display: flex;
       span {
@@ -185,7 +186,6 @@ export default {
   height: 20px;
   margin-right: 5px;
   margin-left: 5px;
-  margin-top: 5px;
   background: url(../assets/index/u619.png) no-repeat;
 }
 

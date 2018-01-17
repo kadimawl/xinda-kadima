@@ -10,19 +10,18 @@
                 </P>
             </div>
             <div>
-                <!-- <h5>&nbsp</h5> -->
-                <P>&nbsp</P>
-                <P>&nbsp</P>
-                <P>&nbsp</P>
-                <P>&nbsp</P>
+                <P>&nbsp;</P>
+                <P>&nbsp;</P>
+                <P>&nbsp;</P>
+                <P>&nbsp;</P>
                 <p>©Copyright 2016 北京信达科技有限公司 京ICP备 16011621号</p>
             </div>
             <div>
                 <img src="../assets/index/u265.png" c alt="">
             </div>
             <div>
-                <P>&nbsp</P>
-                <P>&nbsp</P>              
+                <P>&nbsp;</P>
+                <P>&nbsp;</P>              
                 <p>扫描二维码</p>
                 <p>关注我们</p>
             </div>

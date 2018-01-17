@@ -1,6 +1,6 @@
 <template>
 <div class="user">
-    <p>首页&nbsp/&nbsp个人主页</p>
+    <p>首页&nbsp;/&nbsp;个人主页</p>
     <!-- 头像框，用户登录后会显示用户头像和name -->
     <div class="touxiang">
         <div><img src="../assets/index/user.png" alt="用户头像"></div>
